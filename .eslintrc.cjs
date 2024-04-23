@@ -43,6 +43,7 @@ const config = {
             "lang",
             "langs",
             "latin",
+            "mjs",
             "parens",
             "postcss",
             "req",
