@@ -46,6 +46,7 @@ const config = {
             "latin",
             "mjs",
             "parens",
+            "picsum",
             "postcss",
             "req",
             "smacss",
@@ -53,6 +54,7 @@ const config = {
             "stylelint",
             "stylelintrc",
             "svg",
+            "tagline",
             "tailwindcss",
             "tsconfig",
             "tsx"
