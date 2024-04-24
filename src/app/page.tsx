@@ -1,7 +1,9 @@
 import { ExistingCategories, ExistingCompanies } from "../schema";
 import { API_URL } from "../config";
+import { Bebas_Neue } from "next/font/google";
 import Image from "next/image";
 import React from "react";
+import { t } from "i18next";
 
 /**
  * Home page component.
@@ -15,7 +17,19 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col p-5 gap-5">
-      <Image src="/next.svg" alt="Next Logo" width={100} height={24} priority />
+      <div className="flex items-center gap-2">
+        <Image
+          alt="App Logo"
+          className="app-logo-image"
+          height={858}
+          priority
+          src="/app-logo.png"
+          width={820}
+        />
+        <div className={`${bebas.className} app-logo-text`}>
+          {t("ZeroCompany")}
+        </div>
+      </div>
       {categories.map(category => (
         <div key={category.id}>{category.name}</div>
       ))}
@@ -23,11 +37,11 @@ export default async function Home() {
         <div key={company.id}>
           {company.name}
           <Image
-            src={company.logo}
             alt={company.name}
-            width={100}
             height={100}
             priority
+            src={company.logo}
+            width={100}
           />
         </div>
       ))}
@@ -66,3 +80,5 @@ async function getCompanies(): Promise<ExistingCompanies> {
 
   return companies;
 }
+
+const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });

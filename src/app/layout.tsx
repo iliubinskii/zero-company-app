@@ -7,8 +7,6 @@ import { t } from "i18next";
 
 initLangs();
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   description: t("appDescription"),
   title: t("appTitle")
@@ -31,3 +29,5 @@ export default function RootLayout({ children }: Props) {
 export interface Props {
   readonly children: React.ReactNode;
 }
+
+const inter = Inter({ subsets: ["latin"] });

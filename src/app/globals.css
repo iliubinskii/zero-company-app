@@ -8,3 +8,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.app-logo-image {
+  width: 4rem;
+  height: 4rem;
+}
+
+.app-logo-text {
+  font-size: 2rem;
+}

@@ -30,6 +30,7 @@ const config = {
           // @sort
           [
             "autofix",
+            "bebas",
             "camelcase",
             "cjs",
             "commonjs",
@@ -45,6 +46,7 @@ const config = {
             "langs",
             "latin",
             "mjs",
+            "neue",
             "parens",
             "picsum",
             "postcss",
@@ -53,6 +55,7 @@ const config = {
             "sonarjs",
             "stylelint",
             "stylelintrc",
+            "subsets",
             "svg",
             "tagline",
             "tailwindcss",
