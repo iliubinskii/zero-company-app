@@ -1,8 +1,8 @@
 import { ExistingCategories, ExistingCompanies } from "../schema";
 import { API_URL } from "../config";
 import { Bebas_Neue } from "next/font/google";
-import { HiSearch } from "react-icons/hi";
 import Image from "next/image";
+import { IoSearch } from "react-icons/io5";
 import React from "react";
 import { t } from "i18next";
 /**
@@ -32,9 +32,9 @@ export default async function Home() {
           </h1>
         </div>
         <div className="relative flex-grow">
-          <HiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <IoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-700" />
           <input
-            className="w-full border border-gray-300 rounded-md shadow pl-10 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-gray-300 rounded-md shadow pl-12 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder={t("searchPlaceholder")}
             type="search"
           />
