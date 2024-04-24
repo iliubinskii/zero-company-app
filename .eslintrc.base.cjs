@@ -62,14 +62,23 @@ const config = {
     "unused-imports"
   ],
   rules: {
+    "callback-return": "off",
+    "camelcase": "off",
+    "consistent-return": "off",
+    "default-case": "off",
     "eslint-comments/no-use": [
       "warn",
       { allow: ["eslint", "eslint-disable", "eslint-disable-next-line"] }
     ],
     "eslint-comments/require-description": "warn",
     "id-blacklist": "off",
+    "id-length": "off",
+    "id-match": "off",
+    "no-shadow": "off",
     "no-type-assertion/no-type-assertion": "warn",
     "no-undefined": "off",
+    "no-unreachable": "off",
+    "no-unused-vars": "off",
     "no-use-before-define": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "prettier/prettier": [
@@ -82,6 +91,7 @@ const config = {
       }
     ],
     "quote-props": ["warn", "consistent-as-needed"],
+    "sonarjs/prefer-immediate-return": "off",
     "sort-annotation/sort": "error",
     "sort-annotation/sort-keys": "error",
     "sort-destructure-keys/sort-destructure-keys": "warn",
@@ -89,6 +99,7 @@ const config = {
     "sort-imports-requires/sort-requires": ["warn", { unsafeAutofix: true }],
     "sort-keys": "warn",
     "spellcheck/spell-checker": "warn",
+    "unicorn/catch-error-name": ["warn", { name: "err" }],
     "unicorn/prevent-abbreviations": "off",
     "unused-imports/no-unused-imports": "warn"
   },

@@ -30,6 +30,7 @@ const config = {
           // @sort
           [
             "autofix",
+            "camelcase",
             "cjs",
             "commonjs",
             "destructure",
