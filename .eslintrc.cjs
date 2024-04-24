@@ -51,6 +51,7 @@ const config = {
             "picsum",
             "postcss",
             "req",
+            "semibold",
             "smacss",
             "sonarjs",
             "stylelint",
