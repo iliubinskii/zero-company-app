@@ -12,7 +12,8 @@ export function initLangs() {
           ZeroCompany: "Zero Company",
           appDescription:
             "Create a virtual company at zero cost and grow it into your first unicorn!",
-          appTitle: "Zero Company"
+          appTitle: "Zero Company",
+          searchPlaceholder: "Search..."
         }
       }
     }
