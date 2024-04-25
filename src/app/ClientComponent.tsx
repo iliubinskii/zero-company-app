@@ -31,7 +31,7 @@ export default function ClientComponent(): React.ReactElement {
         for a share in your company.
       `,
       image: { height: 900, src: "/IPO.webp", width: 1600 },
-      title: "Receive contributions"
+      title: "Receive work contributions"
     },
     {
       description: `
