@@ -15,6 +15,7 @@ export function initLangs() {
           appDescription:
             "Create a virtual company at zero cost and grow it into your first unicorn!",
           appTitle: "Zero Company",
+          homeTeaser: "We elevate crowdworking to the corporate level",
           searchPlaceholder: "Search..."
         }
       }

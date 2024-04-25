@@ -1,5 +1,3 @@
-/* eslint-disable filenames/match-regex -- Ok */
-
 /**
  * @type {import("eslint").Linter.Config }
  */
@@ -34,12 +32,14 @@ const config = {
             "camelcase",
             "cjs",
             "commonjs",
+            "crowdworking",
             "destructure",
             "ecma",
             "escompat",
             "eslintrc",
             "filenames",
             "globals",
+            "jpg",
             "jsdoc",
             "jsx",
             "lang",
@@ -61,7 +61,8 @@ const config = {
             "tagline",
             "tailwindcss",
             "tsconfig",
-            "tsx"
+            "tsx",
+            "webp"
           ],
         strings: true,
         templates: true

@@ -1,5 +1,6 @@
 .env
 .next
+.vercel
 coverage
 node_modules
 tsconfig.tsbuildinfo

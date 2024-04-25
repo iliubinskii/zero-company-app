@@ -1,5 +1,3 @@
-/* eslint-disable filenames/match-regex -- Ok */
-
 /**
  * @type {import("eslint").Linter.Config }
  */
@@ -30,6 +28,10 @@ const config = {
   ],
   overrides: [
     {
+      files: "*.d.ts",
+      rules: { "spaced-comment": "off" }
+    },
+    {
       files: ["*.test.ts", "*.test.tsx"],
       rules: {
         "i18n-text/no-en": "off"
@@ -57,9 +59,11 @@ const config = {
       { allow: ["eslint", "eslint-disable", "eslint-disable-next-line"] }
     ],
     "eslint-comments/require-description": "warn",
+    "filenames/match-regex": "off",
     "id-blacklist": "off",
     "id-length": "off",
     "id-match": "off",
+    "import/no-unresolved": "off",
     "jsdoc/require-param-type": "off",
     "jsdoc/require-returns-type": "off",
     "no-shadow": "off",
@@ -91,6 +95,7 @@ const config = {
     "sort-keys": "warn",
     "spellcheck/spell-checker": "warn",
     "unicorn/catch-error-name": ["warn", { name: "err" }],
+    "unicorn/filename-case": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/prevent-abbreviations": "off",
     "unused-imports/no-unused-imports": "warn"

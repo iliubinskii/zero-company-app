@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  * @param props.children - The children nodes.
  * @returns The rendered component.
  */
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: Props): React.ReactElement {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>

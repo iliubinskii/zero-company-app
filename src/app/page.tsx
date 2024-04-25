@@ -1,22 +1,24 @@
 import { ExistingCategories, ExistingCompanies } from "../schema";
 import { API_URL } from "../config";
 import { Bebas_Neue } from "next/font/google";
+import ClientComponent from "./ClientComponent";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
 import { t } from "i18next";
+
 /**
  * Home page component.
  * @returns The rendered component.
  */
-export default async function Home() {
+export default async function Home(): Promise<React.ReactElement> {
   const [categories, companies] = await Promise.all([
     getCategories(),
     getCompanies()
   ]);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-9">
       <div className="border header-border-width flex flex-col p-5 gap-5">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
@@ -28,7 +30,7 @@ export default async function Home() {
               src="/app-logo.png"
               width={820}
             />
-            <h1 className={`${bebas.className} app-logo-text`}>
+            <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
               {t("ZeroCompany")}
             </h1>
           </div>
@@ -53,6 +55,8 @@ export default async function Home() {
           ))}
         </div>
       </div>
+      <h2 className="flex justify-center text-xl">{t("homeTeaser")}</h2>
+      <ClientComponent />
       {companies.map(company => (
         <div key={company.id}>
           {company.name}

@@ -1,3 +1,5 @@
+import withMT from "@material-tailwind/react/utils/withMT";
+
 /**
  * @type {import("tailwindcss").Config}
  */
@@ -7,4 +9,4 @@ const config = {
   theme: { extend: {} }
 };
 
-export default config;
+export default withMT(config);
