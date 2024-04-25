@@ -24,7 +24,7 @@
     "lint-style": "stylelint --fix --max-warnings=0 src/**/*.{css,less,postcss,scss}",
     "start": "next start -p 80",
     "test": "jest",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --incremental false --noEmit"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.3",
