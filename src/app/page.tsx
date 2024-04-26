@@ -1,7 +1,14 @@
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography
+} from "@mui/material";
 import { ExistingCategories, ExistingCompanies } from "../schema";
 import { API_URL } from "../config";
 import { Bebas_Neue } from "next/font/google";
-import ClientComponent from "./ClientComponent";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
@@ -17,13 +24,34 @@ export default async function Home(): Promise<React.ReactElement> {
     getCompanies()
   ]);
 
+  const cards = [
+    {
+      description: t("homeCard1Description"),
+      image: { src: "/digital-sign.webp" },
+      title: t("homeCard1Title")
+    },
+    {
+      description: t("homeCard2Description"),
+      image: { src: "/IPO.webp" },
+      title: t("homeCard2Title")
+    },
+    {
+      description: t("homeCard3Description"),
+      image: { src: "/unicorn.webp" },
+      title: t("homeCard3Title")
+    }
+  ];
+
   return (
     <div className="flex flex-col gap-9">
+      {/* Header */}
       <div className="border header-border-width flex flex-col p-5 gap-5">
+        {/* Main header */}
         <div className="flex items-center gap-8">
+          {/* Logo */}
           <div className="flex items-center gap-2">
             <Image
-              alt="App Logo"
+              alt={t("ZeroCompany")}
               className="app-logo-image"
               height={858}
               priority
@@ -34,6 +62,9 @@ export default async function Home(): Promise<React.ReactElement> {
               {t("ZeroCompany")}
             </h1>
           </div>
+          {/* Logo END */}
+
+          {/* Site search */}
           <div className="relative flex-grow">
             <IoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-700" />
             <input
@@ -42,21 +73,71 @@ export default async function Home(): Promise<React.ReactElement> {
               type="search"
             />
           </div>
+          {/* Site search END */}
+
+          {/* Create company */}
           <button className="px-4 py-3 rounded border border-gray-400 transition duration-150 ease-in-out hover:border-black focus:border-black">
             {t("CreateCompany")}
           </button>
+          {/* Create company END */}
+
+          {/* Log in */}
           <button className="px-2 py-3 transition-colors duration-150 hover:text-green-800">
             {t("LogIn")}
           </button>
+          {/* Log in END */}
         </div>
+        {/* Main header END */}
+
+        {/* Categories */}
         <div className="flex justify-center gap-4 font-medium">
           {categories.map(category => (
             <div key={category.id}>{category.name}</div>
           ))}
         </div>
+        {/* Categories END */}
       </div>
-      <h2 className="flex justify-center text-xl">{t("homeTeaser")}</h2>
-      <ClientComponent />
+      {/* Header END */}
+
+      {/* Teaser */}
+      <Typography className="flex justify-center" variant="h2">
+        {t("homeTeaser")}
+      </Typography>
+      {/* Teaser END */}
+
+      {/* Cards */}
+      <div className="flex justify-center">
+        <div className="grid grid-cols-3 gap-3">
+          {cards.map(({ description, image: { src }, title }, key) => (
+            <Card
+              elevation={3}
+              key={key}
+              sx={{
+                borderRadius: 4,
+                display: "flex",
+                flexDirection: "column",
+                maxWidth: 345
+              }}
+            >
+              <CardMedia component="img" image={src} title={title} />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography gutterBottom variant="h6">
+                  {title}
+                </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {description}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button>{t("LearnMore")}</Button>
+              </CardActions>
+            </Card>
+          ))}
+        </div>
+      </div>
+      {/* Cards END */}
+
+      {/* Companies */}
       {companies.map(company => (
         <div key={company.id}>
           {company.name}
@@ -69,6 +150,7 @@ export default async function Home(): Promise<React.ReactElement> {
           />
         </div>
       ))}
+      {/* Companies END */}
     </div>
   );
 }

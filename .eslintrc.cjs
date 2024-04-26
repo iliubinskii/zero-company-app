@@ -27,6 +27,8 @@ const config = {
         skipWords:
           // @sort
           [
+            "2xl",
+            "3xl",
             "autofix",
             "bebas",
             "camelcase",
@@ -51,6 +53,7 @@ const config = {
             "picsum",
             "postcss",
             "req",
+            "roboto",
             "semibold",
             "smacss",
             "sonarjs",

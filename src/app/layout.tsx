@@ -1,7 +1,7 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import React from "react";
+import { Roboto } from "next/font/google";
 import { initLangs } from "../langs";
 import { t } from "i18next";
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Props): React.ReactElement {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={roboto.className}>{children}</body>
     </html>
   );
 }
@@ -30,4 +30,4 @@ export interface Props {
   readonly children: React.ReactNode;
 }
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ subsets: ["latin"], weight: "400" });
