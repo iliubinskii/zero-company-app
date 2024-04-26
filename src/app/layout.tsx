@@ -1,10 +1,8 @@
 import "./globals.css";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import React from "react";
-import { ThemeProvider } from "@mui/material";
+import { Roboto } from "next/font/google";
 import { lang } from "../langs";
-import theme from "../theme";
 
 export const metadata: Metadata = {
   description: lang.app.description,
@@ -24,11 +22,9 @@ export interface Props {
 export default function RootLayout({ children }: Props): React.ReactElement {
   return (
     <html lang="en">
-      <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </AppRouterCacheProvider>
-      </body>
+      <body className={roboto.className}>{children}</body>
     </html>
   );
 }
+
+const roboto = Roboto({ subsets: ["latin"], weight: "400" });
