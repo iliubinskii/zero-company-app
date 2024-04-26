@@ -12,7 +12,7 @@ import { Bebas_Neue } from "next/font/google";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
-import { t } from "i18next";
+import { lang } from "../langs";
 
 /**
  * Home page component.
@@ -26,19 +26,19 @@ export default async function Home(): Promise<React.ReactElement> {
 
   const cards = [
     {
-      description: t("homeCard1Description"),
-      image: { src: "/digital-sign.webp" },
-      title: t("homeCard1Title")
+      description: lang.home.card1.description,
+      src: "/digital-sign.webp",
+      title: lang.home.card1.title
     },
     {
-      description: t("homeCard2Description"),
-      image: { src: "/IPO.webp" },
-      title: t("homeCard2Title")
+      description: lang.home.card2.description,
+      src: "/IPO.webp",
+      title: lang.home.card2.title
     },
     {
-      description: t("homeCard3Description"),
-      image: { src: "/unicorn.webp" },
-      title: t("homeCard3Title")
+      description: lang.home.card3.description,
+      src: "/unicorn.webp",
+      title: lang.home.card3.title
     }
   ];
 
@@ -51,7 +51,7 @@ export default async function Home(): Promise<React.ReactElement> {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <Image
-              alt={t("ZeroCompany")}
+              alt={lang.ZeroCompany}
               className="app-logo-image"
               height={858}
               priority
@@ -59,7 +59,7 @@ export default async function Home(): Promise<React.ReactElement> {
               width={820}
             />
             <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
-              {t("ZeroCompany")}
+              {lang.ZeroCompany}
             </h1>
           </div>
           {/* Logo END */}
@@ -69,7 +69,7 @@ export default async function Home(): Promise<React.ReactElement> {
             <IoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-700" />
             <input
               className="w-full border border-gray-300 rounded-lg shadow-lg pl-12 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder={t("searchPlaceholder")}
+              placeholder={lang.header.searchPlaceholder}
               type="search"
             />
           </div>
@@ -77,13 +77,13 @@ export default async function Home(): Promise<React.ReactElement> {
 
           {/* Create company */}
           <button className="px-4 py-3 rounded border border-gray-400 transition duration-150 ease-in-out hover:border-black focus:border-black">
-            {t("CreateCompany")}
+            {lang.CreateCompany}
           </button>
           {/* Create company END */}
 
           {/* Log in */}
           <button className="px-2 py-3 transition-colors duration-150 hover:text-green-800">
-            {t("LogIn")}
+            {lang.LogIn}
           </button>
           {/* Log in END */}
         </div>
@@ -101,14 +101,14 @@ export default async function Home(): Promise<React.ReactElement> {
 
       {/* Teaser */}
       <Typography className="flex justify-center" variant="h5">
-        {t("homeTeaser")}
+        {lang.home.teaser}
       </Typography>
       {/* Teaser END */}
 
       {/* Cards */}
       <div className="flex justify-center">
         <div className="grid grid-cols-3 gap-3">
-          {cards.map(({ description, image: { src }, title }, key) => (
+          {cards.map(({ description, src, title }, key) => (
             <Card
               elevation={3}
               key={key}
@@ -129,7 +129,7 @@ export default async function Home(): Promise<React.ReactElement> {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button>{t("LearnMore")}</Button>
+                <Button>{lang.LearnMore}</Button>
               </CardActions>
             </Card>
           ))}

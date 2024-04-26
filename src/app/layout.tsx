@@ -3,15 +3,12 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import React from "react";
 import { ThemeProvider } from "@mui/material";
-import { initLangs } from "../langs";
-import { t } from "i18next";
+import { lang } from "../langs";
 import theme from "../theme";
 
-initLangs();
-
 export const metadata: Metadata = {
-  description: t("appDescription"),
-  title: t("appTitle")
+  description: lang.app.description,
+  title: lang.app.title
 };
 
 export interface Props {

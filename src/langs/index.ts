@@ -1,40 +1,39 @@
-import { init } from "i18next";
-
 /**
  * Initializes the i18next library with the default language and resources.
  */
-export function initLangs() {
-  init({
-    lng: "en",
-    resources: {
-      en: {
-        translation: {
-          CreateCompany: "Create a company",
-          LearnMore: "Learn More",
-          LogIn: "Log In",
-          ZeroCompany: "Zero Company",
-          appDescription:
-            "Create a virtual company at zero cost and grow it into your first unicorn!",
-          appTitle: "Zero Company",
-          homeCard1Description: `
+export const lang = {
+  CreateCompany: "Create a company",
+  LearnMore: "Learn More",
+  LogIn: "Log In",
+  ZeroCompany: "Zero Company",
+  app: {
+    description:
+      "Create a virtual company at zero cost and grow it into your first unicorn!",
+    title: "Zero Company"
+  },
+  header: { searchPlaceholder: "Search..." },
+  home: {
+    card1: {
+      description: `
               Drop in a legal foundation into your project at a very early
               stage.
             `,
-          homeCard1Title: "Create a virtual company",
-          homeCard2Description: `
+      title: "Create a virtual company"
+    },
+    card2: {
+      description: `
               With our legally backed process, you can attract contributors
               for a share in your company.
             `,
-          homeCard2Title: "Receive work contributions",
-          homeCard3Description: `
+      title: "Receive work contributions"
+    },
+    card3: {
+      description: `
               We design a seamless process of asset transfer to the company,
               where you can manage them collectively with your team.
             `,
-          homeCard3Title: "Secure company assets",
-          homeTeaser: "We elevate crowdworking to the corporate level",
-          searchPlaceholder: "Search..."
-        }
-      }
-    }
-  });
-}
+      title: "Secure company assets"
+    },
+    teaser: "We elevate crowdworking to the corporate level"
+  }
+} as const;
