@@ -4,7 +4,6 @@ import { Bebas_Neue } from "next/font/google";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
-import { Typography } from "@mui/material";
 import { images } from "../images";
 import { lang } from "../langs";
 
@@ -94,9 +93,7 @@ export default async function Home(): Promise<React.ReactElement> {
       {/* Header END */}
 
       {/* Teaser */}
-      <Typography className="flex justify-center" variant="h5">
-        {lang.home.teaser}
-      </Typography>
+      <h2 className="text-center text-xl text-gray-500">{lang.home.teaser}</h2>
       {/* Teaser END */}
 
       {/* Cards */}
@@ -104,7 +101,7 @@ export default async function Home(): Promise<React.ReactElement> {
         <div className="grid grid-cols-3 gap-3">
           {cards.map(({ description, image, title }, key) => (
             <div
-              className="max-w-xs rounded-2xl overflow-hidden shadow-lg"
+              className="max-w-xs rounded-xl overflow-hidden shadow-lg"
               key={key}
             >
               <Image
