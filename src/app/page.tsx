@@ -1,17 +1,11 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography
-} from "@mui/material";
 import { ExistingCategories, ExistingCompanies } from "../schema";
 import { API_URL } from "../config";
 import { Bebas_Neue } from "next/font/google";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
+import { Typography } from "@mui/material";
+import { images } from "../images";
 import { lang } from "../langs";
 
 /**
@@ -27,17 +21,17 @@ export default async function Home(): Promise<React.ReactElement> {
   const cards = [
     {
       description: lang.home.card1.description,
-      src: "/digital-sign.webp",
+      image: images.digitalSign,
       title: lang.home.card1.title
     },
     {
       description: lang.home.card2.description,
-      src: "/IPO.webp",
+      image: images.IPO,
       title: lang.home.card2.title
     },
     {
       description: lang.home.card3.description,
-      src: "/unicorn.webp",
+      image: images.unicorn,
       title: lang.home.card3.title
     }
   ];
@@ -53,10 +47,10 @@ export default async function Home(): Promise<React.ReactElement> {
             <Image
               alt={lang.ZeroCompany}
               className="app-logo-image"
-              height={858}
+              height={images.appLogo.height}
               priority
-              src="/app-logo.png"
-              width={820}
+              src={images.appLogo.src}
+              width={images.appLogo.width}
             />
             <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
               {lang.ZeroCompany}
@@ -108,30 +102,25 @@ export default async function Home(): Promise<React.ReactElement> {
       {/* Cards */}
       <div className="flex justify-center">
         <div className="grid grid-cols-3 gap-3">
-          {cards.map(({ description, src, title }, key) => (
-            <Card
-              elevation={3}
+          {cards.map(({ description, image, title }, key) => (
+            <div
+              className="max-w-xs rounded-2xl overflow-hidden shadow-lg"
               key={key}
-              sx={{
-                borderRadius: 4,
-                display: "flex",
-                flexDirection: "column",
-                maxWidth: 345
-              }}
             >
-              <CardMedia component="img" image={src} title={title} />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h6">
-                  {title}
-                </Typography>
-                <Typography color="text.secondary" variant="body2">
-                  {description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button>{lang.LearnMore}</Button>
-              </CardActions>
-            </Card>
+              <Image
+                alt={title}
+                height={image.height}
+                src={image.src}
+                width={image.width}
+              />
+              <div className="py-4 px-6 flex flex-col gap-3">
+                <h3 className="text-xl font-bold">{title}</h3>
+                <p className="flex-grow text-gray-500">{description}</p>
+                <button className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
+                  {lang.LearnMore}
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       </div>

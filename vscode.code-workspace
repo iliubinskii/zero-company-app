@@ -59,6 +59,7 @@
     "files.trimTrailingWhitespace": true,
     "foldOnOpen.targets": ["AllBlockComments"],
     "javascript.suggestionActions.enabled": false,
+    "editor.colorDecorators": false,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "search.exclude": {
       "dist": true,
