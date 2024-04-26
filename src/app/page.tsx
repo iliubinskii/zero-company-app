@@ -100,7 +100,7 @@ export default async function Home(): Promise<React.ReactElement> {
       {/* Header END */}
 
       {/* Teaser */}
-      <Typography className="flex justify-center" variant="h2">
+      <Typography className="flex justify-center" variant="h5">
         {t("homeTeaser")}
       </Typography>
       {/* Teaser END */}
