@@ -21,3 +21,15 @@ export function assertNotNull<T>(value: T | null): T {
 
   return value;
 }
+
+/**
+ * Asserts that a value is a string.
+ * @param value - The value to check.
+ * @returns The value if it is a string.
+ * @throws An error if the value is not a string.
+ */
+export function assertString(value: unknown): string {
+  if (typeof value === "string") return value;
+
+  throw new Error("Value is undefined");
+}

@@ -15,7 +15,7 @@ const config = {
   theme: {
     extend: {
       borderWidth: {
-        1.5: "5px"
+        1.5: "1.5px"
       },
       height: {
         "aspect-ratio-16/9": `${0.01 * 900}rem`
