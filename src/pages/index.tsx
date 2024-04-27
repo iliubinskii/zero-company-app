@@ -9,22 +9,6 @@ import { images } from "../images";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const [categories, companies] = await Promise.all([
-    getCategories(),
-    getCompanies()
-  ]);
-
-  return {
-    props: { categories, companies }
-  };
-};
-
-export interface Props {
-  readonly categories: ExistingCategories;
-  readonly companies: ExistingCompanies;
-}
-
 const Page: NextPage<Props> = ({ categories, companies }) => {
   const router = useRouter();
 
@@ -122,3 +106,19 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
 };
 
 export default Page;
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const [categories, companies] = await Promise.all([
+    getCategories(),
+    getCompanies()
+  ]);
+
+  return {
+    props: { categories, companies }
+  };
+};
+
+export interface Props {
+  readonly categories: ExistingCategories;
+  readonly companies: ExistingCompanies;
+}

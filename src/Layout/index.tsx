@@ -6,11 +6,6 @@ import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
 
-export interface Props {
-  readonly categories: ExistingCategories;
-  readonly children: React.ReactNode;
-}
-
 const Layout: React.FC<Props> = ({ categories, children }) => {
   return (
     <div className={roboto.className}>
@@ -81,6 +76,11 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
 };
 
 export default Layout;
+
+export interface Props {
+  readonly categories: ExistingCategories;
+  readonly children: React.ReactNode;
+}
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 

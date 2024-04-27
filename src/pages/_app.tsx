@@ -4,10 +4,6 @@ import Head from "next/head";
 import React from "react";
 import { lang } from "../langs";
 
-export interface Props {
-  readonly children: React.ReactNode;
-}
-
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
@@ -21,3 +17,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 export default App;
+
+export interface Props {
+  readonly children: React.ReactNode;
+}
