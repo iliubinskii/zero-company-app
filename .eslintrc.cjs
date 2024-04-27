@@ -34,6 +34,7 @@ const config = {
             "camelcase",
             "cjs",
             "commonjs",
+            "compat",
             "crowdworking",
             "daisyui",
             "destructure",
