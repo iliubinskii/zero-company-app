@@ -65,40 +65,31 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
         </div>
         {/* Cards END */}
 
-        {/* Featured companies */}
-        <div className="-mx-1 carousel">
-          {companies.docs.map(company => (
-            <div
-              className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
-              key={company.id}
-            >
-              <Image
-                alt={company.name}
-                className="w-full"
-                height={900}
-                priority
-                src={assertDefined(company.images[0])}
-                width={1600}
-              />
-              {company.name}
-            </div>
-          ))}
-        </div>
-        {/* Featured companies END */}
-
         {/* Companies */}
-        {companies.docs.map(company => (
-          <div className="flex" key={company.id}>
-            <Image
-              alt={company.name}
-              className="w-aspect-ratio-16/9 h-aspect-ratio-16/9"
-              height={1600}
-              src={assertDefined(company.images[0])}
-              width={900}
-            />
-            {company.name}
-          </div>
-        ))}
+        <div className="-mx-1 carousel">
+          {companies.docs.map(company => {
+            const { height, secureUrl, width } = assertDefined(
+              company.images[0]
+            );
+
+            return (
+              <div
+                className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
+                key={company._id}
+              >
+                <Image
+                  alt={company.name}
+                  className="w-full"
+                  height={height}
+                  priority
+                  src={secureUrl}
+                  width={width}
+                />
+                {company.name}
+              </div>
+            );
+          })}
+        </div>
         {/* Companies END */}
       </div>
     </Layout>

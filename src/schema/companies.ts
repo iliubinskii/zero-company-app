@@ -1,15 +1,17 @@
+import { WebAccessibleImage } from "./common";
+
 export interface Company {
   readonly categories: string[];
-  readonly header: string;
-  readonly images: string[];
-  readonly logo: string;
+  readonly header: WebAccessibleImage;
+  readonly images: WebAccessibleImage[];
+  readonly logo: WebAccessibleImage;
   readonly name: string;
 }
 
 export type Companies = readonly Company[];
 
 export interface ExistingCompany extends Company {
-  readonly id: string;
+  readonly _id: string;
 }
 
 export type ExistingCompanies = readonly ExistingCompany[];

@@ -58,7 +58,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
           {/* Categories */}
           <div className="flex justify-center gap-4 font-medium">
             {categories.docs.map(category => (
-              <a href={`/categories/${category.id}`} key={category.id}>
+              <a href={`/categories/${category._id}`} key={category._id}>
                 {category.name}
               </a>
             ))}
