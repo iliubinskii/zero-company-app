@@ -1,4 +1,4 @@
-import { ExistingCategories, ExistingCompanies } from "../schema";
+import { GetCategoriesResponse, GetCompaniesResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { getCategories, getCompanies } from "../api";
 import Image from "next/image";
@@ -65,9 +65,9 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
         </div>
         {/* Cards END */}
 
-        {/* Featured companies */}
+        {/* Companies */}
         <div className="-mx-1 carousel">
-          {companies.map(company => (
+          {companies.docs.map(company => (
             <div
               className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
               key={company.id}
@@ -84,21 +84,6 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
             </div>
           ))}
         </div>
-        {/* Featured companies END */}
-
-        {/* Companies */}
-        {companies.map(company => (
-          <div className="flex" key={company.id}>
-            <Image
-              alt={company.name}
-              className="w-aspect-ratio-16/9 h-aspect-ratio-16/9"
-              height={1600}
-              src={assertDefined(company.images[0])}
-              width={900}
-            />
-            {company.name}
-          </div>
-        ))}
         {/* Companies END */}
       </div>
     </Layout>
@@ -110,7 +95,7 @@ export default Page;
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const [categories, companies] = await Promise.all([
     getCategories(),
-    getCompanies()
+    getCompanies({ limit: 4 })
   ]);
 
   return {
@@ -119,6 +104,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 };
 
 export interface Props {
-  readonly categories: ExistingCategories;
-  readonly companies: ExistingCompanies;
+  readonly categories: GetCategoriesResponse;
+  readonly companies: GetCompaniesResponse;
 }

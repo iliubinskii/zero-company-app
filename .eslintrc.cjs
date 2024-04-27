@@ -60,6 +60,7 @@ const config = {
             "semibold",
             "smacss",
             "sonarjs",
+            "str",
             "stylelint",
             "stylelintrc",
             "subsets",

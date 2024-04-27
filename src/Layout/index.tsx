@@ -1,5 +1,5 @@
 import { Bebas_Neue, Roboto } from "next/font/google";
-import { ExistingCategories } from "../schema";
+import { GetCategoriesResponse } from "../schema";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
@@ -57,7 +57,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
 
           {/* Categories */}
           <div className="flex justify-center gap-4 font-medium">
-            {categories.map(category => (
+            {categories.docs.map(category => (
               <a href={`/categories/${category.id}`} key={category.id}>
                 {category.name}
               </a>
@@ -78,7 +78,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
 export default Layout;
 
 export interface Props {
-  readonly categories: ExistingCategories;
+  readonly categories: GetCategoriesResponse;
   readonly children: React.ReactNode;
 }
 

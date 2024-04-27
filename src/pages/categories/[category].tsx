@@ -1,4 +1,4 @@
-import { ExistingCategories, ExistingCompanies } from "../../schema";
+import { GetCategoriesResponse, GetCompaniesResponse } from "../../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { assertDefined, assertString } from "../../utils";
 import { getCategories, getCompaniesByCategory } from "../../api";
@@ -67,7 +67,7 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
 
         {/* Featured companies */}
         <div className="-mx-1 carousel">
-          {companies.map(company => (
+          {companies.docs.map(company => (
             <div
               className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
               key={company.id}
@@ -87,7 +87,7 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
         {/* Featured companies END */}
 
         {/* Companies */}
-        {companies.map(company => (
+        {companies.docs.map(company => (
           <div className="flex" key={company.id}>
             <Image
               alt={company.name}
@@ -117,12 +117,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
     getCompaniesByCategory(category)
   ]);
 
-  return {
-    props: { categories, companies }
-  };
+  return { props: { categories, companies } };
 };
 
 export interface Props {
-  readonly categories: ExistingCategories;
-  readonly companies: ExistingCompanies;
+  readonly categories: GetCategoriesResponse;
+  readonly companies: GetCompaniesResponse;
 }
