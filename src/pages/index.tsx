@@ -1,7 +1,6 @@
 import { GetCategoriesResponse, GetCompaniesResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { getCategories, getCompanies } from "../api";
-import Image from "next/image";
 import Layout from "../Layout";
 import React from "react";
 import { assertDefined } from "../utils";
@@ -47,7 +46,7 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
         <div className="grid grid-cols-3 gap-3">
           {cards.map(({ description, image, title }, key) => (
             <div className="rounded-xl overflow-hidden shadow-lg" key={key}>
-              <Image
+              <img
                 alt={title}
                 height={image.height}
                 src={image.src}
@@ -77,11 +76,10 @@ const Page: NextPage<Props> = ({ categories, companies }) => {
                 className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
                 key={company._id}
               >
-                <Image
+                <img
                   alt={company.name}
                   className="w-full"
                   height={height}
-                  priority
                   src={secureUrl}
                   width={width}
                 />

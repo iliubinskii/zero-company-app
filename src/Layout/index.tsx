@@ -1,6 +1,5 @@
 import { Bebas_Neue, Roboto } from "next/font/google";
 import { GetCategoriesResponse } from "../schema";
-import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
 import { images } from "../images";
@@ -15,19 +14,18 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
           {/* Main header */}
           <div className="flex items-center gap-8">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <Image
+            <a className="flex items-center gap-2" href="/">
+              <img
                 alt={lang.ZeroCompany}
                 className="app-logo-image"
                 height={images.appLogo.height}
-                priority
                 src={images.appLogo.src}
                 width={images.appLogo.width}
               />
               <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
                 {lang.ZeroCompany}
               </h1>
-            </div>
+            </a>
             {/* Logo END */}
 
             {/* Site search */}
