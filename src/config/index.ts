@@ -16,4 +16,10 @@ export const AUTH0_REDIRECT_URI = assertDefined(
   process.env["NEXT_PUBLIC_AUTH0_REDIRECT_URI"]
 );
 
-export const JWT_SECRET = assertDefined(process.env["JWT_SECRET"]);
+/**
+ * Retrieves the JWT secret.
+ * @returns The JWT secret.
+ */
+export function JWT_SECRET(): string {
+  return assertDefined(process.env["JWT_SECRET"]);
+}

@@ -38,7 +38,7 @@ export async function get(
 
   const queryStr = queryParams.toString();
 
-  const token = jwt.sign(queryObject, JWT_SECRET, {
+  const token = jwt.sign(queryObject, JWT_SECRET(), {
     expiresIn: JWT_EXPIRES_IN
   });
 
