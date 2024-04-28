@@ -69,6 +69,7 @@ const config = {
             "tailwindcss",
             "tsconfig",
             "tsx",
+            "uri",
             "webp"
           ],
         strings: true,

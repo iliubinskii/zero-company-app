@@ -4,14 +4,15 @@ import { assertDefined, assertString } from "../../utils";
 import { getCategories, getCompaniesByCategory } from "../../api";
 import Layout from "../../Layout";
 import React from "react";
+import { lang } from "../../langs";
 import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ categories, companies }) => {
   const router = useRouter();
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
+  // eslint-disable-next-line no-warning-comments -- Postponed
+  // TODO: Style this
+  if (router.isFallback) return <div>{lang.Loading}</div>;
 
   return (
     <Layout categories={categories}>

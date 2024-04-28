@@ -1,6 +1,7 @@
 import { Bebas_Neue, Roboto } from "next/font/google";
 import { GetCategoriesResponse } from "../schema";
 import { IoSearch } from "react-icons/io5";
+import ProfileButton from "./ProfileButton";
 import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
@@ -45,11 +46,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
             </button>
             {/* Create company END */}
 
-            {/* Log in */}
-            <button className="px-2 py-3 transition-colors duration-150 hover:text-green-800">
-              {lang.LogIn}
-            </button>
-            {/* Log in END */}
+            {/* Profile */}
+            <ProfileButton />
+            {/* Profile END */}
           </div>
           {/* Main header END */}
 

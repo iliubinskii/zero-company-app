@@ -4,7 +4,9 @@
 export const lang = {
   CreateCompany: "Create a company",
   LearnMore: "Learn More",
+  Loading: "Loading...",
   LogIn: "Log In",
+  Profile: "Profile",
   ZeroCompany: "Zero Company",
   app: {
     description:
