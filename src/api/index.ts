@@ -1,19 +1,15 @@
 import { GetCategoriesResponse, GetCompaniesResponse } from "../schema";
-import { API_URL } from "../config";
-import { filterUndefinedProperties } from "../utils";
+import { get } from "./core";
 
 /**
  * Retrieves the categories from the API.
  * @returns The categories.
  */
 export async function getCategories(): Promise<GetCategoriesResponse> {
-  const response = await fetch(`${API_URL}categories`);
+  const categories = await get("categories");
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Validate the response.
-  const categories = await response.json();
-
-  return categories;
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+  return categories as GetCategoriesResponse;
 }
 
 /**
@@ -27,26 +23,13 @@ export async function getCompanies({
   limit,
   offset
 }: Pagination = {}): Promise<GetCompaniesResponse> {
-  const queryParams = new URLSearchParams(
-    filterUndefinedProperties({
-      limit: limit?.toString(),
-      offset: offset?.toString()
-    })
-  );
+  const companies = await get("companies", {
+    limit,
+    offset
+  });
 
-  const queryStr = queryParams.toString();
-
-  const response = await fetch(
-    queryStr.length > 0
-      ? `${API_URL}companies?${queryStr}`
-      : `${API_URL}companies`
-  );
-
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Validate the response.
-  const companies = await response.json();
-
-  return companies;
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+  return companies as GetCompaniesResponse;
 }
 
 /**
@@ -61,26 +44,13 @@ export async function getCompaniesByCategory(
   category: string,
   { limit, offset }: Pagination = {}
 ): Promise<GetCompaniesResponse> {
-  const queryParams = new URLSearchParams(
-    filterUndefinedProperties({
-      limit: limit?.toString(),
-      offset: offset?.toString()
-    })
-  );
+  const companies = await get(`categories/${category}/companies`, {
+    limit,
+    offset
+  });
 
-  const queryStr = queryParams.toString();
-
-  const response = await fetch(
-    queryStr.length > 0
-      ? `${API_URL}categories/${category}/companies?${queryStr}`
-      : `${API_URL}categories/${category}/companies`
-  );
-
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Validate the response.
-  const companies = await response.json();
-
-  return companies;
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+  return companies as GetCompaniesResponse;
 }
 
 export interface Pagination {
