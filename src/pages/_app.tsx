@@ -1,11 +1,22 @@
 import "./globals.css";
-import { AppProps } from "next/app";
+import App, { AppContext, AppInitialProps, AppProps } from "next/app";
+import { GetCategoriesResponse } from "../schema";
 import Head from "next/head";
+import Layout from "../Layout";
 import React from "react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { getCategories } from "../api";
 import { lang } from "../langs";
 
-const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+/**
+ * Custom App component
+ * @param Props - Properties.
+ * @param Props.Component - Page component.
+ * @param Props.pageProps - Page properties.
+ * @param Props.categories - Categories.
+ * @returns Application component.
+ */
+function CustomApp({ Component, categories, pageProps }: CustomAppProps) {
   return (
     <>
       <Head>
@@ -13,14 +24,31 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta content={lang.app.description} name="description" />
       </Head>
       <UserProvider>
-        <Component {...pageProps} />
+        <Layout categories={categories}>
+          <Component {...pageProps} />
+        </Layout>
       </UserProvider>
     </>
   );
+}
+
+CustomApp.getInitialProps = async (
+  context: AppContext
+): Promise<CustomAppInitialProps> => {
+  const [categories, props] = await Promise.all([
+    getCategories(),
+    App.getInitialProps(context)
+  ]);
+
+  return { ...props, categories };
 };
 
-export default App;
+export default CustomApp;
 
-export interface Props {
-  readonly children: React.ReactNode;
+export interface CustomAppInitialProps extends AppInitialProps {
+  readonly categories: GetCategoriesResponse;
+}
+
+export interface CustomAppProps extends AppProps {
+  readonly categories: GetCategoriesResponse;
 }
