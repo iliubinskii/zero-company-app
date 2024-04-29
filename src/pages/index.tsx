@@ -33,7 +33,7 @@ const Page: NextPage<Props> = ({ companies }) => {
   ];
 
   return (
-    <div className="self-center m-9 max-w-screen-lg flex flex-col gap-9">
+    <div className="flex flex-col gap-9">
       {/* Teaser */}
       <h2 className="text-center text-xl text-gray-500">{lang.home.teaser}</h2>
       {/* Teaser END */}

@@ -14,7 +14,7 @@ const Page: NextPage<Props> = ({ companies }) => {
   if (router.isFallback) return <div>{lang.Loading}</div>;
 
   return (
-    <div className="self-center m-9 max-w-screen-lg flex flex-col gap-9">
+    <div className="flex flex-col gap-9">
       {/* Companies */}
       <div className="-mx-1 carousel">
         {companies.docs.map(company => {

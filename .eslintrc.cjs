@@ -32,12 +32,14 @@ const config = {
             "autofix",
             "bebas",
             "camelcase",
+            "checkbox",
             "cjs",
             "commonjs",
             "compat",
             "crowdworking",
             "daisyui",
             "destructure",
+            "discoverable",
             "ecma",
             "escompat",
             "eslintrc",
@@ -75,7 +77,8 @@ const config = {
         strings: true,
         templates: true
       }
-    ]
+    ],
+    "unicorn/no-null": "off"
   }
 };
 

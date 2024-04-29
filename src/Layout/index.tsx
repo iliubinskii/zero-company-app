@@ -33,7 +33,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
             <div className="relative flex-grow">
               <IoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-700" />
               <input
-                className="w-full border border-gray-300 rounded-lg shadow-lg pl-12 pr-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full border border-gray-300 rounded-lg shadow-lg pl-12 pr-3 py-3"
                 placeholder={lang.header.searchPlaceholder}
                 type="search"
               />
@@ -41,9 +41,12 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
             {/* Site search END */}
 
             {/* Create company */}
-            <button className="px-4 py-3 rounded border border-gray-400 transition duration-150 ease-in-out hover:border-black focus:border-black">
+            <a
+              className="px-4 py-3 rounded border border-gray-400 transition duration-150 ease-in-out hover:border-black focus:border-black"
+              href="/create-company"
+            >
               {lang.CreateCompany}
-            </button>
+            </a>
             {/* Create company END */}
 
             {/* Profile */}
@@ -65,7 +68,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
         {/* Header END */}
 
         {/* Contents */}
-        {children}
+        <div className="m-9">
+          <div className="max-w-screen-lg mx-auto">{children}</div>
+        </div>
         {/* Contents END */}
       </div>
     </div>

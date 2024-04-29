@@ -2,11 +2,19 @@
  * Initializes the i18next library with the default language and resources.
  */
 export const lang = {
+  AddCompanyImages: "Add company images",
+  AddCompanyLogo: "Add company logo",
   CreateCompany: "Create a company",
+  Description: "Description",
   LearnMore: "Learn More",
   Loading: "Loading...",
   LogIn: "Log In",
+  Name: "Name",
+  PrivateCompany: "Private company",
   Profile: "Profile",
+  SelectCategory: "Select a category",
+  TargetValue: "Target value",
+  Website: "Website",
   ZeroCompany: "Zero Company",
   app: {
     description:
