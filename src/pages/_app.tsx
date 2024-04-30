@@ -4,7 +4,6 @@ import { GetCategoriesResponse } from "../schema";
 import Head from "next/head";
 import Layout from "../Layout";
 import React from "react";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { getCategories } from "../api";
 import { lang } from "../langs";
 
@@ -23,11 +22,9 @@ function CustomApp({ Component, categories, pageProps }: CustomAppProps) {
         <title>{lang.app.title}</title>
         <meta content={lang.app.description} name="description" />
       </Head>
-      <UserProvider>
-        <Layout categories={categories}>
-          <Component {...pageProps} />
-        </Layout>
-      </UserProvider>
+      <Layout categories={categories}>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }

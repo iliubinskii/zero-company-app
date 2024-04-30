@@ -1,28 +1,52 @@
+import { API_URL } from "../config";
 import React from "react";
+import { callAsync } from "../utils";
 import { lang } from "../langs";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
+import zod from "zod";
 
 const ProfileButton: React.FC = () => {
-  const { error, isLoading, user } = useUser();
+  const [loading, setLoading] = React.useState(true);
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (isLoading) return <div>{lang.Loading}</div>;
+  const router = useRouter();
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (error) return <div>{error.message}</div>;
+  const [user, setUser] =
+    React.useState<zod.infer<typeof MeValidationSchema>>();
 
-  return user ? (
-    <div>{lang.Profile}</div>
-  ) : (
-    <a
-      className="px-2 py-3 transition-colors duration-150 hover:text-green-800"
-      href="/api/auth/login"
-    >
-      {lang.LogIn}
-    </a>
+  React.useEffect(() => {
+    callAsync(async () => {
+      try {
+        const response = await fetch(`${API_URL}auth/me`, {
+          credentials: "include"
+        });
+
+        const json = await response.json();
+
+        if (json) setUser(MeValidationSchema.parse(json));
+      } finally {
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  return (
+    <>
+      <button
+        className="px-2 py-3 transition-colors duration-150 hover:text-green-800"
+        disabled={loading}
+        onClick={() => {
+          if (user) router.push("/profile");
+          else window.location.href = `${API_URL}auth/login`;
+        }}
+      >
+        {user ? user.email : lang.LogIn}
+      </button>
+    </>
   );
 };
 
 export default ProfileButton;
+
+const MeValidationSchema = zod.object({
+  email: zod.string().email()
+});

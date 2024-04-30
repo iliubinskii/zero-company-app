@@ -3,6 +3,7 @@
  */
 const config = {
   env: {
+    browser: true,
     es2020: true,
     jest: true
   },
@@ -46,6 +47,7 @@ const config = {
             "filenames",
             "flowbite",
             "globals",
+            "href",
             "jpg",
             "jsdoc",
             "jsx",
@@ -72,7 +74,8 @@ const config = {
             "tsconfig",
             "tsx",
             "uri",
-            "webp"
+            "webp",
+            "zod"
           ],
         strings: true,
         templates: true
