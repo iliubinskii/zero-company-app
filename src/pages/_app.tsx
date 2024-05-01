@@ -15,7 +15,11 @@ import { lang } from "../langs";
  * @param Props.categories - Categories.
  * @returns Application component.
  */
-function CustomApp({ Component, categories, pageProps }: CustomAppProps) {
+function CustomApp({
+  Component,
+  categories,
+  pageProps
+}: CustomAppProps): React.ReactElement {
   return (
     <>
       <Head>

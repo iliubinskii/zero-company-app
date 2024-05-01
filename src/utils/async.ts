@@ -3,5 +3,6 @@
  * @param fn - The async function to call.
  */
 export function callAsync<T>(fn: () => Promise<T>): void {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises -- Postponed
   fn();
 }

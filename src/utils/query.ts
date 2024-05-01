@@ -5,10 +5,10 @@
  */
 export function buildQuery(query: Query): string {
   const queryObject = Object.fromEntries(
-    (function* yieldEntries() {
-      for (const [key, value] of Object.entries(query)) {
-        // eslint-disable-next-line no-warning-comments -- Postponed
-        // TODO: ESLint should check for exhaustive switch cases
+    (function* yieldEntries(): Generator<[string, string]> {
+      // eslint-disable-next-line no-warning-comments -- Postponed
+      // TODO: ESLint should check for exhaustive switch cases
+      for (const [key, value] of Object.entries(query))
         switch (typeof value) {
           case "number": {
             yield [key, value.toString()];
@@ -22,7 +22,6 @@ export function buildQuery(query: Query): string {
             break;
           }
         }
-      }
     })()
   );
 

@@ -20,7 +20,7 @@ const ProfileButton: React.FC = () => {
           credentials: "include"
         });
 
-        const json = await response.json();
+        const json = (await response.json()) as unknown;
 
         if (json) setUser(MeValidationSchema.parse(json));
       } finally {
@@ -35,7 +35,7 @@ const ProfileButton: React.FC = () => {
         className="px-2 py-3 transition-colors duration-150 hover:text-green-800"
         disabled={loading}
         onClick={() => {
-          if (user) router.push("/profile");
+          if (user) callAsync(() => router.push("/profile"));
           else window.location.href = `${API_URL}auth/login`;
         }}
       >

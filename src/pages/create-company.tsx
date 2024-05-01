@@ -1,11 +1,12 @@
 import { GetServerSideProps, NextPage } from "next";
+import { assertHTMLFormElement, callAsync } from "../utils";
 import { API_URL } from "../config";
 import { GetCategoriesResponse } from "../schema";
 import React, { FormEventHandler } from "react";
-import { assertHTMLFormElement } from "../utils";
 import { getCategories } from "../api";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
+import zod from "zod";
 
 const Page: NextPage<Props> = ({ categories }) => {
   const router = useRouter();
@@ -28,40 +29,48 @@ const Page: NextPage<Props> = ({ categories }) => {
   // - Move API request to api/ folder
   // - Style the form better
   // - Validate the form
-  const onSubmit: FormEventHandler = async event => {
-    event.preventDefault();
+  const onSubmit: FormEventHandler = event => {
+    callAsync(async () => {
+      event.preventDefault();
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("categories[]", category);
-    formData.append("description", description);
-    formData.append("name", name);
-    formData.append("privateCompany", privateCompany ? "true" : "false");
-    formData.append("targetValue", targetValue);
-    formData.append("website", website);
-    formData.append("founders[0].email", "sample@mail.com");
-    formData.append("founders[0].share", "100");
-    formData.append("founders[0].confirmed", "false");
+      formData.append("categories[]", category);
+      formData.append("description", description);
+      formData.append("name", name);
+      formData.append("privateCompany", privateCompany ? "true" : "false");
+      formData.append("targetValue", targetValue);
+      formData.append("website", website);
+      formData.append("founders[0].email", "sample@mail.com");
+      formData.append("founders[0].share", "100");
+      formData.append("founders[0].confirmed", "false");
 
-    const target = assertHTMLFormElement(event.target);
+      const target = assertHTMLFormElement(event.target);
 
-    for (const file of target["logo"].files) formData.append("logo", file);
-    for (const file of target["images"].files) formData.append("images", file);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
+      for (const file of FilesSchema.parse(target["logo"].files))
+        formData.append("logo", file);
 
-    try {
-      const response = await fetch(`${API_URL}companies`, {
-        body: formData,
-        method: "POST"
-      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
+      for (const file of FilesSchema.parse(target["images"].files))
+        formData.append("images", file);
 
-      const data = await response.json();
+      try {
+        const response = await fetch(`${API_URL}companies`, {
+          body: formData,
+          credentials: "include",
+          method: "POST"
+        });
 
-      // eslint-disable-next-line no-console -- Postponed
-      console.log(data);
-    } catch (err) {
-      // eslint-disable-next-line no-console -- Postponed
-      console.error("Error uploading file:", err);
-    }
+        const data = (await response.json()) as unknown;
+
+        // eslint-disable-next-line no-console -- Postponed
+        console.log(data);
+      } catch (err) {
+        // eslint-disable-next-line no-console -- Postponed
+        console.error("Error uploading file:", err);
+      }
+    });
   };
 
   // eslint-disable-next-line no-warning-comments -- Postponed
@@ -78,7 +87,9 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Category */}
       <select
         className="border border-gray-300 rounded-md p-2"
-        onChange={e => setCategory(e.target.value)}
+        onChange={e => {
+          setCategory(e.target.value);
+        }}
         value={category}
       >
         <option value="">{lang.SelectCategory}</option>
@@ -93,7 +104,9 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Name */}
       <input
         className="border border-gray-300 rounded-md p-2"
-        onChange={e => setName(e.target.value)}
+        onChange={e => {
+          setName(e.target.value);
+        }}
         placeholder={lang.Name}
         type="text"
         value={name}
@@ -103,7 +116,9 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Description */}
       <textarea
         className="border border-gray-300 rounded-md p-2"
-        onChange={e => setDescription(e.target.value)}
+        onChange={e => {
+          setDescription(e.target.value);
+        }}
         placeholder={lang.Description}
         value={description}
       />
@@ -112,7 +127,9 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Website */}
       <input
         className="border border-gray-300 rounded-md p-2"
-        onChange={e => setWebsite(e.target.value)}
+        onChange={e => {
+          setWebsite(e.target.value);
+        }}
         placeholder={lang.Website}
         type="url"
         value={website}
@@ -134,7 +151,9 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Target Value */}
       <input
         className="border border-gray-300 rounded-md p-2"
-        onChange={e => setTargetValue(e.target.value)}
+        onChange={e => {
+          setTargetValue(e.target.value);
+        }}
         placeholder={lang.TargetValue}
         type="number"
         value={targetValue}
@@ -188,3 +207,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 export interface Props {
   readonly categories: GetCategoriesResponse;
 }
+
+const FilesSchema = zod.array(zod.union([zod.string(), zod.instanceof(Blob)]));

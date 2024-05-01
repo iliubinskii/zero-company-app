@@ -5,7 +5,7 @@ const config = {
   extends: [
     "eslint:recommended",
     "strict",
-    "plugin:@typescript-eslint/strict",
+    "plugin:@typescript-eslint/strict-type-checked",
     "plugin:eslint-comments/recommended",
     "plugin:escompat/recommended",
     "plugin:etc/recommended",
@@ -48,9 +48,15 @@ const config = {
     "unused-imports"
   ],
   rules: {
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/restrict-template-expressions": [
+      "warn",
+      { allowNumber: true }
+    ],
     "callback-return": "off",
     "camelcase": "off",
     "consistent-return": "off",
+    "curly": ["warn", "multi"],
     "default-case": "off",
     "dot-notation": "off",
     "eslint-comments/no-use": [
@@ -59,6 +65,7 @@ const config = {
     ],
     "eslint-comments/require-description": "warn",
     "etc/no-deprecated": "off",
+    "etc/no-implicit-any-catch": "off",
     "filenames/match-regex": "off",
     "id-blacklist": "off",
     "id-length": "off",
@@ -89,11 +96,11 @@ const config = {
     "react/prop-types": "off",
     "sonarjs/prefer-immediate-return": "off",
     "sort/destructuring-properties": [
-      "error",
+      "warn",
       { caseSensitive: true, natural: true }
     ],
     "sort/exports": [
-      "error",
+      "warn",
       {
         caseSensitive: true,
         groups: [],
@@ -103,9 +110,9 @@ const config = {
     ],
     "sort/import-members": "off",
     "sort/imports": "off",
-    "sort/object-properties": ["error", { caseSensitive: true, natural: true }],
-    "sort-annotation/sort": "error",
-    "sort-annotation/sort-keys": "error",
+    "sort/object-properties": ["warn", { caseSensitive: true, natural: true }],
+    "sort-annotation/sort": "warn",
+    "sort-annotation/sort-keys": "warn",
     "sort-imports-requires/sort-imports": ["warn", { unsafeAutofix: true }],
     "sort-imports-requires/sort-requires": ["warn", { unsafeAutofix: true }],
     "spellcheck/spell-checker": "warn",
@@ -116,6 +123,7 @@ const config = {
     "unicorn/no-unnecessary-polyfills": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/prefer-logical-operator-over-ternary": "off",
+    "unicorn/prefer-top-level-await": "off",
     "unicorn/prevent-abbreviations": "off",
     "unused-imports/no-unused-imports": "warn"
   },

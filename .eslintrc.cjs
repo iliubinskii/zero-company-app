@@ -48,6 +48,7 @@ const config = {
             "flowbite",
             "globals",
             "href",
+            "instanceof",
             "jpg",
             "jsdoc",
             "jsx",

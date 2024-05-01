@@ -15,7 +15,7 @@ export async function get(
 
   const response = await fetch(`${API_URL}${endpoint}${queryStr}`);
 
-  const json = await response.json();
+  const json = (await response.json()) as unknown;
 
   return json;
 }
