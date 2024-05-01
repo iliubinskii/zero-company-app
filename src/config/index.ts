@@ -2,4 +2,10 @@
 
 import { assertDefined } from "../utils";
 
-export const API_URL = assertDefined(process.env["NEXT_PUBLIC_API_URL"]);
+export const CLIENT_API_URL = assertDefined(
+  process.env["NEXT_PUBLIC_CLIENT_API_URL"]
+);
+
+export const SERVER_API_URL = assertDefined(
+  process.env["NEXT_PUBLIC_SERVER_API_URL"]
+);

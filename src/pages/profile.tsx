@@ -1,4 +1,4 @@
-import { API_URL } from "../config";
+import { CLIENT_API_URL } from "../config";
 import { NextPage } from "next";
 import React from "react";
 import { lang } from "../langs";
@@ -13,7 +13,7 @@ const Page: NextPage = () => {
 
   return (
     <div className="flex flex-col gap-9">
-      <a href={`${API_URL}auth/logout`}>{lang.LogOut}</a>
+      <a href={`${CLIENT_API_URL}auth/logout`}>{lang.LogOut}</a>
     </div>
   );
 };

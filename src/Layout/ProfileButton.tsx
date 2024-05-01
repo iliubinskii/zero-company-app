@@ -1,4 +1,4 @@
-import { API_URL } from "../config";
+import { CLIENT_API_URL } from "../config";
 import React from "react";
 import { callAsync } from "../utils";
 import { lang } from "../langs";
@@ -16,7 +16,7 @@ const ProfileButton: React.FC = () => {
   React.useEffect(() => {
     callAsync(async () => {
       try {
-        const response = await fetch(`${API_URL}auth/me`, {
+        const response = await fetch(`${CLIENT_API_URL}auth/me`, {
           credentials: "include"
         });
 
@@ -36,7 +36,7 @@ const ProfileButton: React.FC = () => {
         disabled={loading}
         onClick={() => {
           if (user) callAsync(() => router.push("/profile"));
-          else window.location.href = `${API_URL}auth/login`;
+          else window.location.href = `${CLIENT_API_URL}auth/login`;
         }}
       >
         {user ? user.email : lang.LogIn}

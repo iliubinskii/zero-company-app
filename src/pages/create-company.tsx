@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
 import { assertHTMLFormElement, callAsync } from "../utils";
-import { API_URL } from "../config";
+import { CLIENT_API_URL } from "../config";
 import { GetCategoriesResponse } from "../schema";
 import React, { FormEventHandler } from "react";
 import { getCategories } from "../api";
@@ -56,7 +56,7 @@ const Page: NextPage<Props> = ({ categories }) => {
         formData.append("images", file);
 
       try {
-        const response = await fetch(`${API_URL}companies`, {
+        const response = await fetch(`${CLIENT_API_URL}companies`, {
           body: formData,
           credentials: "include",
           method: "POST"

@@ -16,7 +16,7 @@
     "build": "next build",
     "deploy-preview": "vercel",
     "deploy-prod": "vercel --prod",
-    "dev": "next dev --experimental-https -p 3001",
+    "dev": "next dev --experimental-https -p 3100",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
     "install-deps": "npm install --strict-peer-deps",
     "install-dev-deps": "npm install --save-dev --strict-peer-deps",

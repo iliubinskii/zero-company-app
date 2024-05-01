@@ -1,5 +1,5 @@
 import { Query, buildQuery } from "../../utils";
-import { API_URL } from "../../config";
+import { SERVER_API_URL } from "../../config";
 
 /**
  * Retrieves data from the API.
@@ -13,7 +13,7 @@ export async function get(
 ): Promise<unknown> {
   const queryStr = buildQuery(query);
 
-  const response = await fetch(`${API_URL}${endpoint}${queryStr}`);
+  const response = await fetch(`${SERVER_API_URL}${endpoint}${queryStr}`);
 
   const json = (await response.json()) as unknown;
 
