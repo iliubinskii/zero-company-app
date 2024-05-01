@@ -9,6 +9,7 @@ export const lang = {
   LearnMore: "Learn More",
   Loading: "Loading...",
   LogIn: "Log In",
+  LogOut: "Log Out",
   Name: "Name",
   PrivateCompany: "Private company",
   Profile: "Profile",
