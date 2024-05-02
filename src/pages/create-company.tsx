@@ -82,7 +82,7 @@ const Page: NextPage<Props> = ({ categories }) => {
       className="mx-auto max-w-screen-md flex flex-col items-stretch gap-3"
       onSubmit={onSubmit}
     >
-      <h2 className="text-xl">{lang.CreateCompany}</h2>
+      <h2 className="text-xl text-gray-500">{lang.CreateCompany}</h2>
 
       {/* Category */}
       <select

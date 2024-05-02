@@ -35,23 +35,37 @@ export async function getCompanies({ limit, offset }: Pagination = {}): Promise<
 
 /**
  * Retrieves the companies from the API.
- * @param category - The category to filter the companies by.
+ * @param id - The category id.
  * @param option - Options.
  * @param option.limit - The limit.
  * @param option.offset - The offset.
  * @returns The companies.
  */
 export async function getCompaniesByCategory(
-  category: string,
+  id: string,
   { limit, offset }: Pagination = {}
 ): Promise<Routes["/categories"]["/:id/companies"]["GET"][1]> {
-  const companies = await get(`categories/${category}/companies`, {
+  const companies = await get(`categories/${id}/companies`, {
     limit,
     offset
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
   return companies as Routes["/categories"]["/:id/companies"]["GET"][1];
+}
+
+/**
+ * Retrieves the category from the API.
+ * @param id - The category id.
+ * @returns The category.
+ */
+export async function getCategory(
+  id: string
+): Promise<Routes["/categories"]["/:id"]["GET"]["OK"][1]> {
+  const companies = await get(`categories/${id}`);
+
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+  return companies as Routes["/categories"]["/:id"]["GET"]["OK"][1];
 }
 
 export interface Pagination {
