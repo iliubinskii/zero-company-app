@@ -10,16 +10,24 @@
    - certificates/localhost.pem
    - certificates/localhost-key.pem
 
+## Development
+
+Option 1:
+
+1. Start https development server by running `npm run dev-https`
+
+Option 2:
+
+1. Start http development server by running `npm run dev-http`
+2. Start SSL proxy server by running `npm run dev-proxy`
+
 ## Contributions
 
 1. Create a new feature branch `feature/<hyphened-branch-name>`.
 2. Make your changes.
 3. Format code by running `npm run format`.
-4. Check for type errors by running `npm run type-check`.
-5. Check for linting errors by running `npm run lint`.
-6. Check for style errors by running `npm run lint-style`.
-7. Commit and push your changes.
-8. Create a PR.
+4. Commit and push your changes (commit should pass validation).
+5. Create a PR.
 
 ## TODO
 
