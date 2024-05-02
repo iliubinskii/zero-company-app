@@ -1,5 +1,5 @@
+import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
-import { GetCompaniesResponse } from "../schema";
 import React from "react";
 import { assertDefined } from "../utils";
 import { getCompanies } from "../api";
@@ -96,5 +96,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 };
 
 export interface Props {
-  readonly companies: GetCompaniesResponse;
+  readonly companies: MultipleDocsResponse<ExistingCompany>;
 }

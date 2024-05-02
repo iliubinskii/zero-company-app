@@ -1,5 +1,5 @@
 import { Bebas_Neue, Roboto } from "next/font/google";
-import { GetCategoriesResponse } from "../schema";
+import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { IoSearch } from "react-icons/io5";
 import ProfileButton from "./ProfileButton";
 import React from "react";
@@ -80,7 +80,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
 export default Layout;
 
 export interface Props {
-  readonly categories: GetCategoriesResponse;
+  readonly categories: MultipleDocsResponse<ExistingCategory>;
   readonly children: React.ReactNode;
 }
 

@@ -1,6 +1,6 @@
 import "./globals.css";
+import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import App, { AppContext, AppInitialProps, AppProps } from "next/app";
-import { GetCategoriesResponse } from "../schema";
 import Head from "next/head";
 import Layout from "../Layout";
 import React from "react";
@@ -47,9 +47,9 @@ CustomApp.getInitialProps = async (
 export default CustomApp;
 
 export interface CustomAppInitialProps extends AppInitialProps {
-  readonly categories: GetCategoriesResponse;
+  readonly categories: MultipleDocsResponse<ExistingCategory>;
 }
 
 export interface CustomAppProps extends AppProps {
-  readonly categories: GetCategoriesResponse;
+  readonly categories: MultipleDocsResponse<ExistingCategory>;
 }

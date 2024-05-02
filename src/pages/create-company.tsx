@@ -1,7 +1,7 @@
+import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { assertHTMLFormElement, callAsync } from "../utils";
 import { CLIENT_API_URL } from "../config";
-import { GetCategoriesResponse } from "../schema";
 import React, { FormEventHandler } from "react";
 import { getCategories } from "../api";
 import { lang } from "../langs";
@@ -205,7 +205,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 };
 
 export interface Props {
-  readonly categories: GetCategoriesResponse;
+  readonly categories: MultipleDocsResponse<ExistingCategory>;
 }
 
 const FilesSchema = zod.array(zod.union([zod.string(), zod.instanceof(Blob)]));
