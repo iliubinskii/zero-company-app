@@ -95,6 +95,7 @@ const config = {
     "quote-props": ["warn", "consistent-as-needed"],
     "react/jsx-sort-props": "warn",
     "react/prop-types": "off",
+    "security/detect-object-injection": "off",
     "sonarjs/prefer-immediate-return": "off",
     "sort/destructuring-properties": [
       "warn",
@@ -121,6 +122,7 @@ const config = {
     "unicorn/consistent-function-scoping": "off",
     "unicorn/filename-case": "off",
     "unicorn/no-array-callback-reference": "off",
+    "unicorn/no-array-for-each": "off",
     "unicorn/no-unnecessary-polyfills": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/prefer-logical-operator-over-ternary": "off",

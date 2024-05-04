@@ -1,19 +1,46 @@
+// eslint-disable-next-line no-warning-comments -- Postponed
+// TODO:
+// - Move API request to api/ folder
+// - Select one or two categories
+// - Style the form better
+// - Validate the form
+
+import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../consts";
+import {
+  CheckboxField,
+  CheckboxRow,
+  FormCaptionGroup,
+  Header2,
+  InputField,
+  PrimaryButton,
+  SelectField,
+  TextAreaField
+} from "../components";
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
-import { assertHTMLFormElement, callAsync } from "../utils";
+import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
+import { assertDefined, assertHTMLFormElement, callAsync } from "../utils";
 import { CLIENT_API_URL } from "../config";
 import React, { FormEventHandler } from "react";
 import { getCategories } from "../api";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
-import zod from "zod";
 
-const Page: NextPage<Props> = ({ categories }) => {
+const Page: NextPage<Props> = ({ categories: { docs } }) => {
   const router = useRouter();
 
-  const [category, setCategory] = React.useState<string>("");
+  const [categories, setCategories] = React.useState<readonly [string]>([""]);
 
   const [description, setDescription] = React.useState<string>("");
+
+  const [founders, setFounders] = React.useState<Founders>([
+    {
+      email: "",
+      firstName: "",
+      lastName: "",
+      share: ""
+    }
+  ]);
 
   const [name, setName] = React.useState<string>("");
 
@@ -23,54 +50,73 @@ const Page: NextPage<Props> = ({ categories }) => {
 
   const [website, setWebsite] = React.useState<string>("");
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO:
-  // - Get founders from the form
-  // - Move API request to api/ folder
-  // - Style the form better
-  // - Validate the form
-  const onSubmit: FormEventHandler = event => {
+  const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
-      event.preventDefault();
+      e.preventDefault();
 
-      const formData = new FormData();
+      const target = assertHTMLFormElement(e.target);
 
-      formData.append("categories[]", category);
-      formData.append("description", description);
-      formData.append("name", name);
-      formData.append("privateCompany", privateCompany ? "true" : "false");
-      formData.append("targetValue", targetValue);
-      formData.append("website", website);
-      formData.append("founders[0].email", "sample@mail.com");
-      formData.append("founders[0].share", "100");
-      formData.append("founders[0].confirmed", "false");
+      const data = new FormData(target);
 
-      const target = assertHTMLFormElement(event.target);
+      if (data.get("website") === "") data.delete("website");
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
-      for (const file of FilesSchema.parse(target["logo"].files))
-        formData.append("logo", file);
+      const response = await fetch(`${CLIENT_API_URL}companies`, {
+        body: data,
+        credentials: "include",
+        method: "POST"
+      });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
-      for (const file of FilesSchema.parse(target["images"].files))
-        formData.append("images", file);
+      const json = (await response.json()) as unknown;
 
-      try {
-        const response = await fetch(`${CLIENT_API_URL}companies`, {
-          body: formData,
-          credentials: "include",
-          method: "POST"
-        });
-
-        const data = (await response.json()) as unknown;
-
-        // eslint-disable-next-line no-console -- Postponed
-        console.log(data);
-      } catch (err) {
-        // eslint-disable-next-line no-console -- Postponed
-        console.error("Error uploading file:", err);
+      if (typeof json === "object" && json && "error" in json)
+        console.error(json);
+      else {
+        setCategories([""]);
+        setDescription("");
+        setFounders([
+          {
+            email: "",
+            firstName: "",
+            lastName: "",
+            share: ""
+          }
+        ]);
+        setName("");
+        setPrivateCompany(false);
+        setTargetValue("");
+        setWebsite("");
       }
     });
+  };
+
+  const addFounder = (): void => {
+    setFounders([
+      ...founders,
+      {
+        email: "",
+        firstName: "",
+        lastName: "",
+        share: ""
+      }
+    ]);
+  };
+
+  const removeFounder = (index: number): void => {
+    setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
+  };
+
+  const setFounderDetail = (
+    index: number,
+    field: keyof Founder,
+    email: string
+  ): void => {
+    const founder = assertDefined(founders[index]);
+
+    setFounders([
+      ...founders.slice(0, index),
+      { ...founder, [field]: email },
+      ...founders.slice(index + 1)
+    ]);
   };
 
   // eslint-disable-next-line no-warning-comments -- Postponed
@@ -79,31 +125,31 @@ const Page: NextPage<Props> = ({ categories }) => {
 
   return (
     <form
-      className="mx-auto max-w-screen-md flex flex-col items-stretch gap-3"
+      className="mx-auto max-w-screen-md flex flex-col gap-6"
       onSubmit={onSubmit}
     >
-      <h2 className="text-xl text-gray-500">{lang.CreateCompany}</h2>
+      <Header2>{lang.CreateCompany}</Header2>
 
       {/* Category */}
-      <select
-        className="border border-gray-300 rounded-md p-2"
+      <SelectField
+        name="categories[]"
         onChange={e => {
-          setCategory(e.target.value);
+          setCategories([e.target.value]);
         }}
-        value={category}
+        value={categories[0]}
       >
         <option value="">{lang.SelectCategory}</option>
-        {categories.docs.map(category => (
+        {docs.map(category => (
           <option key={category._id} value={category._id}>
             {category.name}
           </option>
         ))}
-      </select>
+      </SelectField>
       {/* Category END */}
 
       {/* Name */}
-      <input
-        className="border border-gray-300 rounded-md p-2"
+      <InputField
+        name="name"
         onChange={e => {
           setName(e.target.value);
         }}
@@ -114,8 +160,8 @@ const Page: NextPage<Props> = ({ categories }) => {
       {/* Name END */}
 
       {/* Description */}
-      <textarea
-        className="border border-gray-300 rounded-md p-2"
+      <TextAreaField
+        name="description"
         onChange={e => {
           setDescription(e.target.value);
         }}
@@ -124,9 +170,37 @@ const Page: NextPage<Props> = ({ categories }) => {
       />
       {/* Description END */}
 
+      {/* Target value */}
+      <InputField
+        min={COMPANY_TARGET_VALUE_STEP}
+        name="targetValue"
+        onChange={e => {
+          setTargetValue(e.target.value);
+        }}
+        placeholder={lang.TargetValue}
+        step={COMPANY_TARGET_VALUE_STEP}
+        type="number"
+        value={targetValue}
+      />
+      {/* Target value END */}
+
+      {/* Logo */}
+      <FormCaptionGroup>
+        {lang.CompanyLogo}
+        <InputField name="logo" type="file" />
+      </FormCaptionGroup>
+      {/* Logo END */}
+
+      {/* Images */}
+      <FormCaptionGroup>
+        {lang.CompanyImages}
+        <InputField multiple name="images" type="file" />
+      </FormCaptionGroup>
+      {/* Images END */}
+
       {/* Website */}
-      <input
-        className="border border-gray-300 rounded-md p-2"
+      <InputField
+        name="website"
         onChange={e => {
           setWebsite(e.target.value);
         }}
@@ -136,60 +210,106 @@ const Page: NextPage<Props> = ({ categories }) => {
       />
       {/* Website END */}
 
-      {/* Private Company */}
-      <input
-        checked={privateCompany}
-        name="privateCompany"
-        onChange={() => {
-          setPrivateCompany(!privateCompany);
-        }}
-        type="checkbox"
-      />
-      {lang.PrivateCompany}
-      {/* Private Company END */}
-
-      {/* Target Value */}
-      <input
-        className="border border-gray-300 rounded-md p-2"
-        onChange={e => {
-          setTargetValue(e.target.value);
-        }}
-        placeholder={lang.TargetValue}
-        type="number"
-        value={targetValue}
-      />
-      {/* Target Value END */}
-
-      {/* Logo */}
-      {lang.AddCompanyLogo}
-      <input
-        className="border border-gray-300 rounded-md p-2"
-        name="logo"
-        type="file"
-      />
-      {/* Logo END */}
-
-      {/* Images */}
-      {lang.AddCompanyImages}
-      <input
-        className="border border-gray-300 rounded-md p-2"
-        multiple
-        name="images"
-        type="file"
-      />
-      {/* Images END */}
-
       {/* Founders */}
-      <input
-        className="border border-gray-300 rounded-md p-2"
-        disabled
-        type="email"
-      />
-      <input className="border border-gray-300 rounded-md p-2" type="text" />
-      <input type="hidden" value="true" />
+      <div className="flex flex-col gap-2">
+        <h3>{lang.Founders}</h3>
+        {founders.map((founder, index) => (
+          <div className="flex gap-4 items-center" key={index}>
+            {/* Fields */}
+            <div className="grid grid-cols-4 gap-2">
+              {/* E-mail */}
+              <InputField
+                name={`founders[${index}].email`}
+                onChange={e => {
+                  setFounderDetail(index, "email", e.target.value);
+                }}
+                placeholder={lang.Email}
+                type="email"
+                value={founder.email}
+              />
+              {/* E-mail END */}
+
+              {/* First name */}
+              <InputField
+                name={`founders[${index}].firstName`}
+                onChange={e => {
+                  setFounderDetail(index, "firstName", e.target.value);
+                }}
+                placeholder={lang.FirstName}
+                type="text"
+                value={founder.firstName}
+              />
+              {/* First name END */}
+
+              {/* Last name */}
+              <InputField
+                name={`founders[${index}].lastName`}
+                onChange={e => {
+                  setFounderDetail(index, "lastName", e.target.value);
+                }}
+                placeholder={lang.LastName}
+                type="text"
+                value={founder.lastName}
+              />
+              {/* Last name END */}
+
+              {/* Share */}
+              <InputField
+                min={COMPANY_SHARE_STEP}
+                name={`founders[${index}].share`}
+                onChange={e => {
+                  setFounderDetail(index, "share", e.target.value);
+                }}
+                placeholder={lang.Share}
+                step={COMPANY_SHARE_STEP}
+                type="number"
+                value={founder.share}
+              />
+              {/* Share END */}
+            </div>
+            {/* Fields END */}
+
+            {/* Buttons */}
+            {index === founders.length - 1 ? (
+              <button onClick={addFounder} type="button">
+                <IoIosAddCircle className="h-6 w-6 text-success" />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  removeFounder(index);
+                }}
+                type="button"
+              >
+                <IoMdRemoveCircle className="h-6 w-6 text-error" />
+              </button>
+            )}
+            {/* Buttons END */}
+          </div>
+        ))}
+      </div>
       {/* Founders END */}
 
-      <button type="submit">Submit</button>
+      {/* Row */}
+      <div className="flex justify-between">
+        {/* Private company */}
+        <CheckboxRow>
+          <CheckboxField
+            checked={privateCompany}
+            name="privateCompany"
+            onChange={e => {
+              setPrivateCompany(e.target.checked);
+            }}
+          />
+          {lang.PrivateCompany}
+        </CheckboxRow>
+        {/* Private company END */}
+
+        {/* Submit button */}
+        <PrimaryButton type="submit">{lang.Submit}</PrimaryButton>
+        {/* Submit button END */}
+      </div>
+      {/* Row END */}
     </form>
   );
 };
@@ -197,7 +317,7 @@ const Page: NextPage<Props> = ({ categories }) => {
 export default Page;
 
 // eslint-disable-next-line no-warning-comments -- Ok
-// TODO: Retrieve the categories on Client side
+// TODO: Categories can be taken from layout
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const categories = await getCategories();
 
@@ -208,4 +328,11 @@ export interface Props {
   readonly categories: MultipleDocsResponse<ExistingCategory>;
 }
 
-const FilesSchema = zod.array(zod.union([zod.string(), zod.instanceof(Blob)]));
+interface Founder {
+  readonly email: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly share: string;
+}
+
+type Founders = readonly Founder[];

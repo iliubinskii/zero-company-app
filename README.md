@@ -6,7 +6,7 @@
 2. Clone your forked repository.
 3. Install dependencies by running `npm install`.
 4. Create .env file (see .env.example)
-5. Add SSL certificates
+5. Add SSL certificates or generate them by running `npm run dev`
    - certificates/localhost.pem
    - certificates/localhost-key.pem
 
@@ -14,12 +14,14 @@
 
 Option 1:
 
-1. Start https development server by running `npm run dev-https`
+1. Start https development server by running `npm run dev`
+2. Server runs on https://localhost:3100 (see .env.example)
 
 Option 2:
 
 1. Start http development server by running `npm run dev-http`
 2. Start SSL proxy server by running `npm run dev-proxy`
+3. Server runs on https://localhost:3100 (see .env.example)
 
 ## Contributions
 

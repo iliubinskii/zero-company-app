@@ -1,5 +1,6 @@
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
+import { Header2 } from "../components";
 import React from "react";
 import { assertDefined } from "../utils";
 import { getCompanies } from "../api";
@@ -35,7 +36,7 @@ const Page: NextPage<Props> = ({ companies }) => {
   return (
     <div className="flex flex-col gap-9">
       {/* Teaser */}
-      <h2 className="text-center text-xl text-gray-500">{lang.home.teaser}</h2>
+      <Header2 className="text-center">{lang.home.teaser}</Header2>
       {/* Teaser END */}
 
       {/* Cards */}

@@ -18,6 +18,7 @@ const config = {
     sourceType: "module"
   },
   rules: {
+    "no-console": ["warn", { allow: ["warn", "error"] }],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -47,6 +48,7 @@ const config = {
             "favicon",
             "filenames",
             "flowbite",
+            "foreach",
             "globals",
             "href",
             "ico",
