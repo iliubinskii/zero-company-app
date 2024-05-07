@@ -1,28 +1,24 @@
 import { CLIENT_API_URL } from "../config";
+import { JwtUser } from "../schema";
 import React from "react";
 import { callAsync } from "../utils";
+import { clientAPI } from "../api";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
-import zod from "zod";
 
 const ProfileButton: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
-  const [user, setUser] =
-    React.useState<zod.infer<typeof MeValidationSchema>>();
+  const [user, setUser] = React.useState<JwtUser>();
 
   React.useEffect(() => {
     callAsync(async () => {
       try {
-        const response = await fetch(`${CLIENT_API_URL}auth/me`, {
-          credentials: "include"
-        });
+        const jwtUser = await clientAPI.getAuthMe();
 
-        const json = (await response.json()) as unknown;
-
-        if (json) setUser(MeValidationSchema.parse(json));
+        setUser(jwtUser);
       } finally {
         setLoading(false);
       }
@@ -46,7 +42,3 @@ const ProfileButton: React.FC = () => {
 };
 
 export default ProfileButton;
-
-const MeValidationSchema = zod.object({
-  email: zod.string().email()
-});
