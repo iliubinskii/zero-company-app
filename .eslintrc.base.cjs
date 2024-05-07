@@ -55,6 +55,11 @@ const config = {
       "warn",
       { allowNumber: true }
     ],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { requireReturnForObjectLiteral: true }
+    ],
     "callback-return": "off",
     "camelcase": "off",
     "consistent-return": "off",
