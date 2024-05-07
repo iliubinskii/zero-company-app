@@ -1,5 +1,10 @@
-import { Query, buildQuery } from "../../utils";
-import { SERVER_API_URL } from "../../config";
+import {
+  ErrorCode,
+  ErrorResponse,
+  ErrorResponseWithData
+} from "../../../schema";
+import { Query, buildQuery } from "../../../utils";
+import { SERVER_API_URL } from "../../../config";
 
 /**
  * Retrieves data from the API.
@@ -7,10 +12,10 @@ import { SERVER_API_URL } from "../../config";
  * @param query - The query.
  * @returns The data.
  */
-export async function get(
+export async function get<T extends [unknown, unknown]>(
   endpoint: string,
   query: Query = {}
-): Promise<unknown> {
+): Promise<T[1] | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>> {
   const queryStr = buildQuery(query);
 
   const response = await fetch(`${SERVER_API_URL}${endpoint}${queryStr}`);

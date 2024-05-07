@@ -2,9 +2,9 @@ import { CompanyCard, Header2, InfoCard } from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
-import { getCompanies } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
+import { serverAPI } from "../api";
 import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ companies }) => {
@@ -71,7 +71,7 @@ const Page: NextPage<Props> = ({ companies }) => {
 export default Page;
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const companies = await getCompanies({ limit: 4 });
+  const companies = await serverAPI.getCompanies({ limit: 4 });
 
   return { props: { companies } };
 };

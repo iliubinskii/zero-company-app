@@ -22,8 +22,8 @@ import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../utils";
 import { CLIENT_API_URL } from "../config";
 import React, { FormEventHandler } from "react";
-import { getCategories } from "../api";
 import { lang } from "../langs";
+import { serverAPI } from "../api";
 import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ categories: { docs } }) => {
@@ -319,7 +319,7 @@ export default Page;
 // eslint-disable-next-line no-warning-comments -- Ok
 // TODO: Categories can be taken from layout
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const categories = await getCategories();
+  const categories = await serverAPI.getCategories();
 
   return { props: { categories } };
 };

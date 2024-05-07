@@ -9,10 +9,10 @@ import {
 } from "../../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { assertDefined, assertString } from "../../utils";
-import { getCategory, getCompaniesByCategory } from "../../api";
 import Head from "next/head";
 import React from "react";
 import { lang } from "../../langs";
+import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ category, companies }) => {
@@ -60,11 +60,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
   const id = assertString(params["id"]);
 
   const [category, companies] = await Promise.all([
-    getCategory(id),
-    getCompaniesByCategory(id)
+    serverAPI.getCategory(id),
+    serverAPI.getCompaniesByCategory(id)
   ]);
 
-  return { props: { category, companies } };
+  return category && companies
+    ? { props: { category, companies } }
+    : { notFound: true };
 };
 
 export interface Props {
