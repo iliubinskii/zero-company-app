@@ -1,8 +1,7 @@
+import { CompanyCard, Header2 } from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
-import { Header2 } from "../components";
 import React from "react";
-import { assertDefined } from "../utils";
 import { getCompanies } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
@@ -63,25 +62,13 @@ const Page: NextPage<Props> = ({ companies }) => {
 
       {/* Companies */}
       <div className="-mx-1 carousel">
-        {companies.docs.map(company => {
-          const { height, secureUrl, width } = assertDefined(company.images[0]);
-
-          return (
-            <div
-              className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
-              key={company._id}
-            >
-              <img
-                alt={company.name}
-                className="w-full"
-                height={height}
-                src={secureUrl}
-                width={width}
-              />
-              {company.name}
-            </div>
-          );
-        })}
+        {companies.docs.map(company => (
+          <CompanyCard
+            className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
+            company={company}
+            key={company._id}
+          />
+        ))}
       </div>
       {/* Companies END */}
     </div>

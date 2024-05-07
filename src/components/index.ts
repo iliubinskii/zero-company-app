@@ -1,5 +1,6 @@
 export { CheckboxField } from "./CheckboxField";
 export { CheckboxRow } from "./CheckboxRow";
+export { CompanyCard } from "./CompanyCard";
 export { FormCaptionGroup } from "./FormCaptionGroup";
 export { Header2 } from "./Header2";
 export { InputField } from "./InputField";
