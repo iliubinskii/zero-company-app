@@ -1,4 +1,4 @@
-import { CompanyCard, Header2 } from "../components";
+import { CompanyCard, Header2, InfoCard } from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
@@ -41,21 +41,14 @@ const Page: NextPage<Props> = ({ companies }) => {
       {/* Cards */}
       <div className="grid grid-cols-3 gap-3">
         {cards.map(({ description, image, title }, key) => (
-          <div className="rounded-xl overflow-hidden shadow-lg" key={key}>
-            <img
-              alt={title}
-              height={image.height}
-              src={image.src}
-              width={image.width}
-            />
-            <div className="px-6 py-4 flex flex-col gap-3">
-              <h3 className="text-xl font-bold">{title}</h3>
-              <p className="flex-grow text-gray-500">{description}</p>
-              <button className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
-                {lang.LearnMore}
-              </button>
-            </div>
-          </div>
+          <InfoCard
+            description={description}
+            image={image.src}
+            imageHeight={image.height}
+            imageWidth={image.width}
+            key={key}
+            title={title}
+          />
         ))}
       </div>
       {/* Cards END */}
