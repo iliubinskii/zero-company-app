@@ -53,13 +53,11 @@ const Page: NextPage<Props> = ({ companies }) => {
       </div>
       {/* Cards END */}
 
-      {/* eslint-disable-next-line no-warning-comments -- Assigned */}
-      {/* TODO: Use grid */}
       {/* Companies */}
-      <div className="-mx-1 carousel">
+      <div className="grid grid-cols-4 gap-4">
         {companies.docs.map(company => (
           <CompanyCard
-            className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
+            className="col-span-1 px-4 py-2"
             company={company}
             key={company._id}
           />
