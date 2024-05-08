@@ -18,6 +18,10 @@ const config = {
     sourceType: "module"
   },
   rules: {
+    "import/no-internal-modules": [
+      "warn",
+      { allow: ["next/*", "next/font/*", "react-icons/*"] }
+    ],
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "spellcheck/spell-checker": [
       "warn",
