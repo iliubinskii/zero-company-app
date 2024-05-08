@@ -37,13 +37,9 @@ const Page: NextPage<Props> = ({ category, companies }) => {
         {/* Category END */}
 
         {/* Companies */}
-        <div className="-mx-1 carousel">
+        <div className="grid grid-cols-4 gap-4">
           {companies.docs.map(company => (
-            <CompanyCard
-              className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
-              company={company}
-              key={company._id}
-            />
+            <CompanyCard company={company} key={company._id} />
           ))}
         </div>
         {/* Companies END */}
