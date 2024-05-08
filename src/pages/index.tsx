@@ -56,11 +56,7 @@ const Page: NextPage<Props> = ({ companies }) => {
       {/* Companies */}
       <div className="grid grid-cols-4 gap-4">
         {companies.docs.map(company => (
-          <CompanyCard
-            className="col-span-1 px-4 py-2"
-            company={company}
-            key={company._id}
-          />
+          <CompanyCard company={company} key={company._id} />
         ))}
       </div>
       {/* Companies END */}
