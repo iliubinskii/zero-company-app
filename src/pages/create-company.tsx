@@ -20,9 +20,8 @@ import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../utils";
-import { CLIENT_API_URL } from "../config";
+import { clientAPI, serverAPI } from "../api";
 import React, { FormEventHandler } from "react";
-import { getCategories } from "../api";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
 
@@ -60,16 +59,11 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
 
       if (data.get("website") === "") data.delete("website");
 
-      const response = await fetch(`${CLIENT_API_URL}companies`, {
-        body: data,
-        credentials: "include",
-        method: "POST"
-      });
+      const company = await clientAPI.postCompany(data);
 
-      const json = (await response.json()) as unknown;
-
-      if (typeof json === "object" && json && "error" in json)
-        console.error(json);
+      // eslint-disable-next-line no-warning-comments -- Postponed
+      // TODO: Show errors to the user
+      if ("error" in company) console.error(company);
       else {
         setCategories([""]);
         setDescription("");
@@ -319,7 +313,7 @@ export default Page;
 // eslint-disable-next-line no-warning-comments -- Ok
 // TODO: Categories can be taken from layout
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const categories = await getCategories();
+  const categories = await serverAPI.getCategories();
 
   return { props: { categories } };
 };

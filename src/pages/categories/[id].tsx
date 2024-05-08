@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-warning-comments -- Postponed
 // TODO: Pagination or infinite scroll for companies
 
+import { CompanyCard, Header2 } from "../../components";
 import {
   ExistingCategory,
   ExistingCompany,
@@ -8,11 +9,10 @@ import {
 } from "../../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { assertDefined, assertString } from "../../utils";
-import { getCategory, getCompaniesByCategory } from "../../api";
 import Head from "next/head";
-import { Header2 } from "../../components";
 import React from "react";
 import { lang } from "../../langs";
+import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ category, companies }) => {
@@ -38,27 +38,13 @@ const Page: NextPage<Props> = ({ category, companies }) => {
 
         {/* Companies */}
         <div className="-mx-1 carousel">
-          {companies.docs.map(company => {
-            const { height, secureUrl, width } = assertDefined(
-              company.images[0]
-            );
-
-            return (
-              <div
-                className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
-                key={company._id}
-              >
-                <img
-                  alt={company.name}
-                  className="w-full"
-                  height={height}
-                  src={secureUrl}
-                  width={width}
-                />
-                {company.name}
-              </div>
-            );
-          })}
+          {companies.docs.map(company => (
+            <CompanyCard
+              className="carousel-item w-1/4 min-w-1/4 px-1 flex-col"
+              company={company}
+              key={company._id}
+            />
+          ))}
         </div>
         {/* Companies END */}
       </div>
@@ -74,11 +60,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
   const id = assertString(params["id"]);
 
   const [category, companies] = await Promise.all([
-    getCategory(id),
-    getCompaniesByCategory(id)
+    serverAPI.getCategory(id),
+    serverAPI.getCompaniesByCategory(id)
   ]);
 
-  return { props: { category, companies } };
+  return category && companies
+    ? { props: { category, companies } }
+    : { notFound: true };
 };
 
 export interface Props {

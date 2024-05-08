@@ -4,8 +4,8 @@ import App, { AppContext, AppInitialProps, AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "../Layout";
 import React from "react";
-import { getCategories } from "../api";
 import { lang } from "../langs";
+import { serverAPI } from "../api";
 
 /**
  * Custom App component
@@ -37,7 +37,7 @@ CustomApp.getInitialProps = async (
   context: AppContext
 ): Promise<CustomAppInitialProps> => {
   const [categories, props] = await Promise.all([
-    getCategories(),
+    serverAPI.getCategories(),
     App.getInitialProps(context)
   ]);
 

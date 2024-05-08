@@ -43,6 +43,7 @@ const config = {
             "destructure",
             "discoverable",
             "ecma",
+            "enum",
             "escompat",
             "eslintrc",
             "favicon",
