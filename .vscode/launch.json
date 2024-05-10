@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Next.js server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "Debug Next.js client",
+      "type": "chrome",
+      "request": "launch",
+      "url": "https://localhost:3100"
+    }
+  ]
+}
