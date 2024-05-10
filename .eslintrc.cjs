@@ -20,7 +20,11 @@ const config = {
   rules: {
     "import/no-internal-modules": [
       "warn",
-      { allow: ["next/*", "next/font/*", "react-icons/*"] }
+      {
+        allow:
+          // @sort
+          ["flowbite/plugin", "next/*", "next/font/*", "react-icons/*"]
+      }
     ],
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "spellcheck/spell-checker": [
