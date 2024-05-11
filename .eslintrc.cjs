@@ -10,6 +10,14 @@ const config = {
   extends: ["./.eslintrc.base.cjs"],
   globals: {},
   ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
+  overrides: [
+    {
+      files: ["./src/schema/routes.ts"],
+      rules: {
+        "no-magic-numbers": "off"
+      }
+    }
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -48,6 +56,7 @@ const config = {
             "compat",
             "crowdworking",
             "daisyui",
+            "defs",
             "destructure",
             "discoverable",
             "ecma",
@@ -70,12 +79,14 @@ const config = {
             "latin",
             "mjs",
             "neue",
+            "openapi",
             "parens",
             "picsum",
             "postcss",
             "redeclare",
             "req",
             "roboto",
+            "schemas",
             "semibold",
             "smacss",
             "sonarjs",
@@ -89,6 +100,7 @@ const config = {
             "tsconfig",
             "tsx",
             "uri",
+            "webhooks",
             "webp",
             "zod"
           ],
