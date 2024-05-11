@@ -4,7 +4,7 @@ import {
   ErrorResponseWithData,
   ExistingCompany,
   JwtUser,
-  Routes
+  RoutesOld
 } from "../../schema";
 import { get, post } from "./core";
 
@@ -13,7 +13,7 @@ import { get, post } from "./core";
  * @returns The authenticated user.
  */
 export async function getAuthMe(): Promise<JwtUser | undefined> {
-  const jwtUser = await get<Routes["/auth"]["/me"]["GET"]>("auth/me");
+  const jwtUser = await get<RoutesOld["/auth"]["/me"]["GET"]>("auth/me");
 
   if (jwtUser === null) return;
 
@@ -33,7 +33,7 @@ export async function postCompany(
 ): Promise<
   ExistingCompany | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
 > {
-  const company = await post<Routes["/companies"]["/"]["POST"]>(
+  const company = await post<RoutesOld["/companies"]["/"]["POST"]>(
     "companies",
     body
   );

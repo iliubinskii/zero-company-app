@@ -3,7 +3,7 @@ import {
   ExistingCategory,
   ExistingCompany,
   MultipleDocsResponse,
-  Routes
+  RoutesOld
 } from "../../schema";
 import { get } from "./core";
 
@@ -14,7 +14,8 @@ import { get } from "./core";
 export async function getCategories(): Promise<
   MultipleDocsResponse<ExistingCategory>
 > {
-  const categories = await get<Routes["/categories"]["/"]["GET"]>("categories");
+  const categories =
+    await get<RoutesOld["/categories"]["/"]["GET"]>("categories");
 
   if ("error" in categories)
     throw new Error(`${categories.error}: ${categories.errorMessage}`);
@@ -32,10 +33,13 @@ export async function getCategories(): Promise<
 export async function getCompanies({ limit, offset }: Pagination = {}): Promise<
   MultipleDocsResponse<ExistingCompany>
 > {
-  const companies = await get<Routes["/companies"]["/"]["GET"]>("companies", {
-    limit,
-    offset
-  });
+  const companies = await get<RoutesOld["/companies"]["/"]["GET"]>(
+    "companies",
+    {
+      limit,
+      offset
+    }
+  );
 
   if ("error" in companies)
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
@@ -55,10 +59,9 @@ export async function getCompaniesByCategory(
   id: string,
   { limit, offset }: Pagination = {}
 ): Promise<MultipleDocsResponse<ExistingCompany> | undefined> {
-  const companies = await get<Routes["/categories"]["/:id/companies"]["GET"]>(
-    `categories/${id}/companies`,
-    { limit, offset }
-  );
+  const companies = await get<
+    RoutesOld["/categories"]["/:id/companies"]["GET"]
+  >(`categories/${id}/companies`, { limit, offset });
 
   if ("error" in companies)
     if (
@@ -79,7 +82,7 @@ export async function getCompaniesByCategory(
 export async function getCategory(
   id: string
 ): Promise<ExistingCategory | undefined> {
-  const category = await get<Routes["/categories"]["/:id"]["GET"]["OK"]>(
+  const category = await get<RoutesOld["/categories"]["/:id"]["GET"]["OK"]>(
     `categories/${id}`
   );
 
