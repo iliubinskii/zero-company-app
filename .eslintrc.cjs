@@ -95,6 +95,7 @@ const config = {
             "stylelintrc",
             "subsets",
             "svg",
+            "swr",
             "tagline",
             "tailwindcss",
             "tsconfig",
