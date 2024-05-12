@@ -1,11 +1,12 @@
 export interface GetCategoriesOptions {
   readonly limit?: number;
   readonly offset?: number;
+  readonly onlyPinned?: boolean;
 }
 
 export interface GetCompaniesOptions {
   readonly category?: string;
-  readonly cursor?: string;
+  readonly cursor?: readonly [string, string];
   readonly founderEmail?: string;
   readonly includePrivateCompanies?: boolean;
   readonly limit?: number;
