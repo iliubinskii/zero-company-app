@@ -9,13 +9,16 @@ import { get } from "./core";
 
 /**
  * Retrieves the categories from the API.
+ * @param onlyPinned - Whether to only get pinned categories.
  * @returns The categories.
  */
-export async function getCategories(): Promise<
-  MultipleDocsResponse<ExistingCategory>
-> {
-  const categories =
-    await get<RoutesOld["/categories"]["/"]["GET"]>("categories");
+export async function getCategories(
+  onlyPinned = false
+): Promise<MultipleDocsResponse<ExistingCategory>> {
+  const categories = await get<RoutesOld["/categories"]["/"]["GET"]>(
+    "categories",
+    { onlyPinned: onlyPinned ? "yes" : "no" }
+  );
 
   if ("error" in categories)
     throw new Error(`${categories.error}: ${categories.errorMessage}`);

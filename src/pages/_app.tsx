@@ -40,7 +40,7 @@ CustomApp.getInitialProps = async (
   context: AppContext
 ): Promise<CustomAppInitialProps> => {
   const [categories, props] = await Promise.all([
-    serverAPI.getCategories(),
+    serverAPI.getCategories(true),
     App.getInitialProps(context)
   ]);
 
