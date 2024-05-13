@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-warning-comments -- Postponed
 // TODO: Pagination or infinite scroll for companies
 
-import { CompanyCard, Header2 } from "../../components";
+import { CompanyCard, Fallback, Header2 } from "../../components";
 import {
   ExistingCategory,
   ExistingCompany,
@@ -18,9 +18,7 @@ import { useRouter } from "next/router";
 const Page: NextPage<Props> = ({ category, companies }) => {
   const router = useRouter();
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (router.isFallback) return <div>{lang.Loading}</div>;
+  if (router.isFallback) return <Fallback />;
 
   return (
     <>

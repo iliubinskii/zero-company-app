@@ -9,6 +9,7 @@ import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../consts";
 import {
   CheckboxField,
   CheckboxRow,
+  Fallback,
   FormCaptionGroup,
   Header2,
   InputField,
@@ -113,9 +114,7 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
     ]);
   };
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (router.isFallback) return <div>{lang.Loading}</div>;
+  if (router.isFallback) return <Fallback />;
 
   return (
     <form

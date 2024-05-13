@@ -1,4 +1,4 @@
-import { CompanyCard, Header2, InfoCard } from "../components";
+import { CompanyCard, Fallback, Header2, InfoCard } from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
@@ -10,9 +10,7 @@ import { useRouter } from "next/router";
 const Page: NextPage<Props> = ({ companies }) => {
   const router = useRouter();
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (router.isFallback) return <div>{lang.Loading}</div>;
+  if (router.isFallback) return <Fallback />;
 
   const cards = [
     {
