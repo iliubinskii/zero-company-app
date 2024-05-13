@@ -12,6 +12,12 @@ const config = {
   ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
   overrides: [
     {
+      files: "./src/schema/**",
+      rules: {
+        "import/no-relative-parent-imports": "warn"
+      }
+    },
+    {
       files: ["./src/schema/routes.ts"],
       rules: {
         "no-magic-numbers": "off"
@@ -54,6 +60,7 @@ const config = {
             "cjs",
             "commonjs",
             "compat",
+            "consts",
             "crowdworking",
             "daisyui",
             "defs",
@@ -79,6 +86,8 @@ const config = {
             "latin",
             "mjs",
             "neue",
+            "nonnegative",
+            "nullable",
             "openapi",
             "parens",
             "picsum",
@@ -95,6 +104,7 @@ const config = {
             "stylelintrc",
             "subsets",
             "svg",
+            "swr",
             "tagline",
             "tailwindcss",
             "tsconfig",

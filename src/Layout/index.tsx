@@ -1,6 +1,7 @@
 import { Bebas_Neue, Roboto } from "next/font/google";
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { IoSearch } from "react-icons/io5";
+import Link from "next/link";
 import ProfileButton from "./ProfileButton";
 import React from "react";
 import { images } from "../images";
@@ -14,7 +15,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => (
         {/* Main header */}
         <div className="flex items-center gap-8">
           {/* Logo */}
-          <a className="flex items-center gap-2" href="/">
+          <Link className="flex items-center gap-2" href="/">
             <img
               alt={lang.ZeroCompany}
               className="app-logo-image"
@@ -25,7 +26,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => (
             <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
               {lang.ZeroCompany}
             </h1>
-          </a>
+          </Link>
           {/* Logo END */}
 
           {/* Site search */}
@@ -40,12 +41,12 @@ const Layout: React.FC<Props> = ({ categories, children }) => (
           {/* Site search END */}
 
           {/* Create company */}
-          <a
+          <Link
             className="px-4 py-3 rounded border border-gray-400 transition duration-150 ease-in-out hover:border-black focus:border-black"
             href="/create-company"
           >
             {lang.CreateCompany}
-          </a>
+          </Link>
           {/* Create company END */}
 
           {/* Profile */}
@@ -57,9 +58,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => (
         {/* Categories */}
         <div className="flex justify-center gap-4 font-medium">
           {categories.docs.map(category => (
-            <a href={`/categories/${category._id}`} key={category._id}>
+            <Link href={`/categories/${category._id}`} key={category._id}>
               {category.name}
-            </a>
+            </Link>
           ))}
         </div>
         {/* Categories END */}

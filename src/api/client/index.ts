@@ -3,6 +3,7 @@ import {
   ErrorResponse,
   ErrorResponseWithData,
   ExistingCompany,
+  ExistingUser,
   JwtUser,
   RoutesOld
 } from "../../schema";
@@ -12,7 +13,7 @@ import { get, post } from "./core";
  * Retrieves the authenticated user from the API.
  * @returns The authenticated user.
  */
-export async function getAuthMe(): Promise<JwtUser | undefined> {
+export async function getJwtUser(): Promise<JwtUser | undefined> {
   const jwtUser = await get<RoutesOld["/auth"]["/me"]["GET"]>("auth/me");
 
   if (jwtUser === null) return;
@@ -21,6 +22,20 @@ export async function getAuthMe(): Promise<JwtUser | undefined> {
     throw new Error(`${jwtUser.error}: ${jwtUser.errorMessage}`);
 
   return jwtUser;
+}
+
+/**
+ * Retrieves the authenticated user from the API.
+ * @returns The authenticated user.
+ */
+export async function getUser(): Promise<ExistingUser | undefined> {
+  const user = await get<RoutesOld["/me"]["/"]["GET"]["OK"]>("me");
+
+  if ("error" in user)
+    if (user.error === ErrorCode.UserNotFound) return undefined;
+    else throw new Error(`${user.error}: ${user.errorMessage}`);
+
+  return user;
 }
 
 /**

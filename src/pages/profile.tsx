@@ -1,4 +1,5 @@
 import { CLIENT_API_URL } from "../config";
+import { Fallback } from "../components";
 import { NextPage } from "next";
 import React from "react";
 import { lang } from "../langs";
@@ -7,9 +8,7 @@ import { useRouter } from "next/router";
 const Page: NextPage = () => {
   const router = useRouter();
 
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Style this
-  if (router.isFallback) return <div>{lang.Loading}</div>;
+  if (router.isFallback) return <Fallback />;
 
   return (
     <div className="flex flex-col gap-9">
