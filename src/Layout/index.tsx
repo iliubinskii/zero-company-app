@@ -67,9 +67,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
       </div>
 
       {/* Contents */}
-      <div className="m-9">
-        <div className="max-w-screen-lg mx-auto">{children}</div>
-      </div>
+      {children}
       {/* Contents END */}
 
       {/* Footer categories */}

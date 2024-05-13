@@ -1,4 +1,4 @@
-import { ContentPage, Header2, Paragraphs } from "../components";
+import { ArticleLayout, Header2, Paragraphs } from "../components";
 import { Fallback } from "../components/Fallback";
 import { NextPage } from "next";
 import React from "react";
@@ -13,7 +13,7 @@ const Page: NextPage = () => {
   if (router.isFallback) return <Fallback />;
 
   return (
-    <ContentPage>
+    <ArticleLayout>
       <Header2>{lang.HelpCenter}</Header2>
       <Paragraphs>
         <p>
@@ -46,7 +46,7 @@ const Page: NextPage = () => {
           officiis alias.
         </p>
       </Paragraphs>
-    </ContentPage>
+    </ArticleLayout>
   );
 };
 

@@ -1,4 +1,12 @@
-import { CompanyCard, Fallback, Header2 } from "../../components";
+import {
+  BlocksLayout,
+  CompanyCard,
+  CompanyCards,
+  Fallback,
+  Header2,
+  Overview,
+  Paragraphs
+} from "../../components";
 import {
   ExistingCategory,
   ExistingCompany,
@@ -99,21 +107,23 @@ const Page: NextPage<Props> = ({
         <title>{`${category.name} - ${lang.app.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <div className="flex flex-col gap-9">
-        {/* Category */}
-        <div className="flex flex-col gap-4">
+      <BlocksLayout wide>
+        {/* Overview */}
+        <Overview>
           <Header2>{category.name}</Header2>
-          <p>{category.description}</p>
-        </div>
-        {/* Category END */}
+          <Paragraphs>
+            <p>{category.description}</p>
+          </Paragraphs>
+        </Overview>
+        {/* Overview END */}
 
-        {/* Companies */}
-        <div className="grid grid-cols-4 gap-4">
+        {/* Company cards */}
+        <CompanyCards>
           {companies.map(company => (
             <CompanyCard company={company} key={company._id} />
           ))}
-        </div>
-        {/* Companies END */}
+        </CompanyCards>
+        {/* Company cards END */}
 
         {/* More button or spinner */}
         {nextCursor ? (
@@ -129,7 +139,7 @@ const Page: NextPage<Props> = ({
           </div>
         ) : undefined}
         {/* More button or spinner END */}
-      </div>
+      </BlocksLayout>
     </>
   );
 };

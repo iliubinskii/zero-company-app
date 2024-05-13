@@ -2,10 +2,7 @@ import { Company } from "../schema";
 import React from "react";
 import { assertDefined } from "../utils";
 
-export const CompanyCard: React.FC<{
-  readonly className?: string | undefined;
-  readonly company: Company;
-}> = ({ className, company }) => {
+export const CompanyCard: React.FC<Props> = ({ className, company }) => {
   const { height, secureUrl, width } = assertDefined(company.images[0]);
 
   return (
@@ -21,3 +18,8 @@ export const CompanyCard: React.FC<{
     </div>
   );
 };
+
+export interface Props {
+  readonly className?: string | undefined;
+  readonly company: Company;
+}
