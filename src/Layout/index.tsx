@@ -72,6 +72,17 @@ const Layout: React.FC<Props> = ({ categories, children }) => (
         <div className="max-w-screen-lg mx-auto">{children}</div>
       </div>
       {/* Contents END */}
+
+      {/* Footer */}
+      <div className="border-t-2 p-7 flex justify-center gap-10 text-sm text-gray-700">
+        <Link href="/terms">{lang.TermsOfUse}</Link>
+        <Link href="/privacy">{lang.PrivacyPolicy}</Link>
+        <Link href="/cookie-policy">{lang.CookiePolicy}</Link>
+        <Link href="/accessibility-statement">
+          {lang.AccessibilityStatement}
+        </Link>
+      </div>
+      {/* Footer END */}
     </div>
   </div>
 );

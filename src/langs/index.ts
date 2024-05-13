@@ -2,8 +2,10 @@
  * Initializes the i18next library with the default language and resources.
  */
 export const lang = {
+  AccessibilityStatement: "Accessibility Statement",
   CompanyImages: "Add company images",
   CompanyLogo: "Add company logo",
+  CookiePolicy: "Cookie Policy",
   CreateCompany: "Create a company",
   Description: "Description",
   Email: "E-mail",
@@ -16,12 +18,14 @@ export const lang = {
   LogIn: "Log In",
   LogOut: "Log Out",
   Name: "Name",
+  PrivacyPolicy: "Privacy Policy",
   PrivateCompany: "Private company",
   Profile: "Profile",
   SelectCategory: "Select a category",
   Share: "Share",
   Submit: "Submit",
   TargetValue: "Target value",
+  TermsOfUse: "Terms of Use",
   Website: "Website",
   ZeroCompany: "Zero Company",
   app: {
