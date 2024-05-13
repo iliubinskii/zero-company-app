@@ -32,7 +32,7 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
 
   const [description, setDescription] = React.useState<string>("");
 
-  const [founders, setFounders] = React.useState<Founders>([
+  const [founders, setFounders] = React.useState<readonly Founder[]>([
     {
       email: "",
       firstName: "",
@@ -328,5 +328,3 @@ interface Founder {
   readonly lastName: string;
   readonly share: string;
 }
-
-type Founders = readonly Founder[];
