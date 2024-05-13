@@ -2,9 +2,12 @@ import {
   ErrorCode,
   ExistingCategory,
   ExistingCompany,
+  GetCompaniesOptions,
   MultipleDocsResponse,
   RoutesOld
 } from "../../schema";
+import { Query } from "../../utils";
+import { Writable } from "ts-toolbelt/out/Object/Writable";
 import { get } from "./core";
 
 /**
@@ -31,17 +34,24 @@ export async function getCategories(
  * @param options - Options.
  * @param options.offset - The offset.
  * @param options.limit - The limit.
+ * @param options.cursor - The cursor.
  * @returns The companies.
  */
-export async function getCompanies({ limit, offset }: Pagination = {}): Promise<
-  MultipleDocsResponse<ExistingCompany>
-> {
+export async function getCompanies({
+  cursor,
+  limit,
+  offset
+}: GetCompaniesOptions = {}): Promise<MultipleDocsResponse<ExistingCompany>> {
+  const query: Writable<Query> = { limit, offset };
+
+  if (cursor) {
+    query["cursor[0]"] = cursor[0];
+    query["cursor[1]"] = cursor[1];
+  }
+
   const companies = await get<RoutesOld["/companies"]["/"]["GET"]>(
     "companies",
-    {
-      limit,
-      offset
-    }
+    query
   );
 
   if ("error" in companies)
@@ -56,15 +66,23 @@ export async function getCompanies({ limit, offset }: Pagination = {}): Promise<
  * @param option - Options.
  * @param option.limit - The limit.
  * @param option.offset - The offset.
+ * @param option.cursor - The cursor.
  * @returns The companies.
  */
 export async function getCompaniesByCategory(
   id: string,
-  { limit, offset }: Pagination = {}
+  { cursor, limit, offset }: GetCompaniesOptions = {}
 ): Promise<MultipleDocsResponse<ExistingCompany> | undefined> {
+  const query: Writable<Query> = { limit, offset };
+
+  if (cursor) {
+    query["cursor[0]"] = cursor[0];
+    query["cursor[1]"] = cursor[1];
+  }
+
   const companies = await get<
     RoutesOld["/categories"]["/:id/companies"]["GET"]
-  >(`categories/${id}/companies`, { limit, offset });
+  >(`categories/${id}/companies`, query);
 
   if ("error" in companies)
     if (
@@ -98,9 +116,4 @@ export async function getCategory(
     else throw new Error(`${category.error}: ${category.errorMessage}`);
 
   return category;
-}
-
-export interface Pagination {
-  readonly limit?: number;
-  readonly offset?: number;
 }

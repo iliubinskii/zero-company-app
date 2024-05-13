@@ -15,6 +15,12 @@ import { lang } from "../../langs";
 import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Infinite scroll for companies
+// Phase 1: Load on clicking more button
+// Phase 2: Load on scrolling to the bottom
+// Add tailwind spinner
+// Remove temp footer when implemented
 const Page: NextPage<Props> = ({ category, companies }) => {
   const router = useRouter();
 
@@ -41,6 +47,10 @@ const Page: NextPage<Props> = ({ category, companies }) => {
           ))}
         </div>
         {/* Companies END */}
+
+        {/* Temp footer */}
+        <div className="bg-gray-50" style={{ height: "400px" }} />
+        {/* Temp footer END */}
       </div>
     </>
   );
@@ -55,6 +65,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
 
   const [category, companies] = await Promise.all([
     serverAPI.getCategory(id),
+    // eslint-disable-next-line no-warning-comments -- Assigned
+    // TODO: limit
     serverAPI.getCompaniesByCategory(id)
   ]);
 
