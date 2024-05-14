@@ -15,7 +15,6 @@ import {
 } from "../../utils";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../consts";
-import Footer from "../../components/Footer";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import { lang } from "../../langs";
@@ -136,10 +135,6 @@ const Page: NextPage<Props> = ({
           </button>
         ) : null}
         {/* More button or spinner END */}
-
-        {/* Temp footer */}
-        <Footer />
-        {/* Temp footer END */}
       </div>
     </>
   );
