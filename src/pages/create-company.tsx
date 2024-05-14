@@ -119,9 +119,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
 
   return (
     <BlocksLayout>
-      <form onSubmit={onSubmit}>
-        <Header2>{lang.CreateCompany}</Header2>
-
+      <Header2>{lang.CreateCompany}</Header2>
+      <form className="flex flex-col gap-9" onSubmit={onSubmit}>
         {/* Category */}
         <SelectField
           name="categories[]"
