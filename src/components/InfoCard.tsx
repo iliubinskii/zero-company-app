@@ -1,13 +1,13 @@
 import React from "react";
 import { lang } from "../langs";
 
-export const InfoCard: React.FC<{
-  readonly description: string;
-  readonly image: string;
-  readonly imageHeight: number;
-  readonly imageWidth: number;
-  readonly title: string;
-}> = ({ description, image, imageHeight, imageWidth, title }) => (
+export const InfoCard: React.FC<Props> = ({
+  description,
+  image,
+  imageHeight,
+  imageWidth,
+  title
+}) => (
   <div className="rounded-xl overflow-hidden shadow-lg">
     <img alt={title} height={imageHeight} src={image} width={imageWidth} />
     <div className="px-6 py-4 flex flex-col gap-3">
@@ -19,3 +19,11 @@ export const InfoCard: React.FC<{
     </div>
   </div>
 );
+
+export interface Props {
+  readonly description: string;
+  readonly image: string;
+  readonly imageHeight: number;
+  readonly imageWidth: number;
+  readonly title: string;
+}

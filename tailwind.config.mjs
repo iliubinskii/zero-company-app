@@ -17,6 +17,9 @@ const config = {
       borderWidth: {
         1.5: "1.5px"
       },
+      fontFamily: {
+        sans: ["Roboto", "sans-serif"]
+      },
       height: {
         "aspect-ratio-16/9": `${0.01 * 900}rem`
       },

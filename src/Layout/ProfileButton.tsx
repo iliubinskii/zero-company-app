@@ -1,26 +1,23 @@
 import { CLIENT_API_URL } from "../config";
+import Link from "next/link";
 import React from "react";
-import { callAsync } from "../utils";
 import { lang } from "../langs";
 import { useJwtUser } from "../contexts";
-import { useRouter } from "next/router";
 
-const ProfileButton: React.FC = () => {
-  const router = useRouter();
-
+const ProfileButton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  className,
+  ...props
+}) => {
   const { jwtUser } = useJwtUser();
 
   return (
-    <div className="w-30 flex justify-end">
-      <button
+    <div className={`w-30 flex justify-end ${className}`.trim()} {...props}>
+      <Link
         className="px-2 py-3 transition-colors duration-150 hover:text-green-800"
-        onClick={() => {
-          if (jwtUser) callAsync(() => router.push("/profile"));
-          else window.location.href = `${CLIENT_API_URL}auth/login`;
-        }}
+        href={jwtUser ? "/profile" : `${CLIENT_API_URL}auth/login`}
       >
         {jwtUser ? lang.Profile : lang.LogIn}
-      </button>
+      </Link>
     </div>
   );
 };

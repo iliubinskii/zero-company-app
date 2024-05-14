@@ -2,8 +2,11 @@
 
 ## Initial setup
 
-1. Fork repository.
-2. Clone your forked repository.
+1. Clone repository.
+2. Git configuration for line breaks:
+   - git config core.autocrlf true
+   - git config core.eol lf
+   - git add --renormalize .
 3. Install dependencies by running `npm install`.
 4. Create .env file (see .env.example)
 5. Add SSL certificates or generate them by running `npm run dev`

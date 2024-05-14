@@ -1,4 +1,12 @@
-import { CompanyCard, Fallback, Header2, InfoCard } from "../components";
+import {
+  BlocksLayout,
+  CompanyCard,
+  CompanyCards,
+  Fallback,
+  Header2,
+  InfoCard,
+  InfoCards
+} from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
@@ -31,13 +39,9 @@ const Page: NextPage<Props> = ({ companies }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-9">
-      {/* Teaser */}
+    <BlocksLayout wide>
       <Header2 className="text-center">{lang.home.teaser}</Header2>
-      {/* Teaser END */}
-
-      {/* Cards */}
-      <div className="grid grid-cols-3 gap-3">
+      <InfoCards>
         {cards.map(({ description, image, title }, key) => (
           <InfoCard
             description={description}
@@ -48,24 +52,20 @@ const Page: NextPage<Props> = ({ companies }) => {
             title={title}
           />
         ))}
-      </div>
-      {/* Cards END */}
-
-      {/* Companies */}
-      <div className="grid grid-cols-4 gap-4">
+      </InfoCards>
+      <CompanyCards>
         {companies.docs.map(company => (
           <CompanyCard company={company} key={company._id} />
         ))}
-      </div>
-      {/* Companies END */}
-    </div>
+      </CompanyCards>
+    </BlocksLayout>
   );
 };
 
 export default Page;
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const companies = await serverAPI.getCompanies({ limit: 4 });
+  const companies = await serverAPI.getCompanies({ limit: 3 });
 
   return { props: { companies } };
 };
