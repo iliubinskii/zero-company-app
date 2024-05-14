@@ -15,3 +15,4 @@ export { Paragraphs } from "./Paragraphs";
 export { PrimaryButton } from "./PrimaryButton";
 export { SelectField } from "./SelectField";
 export { TextAreaField } from "./TextAreaField";
+export { Unauthorized } from "./Unauthorized";
