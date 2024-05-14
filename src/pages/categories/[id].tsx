@@ -14,9 +14,10 @@ import {
   callAsync,
   filterUndefinedProperties
 } from "../../utils";
+import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../consts";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import { lang } from "../../langs";
 import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
@@ -25,30 +26,45 @@ import { useRouter } from "next/router";
 // TODO: Infinite scroll for companies
 // Phase 1: Load on clicking more button +
 // Phase 2: Load on scrolling to the bottom
-// Add tailwind spinner
+// Add tailwind spinner +
 // Remove temp footer when implemented
 const Page: NextPage<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
-  const router = useRouter();
+  const [companies, setCompanies] = React.useState(initialCompanies);
+
+  const [loading, setLoading] = useState(false);
 
   const [nextCursor, setNextCursor] = React.useState(initialNextCursor);
 
-  const [companies, setCompanies] = React.useState(initialCompanies);
+  const router = useRouter();
 
   const fetchMoreData = (): void => {
+    setLoading(true);
     callAsync(async () => {
-      const response = await serverAPI.getCompaniesByCategory(
-        category._id,
-        filterUndefinedProperties({ cursor: nextCursor, limit: COMPANY_LIMIT })
-      );
-      if (response) {
-        setCompanies([...companies, ...response.docs]);
-        setNextCursor(response.nextCursor);
+      try {
+        const response = await serverAPI.getCompaniesByCategory(
+          category._id,
+          filterUndefinedProperties({
+            cursor: nextCursor,
+            limit: COMPANY_LIMIT
+          })
+        );
+        if (response) {
+          setCompanies([...companies, ...response.docs]);
+          setNextCursor(response.nextCursor);
+        }
+      } finally {
+        setLoading(false);
       }
     });
   };
+
+  React.useEffect(() => {
+    setCompanies(initialCompanies);
+    setNextCursor(initialNextCursor);
+  }, [initialCompanies, initialNextCursor]);
 
   if (router.isFallback) return <Fallback />;
 
@@ -74,16 +90,20 @@ const Page: NextPage<Props> = ({
         </div>
         {/* Companies END */}
 
-        {/* More button */}
+        {/* More button or spinner */}
         {nextCursor ? (
-          <button
-            className="bg-blue-500 text-white p-2 rounded-md w-80 block mx-auto"
-            onClick={fetchMoreData}
-          >
-            See more
-          </button>
+          loading ? (
+            <BeatLoader className="block mx-auto" color="#000000" />
+          ) : (
+            <button
+              className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 block mx-auto"
+              onClick={fetchMoreData}
+            >
+              See more
+            </button>
+          )
         ) : undefined}
-        {/* More button END */}
+        {/* More button or spinner END */}
 
         {/* Temp footer */}
         <div className="bg-gray-50" style={{ height: "400px" }} />
