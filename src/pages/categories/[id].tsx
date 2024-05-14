@@ -11,60 +11,93 @@ import { GetServerSideProps, NextPage } from "next";
 import {
   assertDefined,
   assertString,
-  callAsync,
   filterUndefinedProperties
 } from "../../utils";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../consts";
+import Footer from "../../components/Footer";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { lang } from "../../langs";
 import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
 
 // eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Infinite scroll for companies
-// Phase 1: Load on clicking more button +
-// Phase 2: Load on scrolling to the bottom
-// Add tailwind spinner +
-// Remove temp footer when implemented
+// TODO: Infinite scroll for companies -- done
 const Page: NextPage<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
-  const [companies, setCompanies] = React.useState(initialCompanies);
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  const [companies, setCompanies] = useState(initialCompanies);
 
   const [loading, setLoading] = useState(false);
 
-  const [nextCursor, setNextCursor] = React.useState(initialNextCursor);
+  const [nextCursor, setNextCursor] = useState(initialNextCursor);
 
   const router = useRouter();
 
-  const fetchMoreData = (): void => {
-    setLoading(true);
-    callAsync(async () => {
-      try {
-        const response = await serverAPI.getCompaniesByCategory(
-          category._id,
-          filterUndefinedProperties({
-            cursor: nextCursor,
-            limit: COMPANY_LIMIT
-          })
-        );
-        if (response) {
-          setCompanies([...companies, ...response.docs]);
-          setNextCursor(response.nextCursor);
-        }
-      } finally {
-        setLoading(false);
-      }
-    });
-  };
+  const targetRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCompanies(initialCompanies);
     setNextCursor(initialNextCursor);
+    setButtonClicked(false);
   }, [initialCompanies, initialNextCursor]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries)
+          if (entry.isIntersecting && !loading && nextCursor && buttonClicked) {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises -- No need to wait
+            fetchMoreData();
+            break;
+          }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1
+      }
+    );
+
+    const target = targetRef.current;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Necessary for SSR
+    if (target) observer.observe(target);
+
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, spellcheck/spell-checker -- Necessary for SSR
+      if (target) observer.unobserve(target);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchMoreData is a constant function
+  }, [loading, nextCursor, buttonClicked, targetRef]);
+
+  const fetchMoreData = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      const response = await serverAPI.getCompaniesByCategory(
+        category._id,
+        filterUndefinedProperties({
+          cursor: nextCursor,
+          limit: COMPANY_LIMIT
+        })
+      );
+      if (response) {
+        setCompanies([...companies, ...response.docs]);
+        setNextCursor(response.nextCursor);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClick = async (): Promise<void> => {
+    setLoading(true);
+    setButtonClicked(true);
+    await fetchMoreData();
+  };
 
   if (router.isFallback) return <Fallback />;
 
@@ -92,21 +125,20 @@ const Page: NextPage<Props> = ({
 
         {/* More button or spinner */}
         {nextCursor ? (
-          loading ? (
-            <BeatLoader className="block mx-auto" color="#000000" />
-          ) : (
-            <button
-              className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 block mx-auto"
-              onClick={fetchMoreData}
-            >
-              See more
-            </button>
-          )
-        ) : undefined}
+          <button
+            className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 block mx-auto relative"
+            disabled={loading}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises -- No need to pass event
+            onClick={handleClick}
+            ref={targetRef}
+          >
+            {loading ? <BeatLoader color="#ffffff" /> : "Load more"}
+          </button>
+        ) : null}
         {/* More button or spinner END */}
 
         {/* Temp footer */}
-        <div className="bg-gray-50" style={{ height: "400px" }} />
+        <Footer />
         {/* Temp footer END */}
       </div>
     </>
