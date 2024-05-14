@@ -130,11 +130,21 @@ const Page: NextPage<Props> = ({
         {nextCursor ? (
           <div className="flex justify-center">
             <DarkButton
+              className="relative"
               disabled={loading}
               onClick={fetchMoreData}
               ref={loadMoreButtonRef}
             >
-              {loading ? <BeatLoader color="#ffffff" /> : lang.LoadMore}
+              {loading ? (
+                <>
+                  <div className="opacity-0">{lang.LoadMore}</div>
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <BeatLoader color="#ffffff" />
+                  </div>
+                </>
+              ) : (
+                <div>{lang.LoadMore}</div>
+              )}
             </DarkButton>
           </div>
         ) : undefined}
