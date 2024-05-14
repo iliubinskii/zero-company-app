@@ -13,6 +13,7 @@ export { InputWrapper } from "./InputWrapper";
 export { Overview } from "./Overview";
 export { Paragraphs } from "./Paragraphs";
 export { PrimaryButton } from "./PrimaryButton";
+export { ProfileLayout } from "./ProfileLayout";
 export { SelectField } from "./SelectField";
 export { TextAreaField } from "./TextAreaField";
 export { Unauthorized } from "./Unauthorized";
