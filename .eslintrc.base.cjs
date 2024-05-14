@@ -63,6 +63,7 @@ const config = {
         allowedNames: []
       }
     ],
+    "@typescript-eslint/no-shadow": "warn",
     "@typescript-eslint/restrict-template-expressions": [
       "warn",
       { allowNumber: true }

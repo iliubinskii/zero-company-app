@@ -2,6 +2,7 @@ import { JwtUser, JwtUserValidationSchema } from "../schema";
 import { JWT_USER_STORAGE_KEY } from "../consts";
 import React from "react";
 import { clientAPI } from "../api";
+import { filterUndefinedProperties } from "../utils";
 import useSWR from "swr";
 
 export const JwtUserProvider: React.FC<Props> = ({ children }) => {
@@ -61,7 +62,7 @@ function loadFromLocalStorage(): JwtUser | undefined {
 
     const result = JwtUserValidationSchema.safeParse(data);
 
-    if (result.success) return result.data;
+    if (result.success) return filterUndefinedProperties(result.data);
   }
 
   return undefined;
