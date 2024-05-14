@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-warning-comments -- Postponed
-// TODO: Pagination or infinite scroll for companies
-
 import { CompanyCard, Fallback, Header2 } from "../../components";
 import {
   ExistingCategory,
@@ -11,6 +8,7 @@ import { GetServerSideProps, NextPage } from "next";
 import {
   assertDefined,
   assertString,
+  callAsync,
   filterUndefinedProperties
 } from "../../utils";
 import { BeatLoader } from "react-spinners";
@@ -21,15 +19,15 @@ import { lang } from "../../langs";
 import { serverAPI } from "../../api";
 import { useRouter } from "next/router";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Infinite scroll for companies -- done
 const Page: NextPage<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [autoMode, setAutoMode] = useState(false);
 
   const [companies, setCompanies] = useState(initialCompanies);
+
+  const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -37,66 +35,61 @@ const Page: NextPage<Props> = ({
 
   const router = useRouter();
 
-  const targetRef = useRef(null);
+  const fetchMoreData = React.useCallback(() => {
+    callAsync(async () => {
+      setAutoMode(true);
+      setLoading(true);
+
+      try {
+        const response = await serverAPI.getCompaniesByCategory(
+          category._id,
+          filterUndefinedProperties({
+            cursor: nextCursor,
+            limit: COMPANY_LIMIT
+          })
+        );
+
+        if (response) {
+          setCompanies([...companies, ...response.docs]);
+          setNextCursor(response.nextCursor);
+        }
+      } finally {
+        setLoading(false);
+      }
+    });
+  }, [category, companies, nextCursor]);
 
   useEffect(() => {
+    setAutoMode(false);
     setCompanies(initialCompanies);
+    setLoading(false);
     setNextCursor(initialNextCursor);
-    setButtonClicked(false);
   }, [initialCompanies, initialNextCursor]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        for (const entry of entries)
-          if (entry.isIntersecting && !loading && nextCursor && buttonClicked) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises -- No need to wait
-            fetchMoreData();
-            break;
-          }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1
-      }
-    );
+    const target = loadMoreButtonRef.current;
 
-    const target = targetRef.current;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Necessary for SSR
-    if (target) observer.observe(target);
-
-    return () => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, spellcheck/spell-checker -- Necessary for SSR
-      if (target) observer.unobserve(target);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchMoreData is a constant function
-  }, [loading, nextCursor, buttonClicked, targetRef]);
-
-  const fetchMoreData = async (): Promise<void> => {
-    setLoading(true);
-    try {
-      const response = await serverAPI.getCompaniesByCategory(
-        category._id,
-        filterUndefinedProperties({
-          cursor: nextCursor,
-          limit: COMPANY_LIMIT
-        })
+    if (autoMode && nextCursor && target && !loading) {
+      const observer = new IntersectionObserver(
+        entries => {
+          if (entries.some(entry => entry.isIntersecting)) fetchMoreData();
+        },
+        {
+          root: null,
+          rootMargin: "0px",
+          threshold: 1
+        }
       );
-      if (response) {
-        setCompanies([...companies, ...response.docs]);
-        setNextCursor(response.nextCursor);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const handleClick = async (): Promise<void> => {
-    setLoading(true);
-    setButtonClicked(true);
-    await fetchMoreData();
-  };
+      observer.observe(target);
+
+      return () => {
+        observer.unobserve(target);
+      };
+    }
+
+    return undefined;
+  }, [autoMode, fetchMoreData, loading, nextCursor]);
 
   if (router.isFallback) return <Fallback />;
 
@@ -124,16 +117,17 @@ const Page: NextPage<Props> = ({
 
         {/* More button or spinner */}
         {nextCursor ? (
-          <button
-            className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 block mx-auto relative"
-            disabled={loading}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises -- No need to pass event
-            onClick={handleClick}
-            ref={targetRef}
-          >
-            {loading ? <BeatLoader color="#ffffff" /> : "Load more"}
-          </button>
-        ) : null}
+          <div className="flex justify-center">
+            <button
+              className="rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+              disabled={loading}
+              onClick={fetchMoreData}
+              ref={loadMoreButtonRef}
+            >
+              {loading ? <BeatLoader color="#ffffff" /> : lang.LoadMore}
+            </button>
+          </div>
+        ) : undefined}
         {/* More button or spinner END */}
       </div>
     </>

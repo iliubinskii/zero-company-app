@@ -109,6 +109,7 @@ const config = {
             "tailwindcss",
             "tsconfig",
             "tsx",
+            "unobserve",
             "uri",
             "webhooks",
             "webp",
