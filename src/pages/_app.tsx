@@ -1,8 +1,8 @@
 import "./globals.css";
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
-import { JwtUserProvider, UserProvider } from "../contexts";
 import App, { AppContext, AppInitialProps, AppProps } from "next/app";
 import Head from "next/head";
+import { JwtUserProvider } from "../contexts";
 import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
@@ -28,11 +28,9 @@ function CustomApp({
         <meta content={lang.app.description} name="description" />
       </Head>
       <JwtUserProvider>
-        <UserProvider>
-          <Layout categories={categories}>
-            <Component {...pageProps} />
-          </Layout>
-        </UserProvider>
+        <Layout categories={categories}>
+          <Component {...pageProps} />
+        </Layout>
       </JwtUserProvider>
     </>
   );
