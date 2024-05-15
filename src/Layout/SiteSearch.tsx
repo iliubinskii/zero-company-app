@@ -3,7 +3,7 @@ import React from "react";
 import { lang } from "../langs";
 
 const SiteSearch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
+  className = "",
   ...props
 }) => (
   <div className={`relative ${className}`.trim()} {...props}>

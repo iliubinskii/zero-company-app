@@ -1,7 +1,7 @@
 import React from "react";
 
 export const BlocksLayout: React.FC<Props> = ({
-  className,
+  className = "",
   wide = false,
   ...props
 }) => {

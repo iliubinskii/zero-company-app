@@ -5,7 +5,7 @@ import { lang } from "../langs";
 import { useJwtUser } from "../contexts";
 
 const ProfileButton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
+  className = "",
   ...props
 }) => {
   const { jwtUser } = useJwtUser();

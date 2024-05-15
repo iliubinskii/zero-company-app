@@ -1,7 +1,7 @@
 import React from "react";
 
 export const ArticleLayout: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
+  className = "",
   ...props
 }) => (
   <div

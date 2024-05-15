@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 export const ProfileLayout: React.FC<Props> = ({
   children,
-  className,
+  className = "",
   jwtUser,
   ...props
 }) => {
