@@ -2,7 +2,6 @@ import {
   BlocksLayout,
   CompanyCard,
   CompanyCards,
-  DarkButton,
   Fallback,
   Header2,
   Overview,
@@ -129,8 +128,8 @@ const Page: NextPage<Props> = ({
         {/* More button or spinner */}
         {nextCursor ? (
           <div className="flex justify-center">
-            <DarkButton
-              className="relative"
+            <button
+              className="button-dark relative"
               disabled={loading}
               onClick={fetchMoreData}
               ref={loadMoreButtonRef}
@@ -145,7 +144,7 @@ const Page: NextPage<Props> = ({
               ) : (
                 <div>{lang.LoadMore}</div>
               )}
-            </DarkButton>
+            </button>
           </div>
         ) : undefined}
         {/* More button or spinner END */}

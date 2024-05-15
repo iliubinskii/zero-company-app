@@ -7,6 +7,5 @@ export { InfoCards } from "./InfoCards";
 export { Overview } from "./Overview";
 export { Paragraphs } from "./Paragraphs";
 export { Unauthorized } from "./Unauthorized";
-export * from "./buttons";
 export * from "./forms";
 export * from "./layouts";

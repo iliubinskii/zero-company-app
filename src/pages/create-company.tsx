@@ -13,7 +13,6 @@ import {
   Header2,
   InputField,
   InputWrapper,
-  PrimaryButton,
   SelectField,
   TextAreaField
 } from "../components";
@@ -297,7 +296,9 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
           {/* Private company END */}
 
           {/* Submit button */}
-          <PrimaryButton type="submit">{lang.Submit}</PrimaryButton>
+          <button className="button-primary" type="submit">
+            {lang.Submit}
+          </button>
           {/* Submit button END */}
         </div>
         {/* Buttons END */}
