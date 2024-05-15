@@ -1,12 +1,4 @@
-import {
-  BlocksLayout,
-  CompanyCard,
-  CompanyCards,
-  Fallback,
-  Header2,
-  Overview,
-  Paragraphs
-} from "../../components";
+import { CompanyCard, CompanyCards, Fallback } from "../../components";
 import {
   ExistingCategory,
   ExistingCompany,
@@ -107,14 +99,14 @@ const Page: NextPage<Props> = ({
         <title>{`${category.name} - ${lang.app.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <BlocksLayout wide>
+      <div className="blocks-layout-lg">
         {/* Overview */}
-        <Overview>
-          <Header2>{category.name}</Header2>
-          <Paragraphs>
+        <div className="overview">
+          <div className="header2">{category.name}</div>
+          <div className="paragraphs">
             <p>{category.description}</p>
-          </Paragraphs>
-        </Overview>
+          </div>
+        </div>
         {/* Overview END */}
 
         {/* Company cards */}
@@ -129,7 +121,7 @@ const Page: NextPage<Props> = ({
         {nextCursor ? (
           <div className="flex justify-center">
             <button
-              className="button-dark relative"
+              className="dark-button relative"
               disabled={loading}
               onClick={fetchMoreData}
               ref={loadMoreButtonRef}
@@ -148,7 +140,7 @@ const Page: NextPage<Props> = ({
           </div>
         ) : undefined}
         {/* More button or spinner END */}
-      </BlocksLayout>
+      </div>
     </>
   );
 };

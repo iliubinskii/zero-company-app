@@ -13,9 +13,7 @@ export const InfoCard: React.FC<Props> = ({
     <div className="px-6 py-4 flex flex-col gap-3">
       <h3 className="text-xl font-bold">{title}</h3>
       <p className="flex-grow text-gray-500">{description}</p>
-      <button className="self-start rounded px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
-        {lang.LearnMore}
-      </button>
+      <button className="dark-button self-start">{lang.LearnMore}</button>
     </div>
   </div>
 );

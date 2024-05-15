@@ -1,0 +1,23 @@
+.container {
+  @apply flex;
+}
+
+.menu {
+  @apply w-64 p-3 flex flex-col gap-1;
+}
+
+.item {
+  @apply px-5 py-3 rounded flex items-center gap-4 text-slate-700;
+}
+
+.item-active {
+  @apply item bg-slate-100;
+}
+
+.icon {
+  @apply text-2xl;
+}
+
+.contents {
+  @apply p-9;
+}

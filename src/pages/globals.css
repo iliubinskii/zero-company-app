@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
-  padding: 0;
+  @apply m-0 p-0 font-sans;
 }
+
+/* App logo styles */
 
 .app-logo-image {
   width: 4rem;
@@ -16,7 +17,9 @@ body {
   font-size: 2rem;
 }
 
-.button-dark {
+/* Button styles */
+
+.dark-button {
   @apply rounded
     px-4 py-2
     bg-gray-800 hover:bg-gray-700
@@ -24,13 +27,15 @@ body {
     focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50;
 }
 
-.button-primary {
+.primary-button {
   @apply rounded
     px-4 py-2
     bg-blue-800 hover:bg-blue-700
     text-white
     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
 }
+
+/* Form field styles */
 
 .checkbox-field {
   @apply h-5 w-5
@@ -39,7 +44,7 @@ body {
     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
 }
 
-.checkbox-field-wrapper {
+.checkbox-field-container {
   @apply flex items-center gap-3;
 }
 
@@ -49,6 +54,38 @@ body {
     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
 }
 
-.form-field-wrapper {
+.form-field-container {
   @apply flex flex-col gap-1;
+}
+
+/* Layout styles */
+
+.article-layout-md {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
+}
+
+.article-layout-lg {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
+}
+
+.blocks-layout-md {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-9;
+}
+
+.blocks-layout-lg {
+  @apply mx-auto max-w-screen-lg p-9 flex flex-col gap-9;
+}
+
+/* Miscellaneous styles */
+
+.header2 {
+  @apply text-xl text-gray-500;
+}
+
+.overview {
+  @apply flex flex-col gap-4;
+}
+
+.paragraphs {
+  @apply flex flex-col gap-3 text-justify;
 }

@@ -5,13 +5,13 @@
 // - Style the form better
 // - Validate the form
 
-import { BlocksLayout, Fallback, Header2 } from "../components";
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../consts";
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../utils";
 import { clientAPI, serverAPI } from "../api";
+import { Fallback } from "../components";
 import React, { FormEventHandler } from "react";
 import { lang } from "../langs";
 import { useRouter } from "next/router";
@@ -107,8 +107,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
   if (router.isFallback) return <Fallback />;
 
   return (
-    <BlocksLayout>
-      <Header2>{lang.CreateCompany}</Header2>
+    <div className="blocks-layout-md">
+      <div className="header2">{lang.CreateCompany}</div>
       <form className="flex flex-col gap-9" onSubmit={onSubmit}>
         {/* Category */}
         <select
@@ -169,14 +169,14 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Target value END */}
 
         {/* Logo */}
-        <div className="form-field-wrapper">
+        <div className="form-field-container">
           {lang.CompanyLogo}
           <input className="form-field" name="logo" type="file" />
         </div>
         {/* Logo END */}
 
         {/* Images */}
-        <div className="form-field-wrapper">
+        <div className="form-field-container">
           {lang.CompanyImages}
           <input className="form-field" multiple name="images" type="file" />
         </div>
@@ -282,7 +282,7 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Buttons */}
         <div className="flex justify-between">
           {/* Private company */}
-          <div className="checkbox-field-wrapper">
+          <div className="checkbox-field-container">
             <input
               checked={privateCompany}
               className="checkbox-field"
@@ -297,14 +297,14 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
           {/* Private company END */}
 
           {/* Submit button */}
-          <button className="button-primary" type="submit">
+          <button className="primary-button" type="submit">
             {lang.Submit}
           </button>
           {/* Submit button END */}
         </div>
         {/* Buttons END */}
       </form>
-    </BlocksLayout>
+    </div>
   );
 };
 
