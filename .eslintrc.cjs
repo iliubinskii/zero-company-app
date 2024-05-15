@@ -111,6 +111,7 @@ const config = {
             "swr",
             "tagline",
             "tailwindcss",
+            "textarea",
             "tsconfig",
             "tsx",
             "unobserve",

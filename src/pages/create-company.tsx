@@ -5,17 +5,7 @@
 // - Style the form better
 // - Validate the form
 
-import {
-  BlocksLayout,
-  CheckboxField,
-  CheckboxWrapper,
-  Fallback,
-  Header2,
-  InputField,
-  InputWrapper,
-  SelectField,
-  TextAreaField
-} from "../components";
+import { BlocksLayout, Fallback, Header2 } from "../components";
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../consts";
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
@@ -121,7 +111,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
       <Header2>{lang.CreateCompany}</Header2>
       <form className="flex flex-col gap-9" onSubmit={onSubmit}>
         {/* Category */}
-        <SelectField
+        <select
+          className="form-field"
           name="categories[]"
           onChange={e => {
             setCategories([e.target.value]);
@@ -134,11 +125,12 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
               {category.name}
             </option>
           ))}
-        </SelectField>
+        </select>
         {/* Category END */}
 
         {/* Name */}
-        <InputField
+        <input
+          className="form-field"
           name="name"
           onChange={e => {
             setName(e.target.value);
@@ -150,7 +142,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Name END */}
 
         {/* Description */}
-        <TextAreaField
+        <textarea
+          className="form-field"
           name="description"
           onChange={e => {
             setDescription(e.target.value);
@@ -161,7 +154,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Description END */}
 
         {/* Target value */}
-        <InputField
+        <input
+          className="form-field"
           min={COMPANY_TARGET_VALUE_STEP}
           name="targetValue"
           onChange={e => {
@@ -175,21 +169,22 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Target value END */}
 
         {/* Logo */}
-        <InputWrapper>
+        <div className="form-field-wrapper">
           {lang.CompanyLogo}
-          <InputField name="logo" type="file" />
-        </InputWrapper>
+          <input className="form-field" name="logo" type="file" />
+        </div>
         {/* Logo END */}
 
         {/* Images */}
-        <InputWrapper>
+        <div className="form-field-wrapper">
           {lang.CompanyImages}
-          <InputField multiple name="images" type="file" />
-        </InputWrapper>
+          <input className="form-field" multiple name="images" type="file" />
+        </div>
         {/* Images END */}
 
         {/* Website */}
-        <InputField
+        <input
+          className="form-field"
           name="website"
           onChange={e => {
             setWebsite(e.target.value);
@@ -208,7 +203,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
               {/* Fields */}
               <div className="grid grid-cols-4 gap-2">
                 {/* E-mail */}
-                <InputField
+                <input
+                  className="form-field"
                   name={`founders[${index}].email`}
                   onChange={e => {
                     editFounder(index, "email", e.target.value);
@@ -220,7 +216,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
                 {/* E-mail END */}
 
                 {/* First name */}
-                <InputField
+                <input
+                  className="form-field"
                   name={`founders[${index}].firstName`}
                   onChange={e => {
                     editFounder(index, "firstName", e.target.value);
@@ -232,7 +229,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
                 {/* First name END */}
 
                 {/* Last name */}
-                <InputField
+                <input
+                  className="form-field"
                   name={`founders[${index}].lastName`}
                   onChange={e => {
                     editFounder(index, "lastName", e.target.value);
@@ -244,7 +242,8 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
                 {/* Last name END */}
 
                 {/* Share */}
-                <InputField
+                <input
+                  className="form-field"
                   min={COMPANY_SHARE_STEP}
                   name={`founders[${index}].share`}
                   onChange={e => {
@@ -283,16 +282,18 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
         {/* Buttons */}
         <div className="flex justify-between">
           {/* Private company */}
-          <CheckboxWrapper>
-            <CheckboxField
+          <div className="checkbox-field-wrapper">
+            <input
               checked={privateCompany}
+              className="checkbox-field"
               name="privateCompany"
               onChange={e => {
                 setPrivateCompany(e.target.checked);
               }}
+              type="checkbox"
             />
             {lang.PrivateCompany}
-          </CheckboxWrapper>
+          </div>
           {/* Private company END */}
 
           {/* Submit button */}
