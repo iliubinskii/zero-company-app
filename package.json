@@ -10,12 +10,23 @@
     "type": "git",
     "url": "https://github.com/iliubinskii/zero-company-app"
   },
-  "author": "Ilia Liubinskii",
+  "license": "Proprietary",
+  "author": "Ilia Liubinskii <ilia.liubinskii@gmail.com>",
+  "contributors": [
+    {
+      "name": "David Liubinskii",
+      "email": "workdltest@gmail.com"
+    },
+    {
+      "name": "Ilia Liubinskii",
+      "email": "ilia.liubinskii@gmail.com"
+    }
+  ],
   "type": "module",
   "scripts": {
     "build": "next build",
-    "contributors-json": "python -m gitfame --bytype --excl \"\\.(ico|json)$\" --format json ./src >./src/contributors/app.json",
-    "contributors-md": "python -m gitfame --bytype --excl \"\\.(ico|json)$\" ./src >./CONTRIBUTORS.md",
+    "contributors-json": "python -m gitfame --bytype --excl \"\\.(ico|json|svg)$\" --format json ./src >./src/contributors/app.json",
+    "contributors-md": "python -m gitfame --bytype --excl \"\\.(ico|json|svg)$\" ./src >./CONTRIBUTORS.md",
     "deploy-preview": "vercel",
     "deploy-prod": "vercel --prod",
     "dev": "next dev --experimental-https -p 3100",
