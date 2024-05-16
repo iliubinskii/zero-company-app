@@ -1,0 +1,16 @@
+{
+  "columns": ["Author", "loc", "coms", "fils", "%loc", "%coms", "%fils"],
+  "data": [
+    ["Ilia Liubinskii", 3703, 110, 72, 99.0, 95.7, 97.3],
+    ["DavLiub", 38, 5, 2, 1.0, 4.3, 2.7]
+  ],
+  "total": {
+    ".css": 114,
+    ".ts": 1621,
+    ".tsx": 2006,
+    "commits": 115,
+    "ctimes": 808,
+    "files": 74,
+    "loc": 3741
+  }
+}

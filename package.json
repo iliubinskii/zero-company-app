@@ -14,6 +14,8 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "contributors-json": "python -m gitfame --bytype --excl \"\\.(ico|json)$\" --format json ./src >./src/contributors/app.json",
+    "contributors-md": "python -m gitfame --bytype --excl \"\\.(ico|json)$\" ./src >./CONTRIBUTORS.md",
     "deploy-preview": "vercel",
     "deploy-prod": "vercel --prod",
     "dev": "next dev --experimental-https -p 3100",
