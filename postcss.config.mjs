@@ -3,7 +3,10 @@
  */
 const config = {
   plugins: {
-    tailwindcss: {}
+    "autoprefixer": {},
+    "postcss-import": {},
+    "tailwindcss": {},
+    "tailwindcss/nesting": {}
   }
 };
 

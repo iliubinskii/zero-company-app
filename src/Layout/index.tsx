@@ -44,7 +44,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
   ] as const;
 
   return (
-    <div className="flex flex-col font-sans">
+    <div className="flex flex-col">
       <div className="border-b-1.5 p-5 flex flex-col gap-5">
         {/* Search bar */}
         <div className="flex items-center gap-8">

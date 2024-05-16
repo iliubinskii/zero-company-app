@@ -5,7 +5,7 @@ import { images } from "../images";
 import { lang } from "../langs";
 
 const Logo: React.FC<Omit<React.ComponentProps<typeof Link>, "href">> = ({
-  className,
+  className = "",
   ...props
 }) => (
   <Link

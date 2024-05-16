@@ -1,9 +1,7 @@
 import {
-  BlocksLayout,
   CompanyCard,
   CompanyCards,
   Fallback,
-  Header2,
   InfoCard,
   InfoCards
 } from "../components";
@@ -39,8 +37,8 @@ const Page: NextPage<Props> = ({ companies }) => {
   ];
 
   return (
-    <BlocksLayout wide>
-      <Header2 className="text-center">{lang.home.teaser}</Header2>
+    <div className="blocks-layout-lg">
+      <div className="header2 text-center">{lang.home.teaser}</div>
       <InfoCards>
         {cards.map(({ description, image, title }, key) => (
           <InfoCard
@@ -58,7 +56,7 @@ const Page: NextPage<Props> = ({ companies }) => {
           <CompanyCard company={company} key={company._id} />
         ))}
       </CompanyCards>
-    </BlocksLayout>
+    </div>
   );
 };
 

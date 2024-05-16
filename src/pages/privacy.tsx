@@ -1,4 +1,3 @@
-import { ArticleLayout, Header2, Paragraphs } from "../components";
 import { Fallback } from "../components/Fallback";
 import { NextPage } from "next";
 import React from "react";
@@ -13,9 +12,9 @@ const Page: NextPage = () => {
   if (router.isFallback) return <Fallback />;
 
   return (
-    <ArticleLayout>
-      <Header2>{lang.PrivacyPolicy}</Header2>
-      <Paragraphs>
+    <div className="article-layout-md">
+      <div className="header2">{lang.PrivacyPolicy}</div>
+      <div className="paragraphs">
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil eius
           animi nemo eligendi fugit iure tempora dolorem cumque sint autem,
@@ -45,8 +44,8 @@ const Page: NextPage = () => {
           pariatur itaque ut id consequuntur nesciunt aliquam tenetur ducimus,
           officiis alias.
         </p>
-      </Paragraphs>
-    </ArticleLayout>
+      </div>
+    </div>
   );
 };
 

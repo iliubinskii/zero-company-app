@@ -1,21 +1,17 @@
 import { LuLayoutDashboard, LuUser2 } from "react-icons/lu";
 import { BsBookmarks } from "react-icons/bs";
-import { CLIENT_API_URL } from "../../config";
+import { CLIENT_API_URL } from "../config";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
-import { JwtUser } from "../../schema";
+import { JwtUser } from "../schema";
 import Link from "next/link";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
-import { lang } from "../../langs";
+import { lang } from "../langs";
+import styles from "./ProfileLayout.module.css";
 import { useRouter } from "next/router";
 
-export const ProfileLayout: React.FC<Props> = ({
-  children,
-  className,
-  jwtUser,
-  ...props
-}) => {
+export const ProfileLayout: React.FC<Props> = ({ children, jwtUser }) => {
   const router = useRouter();
 
   // eslint-disable-next-line no-warning-comments -- Postponed
@@ -23,29 +19,28 @@ export const ProfileLayout: React.FC<Props> = ({
   (() => jwtUser.email)();
 
   return (
-    <div className={`flex ${className}`.trim()} {...props}>
-      <div className="w-64 p-3 flex flex-col gap-1">
-        {links.map(({ Icon, href, text }) => {
-          const classNameBg = href === router.pathname ? "bg-slate-300" : "";
-
-          return (
-            <Link
-              className={`px-5 py-3 rounded flex items-center gap-4 text-slate-700 ${classNameBg}`.trim()}
-              href={href}
-              key={href}
-            >
-              <Icon className="text-2xl" />
-              {text}
-            </Link>
-          );
-        })}
+    <div className={styles["container"]}>
+      <div className={styles["menu"]}>
+        {links.map(({ Icon, href, text }) => (
+          <Link
+            className={
+              href === router.pathname ? styles["item-active"] : styles["item"]
+            }
+            href={href}
+            key={href}
+          >
+            <Icon className={styles["icon"]} />
+            {text}
+          </Link>
+        ))}
       </div>
-      <div className="p-9">{children}</div>
+      <div className={styles["contents"]}>{children}</div>
     </div>
   );
 };
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props {
+  readonly children: React.ReactNode;
   readonly jwtUser: JwtUser;
 }
 
