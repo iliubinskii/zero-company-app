@@ -11,14 +11,10 @@ import { GetServerSideProps, NextPage } from "next";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../utils";
 import { clientAPI, serverAPI } from "../api";
-import { Fallback } from "../components";
 import React, { FormEventHandler } from "react";
 import { lang } from "../langs";
-import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ categories: { docs } }) => {
-  const router = useRouter();
-
   const [categories, setCategories] = React.useState<readonly [string]>([""]);
 
   const [description, setDescription] = React.useState<string>("");
@@ -103,8 +99,6 @@ const Page: NextPage<Props> = ({ categories: { docs } }) => {
   const removeFounder = (index: number): void => {
     setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
   };
-
-  if (router.isFallback) return <Fallback />;
 
   return (
     <div className="blocks-layout-md">

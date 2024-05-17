@@ -1,4 +1,4 @@
-import { CompanyCard, CompanyCards, Fallback } from "../../components";
+import { CompanyCard, CompanyCards } from "../../components";
 import {
   ExistingCategory,
   ExistingCompany,
@@ -17,7 +17,6 @@ import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import { lang } from "../../langs";
 import { serverAPI } from "../../api";
-import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({
   category,
@@ -32,8 +31,6 @@ const Page: NextPage<Props> = ({
   const [loading, setLoading] = useState(false);
 
   const [nextCursor, setNextCursor] = useState(initialNextCursor);
-
-  const router = useRouter();
 
   const fetchMoreData = React.useCallback(() => {
     callAsync(async () => {
@@ -90,8 +87,6 @@ const Page: NextPage<Props> = ({
 
     return undefined;
   }, [autoMode, fetchMoreData, loading, nextCursor]);
-
-  if (router.isFallback) return <Fallback />;
 
   return (
     <>

@@ -1,23 +1,12 @@
-import {
-  CompanyCard,
-  CompanyCards,
-  Fallback,
-  InfoCard,
-  InfoCards
-} from "../components";
+import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
 import { ExistingCompany, MultipleDocsResponse } from "../schema";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
 import { serverAPI } from "../api";
-import { useRouter } from "next/router";
 
 const Page: NextPage<Props> = ({ companies }) => {
-  const router = useRouter();
-
-  if (router.isFallback) return <Fallback />;
-
   const cards = [
     {
       description: lang.home.card1.description,
