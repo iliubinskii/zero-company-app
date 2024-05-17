@@ -42,7 +42,9 @@ const Page: NextPage<Props> = ({
           category._id,
           filterUndefinedProperties({
             cursor: nextCursor,
-            limit: COMPANY_LIMIT
+            limit: COMPANY_LIMIT,
+            sortBy: "foundedAt",
+            sortOrder: "desc"
           })
         );
 
@@ -149,7 +151,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
 
   const [category, companies] = await Promise.all([
     serverAPI.getCategory(id),
-    serverAPI.getCompaniesByCategory(id, { limit: COMPANY_LIMIT })
+    serverAPI.getCompaniesByCategory(id, {
+      limit: COMPANY_LIMIT,
+      sortBy: "foundedAt",
+      sortOrder: "desc"
+    })
   ]);
 
   return category && companies

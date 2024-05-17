@@ -52,7 +52,11 @@ const Page: NextPage<Props> = ({ companies }) => {
 export default Page;
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const companies = await serverAPI.getCompanies({ limit: 3 });
+  const companies = await serverAPI.getCompanies({
+    limit: 3,
+    sortBy: "foundedAt",
+    sortOrder: "desc"
+  });
 
   return { props: { companies } };
 };
