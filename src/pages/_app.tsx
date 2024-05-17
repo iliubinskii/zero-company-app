@@ -7,6 +7,7 @@ import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
 import { serverAPI } from "../api";
+import { useLoadingCursor } from "../effects";
 
 /**
  * Custom App component
@@ -21,6 +22,8 @@ function CustomApp({
   categories,
   pageProps
 }: CustomAppProps): React.ReactElement {
+  useLoadingCursor();
+
   return (
     <>
       <Head>

@@ -1,0 +1,29 @@
+import React from "react";
+import { useRouter } from "next/router";
+
+/**
+ * Use loading cursor effect on route change.
+ */
+export function useLoadingCursor(): void {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const handleStart = (): void => {
+      document.body.classList.add("app-loading");
+    };
+
+    const handleComplete = (): void => {
+      document.body.classList.remove("app-loading");
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+}
