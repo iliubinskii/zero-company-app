@@ -21,16 +21,23 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
     {
       links: [
         { href: "/how-it-works", text: lang.HowZeroCompanyWorks },
-        { href: "/legal", text: lang.LegalFoundation },
-        { href: "/questions", text: lang.CommonQuestions },
-        { href: "/success", text: lang.SuccessStories }
+        { href: "/nda", text: lang.NDA },
+        { href: "/ip", text: lang.IpAgreement },
+        { href: "/shareholders", text: lang.ShareholdersAgreement },
+        { href: "/buy-sell", text: lang.BuySellAgreement },
+        { href: "/drag-along", text: lang.DragAlongRights },
+        { href: "/tag-along", text: lang.TagAlongRights },
+        { href: "/preemptive", text: lang.PreemptiveRights },
+        { href: "/rofr", text: lang.ROFR }
       ],
-      title: lang.LearnMore
+      title: lang.Legal
     },
     {
       links: [
+        { href: "/questions", text: lang.CommonQuestions },
         { href: "/help", text: lang.HelpCenter },
-        { href: "/blog", text: lang.Blog }
+        { href: "/blog", text: lang.Blog },
+        { href: "/success", text: lang.SuccessStories }
       ],
       title: lang.Resources
     }

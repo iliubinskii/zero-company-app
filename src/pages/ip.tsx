@@ -6,7 +6,7 @@ import { lang } from "../langs";
 // TODO: Add real content
 const Page: NextPage = () => (
   <div className="article-layout-md">
-    <div className="header2">{lang.LegalFoundation}</div>
+    <div className="header2">{lang.IpAgreement}</div>
     <div className="paragraphs">
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil eius
