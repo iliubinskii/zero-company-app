@@ -3,7 +3,6 @@ import { BsBookmarks } from "react-icons/bs";
 import { CLIENT_API_URL } from "../config";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
-import { JwtUser } from "../schema";
 import Link from "next/link";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
@@ -11,12 +10,8 @@ import { lang } from "../langs";
 import styles from "./ProfileLayout.module.css";
 import { useRouter } from "next/router";
 
-export const ProfileLayout: React.FC<Props> = ({ children, jwtUser }) => {
+export const ProfileLayout: React.FC<Props> = ({ children }) => {
   const router = useRouter();
-
-  // eslint-disable-next-line no-warning-comments -- Postponed
-  // TODO: Use JwtUser to show gravatar
-  (() => jwtUser.email)();
 
   return (
     <div className={styles["container"]}>
@@ -41,7 +36,6 @@ export const ProfileLayout: React.FC<Props> = ({ children, jwtUser }) => {
 
 export interface Props {
   readonly children: React.ReactNode;
-  readonly jwtUser: JwtUser;
 }
 
 const links = [

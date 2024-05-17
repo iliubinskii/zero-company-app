@@ -1,4 +1,4 @@
-import { Fallback, ProfileLayout, Unauthorized } from "../../components";
+import { Loading, ProfileLayout } from "../../components";
 import { NextPage } from "next";
 import React from "react";
 import { useJwtUser } from "../../contexts";
@@ -6,15 +6,11 @@ import { useJwtUser } from "../../contexts";
 // eslint-disable-next-line no-warning-comments -- Postponed
 // TODO: Add companies contents
 const Page: NextPage = () => {
-  const { isLoading, jwtUser } = useJwtUser();
-
-  if (isLoading) return <Fallback />;
-
-  if (jwtUser === undefined) return <Unauthorized />;
+  const { isLoading } = useJwtUser();
 
   return (
-    <ProfileLayout jwtUser={jwtUser}>
-      TODO: Add companies contents
+    <ProfileLayout>
+      {isLoading ? <Loading /> : <> TODO: Add companies contents</>}
     </ProfileLayout>
   );
 };
