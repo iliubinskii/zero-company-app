@@ -20,7 +20,8 @@ const config = {
     {
       files: ["./src/schema/routes.ts"],
       rules: {
-        "no-magic-numbers": "off"
+        "no-magic-numbers": "off",
+        "typescript-sort-keys/interface": "off"
       }
     }
   ],
@@ -40,7 +41,7 @@ const config = {
           ["flowbite/plugin", "next/*", "next/font/*", "react-icons/*"]
       }
     ],
-    "no-console": ["warn", { allow: ["warn", "error"] }],
+    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -88,7 +89,9 @@ const config = {
             "langs",
             "latin",
             "mjs",
+            "nda",
             "neue",
+            "nextjs",
             "nonnegative",
             "nullable",
             "openapi",
@@ -96,9 +99,11 @@ const config = {
             "pathname",
             "picsum",
             "postcss",
+            "readonly",
             "redeclare",
             "req",
             "roboto",
+            "rofr",
             "schemas",
             "semibold",
             "smacss",

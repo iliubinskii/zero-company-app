@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply m-0 p-0 font-sans;
+}
+
+/* App */
+
+.app-loading,
+.app-loading * {
+  cursor: wait !important;
+}
+
+.app-logo-image {
+  width: 4rem;
+  height: 4rem;
+}
+
+.app-logo-text {
+  font-size: 2rem;
+}
+
+/* Button styles */
+
+.dark-button {
+  @apply rounded
+    px-4 py-2
+    bg-gray-800 hover:bg-gray-700
+    text-white
+    focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50;
+}
+
+.primary-button {
+  @apply rounded
+    px-4 py-2
+    bg-blue-800 hover:bg-blue-700
+    text-white
+    focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
+}
+
+/* Form field styles */
+
+.checkbox-field {
+  @apply h-5 w-5
+    border border-gray-300 rounded
+    text-blue-600
+    focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
+}
+
+.checkbox-field-container {
+  @apply flex items-center gap-3;
+}
+
+.form-field {
+  @apply border border-gray-300 rounded
+    p-2
+    focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
+}
+
+.form-field-container {
+  @apply flex flex-col gap-1;
+}
+
+/* Layout styles */
+
+.article-layout-md {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
+}
+
+.article-layout-lg {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
+}
+
+.blocks-layout-md {
+  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-9;
+}
+
+.blocks-layout-lg {
+  @apply mx-auto max-w-screen-lg p-9 flex flex-col gap-9;
+}
+
+/* Miscellaneous styles */
+
+.header2 {
+  @apply text-xl text-gray-500;
+}
+
+.overview {
+  @apply flex flex-col gap-4;
+}
+
+.paragraphs {
+  @apply flex flex-col gap-3 text-justify;
+}

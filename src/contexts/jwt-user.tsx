@@ -1,3 +1,5 @@
+"use client";
+
 import { JwtUser, JwtUserValidationSchema } from "../schema";
 import { JWT_USER_STORAGE_KEY } from "../consts";
 import React from "react";
@@ -6,12 +8,19 @@ import { filterUndefinedProperties } from "../utils";
 import useSWR from "swr";
 
 export const JwtUserProvider: React.FC<Props> = ({ children }) => {
-  const { data: jwtUserLocal } = useSWR("/local/auth/me", loadFromLocalStorage);
+  const { data: jwtUserLocal } = useSWR("/local/auth/me", () => {
+    console.info("Fetching JWT user from local storage");
 
-  const { data: jwtUserSwr, isLoading } = useSWR(
-    "/auth/me",
-    clientAPI.getJwtUser
-  );
+    return loadFromLocalStorage();
+  });
+
+  const { data: jwtUserSwr, isLoading } = useSWR("/auth/me", async () => {
+    console.info("Fetching JWT user from API");
+
+    const jwtUser = await clientAPI.getJwtUser();
+
+    return jwtUser;
+  });
 
   const jwtUser = isLoading ? jwtUserLocal : jwtUserSwr;
 
