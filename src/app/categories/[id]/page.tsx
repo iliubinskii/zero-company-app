@@ -5,7 +5,7 @@ import { SuccessPage } from "./SuccessPage";
 import { notFound } from "next/navigation";
 import { serverAPI } from "../../../api";
 
-const Page = createPage("/categories/[id]", async ({ params }) => {
+const Page = createPage("/categories/[id]", async ({ params = {} }) => {
   const id = assertDefined(params["id"]);
 
   const [category, companies] = await Promise.all([

@@ -28,7 +28,7 @@ export function createPage(
   pageName: string,
   page: (props: PageProps) => React.ReactElement | Promise<React.ReactElement>
 ): NextPage<PageProps> {
-  return ({ params, ...props }) => {
+  return ({ params = defaultParams, ...props }) => {
     const dynamicPageName = Object.entries(params).reduce(
       (accumulator, [key, value]) => accumulator.replace(`[${key}]`, value),
       pageName
@@ -41,5 +41,7 @@ export function createPage(
 }
 
 export interface PageProps {
-  readonly params: Record<string, string>;
+  readonly params?: Readonly<Record<string, string>>;
 }
+
+const defaultParams: Readonly<Record<string, string>> = {};

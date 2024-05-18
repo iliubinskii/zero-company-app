@@ -99,6 +99,7 @@ const config = {
             "pathname",
             "picsum",
             "postcss",
+            "readonly",
             "redeclare",
             "req",
             "roboto",
