@@ -41,7 +41,7 @@ const config = {
           ["flowbite/plugin", "next/*", "next/font/*", "react-icons/*"]
       }
     ],
-    "no-console": ["warn", { allow: ["warn", "error"] }],
+    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -91,6 +91,7 @@ const config = {
             "mjs",
             "nda",
             "neue",
+            "nextjs",
             "nonnegative",
             "nullable",
             "openapi",

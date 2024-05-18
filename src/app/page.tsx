@@ -1,11 +1,11 @@
 import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
-import { NextPage } from "next";
 import React from "react";
+import { createPage } from "../utils";
 import { images } from "../images";
 import { lang } from "../langs";
 import { serverAPI } from "../api";
 
-const Page: NextPage = async () => {
+const Page = createPage("/", async () => {
   const companies = await serverAPI.getCompanies({
     limit: 3,
     sortBy: "foundedAt",
@@ -52,6 +52,6 @@ const Page: NextPage = async () => {
       </CompanyCards>
     </div>
   );
-};
+});
 
 export default Page;

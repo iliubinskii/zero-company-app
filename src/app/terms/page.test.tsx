@@ -5,7 +5,7 @@ import { lang } from "../../langs";
 
 describe("Terms page", () => {
   it("renders a heading", () => {
-    render(<Page />);
+    render(<Page params={{}} />);
 
     const alert = screen.queryByText(lang.Loading);
 

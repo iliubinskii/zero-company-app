@@ -1,10 +1,10 @@
-import { NextPage } from "next";
 import React from "react";
+import { createPage } from "../../utils";
 import { lang } from "../../langs";
 
 // eslint-disable-next-line no-warning-comments -- Ok
 // TODO: Add real content
-const Page: NextPage = () => (
+const Page = createPage("/tag-along", () => (
   <div className="article-layout-md">
     <div className="header2">{lang.TagAlongRights}</div>
     <div className="paragraphs">
@@ -39,6 +39,6 @@ const Page: NextPage = () => (
       </p>
     </div>
   </div>
-);
+));
 
 export default Page;

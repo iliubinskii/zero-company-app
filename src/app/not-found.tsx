@@ -1,7 +1,7 @@
-import { NextPage } from "next";
 import { NotFound } from "../components";
 import React from "react";
+import { createPage } from "../utils";
 
-const Page: NextPage = () => <NotFound />;
+const Page = createPage("/not-found", () => <NotFound />);
 
 export default Page;

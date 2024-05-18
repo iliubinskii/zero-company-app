@@ -1,32 +1,27 @@
+import { assertDefined, createPage } from "../../../utils";
 import { COMPANY_LIMIT } from "../../../consts";
-import { NextPage } from "next";
 import React from "react";
 import { SuccessPage } from "./SuccessPage";
 import { notFound } from "next/navigation";
 import { serverAPI } from "../../../api";
 
-const Page: NextPage<Props> = async ({ params }) => {
-  const { id } = params;
+const Page = createPage("/categories/[id]", async ({ params }) => {
+  const id = assertDefined(params["id"]);
 
-  if (typeof id === "string") {
-    const [category, companies] = await Promise.all([
-      serverAPI.getCategory(id),
-      serverAPI.getCompaniesByCategory(id, {
-        limit: COMPANY_LIMIT,
-        sortBy: "foundedAt",
-        sortOrder: "desc"
-      })
-    ]);
+  const [category, companies] = await Promise.all([
+    serverAPI.getCategory(id),
+    serverAPI.getCompaniesByCategory(id, {
+      limit: COMPANY_LIMIT,
+      sortBy: "foundedAt",
+      sortOrder: "desc"
+    })
+  ]);
 
-    if (category && companies)
-      return <SuccessPage category={category} companies={companies} />;
-  }
-
-  return notFound();
-};
+  return category && companies ? (
+    <SuccessPage category={category} companies={companies} />
+  ) : (
+    notFound()
+  );
+});
 
 export default Page;
-
-export interface Props {
-  readonly params: { readonly id: unknown };
-}
