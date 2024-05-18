@@ -1,3 +1,5 @@
+"use client";
+
 import { JwtUser, JwtUserValidationSchema } from "../schema";
 import { JWT_USER_STORAGE_KEY } from "../consts";
 import React from "react";

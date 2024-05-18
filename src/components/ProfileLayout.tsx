@@ -1,3 +1,5 @@
+"use client";
+
 import { LuLayoutDashboard, LuUser2 } from "react-icons/lu";
 import { BsBookmarks } from "react-icons/bs";
 import { CLIENT_API_URL } from "../config";
@@ -8,10 +10,10 @@ import React from "react";
 import { RxRocket } from "react-icons/rx";
 import { lang } from "../langs";
 import styles from "./ProfileLayout.module.css";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export const ProfileLayout: React.FC<Props> = ({ children }) => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <div className={styles["container"]}>
@@ -19,7 +21,7 @@ export const ProfileLayout: React.FC<Props> = ({ children }) => {
         {links.map(({ Icon, href, text }) => (
           <Link
             className={
-              href === router.pathname ? styles["item-active"] : styles["item"]
+              href === pathname ? styles["item-active"] : styles["item"]
             }
             href={href}
             key={href}

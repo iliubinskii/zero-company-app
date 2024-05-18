@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 /**
  * Use loading cursor effect on route change.
  */
+// eslint-disable-next-line no-warning-comments -- Postponed
+// TODO: Remake for Next.js 13
 export function useLoadingCursor(): void {
   const router = useRouter();
 

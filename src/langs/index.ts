@@ -35,6 +35,7 @@ export const lang = {
   MyCompanies: "My Companies",
   NDA: "NDA",
   Name: "Name",
+  NotFound: "Not Found",
   OurCharter: "Our Charter",
   PreemptiveRights: "Preemptive Rights",
   PrivacyPolicy: "Privacy Policy",

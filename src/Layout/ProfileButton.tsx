@@ -1,3 +1,5 @@
+"use client";
+
 import { CLIENT_API_URL } from "../config";
 import Link from "next/link";
 import React from "react";
