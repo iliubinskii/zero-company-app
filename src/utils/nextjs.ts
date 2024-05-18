@@ -9,12 +9,12 @@ import React from "react";
  */
 export function createClientPage(
   pageName: string,
-  page: (props: PageProps) => React.ReactElement
+  page: () => React.ReactElement
 ): NextPage<PageProps> {
-  return props => {
+  return () => {
     console.info(`Rendered ${pageName}`);
 
-    return page(props);
+    return page();
   };
 }
 
@@ -28,7 +28,7 @@ export function createPage(
   pageName: string,
   page: (props: PageProps) => React.ReactElement | Promise<React.ReactElement>
 ): NextPage<PageProps> {
-  return async ({ params, ...props }) => {
+  return ({ params, ...props }) => {
     const dynamicPageName = Object.entries(params).reduce(
       (accumulator, [key, value]) => accumulator.replace(`[${key}]`, value),
       pageName
@@ -36,9 +36,7 @@ export function createPage(
 
     console.info(`Compiled ${dynamicPageName}`);
 
-    const element = await page({ params, ...props });
-
-    return element;
+    return page({ params, ...props });
   };
 }
 
