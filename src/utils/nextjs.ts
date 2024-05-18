@@ -34,7 +34,7 @@ export function createPage(
       pageName
     );
 
-    console.info(`Compiled ${dynamicPageName}`);
+    console.info(`Rendered ${dynamicPageName}`);
 
     return page({ params, ...props });
   };
