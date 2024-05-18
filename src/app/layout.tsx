@@ -1,6 +1,5 @@
 import "./globals.css";
 import { AppLoadingProvider, JwtUserProvider } from "../contexts";
-import { ExistingCategory, MultipleDocsResponse } from "../schema";
 import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
@@ -17,8 +16,7 @@ export default async function RootLayout({
 }: Props): Promise<React.ReactElement> {
   console.info("Render /layout");
 
-  categories =
-    categories ?? (await serverAPI.getCategories({ onlyPinned: true }));
+  const categories = await serverAPI.getCategories({ onlyPinned: true });
 
   return (
     <html lang="en">
@@ -44,6 +42,3 @@ export default async function RootLayout({
 export interface Props {
   children?: React.ReactNode | undefined;
 }
-
-// Cache categories during nextjs build
-let categories: MultipleDocsResponse<ExistingCategory> | undefined;

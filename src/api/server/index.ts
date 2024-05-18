@@ -10,18 +10,13 @@ import { get } from "./core";
 
 /**
  * Retrieves the categories from the API.
- * @param requestOptions - Request options.
- * @param requestOptions.onlyPinned - Whether to only retrieve pinned categories.
- * @param options - Options.
- * @param options.client - Client request.
+ * @param options - Request options.
+ * @param options.onlyPinned - Whether to only retrieve pinned categories.
  * @returns The categories.
  */
-export async function getCategories(
-  { onlyPinned = false }: GetCategoriesOptions = {},
-  { client = false }: Options = {}
-): Promise<MultipleDocsResponse<ExistingCategory>> {
-  if (!client) console.info("API request /categories");
-
+export async function getCategories({
+  onlyPinned = false
+}: GetCategoriesOptions = {}): Promise<MultipleDocsResponse<ExistingCategory>> {
   const categories = await get<RoutesOld["/categories"]["/"]["GET"]>(
     "categories",
     { onlyPinned: onlyPinned ? "yes" : "no" }
@@ -35,20 +30,17 @@ export async function getCategories(
 
 /**
  * Retrieves the companies from the API.
- * @param requestOptions - Request options.
- * @param requestOptions.cursor - The cursor.
- * @param requestOptions.limit - The limit.
- * @param requestOptions.offset - The offset.
- * @param options - Options.
- * @param options.client - Client request.
+ * @param options - Request options.
+ * @param options.cursor - The cursor.
+ * @param options.limit - The limit.
+ * @param options.offset - The offset.
  * @returns The companies.
  */
-export async function getCompanies(
-  { cursor, limit, offset }: GetCompaniesOptions = {},
-  { client = false }: Options = {}
-): Promise<MultipleDocsResponse<ExistingCompany>> {
-  if (!client) console.info("API request /companies");
-
+export async function getCompanies({
+  cursor,
+  limit,
+  offset
+}: GetCompaniesOptions = {}): Promise<MultipleDocsResponse<ExistingCompany>> {
   const companies = await get<RoutesOld["/companies"]["/"]["GET"]>(
     "companies",
     {
@@ -68,21 +60,16 @@ export async function getCompanies(
 /**
  * Retrieves the companies from the API.
  * @param id - The category id.
- * @param requestOptions - Request options.
- * @param requestOptions.cursor - The cursor.
- * @param requestOptions.limit - The limit.
- * @param requestOptions.offset - The offset.
- * @param options - Options.
- * @param options.client - Client request.
+ * @param options - Request options.
+ * @param options.cursor - The cursor.
+ * @param options.limit - The limit.
+ * @param options.offset - The offset.
  * @returns The companies.
  */
 export async function getCompaniesByCategory(
   id: string,
-  { cursor, limit, offset }: GetCompaniesOptions = {},
-  { client = false }: Options = {}
+  { cursor, limit, offset }: GetCompaniesOptions = {}
 ): Promise<MultipleDocsResponse<ExistingCompany>> {
-  if (!client) console.info(`API request /categories/${id}/companies`);
-
   const companies = await get<
     RoutesOld["/categories"]["/:id/companies"]["GET"]
   >(`categories/${id}/companies`, {
@@ -101,16 +88,9 @@ export async function getCompaniesByCategory(
 /**
  * Retrieves the category from the API.
  * @param id - The category id.
- * @param options - Options.
- * @param options.client - Client request.
  * @returns The category.
  */
-export async function getCategory(
-  id: string,
-  { client = false }: Options = {}
-): Promise<ExistingCategory> {
-  if (!client) console.info(`API request /category/${id}`);
-
+export async function getCategory(id: string): Promise<ExistingCategory> {
   const category = await get<RoutesOld["/categories"]["/:id"]["GET"]["OK"]>(
     `categories/${id}`
   );
@@ -119,8 +99,4 @@ export async function getCategory(
     throw new Error(`${category.error}: ${category.errorMessage}`);
 
   return category;
-}
-
-export interface Options {
-  readonly client?: boolean;
 }
