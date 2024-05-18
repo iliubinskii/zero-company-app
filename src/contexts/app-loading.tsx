@@ -1,5 +1,6 @@
 "use client";
 
+import { APP_LOADING_CLASS, APP_LOADING_TIMEOUT_MS } from "../consts";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
 
@@ -8,15 +9,26 @@ export const AppLoadingProvider: React.FC<Props> = ({ children }) => {
 
   const pathname = usePathname();
 
+  const timeout = React.useRef<number | undefined>();
+
   React.useEffect(() => {
-    document.body.classList.remove("app-loading");
+    document.body.classList.remove(APP_LOADING_CLASS);
+    window.clearTimeout(timeout.current);
+
+    return () => {
+      document.body.classList.remove(APP_LOADING_CLASS);
+      window.clearTimeout(timeout.current);
+    };
   }, [params, pathname]);
 
   return (
     <AppLoadingContext.Provider
       value={{
         setLoading: () => {
-          document.body.classList.add("app-loading");
+          window.clearTimeout(timeout.current);
+          timeout.current = window.setTimeout(() => {
+            document.body.classList.add(APP_LOADING_CLASS);
+          }, APP_LOADING_TIMEOUT_MS);
         }
       }}
     >

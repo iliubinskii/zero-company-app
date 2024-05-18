@@ -1,3 +1,7 @@
+export const APP_LOADING_CLASS = "app-loading";
+
+export const APP_LOADING_TIMEOUT_MS = 100;
+
 export const COMPANY_SHARE_STEP = 100;
 
 export const COMPANY_TARGET_VALUE_STEP = 1000;
