@@ -1,5 +1,4 @@
 import {
-  ErrorCode,
   ExistingCategory,
   ExistingCompany,
   GetCompaniesOptions,
@@ -72,7 +71,7 @@ export async function getCompanies({
 export async function getCompaniesByCategory(
   id: string,
   { cursor, limit, offset }: GetCompaniesOptions = {}
-): Promise<MultipleDocsResponse<ExistingCompany> | undefined> {
+): Promise<MultipleDocsResponse<ExistingCompany>> {
   const query: Writable<Query> = { limit, offset };
 
   if (cursor) {
@@ -85,12 +84,7 @@ export async function getCompaniesByCategory(
   >(`categories/${id}/companies`, query);
 
   if ("error" in companies)
-    if (
-      companies.error === ErrorCode.InvalidParam ||
-      companies.error === ErrorCode.CategoryNotFound
-    )
-      return;
-    else throw new Error(`${companies.error}: ${companies.errorMessage}`);
+    throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
   return companies;
 }
@@ -100,20 +94,13 @@ export async function getCompaniesByCategory(
  * @param id - The category id.
  * @returns The category.
  */
-export async function getCategory(
-  id: string
-): Promise<ExistingCategory | undefined> {
+export async function getCategory(id: string): Promise<ExistingCategory> {
   const category = await get<RoutesOld["/categories"]["/:id"]["GET"]["OK"]>(
     `categories/${id}`
   );
 
   if ("error" in category)
-    if (
-      category.error === ErrorCode.InvalidParam ||
-      category.error === ErrorCode.CategoryNotFound
-    )
-      return;
-    else throw new Error(`${category.error}: ${category.errorMessage}`);
+    throw new Error(`${category.error}: ${category.errorMessage}`);
 
   return category;
 }

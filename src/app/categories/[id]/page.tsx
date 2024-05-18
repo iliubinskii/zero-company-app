@@ -2,8 +2,19 @@ import { assertDefined, createPage } from "../../../utils";
 import { COMPANY_LIMIT } from "../../../consts";
 import React from "react";
 import { SuccessPage } from "./SuccessPage";
-import { notFound } from "next/navigation";
 import { serverAPI } from "../../../api";
+
+/**
+ * Generates static parameters.
+ * @returns Static parameters.
+ */
+export async function generateStaticParams(): Promise<unknown[]> {
+  const categories = await serverAPI.getCategories(true);
+
+  return categories.docs.map(category => {
+    return { id: category._id };
+  });
+}
 
 const Page = createPage("/categories/[id]", async ({ params = {} }) => {
   const id = assertDefined(params["id"]);
@@ -17,11 +28,7 @@ const Page = createPage("/categories/[id]", async ({ params = {} }) => {
     })
   ]);
 
-  return category && companies ? (
-    <SuccessPage category={category} companies={companies} />
-  ) : (
-    notFound()
-  );
+  return <SuccessPage category={category} companies={companies} />;
 });
 
 export default Page;

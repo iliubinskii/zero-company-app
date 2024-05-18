@@ -14,7 +14,7 @@ import { serverAPI } from "../api";
 export default async function RootLayout({
   children
 }: Props): Promise<React.ReactElement> {
-  console.info("Rendered /layout");
+  console.info("Compiled /layout");
 
   const categories = await serverAPI.getCategories(true);
 

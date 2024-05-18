@@ -12,7 +12,7 @@ export function createClientPage(
   page: () => React.ReactElement
 ): NextPage<PageProps> {
   return () => {
-    console.info(`Rendered ${pageName}`);
+    console.info(`Compiled ${pageName}`);
 
     return page();
   };
@@ -34,7 +34,7 @@ export function createPage(
       pageName
     );
 
-    console.info(`Rendered ${dynamicPageName}`);
+    console.info(`Compiled ${dynamicPageName}`);
 
     return page({ params, ...props });
   };
