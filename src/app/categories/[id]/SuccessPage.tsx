@@ -44,10 +44,8 @@ export const SuccessPage: React.FC<Props> = ({
           })
         );
 
-        if (response) {
-          setCompanies([...companies, ...response.docs]);
-          setNextCursor(response.nextCursor);
-        }
+        setCompanies([...companies, ...response.docs]);
+        setNextCursor(response.nextCursor);
       } finally {
         setLoading(false);
       }
