@@ -1,4 +1,4 @@
-import { assertDefined, createPage } from "../../../utils";
+import { assertDefined, createAsyncPage } from "../../../utils";
 import { COMPANY_LIMIT } from "../../../consts";
 import React from "react";
 import { SuccessPage } from "./SuccessPage";
@@ -16,7 +16,7 @@ export async function generateStaticParams(): Promise<unknown[]> {
   });
 }
 
-const Page = createPage("/categories/[id]", async ({ params = {} }) => {
+const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
   const id = assertDefined(params["id"]);
 
   const [category, companies] = await Promise.all([

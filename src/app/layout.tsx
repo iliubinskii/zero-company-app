@@ -14,11 +14,11 @@ import { serverAPI } from "../api";
 export default async function RootLayout({
   children
 }: Props): Promise<React.ReactElement> {
-  console.info("Render /layout");
+  const t1 = performance.now();
 
   const categories = await serverAPI.getCategories({ onlyPinned: true });
 
-  return (
+  const element = (
     <html lang="en">
       <head>
         <title>{lang.app.title}</title>
@@ -37,6 +37,12 @@ export default async function RootLayout({
       </body>
     </html>
   );
+
+  const t2 = performance.now();
+
+  console.info(`Render /layout in ${Math.round(t2 - t1)} ms`);
+
+  return element;
 }
 
 export interface Props {
