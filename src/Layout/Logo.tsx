@@ -1,3 +1,4 @@
+import { AnimatedLink } from "../components";
 import { Bebas_Neue } from "next/font/google";
 import Link from "next/link";
 import React from "react";
@@ -8,7 +9,7 @@ const Logo: React.FC<Omit<React.ComponentProps<typeof Link>, "href">> = ({
   className = "",
   ...props
 }) => (
-  <Link
+  <AnimatedLink
     className={`flex items-center gap-2 ${className}`.trim()}
     href="/"
     {...props}
@@ -23,7 +24,7 @@ const Logo: React.FC<Omit<React.ComponentProps<typeof Link>, "href">> = ({
     <h1 className={`${bebas.className} app-logo-text text-blue-700`}>
       {lang.ZeroCompany}
     </h1>
-  </Link>
+  </AnimatedLink>
 );
 
 export default Logo;

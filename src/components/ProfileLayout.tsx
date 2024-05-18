@@ -1,11 +1,11 @@
 "use client";
 
 import { LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import { AnimatedLink } from "./AnimatedLink";
 import { BsBookmarks } from "react-icons/bs";
 import { CLIENT_API_URL } from "../config";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
-import Link from "next/link";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
 import { lang } from "../langs";
@@ -19,7 +19,7 @@ export const ProfileLayout: React.FC<Props> = ({ children }) => {
     <div className={styles["container"]}>
       <div className={styles["menu"]}>
         {links.map(({ Icon, href, text }) => (
-          <Link
+          <AnimatedLink
             className={
               href === pathname ? styles["item-active"] : styles["item"]
             }
@@ -28,7 +28,7 @@ export const ProfileLayout: React.FC<Props> = ({ children }) => {
           >
             <Icon className={styles["icon"]} />
             {text}
-          </Link>
+          </AnimatedLink>
         ))}
       </div>
       <div className={styles["contents"]}>{children}</div>

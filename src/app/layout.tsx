@@ -1,5 +1,5 @@
 import "./globals.css";
-import { JwtUserProvider } from "../contexts";
+import { AppLoadingProvider, JwtUserProvider } from "../contexts";
 import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
@@ -27,9 +27,11 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <JwtUserProvider>
-          <Layout categories={categories}>{children}</Layout>
-        </JwtUserProvider>
+        <AppLoadingProvider>
+          <JwtUserProvider>
+            <Layout categories={categories}>{children}</Layout>
+          </JwtUserProvider>
+        </AppLoadingProvider>
       </body>
     </html>
   );

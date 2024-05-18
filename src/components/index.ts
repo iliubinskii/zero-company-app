@@ -1,3 +1,4 @@
+export { AnimatedLink } from "./AnimatedLink";
 export { CompanyCard } from "./CompanyCard";
 export { CompanyCards } from "./CompanyCards";
 export { InfoCard } from "./InfoCard";

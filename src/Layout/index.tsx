@@ -1,6 +1,6 @@
 import { ExistingCategory, MultipleDocsResponse } from "../schema";
+import { AnimatedLink } from "../components";
 import CreateCompanyButton from "./CreateCompanyButton";
-import Link from "next/link";
 import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
 import React from "react";
@@ -65,9 +65,12 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
         {/* Categories */}
         <div className="flex justify-center gap-4 font-medium">
           {categories.docs.map(category => (
-            <Link href={`/categories/${category._id}`} key={category._id}>
+            <AnimatedLink
+              href={`/categories/${category._id}`}
+              key={category._id}
+            >
               {category.name}
-            </Link>
+            </AnimatedLink>
           ))}
         </div>
         {/* Categories END */}
@@ -80,9 +83,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
       {/* Footer categories */}
       <div className="border-t-2 border-gray-400 px-12 py-5 flex gap-4 text-sm">
         {categories.docs.map(category => (
-          <Link href={`/categories/${category._id}`} key={category._id}>
+          <AnimatedLink href={`/categories/${category._id}`} key={category._id}>
             {category.name}
-          </Link>
+          </AnimatedLink>
         ))}
       </div>
       {/* Footer categories END */}
@@ -96,9 +99,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
               <h3 className="uppercase font-bold">{title}</h3>
               <div className="flex flex-col gap-1 text-sm text-gray-700">
                 {links.map(({ href, text }) => (
-                  <Link href={href} key={href}>
+                  <AnimatedLink href={href} key={href}>
                     {text}
-                  </Link>
+                  </AnimatedLink>
                 ))}
               </div>
             </div>
@@ -110,9 +113,9 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
       {/* Footer links */}
       <div className="border-t-2 p-7 flex justify-center gap-10 text-sm text-gray-700">
         {footerLinks.map(({ href, text }) => (
-          <Link href={href} key={href}>
+          <AnimatedLink href={href} key={href}>
             {text}
-          </Link>
+          </AnimatedLink>
         ))}
       </div>
       {/* Footer links END */}
