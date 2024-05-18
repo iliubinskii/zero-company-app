@@ -41,7 +41,8 @@ export const SuccessPage: React.FC<Props> = ({
             limit: COMPANY_LIMIT,
             sortBy: "foundedAt",
             sortOrder: "desc"
-          })
+          }),
+          { client: true }
         );
 
         setCompanies([...companies, ...response.docs]);

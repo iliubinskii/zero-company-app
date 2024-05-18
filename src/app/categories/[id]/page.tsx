@@ -9,7 +9,7 @@ import { serverAPI } from "../../../api";
  * @returns Static parameters.
  */
 export async function generateStaticParams(): Promise<unknown[]> {
-  const categories = await serverAPI.getCategories(true);
+  const categories = await serverAPI.getCategories({ onlyPinned: true });
 
   return categories.docs.map(category => {
     return { id: category._id };
