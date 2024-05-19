@@ -4,13 +4,14 @@ import { AnimatedLink } from "../components";
 import { CLIENT_API_URL } from "../config";
 import React from "react";
 import { lang } from "../langs";
-import { useJwtUser } from "../contexts";
+import { selectJwtUser } from "../services";
+import { useSelector } from "react-redux";
 
 const ProfileButton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className = "",
   ...props
 }) => {
-  const { jwtUser } = useJwtUser();
+  const jwtUser = useSelector(selectJwtUser);
 
   return (
     <div className={`w-30 flex justify-end ${className}`.trim()} {...props}>

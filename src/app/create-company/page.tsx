@@ -1,12 +1,12 @@
 import React from "react";
-import { SuccessPage } from "./SuccessPage";
-import { createPage } from "../../utils";
+import { SyncPage } from "./SyncPage";
+import { createAsyncPage } from "../../utils";
 import { serverAPI } from "../../api";
 
-const Page = createPage("/create-company", async () => {
+const Page = createAsyncPage("/create-company", async () => {
   const categories = await serverAPI.getCategories();
 
-  return <SuccessPage categories={categories} />;
+  return <SyncPage categories={categories} />;
 });
 
 export default Page;

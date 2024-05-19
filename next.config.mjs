@@ -3,7 +3,13 @@
  */
 const nextConfig = {
   images: {
-    domains: ["picsum.photos"]
+    remotePatterns: [
+      {
+        hostname: "picsum.photos",
+        pathname: "/**",
+        protocol: "https"
+      }
+    ]
   }
 };
 

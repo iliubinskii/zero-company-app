@@ -14,7 +14,7 @@ import React from "react";
 import { lang } from "../../../langs";
 import { serverAPI } from "../../../api";
 
-export const SuccessPage: React.FC<Props> = ({
+export const SyncPage: React.FC<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
@@ -44,10 +44,10 @@ export const SuccessPage: React.FC<Props> = ({
           })
         );
 
-        if (response) {
-          setCompanies([...companies, ...response.docs]);
-          setNextCursor(response.nextCursor);
-        }
+        setCompanies([...companies, ...response.docs]);
+        setNextCursor(response.nextCursor);
+      } catch {
+        setAutoMode(false);
       } finally {
         setLoading(false);
       }

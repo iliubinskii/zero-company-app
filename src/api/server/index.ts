@@ -1,23 +1,22 @@
 import {
-  ErrorCode,
   ExistingCategory,
   ExistingCompany,
+  GetCategoriesOptions,
   GetCompaniesOptions,
   MultipleDocsResponse,
   RoutesOld
 } from "../../schema";
-import { Query } from "../../utils";
-import { Writable } from "ts-toolbelt/out/Object/Writable";
 import { get } from "./core";
 
 /**
  * Retrieves the categories from the API.
- * @param onlyPinned - Whether to only get pinned categories.
+ * @param options - Request options.
+ * @param options.onlyPinned - Whether to only retrieve pinned categories.
  * @returns The categories.
  */
-export async function getCategories(
+export async function getCategories({
   onlyPinned = false
-): Promise<MultipleDocsResponse<ExistingCategory>> {
+}: GetCategoriesOptions = {}): Promise<MultipleDocsResponse<ExistingCategory>> {
   const categories = await get<RoutesOld["/categories"]["/"]["GET"]>(
     "categories",
     { onlyPinned: onlyPinned ? "yes" : "no" }
@@ -31,10 +30,10 @@ export async function getCategories(
 
 /**
  * Retrieves the companies from the API.
- * @param options - Options.
- * @param options.offset - The offset.
- * @param options.limit - The limit.
+ * @param options - Request options.
  * @param options.cursor - The cursor.
+ * @param options.limit - The limit.
+ * @param options.offset - The offset.
  * @returns The companies.
  */
 export async function getCompanies({
@@ -42,16 +41,14 @@ export async function getCompanies({
   limit,
   offset
 }: GetCompaniesOptions = {}): Promise<MultipleDocsResponse<ExistingCompany>> {
-  const query: Writable<Query> = { limit, offset };
-
-  if (cursor) {
-    query["cursor[0]"] = cursor[0];
-    query["cursor[1]"] = cursor[1];
-  }
-
   const companies = await get<RoutesOld["/companies"]["/"]["GET"]>(
     "companies",
-    query
+    {
+      "cursor[0]": cursor ? cursor[0] : undefined,
+      "cursor[1]": cursor ? cursor[1] : undefined,
+      limit,
+      offset
+    }
   );
 
   if ("error" in companies)
@@ -63,34 +60,27 @@ export async function getCompanies({
 /**
  * Retrieves the companies from the API.
  * @param id - The category id.
- * @param option - Options.
- * @param option.limit - The limit.
- * @param option.offset - The offset.
- * @param option.cursor - The cursor.
+ * @param options - Request options.
+ * @param options.cursor - The cursor.
+ * @param options.limit - The limit.
+ * @param options.offset - The offset.
  * @returns The companies.
  */
 export async function getCompaniesByCategory(
   id: string,
   { cursor, limit, offset }: GetCompaniesOptions = {}
-): Promise<MultipleDocsResponse<ExistingCompany> | undefined> {
-  const query: Writable<Query> = { limit, offset };
-
-  if (cursor) {
-    query["cursor[0]"] = cursor[0];
-    query["cursor[1]"] = cursor[1];
-  }
-
+): Promise<MultipleDocsResponse<ExistingCompany>> {
   const companies = await get<
     RoutesOld["/categories"]["/:id/companies"]["GET"]
-  >(`categories/${id}/companies`, query);
+  >(`categories/${id}/companies`, {
+    "cursor[0]": cursor ? cursor[0] : undefined,
+    "cursor[1]": cursor ? cursor[1] : undefined,
+    limit,
+    offset
+  });
 
   if ("error" in companies)
-    if (
-      companies.error === ErrorCode.InvalidParam ||
-      companies.error === ErrorCode.CategoryNotFound
-    )
-      return;
-    else throw new Error(`${companies.error}: ${companies.errorMessage}`);
+    throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
   return companies;
 }
@@ -100,20 +90,13 @@ export async function getCompaniesByCategory(
  * @param id - The category id.
  * @returns The category.
  */
-export async function getCategory(
-  id: string
-): Promise<ExistingCategory | undefined> {
+export async function getCategory(id: string): Promise<ExistingCategory> {
   const category = await get<RoutesOld["/categories"]["/:id"]["GET"]["OK"]>(
     `categories/${id}`
   );
 
   if ("error" in category)
-    if (
-      category.error === ErrorCode.InvalidParam ||
-      category.error === ErrorCode.CategoryNotFound
-    )
-      return;
-    else throw new Error(`${category.error}: ${category.errorMessage}`);
+    throw new Error(`${category.error}: ${category.errorMessage}`);
 
   return category;
 }

@@ -2,19 +2,30 @@ import { NextPage } from "next";
 import React from "react";
 
 /**
- * Create a client page.
+ * Create an async page.
  * @param pageName - Page name.
  * @param page - Page.
  * @returns Wrapped page.
  */
-export function createClientPage(
+export function createAsyncPage(
   pageName: string,
-  page: () => React.ReactElement
+  page: (props: PageProps) => Promise<React.ReactElement>
 ): NextPage<PageProps> {
-  return () => {
-    console.info(`Rendered ${pageName}`);
+  return async ({ params = defaultParams, ...props }) => {
+    const dynamicPageName = Object.entries(params).reduce(
+      (accumulator, [key, value]) => accumulator.replace(`[${key}]`, value),
+      pageName
+    );
 
-    return page();
+    const t1 = performance.now();
+
+    const element = await page({ params, ...props });
+
+    const t2 = performance.now();
+
+    console.info(`Render ${dynamicPageName} in ${Math.round(t2 - t1)} ms`);
+
+    return element;
   };
 }
 
@@ -26,7 +37,7 @@ export function createClientPage(
  */
 export function createPage(
   pageName: string,
-  page: (props: PageProps) => React.ReactElement | Promise<React.ReactElement>
+  page: (props: PageProps) => React.ReactElement
 ): NextPage<PageProps> {
   return ({ params = defaultParams, ...props }) => {
     const dynamicPageName = Object.entries(params).reduce(
@@ -34,9 +45,15 @@ export function createPage(
       pageName
     );
 
-    console.info(`Rendered ${dynamicPageName}`);
+    const t1 = performance.now();
 
-    return page({ params, ...props });
+    const element = page({ params, ...props });
+
+    const t2 = performance.now();
+
+    console.info(`Render ${dynamicPageName} in ${Math.round(t2 - t1)} ms`);
+
+    return element;
   };
 }
 

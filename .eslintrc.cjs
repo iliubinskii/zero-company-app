@@ -7,7 +7,7 @@ const config = {
     es2020: true,
     jest: true
   },
-  extends: ["./.eslintrc.base.cjs"],
+  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
   globals: {},
   ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
   overrides: [
@@ -38,7 +38,14 @@ const config = {
       {
         allow:
           // @sort
-          ["flowbite/plugin", "next/*", "next/font/*", "react-icons/*"]
+          [
+            "flowbite/plugin",
+            "next/*",
+            "next/font/*",
+            "react-icons/*",
+            "redux-persist/integration/react",
+            "redux-persist/lib/storage"
+          ]
       }
     ],
     "no-console": ["warn", { allow: ["error", "info", "warn"] }],
@@ -97,10 +104,12 @@ const config = {
             "openapi",
             "parens",
             "pathname",
+            "persistor",
             "picsum",
             "postcss",
             "readonly",
             "redeclare",
+            "redux",
             "req",
             "roboto",
             "rofr",

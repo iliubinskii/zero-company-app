@@ -1,11 +1,22 @@
-import { assertDefined, createPage } from "../../../utils";
+import { assertDefined, createAsyncPage } from "../../../utils";
 import { COMPANY_LIMIT } from "../../../consts";
 import React from "react";
-import { SuccessPage } from "./SuccessPage";
-import { notFound } from "next/navigation";
+import { SyncPage } from "./SyncPage";
 import { serverAPI } from "../../../api";
 
-const Page = createPage("/categories/[id]", async ({ params = {} }) => {
+/**
+ * Generates static parameters.
+ * @returns Static parameters.
+ */
+export async function generateStaticParams(): Promise<unknown[]> {
+  const categories = await serverAPI.getCategories({ onlyPinned: true });
+
+  return categories.docs.map(category => {
+    return { id: category._id };
+  });
+}
+
+const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
   const id = assertDefined(params["id"]);
 
   const [category, companies] = await Promise.all([
@@ -17,11 +28,7 @@ const Page = createPage("/categories/[id]", async ({ params = {} }) => {
     })
   ]);
 
-  return category && companies ? (
-    <SuccessPage category={category} companies={companies} />
-  ) : (
-    notFound()
-  );
+  return <SyncPage category={category} companies={companies} />;
 });
 
 export default Page;

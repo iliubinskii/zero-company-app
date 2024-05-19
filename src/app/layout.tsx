@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-page-custom-font -- Ok */
+
 import "./globals.css";
-import { AppLoadingProvider, JwtUserProvider } from "../contexts";
+import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
+import { AppStateUpdater } from "../AppStateUpdater";
 import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
@@ -14,11 +17,11 @@ import { serverAPI } from "../api";
 export default async function RootLayout({
   children
 }: Props): Promise<React.ReactElement> {
-  console.info("Rendered /layout");
+  const t1 = performance.now();
 
-  const categories = await serverAPI.getCategories(true);
+  const categories = await serverAPI.getCategories({ onlyPinned: true });
 
-  return (
+  const element = (
     <html lang="en">
       <head>
         <title>{lang.app.title}</title>
@@ -30,13 +33,20 @@ export default async function RootLayout({
       </head>
       <body>
         <AppLoadingProvider>
-          <JwtUserProvider>
+          <ReduxStoreProvider>
+            <AppStateUpdater />
             <Layout categories={categories}>{children}</Layout>
-          </JwtUserProvider>
+          </ReduxStoreProvider>
         </AppLoadingProvider>
       </body>
     </html>
   );
+
+  const t2 = performance.now();
+
+  console.info(`Render /layout in ${Math.round(t2 - t1)} ms`);
+
+  return element;
 }
 
 export interface Props {
