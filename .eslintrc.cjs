@@ -7,7 +7,7 @@ const config = {
     es2020: true,
     jest: true
   },
-  extends: ["./.eslintrc.base.cjs"],
+  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
   globals: {},
   ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
   overrides: [

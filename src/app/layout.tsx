@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-page-custom-font -- Ok */
+
 import "./globals.css";
 import { AppLoadingProvider, JwtUserProvider } from "../contexts";
 import Layout from "../Layout";
