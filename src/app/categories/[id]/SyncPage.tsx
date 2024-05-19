@@ -46,6 +46,8 @@ export const SyncPage: React.FC<Props> = ({
 
         setCompanies([...companies, ...response.docs]);
         setNextCursor(response.nextCursor);
+      } catch {
+        setAutoMode(false);
       } finally {
         setLoading(false);
       }
