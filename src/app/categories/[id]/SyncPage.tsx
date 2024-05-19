@@ -14,7 +14,7 @@ import React from "react";
 import { lang } from "../../../langs";
 import { serverAPI } from "../../../api";
 
-export const SuccessPage: React.FC<Props> = ({
+export const SyncPage: React.FC<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {

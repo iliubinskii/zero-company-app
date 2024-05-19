@@ -1,7 +1,7 @@
 import { assertDefined, createAsyncPage } from "../../../utils";
 import { COMPANY_LIMIT } from "../../../consts";
 import React from "react";
-import { SuccessPage } from "./SuccessPage";
+import { SyncPage } from "./SyncPage";
 import { serverAPI } from "../../../api";
 
 /**
@@ -28,7 +28,7 @@ const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
     })
   ]);
 
-  return <SuccessPage category={category} companies={companies} />;
+  return <SyncPage category={category} companies={companies} />;
 });
 
 export default Page;

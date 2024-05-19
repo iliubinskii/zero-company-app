@@ -14,7 +14,7 @@ import { lang } from "../../langs";
 // - Select one or two categories
 // - Style the form better
 // - Validate the form
-export const SuccessPage: React.FC<Props> = ({ categories: { docs } }) => {
+export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
   const [categories, setCategories] = React.useState<readonly [string]>([""]);
 
   const [description, setDescription] = React.useState<string>("");
