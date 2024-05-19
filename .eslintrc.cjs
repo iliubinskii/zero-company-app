@@ -101,6 +101,7 @@ const config = {
             "postcss",
             "readonly",
             "redeclare",
+            "redux",
             "req",
             "roboto",
             "rofr",
