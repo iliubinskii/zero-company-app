@@ -1,11 +1,8 @@
 /* eslint-disable @next/next/no-page-custom-font -- Ok */
 
 import "./globals.css";
-import {
-  AppLoadingProvider,
-  JwtUserProvider,
-  ReduxStoreProvider
-} from "../contexts";
+import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
+import { AppStateUpdater } from "../AppStateUpdater";
 import Layout from "../Layout";
 import React from "react";
 import { lang } from "../langs";
@@ -35,13 +32,12 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <ReduxStoreProvider>
-          <AppLoadingProvider>
-            <JwtUserProvider>
-              <Layout categories={categories}>{children}</Layout>
-            </JwtUserProvider>
-          </AppLoadingProvider>
-        </ReduxStoreProvider>
+        <AppLoadingProvider>
+          <ReduxStoreProvider>
+            <AppStateUpdater />
+            <Layout categories={categories}>{children}</Layout>
+          </ReduxStoreProvider>
+        </AppLoadingProvider>
       </body>
     </html>
   );

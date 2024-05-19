@@ -8,18 +8,16 @@ const userAuthSlice = createSlice({
   initialState,
   name: "userAuth",
   reducers: {
-    logOut: state => {
-      delete state.jwtUser;
-    },
-    login: (state, action: PayloadAction<JwtUser>) => {
-      state.jwtUser = action.payload;
+    setJwtUser: (state, action: PayloadAction<JwtUser | undefined>) => {
+      if (action.payload) state.jwtUser = action.payload;
+      else delete state.jwtUser;
     }
   }
 });
 
 export const userAuthReducer = userAuthSlice.reducer;
 
-export const { logOut, login } = userAuthSlice.actions;
+export const { setJwtUser } = userAuthSlice.actions;
 
 export const selectJwtUser = (state: RootState): JwtUser | undefined =>
   state.userAuth.jwtUser;
