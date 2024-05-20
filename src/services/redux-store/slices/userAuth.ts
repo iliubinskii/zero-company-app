@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { JwtUser } from "../../../schema";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../types";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: RootState["userAuth"] = {};
 

@@ -1,4 +1,4 @@
-import { ExistingCategory, MultipleDocsResponse } from "../schema";
+import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { AnimatedLink } from "../components";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";

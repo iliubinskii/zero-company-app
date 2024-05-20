@@ -1,6 +1,6 @@
 import { AnimatedLink } from "../components";
 import { Bebas_Neue } from "next/font/google";
-import Link from "next/link";
+import type Link from "next/link";
 import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
