@@ -1,9 +1,8 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { REDUX_PERSIST_KEY } from "../../consts";
-import { RootState } from "./state";
 import storage from "redux-persist/lib/storage";
+import { thunk } from "redux-thunk";
 import { userAuthReducer } from "./slices";
 
 const rootReducer = combineReducers({
@@ -20,18 +19,13 @@ const persistedReducer = persistReducer(
 );
 
 export const store = configureStore({
+  middleware: getDefaultMiddleware => {
+    const defaultMiddleware = getDefaultMiddleware();
+
+    // eslint-disable-next-line unicorn/prefer-spread -- Ok
+    return defaultMiddleware.concat(thunk);
+  },
   reducer: persistedReducer
 });
 
 export const persistor = persistStore(store);
-
-/**
- * A hook to access the Redux dispatch function.
- * @returns The Redux dispatch function.
- */
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- Ok
-export function useAppDispatch() {
-  return useDispatch<typeof store.dispatch>();
-}
-
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
