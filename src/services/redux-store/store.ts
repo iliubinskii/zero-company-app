@@ -1,8 +1,9 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { REDUX_PERSIST_KEY } from "../../consts";
+import { RootState } from "./state";
 import storage from "redux-persist/lib/storage";
-import { useDispatch } from "react-redux";
 import { userAuthReducer } from "./slices";
 
 const rootReducer = combineReducers({
@@ -32,3 +33,5 @@ export const persistor = persistStore(store);
 export function useAppDispatch() {
   return useDispatch<typeof store.dispatch>();
 }
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
