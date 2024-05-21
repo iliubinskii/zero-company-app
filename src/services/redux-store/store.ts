@@ -20,7 +20,9 @@ const persistedReducer = persistReducer(
 
 export const store = configureStore({
   middleware: getDefaultMiddleware => {
-    const defaultMiddleware = getDefaultMiddleware();
+    const defaultMiddleware = getDefaultMiddleware({
+      serializableCheck: false
+    });
 
     // eslint-disable-next-line unicorn/prefer-spread -- Ok
     return defaultMiddleware.concat(thunk);
