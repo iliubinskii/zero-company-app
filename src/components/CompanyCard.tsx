@@ -1,4 +1,4 @@
-import { Company } from "../schema";
+import type { Company } from "../schema";
 import React from "react";
 import { assertDefined } from "../utils";
 

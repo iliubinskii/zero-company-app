@@ -1,7 +1,7 @@
 "use client";
 
 import { CompanyCard, CompanyCards } from "../../../components";
-import {
+import type {
   ExistingCategory,
   ExistingCompany,
   MultipleDocsResponse

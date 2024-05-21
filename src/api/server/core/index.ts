@@ -1,10 +1,11 @@
-import {
+import type {
   ErrorCode,
   ErrorResponse,
   ErrorResponseWithData
 } from "../../../schema";
-import { Query, buildQuery } from "../../../utils";
+import type { Query } from "../../../utils";
 import { SERVER_API_URL } from "../../../config";
+import { buildQuery } from "../../../utils";
 
 /**
  * Retrieves data from the API.

@@ -1,5 +1,5 @@
 import { AnimatedLink } from "../components";
-import Link from "next/link";
+import type Link from "next/link";
 import React from "react";
 import { lang } from "../langs";
 

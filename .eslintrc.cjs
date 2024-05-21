@@ -115,6 +115,7 @@ const config = {
             "rofr",
             "schemas",
             "semibold",
+            "serializable",
             "smacss",
             "sonarjs",
             "str",

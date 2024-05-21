@@ -1,10 +1,11 @@
 "use client";
 
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
-import { ExistingCategory, MultipleDocsResponse } from "../../schema";
+import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
-import React, { FormEventHandler } from "react";
+import type { FormEventHandler } from "react";
+import React from "react";
 import { clientAPI } from "../../api";
 import { lang } from "../../langs";
 

@@ -1,5 +1,4 @@
-import {
-  ErrorCode,
+import type {
   ErrorResponse,
   ErrorResponseWithData,
   ExistingCompany,
@@ -7,6 +6,7 @@ import {
   RoutesOld
 } from "../../schema";
 import { get, post } from "./core";
+import { ErrorCode } from "../../schema";
 
 /**
  * Retrieves the authenticated user from the API.
