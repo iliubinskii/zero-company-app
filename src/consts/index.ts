@@ -1,6 +1,6 @@
 export const APP_LOADING_CLASS = "app-loading";
 
-export const APP_LOADING_TIMEOUT_MS = 100;
+export const APP_LOADING_TIMEOUT_MS = 200;
 
 export const COMPANY_LIMIT = 9;
 
