@@ -1,4 +1,4 @@
-import type { useDispatch, useSelector } from "react-redux";
+import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { JwtUser } from "../../../schema";
 import type { store } from "../store";
 
@@ -16,4 +16,4 @@ export interface RootState {
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;
 
-export type UseAppSelector = typeof useSelector<RootState>;
+export type UseAppSelector = TypedUseSelectorHook<RootState>;
