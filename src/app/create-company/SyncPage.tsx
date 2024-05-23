@@ -166,14 +166,25 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         {/* Logo */}
         <div className="form-field-container">
           {lang.CompanyLogo}
-          <input className="form-field" name="logo" type="file" />
+          <input
+            accept="image/*"
+            className="form-field"
+            name="logo"
+            type="file"
+          />
         </div>
         {/* Logo END */}
 
         {/* Images */}
         <div className="form-field-container">
           {lang.CompanyImages}
-          <input className="form-field" multiple name="images" type="file" />
+          <input
+            accept="image/*"
+            className="form-field"
+            multiple
+            name="images"
+            type="file"
+          />
         </div>
         {/* Images END */}
 
