@@ -63,8 +63,8 @@ const links = [
   },
   {
     Icon: LuUser2,
-    href: "/profile/account",
-    text: lang.Account
+    href: "/profile/settings",
+    text: lang.Settings
   },
   {
     Icon: BsBookmarks,
