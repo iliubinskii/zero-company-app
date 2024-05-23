@@ -1,8 +1,8 @@
 import type {
+  AuthUser,
   ErrorResponse,
   ErrorResponseWithData,
   ExistingCompany,
-  JwtUser,
   RoutesOld
 } from "../../schema";
 import { get, post } from "./core";
@@ -12,15 +12,14 @@ import { ErrorCode } from "../../schema";
  * Retrieves the authenticated user from the API.
  * @returns The authenticated user.
  */
-export async function getJwtUser(): Promise<JwtUser | undefined> {
-  const jwtUser = await get<RoutesOld["/auth"]["/me"]["GET"]>("auth/me");
+export async function getAuthUser(): Promise<AuthUser | undefined> {
+  const user = await get<RoutesOld["/auth"]["/me"]["GET"]>("auth/me");
 
-  if (jwtUser === null) return;
+  if (user === null) return;
 
-  if ("error" in jwtUser)
-    throw new Error(`${jwtUser.error}: ${jwtUser.errorMessage}`);
+  if ("error" in user) throw new Error(`${user.error}: ${user.errorMessage}`);
 
-  return jwtUser;
+  return user;
 }
 
 /**
