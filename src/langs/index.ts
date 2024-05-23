@@ -33,6 +33,7 @@ export const lang = {
   LogIn: "Log In",
   LogOut: "Log Out",
   MyCompanies: "My Companies",
+  MyDrafts: "My Drafts",
   NDA: "NDA",
   Name: "Name",
   NotFound: "Not Found",

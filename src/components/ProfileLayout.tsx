@@ -1,6 +1,6 @@
 "use client";
 
-import { LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
 import { AnimatedLink } from "./AnimatedLink";
 import { BsBookmarks } from "react-icons/bs";
 import { CLIENT_API_URL } from "../config";
@@ -50,6 +50,11 @@ const links = [
     Icon: RxRocket,
     href: "/profile/companies",
     text: lang.MyCompanies
+  },
+  {
+    Icon: LuHeartHandshake,
+    href: "/profile/drafts",
+    text: lang.MyDrafts
   },
   {
     Icon: IoDocumentsOutline,
