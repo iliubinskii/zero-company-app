@@ -68,6 +68,8 @@ const fields = {
 
 export const ExistingCompanyValidationSchema = zod.strictObject(fields);
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Use it for validation
 export const CompanyCreateValidationSchema = zod.strictObject({
   ..._.omit(fields, "_id", "foundedAt", "recommended"),
   founders: foundersCreate

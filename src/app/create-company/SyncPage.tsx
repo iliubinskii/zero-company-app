@@ -49,7 +49,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       const company = await clientAPI.postCompany(data);
 
-      // eslint-disable-next-line no-warning-comments -- Postponed
+      // eslint-disable-next-line no-warning-comments -- Assigned
       // TODO: Show errors to the user
       if ("error" in company) console.error(company);
       else {
@@ -103,6 +103,15 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
   return (
     <div className="blocks-layout-md">
+      {/* eslint-disable-next-line no-warning-comments -- Temp */}
+      {/* TODO: remove */}
+      <div className="relative">
+        <input />
+        <div className="absolute left-0 right-0 bottom-0 transform translate-y-full">
+          Error
+        </div>
+      </div>
+      {/* END */}
       <div className="header2">{lang.CreateCompany}</div>
       <form className="flex flex-col gap-9" onSubmit={onSubmit}>
         {/* Category */}
