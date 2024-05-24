@@ -1,12 +1,12 @@
 import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
 import React from "react";
 import { createAsyncPage } from "../utils";
+import { getCompanies } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
-import { serverAPI } from "../api";
 
 const Page = createAsyncPage("/", async () => {
-  const companies = await serverAPI.getCompanies({
+  const companies = await getCompanies({
     limit: 3,
     sortBy: "foundedAt",
     sortOrder: "desc"

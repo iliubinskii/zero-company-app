@@ -6,8 +6,8 @@ import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FormEventHandler } from "react";
 import React from "react";
-import { clientAPI } from "../../api";
 import { lang } from "../../langs";
+import { postCompany } from "../../api";
 
 // eslint-disable-next-line no-warning-comments -- Postponed
 // TODO:
@@ -47,7 +47,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       if (data.get("website") === "") data.delete("website");
 
-      const company = await clientAPI.postCompany(data);
+      const company = await postCompany(data);
 
       // eslint-disable-next-line no-warning-comments -- Postponed
       // TODO: Show errors to the user

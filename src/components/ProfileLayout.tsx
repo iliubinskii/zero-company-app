@@ -1,9 +1,9 @@
 "use client";
 
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import { API_URL } from "../config";
 import { AnimatedLink } from "./AnimatedLink";
 import { BsBookmarks } from "react-icons/bs";
-import { CLIENT_API_URL } from "../config";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
@@ -73,7 +73,7 @@ const links = [
   },
   {
     Icon: GoSignOut,
-    href: `${CLIENT_API_URL}auth/logout`,
+    href: `${API_URL}auth/logout`,
     text: lang.LogOut
   }
 ];
