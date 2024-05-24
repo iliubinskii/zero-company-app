@@ -5,29 +5,38 @@ import { authReducer } from "./slices";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 
-const rootReducer = combineReducers({
-  auth: authReducer
-});
+/**
+ * Creates a persisted store.
+ * @returns The store and the persistor.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- Ok
+export function createdPersistedStore() {
+  const rootReducer = combineReducers({
+    auth: authReducer
+  });
 
-const persistedReducer = persistReducer(
-  {
-    key: REDUX_PERSIST_KEY,
-    storage,
-    whitelist: ["auth"]
-  },
-  rootReducer
-);
+  const persistedReducer = persistReducer(
+    {
+      key: REDUX_PERSIST_KEY,
+      storage,
+      whitelist: ["auth"]
+    },
+    rootReducer
+  );
 
-export const store = configureStore({
-  middleware: getDefaultMiddleware => {
-    const defaultMiddleware = getDefaultMiddleware({
-      serializableCheck: false
-    });
+  const store = configureStore({
+    middleware: getDefaultMiddleware => {
+      const defaultMiddleware = getDefaultMiddleware({
+        serializableCheck: false
+      });
 
-    // eslint-disable-next-line unicorn/prefer-spread -- Ok
-    return defaultMiddleware.concat(thunk);
-  },
-  reducer: persistedReducer
-});
+      // eslint-disable-next-line unicorn/prefer-spread -- Ok
+      return defaultMiddleware.concat(thunk);
+    },
+    reducer: persistedReducer
+  });
 
-export const persistor = persistStore(store);
+  const persistor = persistStore(store);
+
+  return { persistor, store };
+}
