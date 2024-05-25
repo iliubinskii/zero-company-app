@@ -5,8 +5,8 @@ import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
 import { AppStateUpdater } from "../AppStateUpdater";
 import Layout from "../Layout";
 import React from "react";
+import { getCategories } from "../api";
 import { lang } from "../langs";
-import { serverAPI } from "../api";
 
 /**
  * Root layout.
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }: Props): Promise<React.ReactElement> {
   const t1 = performance.now();
 
-  const categories = await serverAPI.getCategories({ onlyPinned: true });
+  const categories = await getCategories({ onlyPinned: true });
 
   const element = (
     <html lang="en">

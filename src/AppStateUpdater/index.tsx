@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useJwtUserUpdater } from "./useJwtUserUpdater";
+import { useAuthUserUpdater } from "./useAuthUserUpdater";
 
 export const AppStateUpdater: React.FC = () => {
-  useJwtUserUpdater();
+  useAuthUserUpdater();
 
   return <></>;
 };

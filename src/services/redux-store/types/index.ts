@@ -1,16 +1,18 @@
+import type { AuthUser, AuthUserEssential } from "../../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
-import type { JwtUser } from "../../../schema";
-import type { store } from "../store";
+import type { createdPersistedStore } from "../store";
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ReturnType<
+  typeof createdPersistedStore
+>["store"]["dispatch"];
 
 export interface AppThunk<T = void> {
   (): (dispatch: AppDispatch) => Promise<T>;
 }
 
 export interface RootState {
-  readonly userAuth: {
-    readonly jwtUser?: JwtUser;
+  readonly auth: {
+    readonly authUser?: AuthUser | AuthUserEssential;
   };
 }
 

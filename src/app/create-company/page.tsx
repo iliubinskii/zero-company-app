@@ -1,10 +1,10 @@
 import React from "react";
 import { SyncPage } from "./SyncPage";
 import { createAsyncPage } from "../../utils";
-import { serverAPI } from "../../api";
+import { getCategories } from "../../api";
 
 const Page = createAsyncPage("/create-company", async () => {
-  const categories = await serverAPI.getCategories();
+  const categories = await getCategories();
 
   return <SyncPage categories={categories} />;
 });
