@@ -45,7 +45,6 @@ export const lang = {
   ROFR: "ROFR",
   Resources: "Resources",
   SelectCategory: "Select a category",
-  ServerInfoLogged: "Server info logged",
   Settings: "Settings",
   Share: "Share",
   ShareholdersAgreement: "Shareholders' Agreement",
