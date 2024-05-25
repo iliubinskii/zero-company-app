@@ -5,6 +5,7 @@ export const lang = {
   About: "About",
   AboutUs: "About Us",
   AccessibilityStatement: "Accessibility Statement",
+  ApiUrl: "API URL",
   Blog: "Blog",
   Bookmarks: "Bookmarks",
   BuySellAgreement: "Buy-Sell Agreement",
@@ -44,6 +45,7 @@ export const lang = {
   ROFR: "ROFR",
   Resources: "Resources",
   SelectCategory: "Select a category",
+  ServerInfoLogged: "Server info logged",
   Settings: "Settings",
   Share: "Share",
   ShareholdersAgreement: "Shareholders' Agreement",
@@ -55,6 +57,7 @@ export const lang = {
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
   Website: "Website",
+  ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
   app: {
     description:
