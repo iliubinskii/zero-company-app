@@ -1,1 +1,1 @@
-export { updateJwtUser } from "./update-jwt-user";
+export { updateAuthUser } from "./update-auth-user";

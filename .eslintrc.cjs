@@ -133,6 +133,7 @@ const config = {
             "tsx",
             "unobserve",
             "uri",
+            "ver",
             "webhooks",
             "webp",
             "zod"

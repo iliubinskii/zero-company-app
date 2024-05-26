@@ -11,8 +11,8 @@ import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import Head from "next/head";
 import React from "react";
+import { getCompaniesByCategory } from "../../../api";
 import { lang } from "../../../langs";
-import { serverAPI } from "../../../api";
 
 export const SyncPage: React.FC<Props> = ({
   category,
@@ -34,7 +34,7 @@ export const SyncPage: React.FC<Props> = ({
       setLoading(true);
 
       try {
-        const response = await serverAPI.getCompaniesByCategory(
+        const response = await getCompaniesByCategory(
           category._id,
           filterUndefinedProperties({
             cursor: nextCursor,

@@ -2,10 +2,10 @@ import type {
   ErrorCode,
   ErrorResponse,
   ErrorResponseWithData
-} from "../../../schema";
-import { CLIENT_API_URL } from "../../../config";
-import type { Query } from "../../../utils";
-import { buildQuery } from "../../../utils";
+} from "../../schema";
+import { API_URL } from "../../config";
+import type { Query } from "../../utils";
+import { buildQuery } from "../../utils";
 
 /**
  * Retrieves data from the API.
@@ -19,7 +19,7 @@ export async function get<T extends [unknown, unknown]>(
 ): Promise<T[1] | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>> {
   const queryStr = buildQuery(query);
 
-  const response = await fetch(`${CLIENT_API_URL}${endpoint}${queryStr}`, {
+  const response = await fetch(`${API_URL}${endpoint}${queryStr}`, {
     credentials: "include"
   });
 
@@ -38,7 +38,7 @@ export async function post<T extends [unknown, unknown]>(
   endpoint: string,
   body: FormData
 ): Promise<T[1] | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>> {
-  const response = await fetch(`${CLIENT_API_URL}${endpoint}`, {
+  const response = await fetch(`${API_URL}${endpoint}`, {
     body,
     credentials: "include",
     method: "POST"

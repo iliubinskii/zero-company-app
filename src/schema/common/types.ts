@@ -1,12 +1,10 @@
 export enum ErrorCode {
-  AuthenticationFailed = "AuthenticationFailed",
   BadRequest = "BadRequest",
   CategoryNotFound = "CategoryNotFound",
   CompanyNotFound = "CompanyNotFound",
   InternalServerError = "InternalServerError",
   InvalidCategoryData = "InvalidCategoryData",
   InvalidCompanyData = "InvalidCompanyData",
-  InvalidEmailParam = "InvalidEmailParam",
   InvalidIdParam = "InvalidIdParam",
   InvalidParam = "InvalidParam",
   InvalidQuery = "InvalidQuery",
