@@ -1,5 +1,9 @@
 /* eslint-disable no-process-env -- Ok */
 
-import { assertDefined } from "../utils";
+import { cleanEnv, str } from "envalid";
 
-export const API_URL = assertDefined(process.env["NEXT_PUBLIC_API_URL"]);
+const env = cleanEnv(process.env, {
+  NEXT_PUBLIC_API_URL: str()
+});
+
+export const { NEXT_PUBLIC_API_URL: API_URL } = env;
