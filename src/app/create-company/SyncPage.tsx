@@ -7,6 +7,7 @@ import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FormEventHandler } from "react";
 import React from "react";
 import { lang } from "../../langs";
+import { logger } from "../../services";
 import { postCompany } from "../../api";
 
 // eslint-disable-next-line no-warning-comments -- Postponed
@@ -51,7 +52,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       // eslint-disable-next-line no-warning-comments -- Postponed
       // TODO: Show errors to the user
-      if ("error" in company) console.error(company);
+      if ("error" in company) logger.error(company);
       else {
         setCategories([""]);
         setDescription("");
