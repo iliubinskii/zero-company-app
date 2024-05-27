@@ -1,11 +1,18 @@
 "use client";
 
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
-import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
+import type {
+  ExistingCategory,
+  FieldError,
+  MultipleDocsResponse
+} from "../../schema";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FormEventHandler } from "react";
+import { InputElement } from "../../components/form/InputElement";
 import React from "react";
+import { SelectElement } from "../../components/form/SelectElement";
+import { TextAreaElement } from "../../components/form/TextAreaElement";
 import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
@@ -37,6 +44,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
   const [website, setWebsite] = React.useState<string>("");
 
+  const [errorArray, setErrorArray] = React.useState<FieldError[]>([]);
+
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
       e.preventDefault();
@@ -51,8 +60,10 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       // eslint-disable-next-line no-warning-comments -- Assigned
       // TODO: Show errors to the user
-      if ("error" in company) console.error(company);
-      else {
+      if ("error" in company) {
+        console.error(company);
+        if ("data" in company) setErrorArray([...company.data]);
+      } else {
         setCategories([""]);
         setDescription("");
         setFounders([
@@ -67,6 +78,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         setPrivateCompany(false);
         setTargetValue("");
         setWebsite("");
+        setErrorArray([]);
       }
     });
   };
@@ -100,110 +112,120 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
   const removeFounder = (index: number): void => {
     setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
   };
-
   return (
     <div className="blocks-layout-md">
-      {/* eslint-disable-next-line no-warning-comments -- Temp */}
-      {/* TODO: remove */}
-      <div className="relative">
-        <input />
-        <div className="absolute left-0 right-0 bottom-0 transform translate-y-full">
-          Error
-        </div>
-      </div>
-      {/* END */}
       <div className="header2">{lang.CreateCompany}</div>
-      <form className="flex flex-col gap-9" onSubmit={onSubmit}>
+      <form className="flex flex-col gap-11" onSubmit={onSubmit}>
         {/* Category */}
-        <select
-          className="form-field"
-          name="categories[]"
-          onChange={e => {
-            setCategories([e.target.value]);
-          }}
-          value={categories[0]}
-        >
-          <option value="">{lang.SelectCategory}</option>
-          {docs.map(category => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+
+        <div className="relative">
+          <SelectElement
+            errorMessages={errorArray.filter(
+              field => field.path === "categories[0]"
+            )}
+            name="categories[]"
+            onChange={value => {
+              setCategories([value]);
+            }}
+            options={docs.map(category => {
+              return {
+                label: category.name,
+                value: category._id
+              };
+            })}
+            otherStyles="form-field w-full"
+            placeholder={lang.SelectCategory}
+            value={categories[0]}
+          />
+        </div>
+
         {/* Category END */}
 
         {/* Name */}
-        <input
-          className="form-field"
-          name="name"
-          onChange={e => {
-            setName(e.target.value);
-          }}
-          placeholder={lang.Name}
-          type="text"
-          value={name}
-        />
+        <div className="relative">
+          <InputElement
+            errorMessages={errorArray.filter(field => field.path === "name")}
+            name={name}
+            onChange={setName}
+            otherStyles={"form-field w-full"}
+            placeholder={lang.Name}
+            type="text"
+            value={name}
+          />
+        </div>
         {/* Name END */}
 
         {/* Description */}
-        <textarea
-          className="form-field"
-          name="description"
-          onChange={e => {
-            setDescription(e.target.value);
-          }}
-          placeholder={lang.Description}
-          value={description}
-        />
+        <div className="relative">
+          <TextAreaElement
+            errorMessages={errorArray.filter(
+              field => field.path === "description"
+            )}
+            name="description"
+            onChange={setDescription}
+            otherStyles="form-field w-full"
+            placeholder={lang.Description}
+            value={description}
+          />
+        </div>
         {/* Description END */}
 
         {/* Target value */}
-        <input
-          className="form-field"
-          min={COMPANY_TARGET_VALUE_STEP}
-          name="targetValue"
-          onChange={e => {
-            setTargetValue(e.target.value);
-          }}
-          placeholder={lang.TargetValue}
-          step={COMPANY_TARGET_VALUE_STEP}
-          type="number"
-          value={targetValue}
-        />
+        <div className="relative">
+          <InputElement
+            errorMessages={errorArray.filter(
+              field => field.path === "targetValue"
+            )}
+            min={COMPANY_TARGET_VALUE_STEP}
+            name="targetValue"
+            onChange={setTargetValue}
+            otherStyles="form-field w-full"
+            placeholder={lang.TargetValue}
+            step={COMPANY_TARGET_VALUE_STEP}
+            type="number"
+            value={targetValue}
+          />
+        </div>
         {/* Target value END */}
 
         {/* Logo */}
         <div className="form-field-container">
           {lang.CompanyLogo}
-          <input
-            accept="image/*"
-            className="form-field"
-            name="logo"
-            type="file"
-          />
+          <div className="relative">
+            <InputElement
+              accept="image/*"
+              errorMessages={errorArray.filter(field => field.path === "logo")}
+              name="logo"
+              otherStyles="form-field w-full"
+              type="file"
+            />
+          </div>
         </div>
         {/* Logo END */}
 
         {/* Images */}
         <div className="form-field-container">
           {lang.CompanyImages}
-          <input
-            accept="image/*"
-            className="form-field"
-            multiple
-            name="images"
-            type="file"
-          />
+          <div className="relative">
+            <InputElement
+              accept="image/*"
+              errorMessages={errorArray.filter(
+                field => field.path === "images"
+              )}
+              multiple
+              name="images"
+              otherStyles="form-field w-full"
+              type="file"
+            />
+          </div>
         </div>
         {/* Images END */}
 
         {/* Website */}
-        <input
-          className="form-field"
+        <InputElement
           name="website"
-          onChange={e => {
-            setWebsite(e.target.value);
-          }}
+          onChange={setWebsite}
+          otherStyles="form-field w-full"
           placeholder={lang.Website}
           type="url"
           value={website}
@@ -214,61 +236,80 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         <div className="flex flex-col gap-2">
           <h3>{lang.Founders}</h3>
           {founders.map((founder, index) => (
-            <div className="flex gap-4 items-center" key={index}>
+            <div className="flex gap-4 items-center w-full" key={index}>
               {/* Fields */}
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2 w-full">
                 {/* E-mail */}
-                <input
-                  className="form-field"
-                  name={`founders[${index}].email`}
-                  onChange={e => {
-                    editFounder(index, "email", e.target.value);
-                  }}
-                  placeholder={lang.Email}
-                  type="email"
-                  value={founder.email}
-                />
-                {/* E-mail END */}
+                <div className="relative">
+                  <InputElement
+                    errorMessages={errorArray.filter(
+                      field => field.path === "founders[0].email"
+                    )}
+                    name={`founders[${index}].email`}
+                    onChange={value => {
+                      editFounder(index, "email", value);
+                    }}
+                    otherStyles="form-field w-full"
+                    placeholder={lang.Email}
+                    type="email"
+                    value={founder.email}
+                  />
+                </div>
 
                 {/* First name */}
-                <input
-                  className="form-field"
-                  name={`founders[${index}].firstName`}
-                  onChange={e => {
-                    editFounder(index, "firstName", e.target.value);
-                  }}
-                  placeholder={lang.FirstName}
-                  type="text"
-                  value={founder.firstName}
-                />
+                <div className="relative">
+                  <InputElement
+                    errorMessages={errorArray.filter(
+                      field => field.path === "founders[0].firstName"
+                    )}
+                    name={`founders[${index}].firstName`}
+                    onChange={value => {
+                      editFounder(index, "firstName", value);
+                    }}
+                    otherStyles="form-field w-full"
+                    placeholder={lang.FirstName}
+                    type="text"
+                    value={founder.firstName}
+                  />
+                </div>
                 {/* First name END */}
 
                 {/* Last name */}
-                <input
-                  className="form-field"
-                  name={`founders[${index}].lastName`}
-                  onChange={e => {
-                    editFounder(index, "lastName", e.target.value);
-                  }}
-                  placeholder={lang.LastName}
-                  type="text"
-                  value={founder.lastName}
-                />
+                <div className="relative">
+                  <InputElement
+                    errorMessages={errorArray.filter(
+                      field => field.path === "founders[0].lastName"
+                    )}
+                    name={`founders[${index}].lastName`}
+                    onChange={value => {
+                      editFounder(index, "lastName", value);
+                    }}
+                    otherStyles="form-field w-full"
+                    placeholder={lang.LastName}
+                    type="text"
+                    value={founder.lastName}
+                  />
+                </div>
                 {/* Last name END */}
 
                 {/* Share */}
-                <input
-                  className="form-field"
-                  min={COMPANY_SHARE_STEP}
-                  name={`founders[${index}].share`}
-                  onChange={e => {
-                    editFounder(index, "share", e.target.value);
-                  }}
-                  placeholder={lang.Share}
-                  step={COMPANY_SHARE_STEP}
-                  type="number"
-                  value={founder.share}
-                />
+                <div className="relative">
+                  <InputElement
+                    errorMessages={errorArray.filter(
+                      field => field.path === "founders[0].share"
+                    )}
+                    min={COMPANY_SHARE_STEP}
+                    name={`founders[${index}].share`}
+                    onChange={value => {
+                      editFounder(index, "share", value);
+                    }}
+                    otherStyles="form-field w-full"
+                    placeholder={lang.Share}
+                    step={COMPANY_SHARE_STEP}
+                    type="number"
+                    value={founder.share}
+                  />
+                </div>
                 {/* Share END */}
               </div>
               {/* Fields END */}
