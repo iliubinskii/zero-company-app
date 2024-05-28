@@ -1,0 +1,6 @@
+.container {
+  @apply z-10
+    absolute left-0 right-0 -bottom-1 transform translate-y-full
+    text-sm text-red-700
+    flex flex-col gap-1;
+}

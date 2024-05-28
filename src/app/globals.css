@@ -59,6 +59,11 @@ body {
     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
 }
 
+.form-field-error {
+  /* TODO */
+  @apply form-field text-red-700;
+}
+
 .form-field-container {
   @apply flex flex-col gap-1;
 }

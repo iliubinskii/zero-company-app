@@ -1,7 +1,17 @@
 "use client";
 
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
-import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
+import type {
+  ExistingCategory,
+  FieldError,
+  MultipleDocsResponse
+} from "../../schema";
+import {
+  FileInputElement,
+  InputElement,
+  SelectElement,
+  TextareaElement
+} from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FormEventHandler } from "react";
@@ -9,12 +19,6 @@ import React from "react";
 import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
-// eslint-disable-next-line no-warning-comments -- Postponed
-// TODO:
-// - Move API request to api/ folder
-// - Select one or two categories
-// - Style the form better
-// - Validate the form
 export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
   const [categories, setCategories] = React.useState<readonly [string]>([""]);
 
@@ -37,6 +41,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
   const [website, setWebsite] = React.useState<string>("");
 
+  const [errorMessages, setErrorMessages] = React.useState<FieldError[]>([]);
+
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
       e.preventDefault();
@@ -49,10 +55,11 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       const company = await postCompany(data);
 
-      // eslint-disable-next-line no-warning-comments -- Postponed
+      // eslint-disable-next-line no-warning-comments -- Assigned
       // TODO: Show errors to the user
-      if ("error" in company) console.error(company);
-      else {
+      if ("error" in company) {
+        if ("data" in company) setErrorMessages([...company.data]);
+      } else {
         setCategories([""]);
         setDescription("");
         setFounders([
@@ -67,6 +74,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         setPrivateCompany(false);
         setTargetValue("");
         setWebsite("");
+        setErrorMessages([]);
       }
     });
   };
@@ -104,32 +112,30 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
   return (
     <div className="blocks-layout-md">
       <div className="header2">{lang.CreateCompany}</div>
-      <form className="flex flex-col gap-9" onSubmit={onSubmit}>
+      <form className="flex flex-col gap-11" onSubmit={onSubmit}>
         {/* Category */}
-        <select
-          className="form-field"
-          name="categories[]"
-          onChange={e => {
-            setCategories([e.target.value]);
+        <SelectElement
+          errorMessages={errorMessages}
+          name="categories[0]"
+          onChange={value => {
+            setCategories([value]);
           }}
+          options={docs.map(category => {
+            return {
+              label: category.name,
+              value: category._id
+            };
+          })}
+          placeholder={lang.SelectCategory}
           value={categories[0]}
-        >
-          <option value="">{lang.SelectCategory}</option>
-          {docs.map(category => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+        />
         {/* Category END */}
 
         {/* Name */}
-        <input
-          className="form-field"
+        <InputElement
+          errorMessages={errorMessages}
           name="name"
-          onChange={e => {
-            setName(e.target.value);
-          }}
+          onChange={setName}
           placeholder={lang.Name}
           type="text"
           value={name}
@@ -137,25 +143,21 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         {/* Name END */}
 
         {/* Description */}
-        <textarea
-          className="form-field"
+        <TextareaElement
+          errorMessages={errorMessages}
           name="description"
-          onChange={e => {
-            setDescription(e.target.value);
-          }}
+          onChange={setDescription}
           placeholder={lang.Description}
           value={description}
         />
         {/* Description END */}
 
         {/* Target value */}
-        <input
-          className="form-field"
+        <InputElement
+          errorMessages={errorMessages}
           min={COMPANY_TARGET_VALUE_STEP}
           name="targetValue"
-          onChange={e => {
-            setTargetValue(e.target.value);
-          }}
+          onChange={setTargetValue}
           placeholder={lang.TargetValue}
           step={COMPANY_TARGET_VALUE_STEP}
           type="number"
@@ -166,9 +168,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         {/* Logo */}
         <div className="form-field-container">
           {lang.CompanyLogo}
-          <input
+          <FileInputElement
             accept="image/*"
-            className="form-field"
+            errorMessages={errorMessages}
             name="logo"
             type="file"
           />
@@ -178,9 +180,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         {/* Images */}
         <div className="form-field-container">
           {lang.CompanyImages}
-          <input
+          <FileInputElement
             accept="image/*"
-            className="form-field"
+            errorMessages={errorMessages}
             multiple
             name="images"
             type="file"
@@ -189,12 +191,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         {/* Images END */}
 
         {/* Website */}
-        <input
-          className="form-field"
+        <InputElement
           name="website"
-          onChange={e => {
-            setWebsite(e.target.value);
-          }}
+          onChange={setWebsite}
           placeholder={lang.Website}
           type="url"
           value={website}
@@ -205,15 +204,15 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         <div className="flex flex-col gap-2">
           <h3>{lang.Founders}</h3>
           {founders.map((founder, index) => (
-            <div className="flex gap-4 items-center" key={index}>
+            <div className="flex gap-4 items-center w-full" key={index}>
               {/* Fields */}
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2 w-full">
                 {/* E-mail */}
-                <input
-                  className="form-field"
+                <InputElement
+                  errorMessages={errorMessages}
                   name={`founders[${index}].email`}
-                  onChange={e => {
-                    editFounder(index, "email", e.target.value);
+                  onChange={value => {
+                    editFounder(index, "email", value);
                   }}
                   placeholder={lang.Email}
                   type="email"
@@ -222,11 +221,11 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                 {/* E-mail END */}
 
                 {/* First name */}
-                <input
-                  className="form-field"
+                <InputElement
+                  errorMessages={errorMessages}
                   name={`founders[${index}].firstName`}
-                  onChange={e => {
-                    editFounder(index, "firstName", e.target.value);
+                  onChange={value => {
+                    editFounder(index, "firstName", value);
                   }}
                   placeholder={lang.FirstName}
                   type="text"
@@ -235,11 +234,11 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                 {/* First name END */}
 
                 {/* Last name */}
-                <input
-                  className="form-field"
+                <InputElement
+                  errorMessages={errorMessages}
                   name={`founders[${index}].lastName`}
-                  onChange={e => {
-                    editFounder(index, "lastName", e.target.value);
+                  onChange={value => {
+                    editFounder(index, "lastName", value);
                   }}
                   placeholder={lang.LastName}
                   type="text"
@@ -248,12 +247,12 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                 {/* Last name END */}
 
                 {/* Share */}
-                <input
-                  className="form-field"
+                <InputElement
+                  errorMessages={errorMessages}
                   min={COMPANY_SHARE_STEP}
                   name={`founders[${index}].share`}
-                  onChange={e => {
-                    editFounder(index, "share", e.target.value);
+                  onChange={value => {
+                    editFounder(index, "share", value);
                   }}
                   placeholder={lang.Share}
                   step={COMPANY_SHARE_STEP}

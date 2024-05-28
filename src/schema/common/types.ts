@@ -1,5 +1,4 @@
 export enum ErrorCode {
-  AuthenticationFailed = "AuthenticationFailed",
   BadRequest = "BadRequest",
   CategoryNotFound = "CategoryNotFound",
   CompanyNotFound = "CompanyNotFound",
@@ -26,6 +25,9 @@ export interface ErrorResponse<E extends ErrorCode> {
   readonly error: E;
   readonly errorMessage: string;
 }
+
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Interface describing the error response for fields
 
 export interface ErrorResponseWithData<E extends ErrorCode> {
   readonly data: readonly FieldError[];
