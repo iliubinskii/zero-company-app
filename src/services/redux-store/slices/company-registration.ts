@@ -17,7 +17,7 @@ const companyRegistrationSlice = createSlice({
       delete state.category;
     },
     setCompanyCategory: (state, action: PayloadAction<ExistingCategory>) => {
-      state.currentStep = CompanyReg.Country;
+      state.currentStep = CompanyReg.SelectCountry;
       state.category = action.payload;
     },
     setCompanyCountry: (state, action: PayloadAction<string>) => {
@@ -25,7 +25,7 @@ const companyRegistrationSlice = createSlice({
       state.country = action.payload;
     },
     startCompanyRegistration: state => {
-      state.currentStep = CompanyReg.Category;
+      state.currentStep = CompanyReg.SelectCategory;
     }
   }
 });

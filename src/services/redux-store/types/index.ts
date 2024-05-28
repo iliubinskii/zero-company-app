@@ -10,9 +10,9 @@ import type { createdPersistedStore } from "../store";
  * The company registration step.
  */
 export enum CompanyReg {
-  Category = "Category",
-  Country = "Country",
   Login = "Login",
+  SelectCategory = "SelectCategory",
+  SelectCountry = "SelectCountry",
   Start = "Start"
 }
 
