@@ -16,7 +16,7 @@
    - `git add --renormalize .`
 3. Install dependencies by running `npm install`.
 4. Create a `.env` file (see `.env.example`).
-5. Request access to postman collection if you need it for your part of work
+5. Request access to postman collection if you need it for your part of work.
 
 ## Development
 
