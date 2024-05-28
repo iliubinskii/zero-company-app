@@ -1,8 +1,6 @@
-import { API_URL } from "../../../config";
 import { createPage } from "../../../utils";
-import { lang } from "../../../langs";
+import { logServerInfo } from "../../../services";
 import { notFound } from "next/navigation";
-import { schemaVersion } from "../../../schema";
 
 /**
  * Server info handler
@@ -10,8 +8,7 @@ import { schemaVersion } from "../../../schema";
  * @param res - Response
  */
 const Page = createPage("/server-info", () => {
-  console.info(`${lang.ZeroAppServer} ${schemaVersion}`);
-  console.info(`${lang.ApiUrl}: ${API_URL}`);
+  logServerInfo();
 
   return notFound();
 });

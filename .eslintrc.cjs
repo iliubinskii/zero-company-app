@@ -49,7 +49,6 @@ const config = {
       }
     ],
     "n/no-unsupported-features/node-builtins": "off",
-    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "spellcheck/spell-checker": [
       "warn",
       {
