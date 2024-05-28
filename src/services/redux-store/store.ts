@@ -1,7 +1,7 @@
+import { authReducer, companyRegistrationReducer } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { REDUX_PERSIST_KEY } from "../../consts";
-import { authReducer } from "./slices";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 
@@ -12,14 +12,15 @@ import { thunk } from "redux-thunk";
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- Ok
 export function createdPersistedStore() {
   const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    companyRegistration: companyRegistrationReducer
   });
 
   const persistedReducer = persistReducer(
     {
       key: REDUX_PERSIST_KEY,
       storage,
-      whitelist: ["auth"]
+      whitelist: ["auth", "companyRegistration"]
     },
     rootReducer
   );
