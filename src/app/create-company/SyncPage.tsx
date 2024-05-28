@@ -41,7 +41,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
   const [website, setWebsite] = React.useState<string>("");
 
-  const [errorMessages, setErrorMessages] = React.useState<FieldError[]>([]);
+  const [errorMessages, setErrorMessages] = React.useState<
+    readonly FieldError[]
+  >([]);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
@@ -58,7 +60,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
       // eslint-disable-next-line no-warning-comments -- Assigned
       // TODO: Show errors to the user
       if ("error" in company) {
-        if ("data" in company) setErrorMessages([...company.data]);
+        if ("data" in company) setErrorMessages(company.data);
       } else {
         setCategories([""]);
         setDescription("");
