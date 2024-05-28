@@ -26,6 +26,9 @@ export interface ErrorResponse<E extends ErrorCode> {
   readonly errorMessage: string;
 }
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Interface describing the error response for fields
+
 export interface ErrorResponseWithData<E extends ErrorCode> {
   readonly data: readonly FieldError[];
   readonly error: E;
