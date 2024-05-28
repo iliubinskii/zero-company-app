@@ -1,9 +1,395 @@
 {
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Zero Company API",
+    "description": "An API for Zero Company application",
+    "version": "2024.5.26"
+  },
+  "servers": [
+    {
+      "url": "https://api.zero-company.app"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get API status",
+        "tags": [
+          "root"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Home"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get authentication response",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthUser"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "summary": "Get all categories",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CategoryList"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidQuery"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new category",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Category"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "delete": {
+        "summary": "Delete a category by ID",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a category by ID",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Category"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a category by ID",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Category"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/categories/{id}/companies": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "summary": "Get all companies for a category",
+        "tags": [
+          "categories"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CompanyList"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidQuery"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "get": {
+        "summary": "Get all companies",
+        "tags": [
+          "companies"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CompanyList"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidQuery"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new company",
+        "tags": [
+          "companies"
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Company"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          }
+        }
+      }
+    },
+    "/companies/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "delete": {
+        "summary": "Delete a company by ID",
+        "tags": [
+          "companies"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a company by ID",
+        "tags": [
+          "companies"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Company"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a company by ID",
+        "tags": [
+          "companies"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Company"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserList"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidQuery"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          },
+          "409": {
+            "$ref": "#/components/responses/AlreadyExists"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "delete": {
+        "summary": "Delete a user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidData"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/users/{id}/companies": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "summary": "Get all companies for a user",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CompanyList"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidQuery"
+          }
+        }
+      }
+    },
+    "/400": {
+      "get": {
+        "summary": "Bad request",
+        "tags": [
+          "common"
+        ],
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/401": {
+      "get": {
+        "summary": "Unauthorized",
+        "tags": [
+          "common"
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/404": {
+      "get": {
+        "summary": "Not found",
+        "tags": [
+          "common"
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/405": {
+      "get": {
+        "summary": "Method not allowed",
+        "tags": [
+          "common"
+        ],
+        "responses": {
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          }
+        }
+      }
+    },
+    "/500": {
+      "get": {
+        "summary": "Internal server error",
+        "tags": [
+          "common"
+        ],
+        "responses": {
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "Id": {
-        "in": "path",
         "name": "id",
+        "in": "path",
         "required": true,
         "schema": {
           "type": "string"
@@ -11,212 +397,242 @@
       }
     },
     "responses": {
+      "AlreadyExists": {
+        "description": "Already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AlreadyExists"
+            }
+          }
+        }
+      },
+      "AuthUser": {
+        "description": "Authentication response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthUser"
+            }
+          }
+        }
+      },
       "BadRequest": {
+        "description": "Bad request",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/BadRequest"
             }
           }
-        },
-        "description": "Bad request"
+        }
       },
       "Category": {
+        "description": "Category",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Category"
             }
           }
-        },
-        "description": "Category"
+        }
       },
       "CategoryList": {
+        "description": "Category list",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/CategoryList"
             }
           }
-        },
-        "description": "Category list"
-      },
-      "CategoryNotFound": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CategoryNotFound"
-            }
-          }
-        },
-        "description": "Category not found"
+        }
       },
       "Company": {
+        "description": "Company",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Company"
             }
           }
-        },
-        "description": "Company"
+        }
       },
       "CompanyList": {
+        "description": "Company list",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/CompanyList"
             }
           }
-        },
-        "description": "Company list"
-      },
-      "CompanyNotFound": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CompanyNotFound"
-            }
-          }
-        },
-        "description": "Company not found"
+        }
       },
       "Delete": {
+        "description": "Delete",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Delete"
             }
           }
-        },
-        "description": "Delete"
+        }
       },
       "Home": {
+        "description": "Home",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Home"
             }
           }
-        },
-        "description": "Home"
+        }
       },
       "InternalServerError": {
+        "description": "Internal server error",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/InternalServerError"
             }
           }
-        },
-        "description": "Internal server error"
+        }
       },
-      "InvalidCategoryData": {
+      "InvalidData": {
+        "description": "Invalid data",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/InvalidCategoryData"
+              "$ref": "#/components/schemas/InvalidData"
             }
           }
-        },
-        "description": "Invalid category data"
-      },
-      "InvalidCompanyData": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/InvalidCompanyData"
-            }
-          }
-        },
-        "description": "Invalid company data"
+        }
       },
       "InvalidQuery": {
+        "description": "Invalid query",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/InvalidQuery"
             }
           }
-        },
-        "description": "Invalid query"
+        }
       },
-      "InvalidUserData": {
+      "MethodNotAllowed": {
+        "description": "Method not allowed",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/InvalidUserData"
+              "$ref": "#/components/schemas/MethodNotAllowed"
             }
           }
-        },
-        "description": "Invalid user data"
+        }
       },
       "NotFound": {
+        "description": "Not found",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/NotFound"
             }
           }
-        },
-        "description": "Not found"
+        }
+      },
+      "Unauthorized": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Unauthorized"
+            }
+          }
+        }
       },
       "User": {
+        "description": "User",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/User"
             }
           }
-        },
-        "description": "User"
-      },
-      "UserAlreadyExists": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/UserAlreadyExists"
-            }
-          }
-        },
-        "description": "User already exists"
+        }
       },
       "UserList": {
+        "description": "User list",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/UserList"
             }
           }
-        },
-        "description": "User list"
-      },
-      "UserNotFound": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/UserNotFound"
-            }
-          }
-        },
-        "description": "User not found"
+        }
       }
     },
     "schemas": {
-      "BadRequest": {
+      "AlreadyExists": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
         "properties": {
           "error": {
-            "enum": ["BadRequest", "InvalidIdParam"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "AlreadyExists"
+            ]
           },
           "errorMessage": {
             "type": "string"
           }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
+      },
+      "AuthUser": {
+        "type": "object",
+        "nullable": true,
+        "required": [
+          "admin",
+          "email"
+        ],
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "BadRequest": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "BadRequest",
+              "InvalidIdParam"
+            ]
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
       },
       "Category": {
+        "type": "object",
+        "required": [
+          "_id",
+          "description",
+          "name",
+          "tagline"
+        ],
         "properties": {
           "_id": {
             "type": "string"
@@ -233,57 +649,60 @@
           "tagline": {
             "type": "string"
           }
-        },
-        "required": ["_id", "description", "name", "tagline"],
-        "type": "object"
+        }
       },
       "CategoryList": {
+        "type": "object",
+        "required": [
+          "count",
+          "docs",
+          "total"
+        ],
         "properties": {
           "count": {
             "type": "integer"
           },
           "docs": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
-            },
-            "type": "array"
+            }
           },
           "nextCursor": {
+            "type": "array",
             "items": {
               "type": "string"
             },
-            "type": "array"
+            "minItems": 2,
+            "maxItems": 2
           },
           "total": {
             "type": "integer"
           }
-        },
-        "required": ["count", "docs", "total"],
-        "type": "object"
-      },
-      "CategoryNotFound": {
-        "properties": {
-          "error": {
-            "enum": ["CategoryNotFound"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
       "Company": {
+        "type": "object",
+        "required": [
+          "_id",
+          "categories",
+          "description",
+          "foundedAt",
+          "founders",
+          "images",
+          "logo",
+          "name",
+          "targetValue"
+        ],
         "properties": {
           "_id": {
             "type": "string"
           },
           "categories": {
+            "type": "array",
             "items": {
               "type": "string"
-            },
-            "type": "array"
+            }
           },
           "description": {
             "type": "string"
@@ -292,16 +711,16 @@
             "type": "string"
           },
           "founders": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/Founder"
-            },
-            "type": "array"
+            }
           },
           "images": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/WebAccessibleImage"
-            },
-            "type": "array"
+            }
           },
           "logo": {
             "$ref": "#/components/schemas/WebAccessibleImage"
@@ -321,67 +740,57 @@
           "website": {
             "type": "string"
           }
-        },
-        "required": [
-          "_id",
-          "categories",
-          "description",
-          "foundedAt",
-          "founders",
-          "images",
-          "logo",
-          "name",
-          "targetValue"
-        ],
-        "type": "object"
+        }
       },
       "CompanyList": {
+        "type": "object",
+        "required": [
+          "count",
+          "docs",
+          "total"
+        ],
         "properties": {
           "count": {
             "type": "integer"
           },
           "docs": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/Company"
-            },
-            "type": "array"
+            }
           },
           "nextCursor": {
+            "type": "array",
             "items": {
               "type": "string"
             },
-            "type": "array"
+            "minItems": 2,
+            "maxItems": 2
           },
           "total": {
             "type": "integer"
           }
-        },
-        "required": ["count", "docs", "total"],
-        "type": "object"
-      },
-      "CompanyNotFound": {
-        "properties": {
-          "error": {
-            "enum": ["CompanyNotFound"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
       "Delete": {
+        "type": "object",
+        "required": [
+          "affectedRows"
+        ],
         "properties": {
           "affectedRows": {
             "type": "integer"
           }
-        },
-        "required": ["affectedRows"],
-        "type": "object"
+        }
       },
       "Founder": {
+        "type": "object",
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "share"
+        ],
         "properties": {
           "confirmed": {
             "type": "boolean"
@@ -398,40 +807,69 @@
           "share": {
             "type": "number"
           }
-        },
-        "required": ["email", "firstName", "lastName", "share"],
-        "type": "object"
+        }
       },
       "Home": {
+        "type": "object",
+        "required": [
+          "schema",
+          "status"
+        ],
         "properties": {
           "schema": {
             "type": "string"
           },
           "status": {
-            "enum": ["OK"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "OK"
+            ]
           }
-        },
-        "required": ["schema", "status"],
-        "type": "object"
+        }
       },
       "InternalServerError": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
         "properties": {
           "error": {
-            "enum": ["InternalServerError"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "InternalServerError"
+            ]
           },
           "errorMessage": {
             "type": "string"
           }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
-      "InvalidCategoryData": {
+      "InvalidData": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage",
+          "data"
+        ],
         "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "InvalidData"
+            ]
+          },
+          "errorMessage": {
+            "type": "string"
+          },
           "data": {
+            "type": "array",
             "items": {
+              "type": "object",
+              "required": [
+                "message",
+                "path"
+              ],
               "properties": {
                 "message": {
                   "type": "string"
@@ -439,68 +877,54 @@
                 "path": {
                   "type": "string"
                 }
-              },
-              "required": ["message", "path"],
-              "type": "object"
-            },
-            "type": "array"
-          },
-          "error": {
-            "enum": ["InvalidCategoryData"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
+              }
+            }
           }
-        },
-        "required": ["error", "errorMessage", "data"],
-        "type": "object"
-      },
-      "InvalidCompanyData": {
-        "properties": {
-          "data": {
-            "items": {
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "path": {
-                  "type": "string"
-                }
-              },
-              "required": ["message", "path"],
-              "type": "object"
-            },
-            "type": "array"
-          },
-          "error": {
-            "enum": ["InvalidCompanyData"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        },
-        "required": ["error", "errorMessage", "data"],
-        "type": "object"
+        }
       },
       "InvalidIdParam": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
         "properties": {
           "error": {
-            "enum": ["InvalidIdParam"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "InvalidIdParam"
+            ]
           },
           "errorMessage": {
             "type": "string"
           }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
       "InvalidQuery": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage",
+          "data"
+        ],
         "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "InvalidQuery"
+            ]
+          },
+          "errorMessage": {
+            "type": "string"
+          },
           "data": {
+            "type": "array",
             "items": {
+              "type": "object",
+              "required": [
+                "message",
+                "path"
+              ],
               "properties": {
                 "message": {
                   "type": "string"
@@ -508,65 +932,73 @@
                 "path": {
                   "type": "string"
                 }
-              },
-              "required": ["message", "path"],
-              "type": "object"
-            },
-            "type": "array"
-          },
-          "error": {
-            "enum": ["InvalidQuery"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
+              }
+            }
           }
-        },
-        "required": ["error", "errorMessage", "data"],
-        "type": "object"
+        }
       },
-      "InvalidUserData": {
+      "MethodNotAllowed": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
         "properties": {
-          "data": {
-            "items": {
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "path": {
-                  "type": "string"
-                }
-              },
-              "required": ["message", "path"],
-              "type": "object"
-            },
-            "type": "array"
-          },
           "error": {
-            "enum": ["InvalidUserData"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "MethodNotAllowed"
+            ]
           },
           "errorMessage": {
             "type": "string"
           }
-        },
-        "required": ["error", "errorMessage", "data"],
-        "type": "object"
+        }
       },
       "NotFound": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
         "properties": {
           "error": {
-            "enum": ["NotFound"],
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "NotFound"
+            ]
           },
           "errorMessage": {
             "type": "string"
           }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "required": [
+          "error",
+          "errorMessage"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "Unauthorized"
+            ]
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
       },
       "User": {
+        "type": "object",
+        "required": [
+          "_id",
+          "email",
+          "firstName",
+          "lastName"
+        ],
         "properties": {
           "_id": {
             "type": "string"
@@ -580,61 +1012,47 @@
           "lastName": {
             "type": "string"
           }
-        },
-        "required": ["_id", "email", "firstName", "lastName"],
-        "type": "object"
-      },
-      "UserAlreadyExists": {
-        "properties": {
-          "error": {
-            "enum": ["UserAlreadyExists"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
       "UserList": {
+        "type": "object",
+        "required": [
+          "count",
+          "docs",
+          "total"
+        ],
         "properties": {
           "count": {
             "type": "integer"
           },
           "docs": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/User"
-            },
-            "type": "array"
+            }
           },
           "nextCursor": {
+            "type": "array",
             "items": {
               "type": "string"
             },
-            "type": "array"
+            "minItems": 2,
+            "maxItems": 2
           },
           "total": {
             "type": "integer"
           }
-        },
-        "required": ["count", "docs", "total"],
-        "type": "object"
-      },
-      "UserNotFound": {
-        "properties": {
-          "error": {
-            "enum": ["UserNotFound"],
-            "type": "string"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        },
-        "required": ["error", "errorMessage"],
-        "type": "object"
+        }
       },
       "WebAccessibleImage": {
+        "type": "object",
+        "required": [
+          "assetId",
+          "height",
+          "secureUrl",
+          "url",
+          "width"
+        ],
         "properties": {
           "assetId": {
             "type": "string"
@@ -651,315 +1069,8 @@
           "width": {
             "type": "number"
           }
-        },
-        "required": ["assetId", "height", "secureUrl", "url", "width"],
-        "type": "object"
+        }
       }
     }
-  },
-  "info": {
-    "description": "An API for Zero Company application",
-    "title": "Zero Company API",
-    "version": "2024.5.26"
-  },
-  "openapi": "3.0.0",
-  "paths": {
-    "/": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Home"
-          }
-        },
-        "summary": "Get API status",
-        "tags": ["root"]
-      }
-    },
-    "/400": {
-      "get": {
-        "responses": {
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          }
-        },
-        "summary": "Bad request",
-        "tags": ["common"]
-      }
-    },
-    "/404": {
-      "get": {
-        "responses": {
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        },
-        "summary": "Not found",
-        "tags": ["common"]
-      }
-    },
-    "/500": {
-      "get": {
-        "responses": {
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        },
-        "summary": "Internal server error",
-        "tags": ["common"]
-      }
-    },
-    "/categories": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/CategoryList"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidQuery"
-          }
-        },
-        "summary": "Get all categories",
-        "tags": ["categories"]
-      },
-      "post": {
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Category"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidCategoryData"
-          }
-        },
-        "summary": "Create a new category",
-        "tags": ["categories"]
-      }
-    },
-    "/categories/{id}": {
-      "delete": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Delete"
-          }
-        },
-        "summary": "Delete a category by ID",
-        "tags": ["categories"]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Category"
-          },
-          "404": {
-            "$ref": "#/components/responses/CategoryNotFound"
-          }
-        },
-        "summary": "Get a category by ID",
-        "tags": ["categories"]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Id"
-        }
-      ],
-      "put": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Category"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidCategoryData"
-          },
-          "404": {
-            "$ref": "#/components/responses/CategoryNotFound"
-          }
-        },
-        "summary": "Update a category by ID",
-        "tags": ["categories"]
-      }
-    },
-    "/categories/{id}/companies": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/CompanyList"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidQuery"
-          }
-        },
-        "summary": "Get all companies for a category",
-        "tags": ["categories"]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Id"
-        }
-      ]
-    },
-    "/companies": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/CompanyList"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidQuery"
-          }
-        },
-        "summary": "Get all companies",
-        "tags": ["companies"]
-      },
-      "post": {
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Company"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidCompanyData"
-          }
-        },
-        "summary": "Create a new company",
-        "tags": ["companies"]
-      }
-    },
-    "/companies/{id}": {
-      "delete": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Delete"
-          }
-        },
-        "summary": "Delete a company by ID",
-        "tags": ["companies"]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Company"
-          },
-          "404": {
-            "$ref": "#/components/responses/CompanyNotFound"
-          }
-        },
-        "summary": "Get a company by ID",
-        "tags": ["companies"]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Id"
-        }
-      ],
-      "put": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Company"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidCompanyData"
-          },
-          "404": {
-            "$ref": "#/components/responses/CompanyNotFound"
-          }
-        },
-        "summary": "Update a company by ID",
-        "tags": ["companies"]
-      }
-    },
-    "/users": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/UserList"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidQuery"
-          }
-        },
-        "summary": "Get all users",
-        "tags": ["users"]
-      },
-      "post": {
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/User"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidUserData"
-          },
-          "409": {
-            "$ref": "#/components/responses/UserAlreadyExists"
-          }
-        },
-        "summary": "Create a new user",
-        "tags": ["users"]
-      }
-    },
-    "/users/{id}": {
-      "delete": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Delete"
-          }
-        },
-        "summary": "Delete a user by ID",
-        "tags": ["users"]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/User"
-          },
-          "404": {
-            "$ref": "#/components/responses/UserNotFound"
-          }
-        },
-        "summary": "Get a user by ID",
-        "tags": ["users"]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Id"
-        }
-      ],
-      "put": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/User"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidUserData"
-          },
-          "404": {
-            "$ref": "#/components/responses/UserNotFound"
-          }
-        },
-        "summary": "Update a user by ID",
-        "tags": ["users"]
-      }
-    },
-    "/users/{id}/companies": {
-      "get": {
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/CompanyList"
-          },
-          "400": {
-            "$ref": "#/components/responses/InvalidQuery"
-          }
-        },
-        "summary": "Get all companies for a user",
-        "tags": ["users"]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Id"
-        }
-      ]
-    }
-  },
-  "servers": [
-    {
-      "url": "https://api.zero-company.app"
-    }
-  ]
+  }
 }

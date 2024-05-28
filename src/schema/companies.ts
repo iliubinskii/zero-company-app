@@ -1,7 +1,5 @@
 import type { Update, WebAccessibleImage } from "./common";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Take types and required/optional here
 export interface Company {
   readonly categories: readonly string[];
   readonly description: string;
