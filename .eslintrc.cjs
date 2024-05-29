@@ -137,6 +137,7 @@ const config = {
             "unobserve",
             "uri",
             "ver",
+            "vscode",
             "webhooks",
             "webp",
             "zod"

@@ -12,4 +12,4 @@ export const REDUX_PERSIST_KEY = "root";
 
 export const USER_STORAGE_KEY = "user";
 
-export const SHOW_SNACKBAR_DURATION = 3000;
+export const SHOW_SNACKBAR_DURATION_MS = 3000;

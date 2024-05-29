@@ -1,57 +1,34 @@
 "use client";
-// parent has use client rule, but if i don't add this rule here, app falls
 
 import { MdClose } from "react-icons/md";
-import React, { useCallback, useEffect } from "react";
-import { SHOW_SNACKBAR_DURATION } from "../consts";
+import React, { useEffect } from "react";
+import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
 import styles from "./Snackbar.module.css";
 
 export const Snackbar: React.FC<Props> = ({
-  duration = SHOW_SNACKBAR_DURATION,
+  duration = SHOW_SNACKBAR_DURATION_MS,
   isOpen,
   message,
+  // TS71007: Weird typescript error that appears only in the editor, switch to vscode's version of typescript
   onClose
-  // TS71007: Props must be serializable for components in the "use client" entry file, "onClose" is invalid. - How to fix?
 }) => {
-  const handleEscape = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    },
-    [onClose]
-  );
-
   useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, duration);
-      window.addEventListener("keydown", handleEscape);
+    const timer = setTimeout(onClose, duration);
 
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener("keydown", handleEscape);
-      };
-    }
-
-    // Return a cleanup function even if isOpen is false
     return () => {
-      window.removeEventListener("keydown", handleEscape);
+      clearTimeout(timer);
     };
-  }, [isOpen, duration, onClose, handleEscape]);
-
-  if (!isOpen) return null;
+  }, [duration, onClose]);
 
   return (
-    <div className={styles["outer-container"]} onClick={onClose}>
-      <div
-        className={styles["inner-container"]}
-        onClick={e => {
-          e.stopPropagation();
-        }}
-      >
-        <span>{message}</span>
-        <MdClose className={styles["icon"]} onClick={onClose} />
-      </div>
+    <div
+      className={isOpen ? styles["container-open"] : styles["container"]}
+      onClick={e => {
+        e.stopPropagation();
+      }}
+    >
+      <span>{message}</span>
+      <MdClose className={styles["icon"]} onClick={onClose} />
     </div>
   );
 };

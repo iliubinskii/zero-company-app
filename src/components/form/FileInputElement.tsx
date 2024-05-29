@@ -1,5 +1,3 @@
-"use client";
-
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React, { useCallback } from "react";
@@ -18,6 +16,7 @@ export const FileInputElement: React.FC<Props> = ({
   multiple = false,
   name,
   onResetErrors = noop,
+  // TS71007: Weird typescript error that appears only in the editor, switch to vscode's version of typescript
   setFiles,
   ...props
 }) => {
