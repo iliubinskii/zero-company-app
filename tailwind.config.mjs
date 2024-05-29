@@ -12,6 +12,13 @@ const config = {
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
   plugins: [daisyui, flowbite],
+  safelist: [
+    "max-w-screen-sm",
+    "max-w-screen-md",
+    "max-w-screen-lg",
+    "max-w-screen-xl",
+    "max-w-screen-2xl"
+  ],
   theme: {
     extend: {
       borderWidth: {

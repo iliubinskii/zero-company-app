@@ -114,6 +114,7 @@ const config = {
             "req",
             "roboto",
             "rofr",
+            "safelist",
             "schemas",
             "semibold",
             "serializable",
