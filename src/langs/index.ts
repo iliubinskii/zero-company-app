@@ -69,6 +69,7 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
+  dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
   home: {
     card1: {

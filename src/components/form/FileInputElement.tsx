@@ -5,6 +5,7 @@ import type { FieldError } from "../../schema";
 import React, { useCallback } from "react";
 import { SlClose } from "react-icons/sl";
 import { filterUndefinedProperties } from "../../utils";
+import { lang } from "../../langs";
 import { noop } from "lodash";
 import styles from "./FileInputElement.module.css";
 import { useDropzone } from "react-dropzone";
@@ -12,7 +13,6 @@ import { useDropzone } from "react-dropzone";
 export const FileInputElement: React.FC<Props> = ({
   accept,
   className = "",
-  containerClassName = "",
   errorMessages = [],
   files,
   multiple = false,
@@ -29,9 +29,9 @@ export const FileInputElement: React.FC<Props> = ({
         })
       );
 
-      setFiles(prevFiles =>
-        multiple ? [...prevFiles, ...filesWithPreviews] : filesWithPreviews
-      );
+      if (multiple) setFiles(prevFiles => [...prevFiles, ...filesWithPreviews]);
+      else setFiles(filesWithPreviews);
+
       onResetErrors(name);
     },
     [multiple, name, setFiles, onResetErrors]
@@ -39,12 +39,7 @@ export const FileInputElement: React.FC<Props> = ({
 
   const { getInputProps, getRootProps } = useDropzone(
     filterUndefinedProperties({
-      accept:
-        typeof accept === "string"
-          ? {
-              [accept]: []
-            }
-          : undefined,
+      accept: { [accept]: [] },
       multiple,
       onDrop
     })
@@ -56,17 +51,11 @@ export const FileInputElement: React.FC<Props> = ({
   };
 
   return (
-    <div className={`relative ${containerClassName}`.trim()}>
+    <div className={`relative ${className}`.trim()}>
       <div {...getRootProps()} className={styles["outer-container"]}>
-        <input
-          {...getInputProps()}
-          {...props}
-          className={`form-field w-full ${className}`.trim()}
-        />
+        <input name={name} {...props} {...getInputProps()} />
         {files.length === 0 ? (
-          <p className={styles["text"]}>
-            Drag & drop files here, or click to select files
-          </p>
+          <p className={styles["text"]}>{lang.dragAndDropPrompt}</p>
         ) : (
           <ul className={styles["preview-list"]}>
             {files.map(file => (
@@ -98,12 +87,13 @@ export const FileInputElement: React.FC<Props> = ({
   );
 };
 
-export interface Props
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  readonly containerClassName?: string;
+export interface Props {
+  readonly accept: string;
+  readonly className?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly files: readonly FileWithPreview[];
   readonly multiple?: boolean;
+  readonly name?: string;
   readonly onResetErrors?: (name?: string) => void;
   readonly setFiles: React.Dispatch<
     React.SetStateAction<readonly FileWithPreview[]>

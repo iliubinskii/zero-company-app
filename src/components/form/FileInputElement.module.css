@@ -3,7 +3,7 @@
 }
 
 .text {
-  @apply text-center text-gray-500;
+  @apply h-10 flex justify-center items-center text-gray-500;
 }
 
 .preview-list {

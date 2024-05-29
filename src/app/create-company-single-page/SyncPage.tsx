@@ -205,7 +205,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
             name="logo"
             onResetErrors={resetErrorsHandler}
             setFiles={setLogo}
-            type="file"
           />
         </div>
         {/* Logo END */}
@@ -221,7 +220,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
             name="images"
             onResetErrors={resetErrorsHandler}
             setFiles={setImages}
-            type="file"
           />
         </div>
         {/* Images END */}
