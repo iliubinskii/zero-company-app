@@ -4,7 +4,7 @@
 import { MdClose } from "react-icons/md";
 import React, { useCallback, useEffect } from "react";
 import { SHOW_SNACKBAR_DURATION } from "../consts";
-import styles from "./SnackBar.module.css";
+import styles from "./Snack.module.css";
 
 export const SnackBar: React.FC<Props> = ({
   duration = SHOW_SNACKBAR_DURATION,
