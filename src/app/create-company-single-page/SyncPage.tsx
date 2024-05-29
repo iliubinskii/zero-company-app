@@ -88,6 +88,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
             share: ""
           }
         ]);
+        setImages([]);
+        setLogo([]);
         setName("");
         setPrivateCompany(false);
         setTargetValue("");
