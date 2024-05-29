@@ -23,6 +23,11 @@ export const authReducer = authSlice.reducer;
 
 export const { setAuthUser } = authSlice.actions;
 
+/**
+ * Select the authenticated user.
+ * @param state - The root state.
+ * @returns The authenticated user.
+ */
 export const selectAuthUser = (
   state: RootState
 ): AuthUser | AuthUserEssential | undefined => state.auth.authUser;
