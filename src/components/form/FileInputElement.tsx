@@ -1,15 +1,16 @@
 "use client";
 
-import type { Accept } from "react-dropzone";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React, { useCallback } from "react";
 import { SlClose } from "react-icons/sl";
+import { filterUndefinedProperties } from "../../utils";
 import { noop } from "lodash";
 import styles from "./FileInputElement.module.css";
 import { useDropzone } from "react-dropzone";
 
 export const FileInputElement: React.FC<Props> = ({
+  accept,
   className = "",
   containerClassName = "",
   errorMessages = [],
@@ -36,15 +37,18 @@ export const FileInputElement: React.FC<Props> = ({
     [multiple, name, setFiles, onResetErrors]
   );
 
-  const accept: Accept = {
-    "image/*": []
-  };
-
-  const { getInputProps, getRootProps } = useDropzone({
-    accept,
-    multiple,
-    onDrop
-  });
+  const { getInputProps, getRootProps } = useDropzone(
+    filterUndefinedProperties({
+      accept:
+        typeof accept === "string"
+          ? {
+              [accept]: []
+            }
+          : undefined,
+      multiple,
+      onDrop
+    })
+  );
 
   const handleReset = (file: FileWithPreview): void => {
     setFiles(prevFiles => prevFiles.filter(f => f !== file));
