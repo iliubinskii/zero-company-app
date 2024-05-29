@@ -10,7 +10,7 @@ import {
   FileInputElement,
   InputElement,
   SelectElement,
-  SnackBar,
+  Snackbar,
   TextareaElement
 } from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
@@ -370,7 +370,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         </div>
         {/* Buttons END */}
       </form>
-      <SnackBar
+      <Snackbar
         isOpen={isSnackbarActive}
         message={errorMessage}
         onClose={() => {
