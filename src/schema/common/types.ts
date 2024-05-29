@@ -1,33 +1,26 @@
-export enum ErrorCode {
-  BadRequest = "BadRequest",
-  CategoryNotFound = "CategoryNotFound",
-  CompanyNotFound = "CompanyNotFound",
-  InternalServerError = "InternalServerError",
-  InvalidCategoryData = "InvalidCategoryData",
-  InvalidCompanyData = "InvalidCompanyData",
-  InvalidIdParam = "InvalidIdParam",
-  InvalidParam = "InvalidParam",
-  InvalidQuery = "InvalidQuery",
-  InvalidUserData = "InvalidUserData",
-  MethodNotAllowed = "MethodNotAllowed",
-  NotFound = "NotFound",
-  OK = "OK",
-  Unauthorized = "Unauthorized",
-  UserAlreadyExists = "UserAlreadyExists",
-  UserNotFound = "UserNotFound"
-}
+export const ErrorCode = {
+  AlreadyExists: "AlreadyExists",
+  BadRequest: "BadRequest",
+  InternalServerError: "InternalServerError",
+  InvalidData: "InvalidData",
+  InvalidIdParam: "InvalidIdParam",
+  InvalidQuery: "InvalidQuery",
+  MethodNotAllowed: "MethodNotAllowed",
+  NotFound: "NotFound",
+  OK: "OK",
+  Unauthorized: "Unauthorized"
+} as const;
 
 export interface DeleteResponse {
   readonly affectedRows: number;
 }
 
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+
 export interface ErrorResponse<E extends ErrorCode> {
   readonly error: E;
   readonly errorMessage: string;
 }
-
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Interface describing the error response for fields
 
 export interface ErrorResponseWithData<E extends ErrorCode> {
   readonly data: readonly FieldError[];

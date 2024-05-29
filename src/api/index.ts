@@ -1,5 +1,6 @@
 import type {
   AuthUser,
+  ErrorCode,
   ErrorResponse,
   ErrorResponseWithData,
   ExistingCategory,
@@ -7,17 +8,21 @@ import type {
   GetCategoriesOptions,
   GetCompaniesOptions,
   MultipleDocsResponse,
-  RoutesOld
+  Routes
 } from "../schema";
 import { get, post } from "./core";
-import { ErrorCode } from "../schema";
+import { filterUndefinedProperties } from "../utils";
 
 /**
  * Retrieves the authenticated user from the API.
  * @returns The authenticated user.
  */
 export async function getAuthUser(): Promise<AuthUser | undefined> {
-  const user = await get<RoutesOld["/auth"]["/me"]["GET"]>("auth/me");
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  const user = (await get("auth/me")) as
+    | AuthUser
+    | ErrorResponse<ErrorCode>
+    | null;
 
   if (user === null) return;
 
@@ -35,15 +40,24 @@ export async function getAuthUser(): Promise<AuthUser | undefined> {
 export async function getCategories({
   onlyPinned = false
 }: GetCategoriesOptions = {}): Promise<MultipleDocsResponse<ExistingCategory>> {
-  const categories = await get<RoutesOld["/categories"]["/"]["GET"]>(
-    "categories",
-    { onlyPinned: onlyPinned ? "yes" : "no" }
-  );
+  const categories = await get<Routes["/categories"]["get"]>("categories", {
+    onlyPinned: onlyPinned ? "yes" : "no"
+  });
 
   if ("error" in categories)
     throw new Error(`${categories.error}: ${categories.errorMessage}`);
 
-  return categories;
+  const { count, docs, nextCursor, total } = categories;
+
+  return filterUndefinedProperties({
+    count,
+    docs,
+    // eslint-disable-next-line no-warning-comments -- Postponed
+    // TODO: Auto-generated schema has string[] instead of [string, string]
+    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+    nextCursor: nextCursor as [string, string] | undefined,
+    total
+  });
 }
 
 /**
@@ -52,7 +66,7 @@ export async function getCategories({
  * @returns The category.
  */
 export async function getCategory(id: string): Promise<ExistingCategory> {
-  const category = await get<RoutesOld["/categories"]["/:id"]["GET"]["OK"]>(
+  const category = await get<Routes["/categories/{id}"]["get"]>(
     `categories/${id}`
   );
 
@@ -75,20 +89,27 @@ export async function getCompanies({
   limit,
   offset
 }: GetCompaniesOptions = {}): Promise<MultipleDocsResponse<ExistingCompany>> {
-  const companies = await get<RoutesOld["/companies"]["/"]["GET"]>(
-    "companies",
-    {
-      "cursor[0]": cursor ? cursor[0] : undefined,
-      "cursor[1]": cursor ? cursor[1] : undefined,
-      limit,
-      offset
-    }
-  );
+  const companies = await get<Routes["/companies"]["get"]>("companies", {
+    "cursor[0]": cursor ? cursor[0] : undefined,
+    "cursor[1]": cursor ? cursor[1] : undefined,
+    limit,
+    offset
+  });
 
   if ("error" in companies)
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  return companies;
+  const { count, docs, nextCursor, total } = companies;
+
+  return filterUndefinedProperties({
+    count,
+    docs,
+    // eslint-disable-next-line no-warning-comments -- Postponed
+    // TODO: Auto-generated schema has string[] instead of [string, string]
+    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+    nextCursor: nextCursor as [string, string] | undefined,
+    total
+  });
 }
 
 /**
@@ -104,19 +125,30 @@ export async function getCompaniesByCategory(
   id: string,
   { cursor, limit, offset }: GetCompaniesOptions = {}
 ): Promise<MultipleDocsResponse<ExistingCompany>> {
-  const companies = await get<
-    RoutesOld["/categories"]["/:id/companies"]["GET"]
-  >(`categories/${id}/companies`, {
-    "cursor[0]": cursor ? cursor[0] : undefined,
-    "cursor[1]": cursor ? cursor[1] : undefined,
-    limit,
-    offset
-  });
+  const companies = await get<Routes["/categories/{id}/companies"]["get"]>(
+    `categories/${id}/companies`,
+    {
+      "cursor[0]": cursor ? cursor[0] : undefined,
+      "cursor[1]": cursor ? cursor[1] : undefined,
+      limit,
+      offset
+    }
+  );
 
   if ("error" in companies)
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  return companies;
+  const { count, docs, nextCursor, total } = companies;
+
+  return filterUndefinedProperties({
+    count,
+    docs,
+    // eslint-disable-next-line no-warning-comments -- Postponed
+    // TODO: Auto-generated schema has string[] instead of [string, string]
+    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
+    nextCursor: nextCursor as [string, string] | undefined,
+    total
+  });
 }
 
 /**
@@ -129,14 +161,7 @@ export async function postCompany(
 ): Promise<
   ExistingCompany | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
 > {
-  const company = await post<RoutesOld["/companies"]["/"]["POST"]>(
-    "companies",
-    body
-  );
-
-  if ("error" in company)
-    if (company.error === ErrorCode.InvalidCompanyData) return company;
-    else throw new Error(`${company.error}: ${company.errorMessage}`);
+  const company = await post<Routes["/companies"]["post"]>("companies", body);
 
   return company;
 }

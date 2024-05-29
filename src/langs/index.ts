@@ -12,6 +12,7 @@ export const lang = {
   CommonQuestions: "Common Questions",
   CompanyImages: "Add company images",
   CompanyLogo: "Add company logo",
+  Continue: "Continue",
   CookiePolicy: "Cookie Policy",
   CreateCompany: "Create a company",
   Dashboard: "Dashboard",
@@ -45,6 +46,7 @@ export const lang = {
   ROFR: "ROFR",
   Resources: "Resources",
   SelectCategory: "Select a category",
+  SelectCountry: "Select a country",
   Settings: "Settings",
   Share: "Share",
   ShareholdersAgreement: "Shareholders' Agreement",
@@ -62,6 +64,10 @@ export const lang = {
     description:
       "Create a virtual company at zero cost and grow it into your first unicorn!",
     title: "Zero Company"
+  },
+  countries: {
+    il: "Israel",
+    us: "United States"
   },
   header: { searchPlaceholder: "Search..." },
   home: {
