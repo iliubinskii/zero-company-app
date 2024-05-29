@@ -10,7 +10,8 @@ export const Snackbar: React.FC<Props> = ({
   isOpen,
   message,
   // TS71007: Weird typescript error that appears only in the editor, switch to vscode's version of typescript
-  onClose
+  onClose,
+  variant = "info"
 }) => {
   useEffect(() => {
     const timer = setTimeout(onClose, duration);
@@ -22,13 +23,15 @@ export const Snackbar: React.FC<Props> = ({
 
   return (
     <div
-      className={isOpen ? styles["container-open"] : styles["container"]}
+      className={
+        isOpen ? styles[`open-${variant}`] : styles[`closed-${variant}`]
+      }
       onClick={e => {
         e.stopPropagation();
       }}
     >
       <span>{message}</span>
-      <MdClose className={styles["icon"]} onClick={onClose} />
+      <MdClose className={styles[`icon-${variant}`]} onClick={onClose} />
     </div>
   );
 };
@@ -38,4 +41,5 @@ export interface Props {
   readonly isOpen: boolean;
   readonly message: string;
   readonly onClose: () => void;
+  readonly variant?: "error" | "info" | "success";
 }

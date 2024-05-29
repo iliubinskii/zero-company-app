@@ -74,7 +74,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
       if ("error" in company)
         if ("data" in company) setErrorMessages(company.data);
         else {
-          setErrorMessage(company.error);
+          setErrorMessage(company.errorMessage);
           setIsSnackbarActive(true);
         }
       else {
@@ -373,8 +373,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         message={errorMessage}
         onClose={() => {
           setIsSnackbarActive(false);
-          setErrorMessage("");
         }}
+        variant="error"
       />
     </div>
   );
