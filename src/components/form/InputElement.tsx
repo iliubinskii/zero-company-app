@@ -1,13 +1,15 @@
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
+import { noop } from "lodash";
 
 export const InputElement: React.FC<Props> = ({
   className = "",
   containerClassName = "",
-  errorMessages,
+  errorMessages = [],
   name,
   onChange,
+  onResetErrors = noop,
   ...props
 }) => (
   <div className={`relative ${containerClassName}`.trim()}>
@@ -16,10 +18,11 @@ export const InputElement: React.FC<Props> = ({
       name={name}
       onChange={e => {
         onChange(e.target.value);
+        onResetErrors(name);
       }}
       {...props}
     />
-    {errorMessages && (
+    {errorMessages.length > 0 && (
       <ErrorMessage errorMessages={errorMessages} path={name} />
     )}
   </div>
@@ -30,4 +33,5 @@ export interface Props
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly onChange: (value: string) => void;
+  readonly onResetErrors?: (name?: string) => void;
 }

@@ -8,5 +8,6 @@ export { Loading } from "./Loading";
 export { Navigate } from "./Navigate";
 export { NotFound } from "./NotFound";
 export { ProfileLayout } from "./ProfileLayout";
+export { Snackbar } from "./Snackbar";
 export { Unauthorized } from "./Unauthorized";
 export * from "./form";

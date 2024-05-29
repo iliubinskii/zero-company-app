@@ -1,13 +1,15 @@
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
+import { noop } from "lodash";
 
 export const SelectElement: React.FC<Props> = ({
   className = "",
   containerClassName = "",
-  errorMessages,
+  errorMessages = [],
   name,
   onChange,
+  onResetErrors = noop,
   options,
   placeholder,
   ...props
@@ -18,6 +20,7 @@ export const SelectElement: React.FC<Props> = ({
       name={name}
       onChange={e => {
         onChange(e.target.value);
+        onResetErrors(name);
       }}
       {...props}
     >
@@ -28,7 +31,7 @@ export const SelectElement: React.FC<Props> = ({
         </option>
       ))}
     </select>
-    {errorMessages && (
+    {errorMessages.length > 0 && (
       <ErrorMessage errorMessages={errorMessages} path={name} />
     )}
   </div>
@@ -39,6 +42,7 @@ export interface Props
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly onChange: (value: string) => void;
+  readonly onResetErrors?: (name?: string) => void;
   readonly options: SelectOption[];
   readonly placeholder?: string;
 }
