@@ -10,5 +10,5 @@ export const BlocksLayout: React.FC<Props> = ({ children, size }) => (
 
 export interface Props {
   readonly children: React.ReactNode;
-  readonly size: "md" | "lg" | "xl";
+  readonly size: "sm" | "md" | "lg" | "xl" | "2xl";
 }
