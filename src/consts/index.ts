@@ -11,3 +11,5 @@ export const COMPANY_TARGET_VALUE_STEP = 1000;
 export const REDUX_PERSIST_KEY = "root";
 
 export const USER_STORAGE_KEY = "user";
+
+export const SHOW_SNACKBAR_DURATION = 3000;

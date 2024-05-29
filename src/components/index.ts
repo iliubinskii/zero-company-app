@@ -6,5 +6,6 @@ export { InfoCards } from "./InfoCards";
 export { Loading } from "./Loading";
 export { NotFound } from "./NotFound";
 export { ProfileLayout } from "./ProfileLayout";
+export { SnackBar } from "./SnackBar";
 export { Unauthorized } from "./Unauthorized";
 export * from "./form";
