@@ -88,9 +88,7 @@ export const FileInputElement: React.FC<Props> = ({
           </ul>
         )}
       </div>
-      {files.length === 0 && errors.length > 0 && (
-        <ErrorMessage errorMessages={errors} path={name} />
-      )}
+      {errors.length > 0 && <ErrorMessage errorMessages={errors} path={name} />}
     </div>
   );
 };
