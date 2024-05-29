@@ -6,7 +6,7 @@ import { noop } from "lodash";
 export const SelectElement: React.FC<Props> = ({
   className = "",
   containerClassName = "",
-  errorMessages,
+  errorMessages = [],
   name,
   onChange,
   onResetErrors = noop,
@@ -31,7 +31,7 @@ export const SelectElement: React.FC<Props> = ({
         </option>
       ))}
     </select>
-    {errorMessages && (
+    {errorMessages.length > 0 && (
       <ErrorMessage errorMessages={errorMessages} path={name} />
     )}
   </div>

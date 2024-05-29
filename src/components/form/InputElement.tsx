@@ -6,7 +6,7 @@ import { noop } from "lodash";
 export const InputElement: React.FC<Props> = ({
   className = "",
   containerClassName = "",
-  errorMessages,
+  errorMessages = [],
   name,
   onChange,
   onResetErrors = noop,
@@ -22,7 +22,7 @@ export const InputElement: React.FC<Props> = ({
       }}
       {...props}
     />
-    {errorMessages && (
+    {errorMessages.length > 0 && (
       <ErrorMessage errorMessages={errorMessages} path={name} />
     )}
   </div>

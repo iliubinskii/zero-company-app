@@ -3,7 +3,7 @@
 import type { Accept } from "react-dropzone";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { SlClose } from "react-icons/sl";
 import { noop } from "lodash";
 import styles from "./FileInputElement.module.css";
@@ -20,10 +20,6 @@ export const FileInputElement: React.FC<Props> = ({
   setFiles,
   ...props
 }) => {
-  const [errors, setErrors] = useState<readonly FieldError[]>([]);
-  useEffect(() => {
-    setErrors(errorMessages);
-  }, [errorMessages]);
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const filesWithPreviews = acceptedFiles.map(file =>
@@ -36,7 +32,6 @@ export const FileInputElement: React.FC<Props> = ({
         multiple ? [...prevFiles, ...filesWithPreviews] : filesWithPreviews
       );
       onResetErrors(name);
-      setErrors([]);
     },
     [multiple, name, setFiles, onResetErrors]
   );
@@ -92,7 +87,9 @@ export const FileInputElement: React.FC<Props> = ({
           </ul>
         )}
       </div>
-      {errors.length > 0 && <ErrorMessage errorMessages={errors} path={name} />}
+      {errorMessages.length > 0 && (
+        <ErrorMessage errorMessages={errorMessages} path={name} />
+      )}
     </div>
   );
 };
