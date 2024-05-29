@@ -128,12 +128,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
     setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
   };
 
-  const handleInputChange =
-    (field: string, setter: React.Dispatch<React.SetStateAction<string>>) =>
-    (value: string) => {
-      setter(value);
-      setErrorMessages(prev => prev.filter(error => error.path !== field));
-    };
+  const resetErrorsHandler = React.useCallback((path?: string): void => {
+    setErrorMessages(prev => prev.filter(error => error.path !== path));
+  }, []);
 
   return (
     <div className="blocks-layout-md">
@@ -149,6 +146,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
               prev.filter(error => error.path !== "categories[0]")
             );
           }}
+          onResetErrors={resetErrorsHandler}
           options={docs.map(category => {
             return {
               label: category.name,
@@ -164,7 +162,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         <InputElement
           errorMessages={errorMessages}
           name="name"
-          onChange={handleInputChange("name", setName)}
+          onChange={setName}
+          onResetErrors={resetErrorsHandler}
           placeholder={lang.Name}
           type="text"
           value={name}
@@ -175,7 +174,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         <TextareaElement
           errorMessages={errorMessages}
           name="description"
-          onChange={handleInputChange("description", setDescription)}
+          onChange={setDescription}
+          onResetErrors={resetErrorsHandler}
           placeholder={lang.Description}
           value={description}
         />
@@ -186,7 +186,8 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
           errorMessages={errorMessages}
           min={COMPANY_TARGET_VALUE_STEP}
           name="targetValue"
-          onChange={handleInputChange("targetValue", setTargetValue)}
+          onChange={setTargetValue}
+          onResetErrors={resetErrorsHandler}
           placeholder={lang.TargetValue}
           step={COMPANY_TARGET_VALUE_STEP}
           type="number"
@@ -202,6 +203,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
             errorMessages={errorMessages}
             files={logo}
             name="logo"
+            onResetErrors={resetErrorsHandler}
             setFiles={setLogo}
             type="file"
           />
@@ -217,6 +219,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
             files={images}
             multiple
             name="images"
+            onResetErrors={resetErrorsHandler}
             setFiles={setImages}
             type="file"
           />
@@ -227,6 +230,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         <InputElement
           name="website"
           onChange={setWebsite}
+          onResetErrors={resetErrorsHandler}
           placeholder={lang.Website}
           type="url"
           value={website}
@@ -252,6 +256,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                       )
                     );
                   }}
+                  onResetErrors={resetErrorsHandler}
                   placeholder={lang.Email}
                   type="email"
                   value={founder.email}
@@ -270,6 +275,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                       )
                     );
                   }}
+                  onResetErrors={resetErrorsHandler}
                   placeholder={lang.FirstName}
                   type="text"
                   value={founder.firstName}
@@ -288,6 +294,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                       )
                     );
                   }}
+                  onResetErrors={resetErrorsHandler}
                   placeholder={lang.LastName}
                   type="text"
                   value={founder.lastName}
@@ -307,6 +314,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                       )
                     );
                   }}
+                  onResetErrors={resetErrorsHandler}
                   placeholder={lang.Share}
                   step={COMPANY_SHARE_STEP}
                   type="number"

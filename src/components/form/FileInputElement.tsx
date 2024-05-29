@@ -5,6 +5,7 @@ import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React, { useCallback, useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
+import { noop } from "lodash";
 import styles from "./FileInputElement.module.css";
 import { useDropzone } from "react-dropzone";
 
@@ -15,6 +16,7 @@ export const FileInputElement: React.FC<Props> = ({
   files,
   multiple = false,
   name,
+  onResetErrors = noop,
   setFiles,
   ...props
 }) => {
@@ -33,9 +35,10 @@ export const FileInputElement: React.FC<Props> = ({
       setFiles(prevFiles =>
         multiple ? [...prevFiles, ...filesWithPreviews] : filesWithPreviews
       );
+      onResetErrors(name);
       setErrors([]);
     },
-    [multiple, setFiles]
+    [multiple, name, setFiles, onResetErrors]
   );
 
   const accept: Accept = {
@@ -100,6 +103,7 @@ export interface Props
   readonly errorMessages?: readonly FieldError[];
   readonly files: readonly FileWithPreview[];
   readonly multiple?: boolean;
+  readonly onResetErrors?: (name?: string) => void;
   readonly setFiles: React.Dispatch<
     React.SetStateAction<readonly FileWithPreview[]>
   >;
