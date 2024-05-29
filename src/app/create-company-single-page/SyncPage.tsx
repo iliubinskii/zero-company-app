@@ -15,6 +15,7 @@ import {
 } from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
+import type { FileWithPreview } from "../../components";
 import type { FormEventHandler } from "react";
 import React from "react";
 import { lang } from "../../langs";
@@ -33,6 +34,10 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
       share: ""
     }
   ]);
+
+  const [images, setImages] = React.useState<readonly FileWithPreview[]>([]);
+
+  const [logo, setLogo] = React.useState<readonly FileWithPreview[]>([]);
 
   const [name, setName] = React.useState<string>("");
 
@@ -58,6 +63,10 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
       const target = assertHTMLFormElement(e.target);
 
       const data = new FormData(target);
+
+      for (const file of images) data.append("images", file, file.name);
+
+      for (const file of logo) data.append("logo", file, file.name);
 
       if (data.get("website") === "") data.delete("website");
 
@@ -190,7 +199,9 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
           <FileInputElement
             accept="image/*"
             errorMessages={errorMessages}
+            files={logo}
             name="logo"
+            setFiles={setLogo}
             type="file"
           />
         </div>
@@ -202,8 +213,10 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
           <FileInputElement
             accept="image/*"
             errorMessages={errorMessages}
+            files={images}
             multiple
             name="images"
+            setFiles={setImages}
             type="file"
           />
         </div>

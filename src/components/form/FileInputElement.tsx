@@ -12,11 +12,12 @@ export const FileInputElement: React.FC<Props> = ({
   className = "",
   containerClassName = "",
   errorMessages = [],
+  files,
   multiple = false,
   name,
+  setFiles,
   ...props
 }) => {
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [errors, setErrors] = useState<readonly FieldError[]>([]);
   useEffect(() => {
     setErrors(errorMessages);
@@ -34,7 +35,7 @@ export const FileInputElement: React.FC<Props> = ({
       );
       setErrors([]);
     },
-    [multiple]
+    [multiple, setFiles]
   );
 
   const accept: Accept = {
@@ -97,7 +98,11 @@ export interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
+  readonly files: readonly FileWithPreview[];
   readonly multiple?: boolean;
+  readonly setFiles: React.Dispatch<
+    React.SetStateAction<readonly FileWithPreview[]>
+  >;
 }
 
 export interface FileWithPreview extends File {
