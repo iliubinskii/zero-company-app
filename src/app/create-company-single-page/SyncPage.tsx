@@ -47,14 +47,13 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
   const [website, setWebsite] = React.useState<string>("");
 
+  const [errorMessage, setErrorMessage] = React.useState("");
+
   const [errorMessages, setErrorMessages] = React.useState<
     readonly FieldError[]
   >([]);
 
-  const [isActive, setIsActive] = React.useState(false);
-  const toggleActive = (): void => {
-    setIsActive(prevState => !prevState);
-  };
+  const [isSnackbarActive, setIsSnackbarActive] = React.useState(false);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
@@ -72,11 +71,12 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       const company = await postCompany(data);
 
-      // eslint-disable-next-line no-warning-comments -- Assigned
-      // TODO: Show errors to the user
       if ("error" in company)
         if ("data" in company) setErrorMessages(company.data);
-        else toggleActive();
+        else {
+          setErrorMessage(company.error);
+          setIsSnackbarActive(true);
+        }
       else {
         setCategories([""]);
         setDescription("");
@@ -92,6 +92,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         setPrivateCompany(false);
         setTargetValue("");
         setWebsite("");
+        setErrorMessage("");
         setErrorMessages([]);
       }
     });
@@ -361,13 +362,14 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         </div>
         {/* Buttons END */}
       </form>
-      {isActive && (
-        <SnackBar
-          isOpen={isActive}
-          message={"Invalid data"}
-          onClose={toggleActive}
-        />
-      )}
+      <SnackBar
+        isOpen={isSnackbarActive}
+        message={errorMessage}
+        onClose={() => {
+          setIsSnackbarActive(false);
+          setErrorMessage("");
+        }}
+      />
     </div>
   );
 };
