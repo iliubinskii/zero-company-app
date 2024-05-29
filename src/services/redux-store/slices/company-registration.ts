@@ -1,7 +1,13 @@
+import type {
+  AuthUser,
+  AuthUserEssential,
+  ExistingCategory
+} from "../../../schema";
 import { CompanyReg, type RootState } from "../types";
-import type { ExistingCategory } from "../../../schema";
+import { API_URL } from "../../../config";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import type { useRouter } from "next/navigation";
 
 const initialState: RootState["companyRegistration"] = {
   currentStep: CompanyReg.Start
@@ -20,9 +26,19 @@ const companyRegistrationSlice = createSlice({
       state.currentStep = CompanyReg.SelectCountry;
       state.category = action.payload;
     },
-    setCompanyCountry: (state, action: PayloadAction<string>) => {
-      state.currentStep = CompanyReg.Login;
-      state.country = action.payload;
+    setCompanyCountry: (
+      state,
+      action: PayloadAction<{
+        readonly authUser: AuthUser | AuthUserEssential | undefined;
+        readonly country: string;
+        readonly router: ReturnType<typeof useRouter>;
+      }>
+    ) => {
+      const { authUser, country, router } = action.payload;
+
+      state.currentStep = CompanyReg.EditDraft;
+      state.country = country;
+      router.push(authUser ? "/profile" : `${API_URL}auth/login`);
     },
     startCompanyRegistration: state => {
       state.currentStep = CompanyReg.SelectCategory;
