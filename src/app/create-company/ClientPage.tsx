@@ -8,7 +8,7 @@ import { SelectCategory } from "./SelectCategory";
 import { SelectCountry } from "./SelectCountry";
 import { Start } from "./Start";
 
-export const SyncPage: FC<Props> = ({ categories }) => {
+export const ClientPage: FC<Props> = ({ categories }) => {
   const step = useAppSelector(selectStep);
 
   // For `EditDraft` step continue showing `SelectCountry` component to avoid flickering before redirecting.

@@ -15,7 +15,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getCompaniesByCategory } from "../../../api";
 import { lang } from "../../../langs";
 
-export const SyncPage: FC<Props> = ({
+export const ClientPage: FC<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {

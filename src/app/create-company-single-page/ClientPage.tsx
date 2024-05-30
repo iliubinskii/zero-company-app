@@ -21,7 +21,7 @@ import React, { useCallback, useState } from "react";
 import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
-export const SyncPage: FC<Props> = ({ categories: { docs } }) => {
+export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   const [categories, setCategories] = useState<readonly [string]>([""]);
 
   const [description, setDescription] = useState<string>("");
