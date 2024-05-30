@@ -8,7 +8,7 @@ export const Start: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <BlocksLayout size="md">
+    <BlocksLayout>
       <form
         className="py-32 flex flex-col items-center"
         onSubmit={e => {

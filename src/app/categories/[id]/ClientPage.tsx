@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyCard, CompanyCards } from "../../../components";
+import { BlocksLayout, CompanyCard, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
@@ -93,7 +93,7 @@ export const ClientPage: FC<Props> = ({
         <title>{`${category.name} - ${lang.app.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <div className="blocks-layout-lg">
+      <BlocksLayout size="lg">
         {/* Overview */}
         <div className="overview">
           <div className="header2">{category.name}</div>
@@ -134,7 +134,7 @@ export const ClientPage: FC<Props> = ({
           </div>
         ) : undefined}
         {/* More button or spinner END */}
-      </div>
+      </BlocksLayout>
     </>
   );
 };

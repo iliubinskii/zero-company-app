@@ -1,4 +1,10 @@
-import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
+import {
+  BlocksLayout,
+  CompanyCard,
+  CompanyCards,
+  InfoCard,
+  InfoCards
+} from "../components";
 import React from "react";
 import { createAsyncPage } from "../utils";
 import { getCompanies } from "../api";
@@ -31,7 +37,7 @@ const Page = createAsyncPage("/", async () => {
   ];
 
   return (
-    <div className="blocks-layout-lg">
+    <BlocksLayout size="lg">
       <div className="header2 text-center">{lang.home.teaser}</div>
       <InfoCards>
         {cards.map(({ description, image, title }, key) => (
@@ -50,7 +56,7 @@ const Page = createAsyncPage("/", async () => {
           <CompanyCard company={company} key={company._id} />
         ))}
       </CompanyCards>
-    </div>
+    </BlocksLayout>
   );
 });
 

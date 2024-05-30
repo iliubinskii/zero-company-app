@@ -1,3 +1,4 @@
+import { ArticleLayout } from "../../components";
 import React from "react";
 import { createPage } from "../../utils";
 import { lang } from "../../langs";
@@ -5,7 +6,7 @@ import { lang } from "../../langs";
 // eslint-disable-next-line no-warning-comments -- Ok
 // TODO: Add real content
 const Page = createPage("/shareholders", () => (
-  <div className="article-layout-md">
+  <ArticleLayout>
     <div className="header2">{lang.NDA}</div>
     <div className="paragraphs">
       <p>
@@ -38,7 +39,7 @@ const Page = createPage("/shareholders", () => (
         alias.
       </p>
     </div>
-  </div>
+  </ArticleLayout>
 ));
 
 export default Page;

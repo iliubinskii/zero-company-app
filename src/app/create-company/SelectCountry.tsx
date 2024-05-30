@@ -4,7 +4,7 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../services";
-import { BlocksLayout } from "../../components/BlocksLayout";
+import { BlocksLayout } from "../../components/layouts/BlocksLayout";
 import type { FC } from "react";
 import React, { useState } from "react";
 import { SelectElement } from "../../components";
@@ -26,7 +26,7 @@ export const SelectCountry: FC = () => {
   const router = useRouter();
 
   return (
-    <BlocksLayout size="md">
+    <BlocksLayout>
       <form
         className="py-32 flex flex-col gap-10"
         onSubmit={e => {
