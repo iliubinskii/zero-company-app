@@ -49,7 +49,6 @@ const config = {
       }
     ],
     "n/no-unsupported-features/node-builtins": "off",
-    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -78,6 +77,7 @@ const config = {
             "discoverable",
             "docuseal",
             "dom",
+            "dropzone",
             "ecma",
             "enum",
             "escompat",
@@ -95,6 +95,7 @@ const config = {
             "jsdoc",
             "jsdom",
             "jsx",
+            "keydown",
             "lang",
             "langs",
             "latin",
@@ -116,10 +117,12 @@ const config = {
             "req",
             "roboto",
             "rofr",
+            "safelist",
             "schemas",
             "semibold",
             "serializable",
             "smacss",
+            "snackbar",
             "sonarjs",
             "str",
             "stylelint",
@@ -136,6 +139,7 @@ const config = {
             "uri",
             "urls",
             "ver",
+            "vscode",
             "webhooks",
             "webp",
             "zod"

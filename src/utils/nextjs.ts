@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import type React from "react";
+import { logger } from "../services";
 
 /**
  * Create an async page.
@@ -23,7 +24,8 @@ export function createAsyncPage(
 
     const t2 = performance.now();
 
-    console.info(`Render ${dynamicPageName} in ${Math.round(t2 - t1)} ms`);
+    // eslint-disable-next-line i18n-text/no-en -- Ok
+    logger.info(`Render '${dynamicPageName}' in ${Math.round(t2 - t1)} ms`);
 
     return element;
   };
@@ -51,7 +53,8 @@ export function createPage(
 
     const t2 = performance.now();
 
-    console.info(`Render ${dynamicPageName} in ${Math.round(t2 - t1)} ms`);
+    // eslint-disable-next-line i18n-text/no-en -- Ok
+    logger.info(`Render '${dynamicPageName}' in ${Math.round(t2 - t1)} ms`);
 
     return element;
   };

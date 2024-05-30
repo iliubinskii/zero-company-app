@@ -7,6 +7,7 @@ import Layout from "../Layout";
 import React from "react";
 import { getCategories } from "../api";
 import { lang } from "../langs";
+import { logger } from "../services";
 
 /**
  * Root layout.
@@ -44,7 +45,8 @@ export default async function RootLayout({
 
   const t2 = performance.now();
 
-  console.info(`Render /layout in ${Math.round(t2 - t1)} ms`);
+  // eslint-disable-next-line i18n-text/no-en -- Ok
+  logger.info(`Render '/layout' in ${Math.round(t2 - t1)} ms`);
 
   return element;
 }
