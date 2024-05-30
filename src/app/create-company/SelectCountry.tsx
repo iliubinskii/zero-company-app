@@ -5,20 +5,21 @@ import {
   useAppSelector
 } from "../../services";
 import { BlocksLayout } from "../../components/BlocksLayout";
-import React from "react";
+import type { FC } from "react";
+import React, { useState } from "react";
 import { SelectElement } from "../../components";
 import type { SelectOption } from "../../components";
 import { lang } from "../../langs";
 import { useRouter } from "next/navigation";
 
-export const SelectCountry: React.FC = () => {
+export const SelectCountry: FC = () => {
   const authUser = useAppSelector(selectAuthUser);
 
   const initialCountry = useAppSelector(
     state => state.companyRegistration.country
   );
 
-  const [country, setCountry] = React.useState(initialCountry);
+  const [country, setCountry] = useState(initialCountry);
 
   const dispatch = useAppDispatch();
 

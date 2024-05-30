@@ -1,3 +1,4 @@
+import type { Dispatch, FC, SetStateAction } from "react";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React, { useCallback } from "react";
@@ -8,7 +9,7 @@ import { noop } from "lodash";
 import styles from "./FileInputElement.module.css";
 import { useDropzone } from "react-dropzone";
 
-export const FileInputElement: React.FC<Props> = ({
+export const FileInputElement: FC<Props> = ({
   accept,
   className = "",
   errorMessages = [],
@@ -94,9 +95,7 @@ export interface Props {
   readonly multiple?: boolean;
   readonly name?: string;
   readonly onResetErrors?: (name?: string) => void;
-  readonly setFiles: React.Dispatch<
-    React.SetStateAction<readonly FileWithPreview[]>
-  >;
+  readonly setFiles: Dispatch<SetStateAction<readonly FileWithPreview[]>>;
 }
 
 export interface FileWithPreview extends File {

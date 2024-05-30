@@ -1,9 +1,10 @@
 import { startCompanyRegistration, useAppDispatch } from "../../services";
 import { BlocksLayout } from "../../components";
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../../langs";
 
-export const Start: React.FC = () => {
+export const Start: FC = () => {
   const dispatch = useAppDispatch();
 
   return (

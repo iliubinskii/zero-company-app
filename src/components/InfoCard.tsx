@@ -1,7 +1,8 @@
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../langs";
 
-export const InfoCard: React.FC<Props> = ({
+export const InfoCard: FC<Props> = ({
   description,
   image,
   imageHeight,

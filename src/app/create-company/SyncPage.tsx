@@ -2,12 +2,13 @@
 
 import { CompanyReg, selectStep, useAppSelector } from "../../services";
 import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
+import type { FC } from "react";
 import React from "react";
 import { SelectCategory } from "./SelectCategory";
 import { SelectCountry } from "./SelectCountry";
 import { Start } from "./Start";
 
-export const SyncPage: React.FC<Props> = ({ categories }) => {
+export const SyncPage: FC<Props> = ({ categories }) => {
   const step = useAppSelector(selectStep);
 
   // For `EditDraft` step continue showing `SelectCountry` component to avoid flickering before redirecting.

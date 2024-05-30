@@ -1,12 +1,13 @@
 "use client";
 
+import type { FC, HTMLAttributes } from "react";
 import { selectAuthUser, useAppSelector } from "../services";
 import { API_URL } from "../config";
 import { AnimatedLink } from "../components";
 import React from "react";
 import { lang } from "../langs";
 
-const ProfileButton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({
   className = "",
   ...props
 }) => {

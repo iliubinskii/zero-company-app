@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 /**
@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 export function useLoadingCursor(): void {
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleStart = (): void => {
       document.body.classList.add("app-loading");
     };

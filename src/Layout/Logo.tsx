@@ -1,3 +1,4 @@
+import type { ComponentProps, FC } from "react";
 import { AnimatedLink } from "../components";
 import { Bebas_Neue } from "next/font/google";
 import type Link from "next/link";
@@ -5,7 +6,7 @@ import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
 
-const Logo: React.FC<Omit<React.ComponentProps<typeof Link>, "href">> = ({
+const Logo: FC<Omit<ComponentProps<typeof Link>, "href">> = ({
   className = "",
   ...props
 }) => (

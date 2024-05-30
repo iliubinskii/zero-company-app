@@ -1,6 +1,7 @@
+import type { FC, HTMLAttributes } from "react";
 import React from "react";
 
-export const InfoCards: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+export const InfoCards: FC<HTMLAttributes<HTMLDivElement>> = ({
   className = "",
   ...props
 }) => (

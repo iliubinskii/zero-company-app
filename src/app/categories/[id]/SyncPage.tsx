@@ -9,26 +9,27 @@ import type {
 import { callAsync, filterUndefinedProperties } from "../../../utils";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
+import type { FC } from "react";
 import Head from "next/head";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getCompaniesByCategory } from "../../../api";
 import { lang } from "../../../langs";
 
-export const SyncPage: React.FC<Props> = ({
+export const SyncPage: FC<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
-  const [autoMode, setAutoMode] = React.useState(false);
+  const [autoMode, setAutoMode] = useState(false);
 
-  const [companies, setCompanies] = React.useState(initialCompanies);
+  const [companies, setCompanies] = useState(initialCompanies);
 
-  const loadMoreButtonRef = React.useRef<HTMLButtonElement>(null);
+  const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [nextCursor, setNextCursor] = React.useState(initialNextCursor);
+  const [nextCursor, setNextCursor] = useState(initialNextCursor);
 
-  const fetchMoreData = React.useCallback(() => {
+  const fetchMoreData = useCallback(() => {
     callAsync(async () => {
       setAutoMode(true);
       setLoading(true);
@@ -54,14 +55,14 @@ export const SyncPage: React.FC<Props> = ({
     });
   }, [category, companies, nextCursor]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAutoMode(false);
     setCompanies(initialCompanies);
     setLoading(false);
     setNextCursor(initialNextCursor);
   }, [initialCompanies, initialNextCursor]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const target = loadMoreButtonRef.current;
 
     if (autoMode && nextCursor && target && !loading) {

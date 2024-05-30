@@ -2,6 +2,7 @@
 
 import "./globals.css";
 import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
+import type { ReactElement, ReactNode } from "react";
 import { AppStateUpdater } from "../AppStateUpdater";
 import Layout from "../Layout";
 import React from "react";
@@ -17,7 +18,7 @@ import { logger } from "../services";
  */
 export default async function RootLayout({
   children
-}: Props): Promise<React.ReactElement> {
+}: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
   const categories = await getCategories({ onlyPinned: true });
@@ -52,5 +53,5 @@ export default async function RootLayout({
 }
 
 export interface Props {
-  children?: React.ReactNode | undefined;
+  children?: ReactNode | undefined;
 }

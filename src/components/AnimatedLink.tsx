@@ -1,11 +1,12 @@
 "use client";
 
+import type { AnchorHTMLAttributes, FC, MouseEventHandler } from "react";
 import React from "react";
 import { noop } from "lodash";
 import { useAppLoading } from "../contexts";
 import { useRouter } from "next/navigation";
 
-export const AnimatedLink: React.FC<Props> = ({
+export const AnimatedLink: FC<Props> = ({
   href,
   onBeforeClick = noop,
   ...props
@@ -14,7 +15,7 @@ export const AnimatedLink: React.FC<Props> = ({
 
   const { setLoading } = useAppLoading();
 
-  const handleClick: React.MouseEventHandler<HTMLAnchorElement> = e => {
+  const handleClick: MouseEventHandler<HTMLAnchorElement> = e => {
     e.preventDefault();
     onBeforeClick();
     setLoading();
@@ -31,7 +32,7 @@ export const AnimatedLink: React.FC<Props> = ({
   );
 };
 
-export interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   readonly href: string;
   readonly onBeforeClick?: () => void;
 }

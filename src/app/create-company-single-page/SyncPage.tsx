@@ -6,6 +6,7 @@ import type {
   FieldError,
   MultipleDocsResponse
 } from "../../schema";
+import type { FC, FormEventHandler } from "react";
 import {
   FileInputElement,
   InputElement,
@@ -16,17 +17,16 @@ import {
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FileWithPreview } from "../../components";
-import type { FormEventHandler } from "react";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
-export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
-  const [categories, setCategories] = React.useState<readonly [string]>([""]);
+export const SyncPage: FC<Props> = ({ categories: { docs } }) => {
+  const [categories, setCategories] = useState<readonly [string]>([""]);
 
-  const [description, setDescription] = React.useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
-  const [founders, setFounders] = React.useState<readonly Founder[]>([
+  const [founders, setFounders] = useState<readonly Founder[]>([
     {
       email: "",
       firstName: "",
@@ -35,25 +35,23 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
     }
   ]);
 
-  const [images, setImages] = React.useState<readonly FileWithPreview[]>([]);
+  const [images, setImages] = useState<readonly FileWithPreview[]>([]);
 
-  const [logo, setLogo] = React.useState<readonly FileWithPreview[]>([]);
+  const [logo, setLogo] = useState<readonly FileWithPreview[]>([]);
 
-  const [name, setName] = React.useState<string>("");
+  const [name, setName] = useState<string>("");
 
-  const [privateCompany, setPrivateCompany] = React.useState<boolean>(false);
+  const [privateCompany, setPrivateCompany] = useState<boolean>(false);
 
-  const [targetValue, setTargetValue] = React.useState<string>("");
+  const [targetValue, setTargetValue] = useState<string>("");
 
-  const [website, setWebsite] = React.useState<string>("");
+  const [website, setWebsite] = useState<string>("");
 
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [errorMessages, setErrorMessages] = React.useState<
-    readonly FieldError[]
-  >([]);
+  const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
-  const [isSnackbarActive, setIsSnackbarActive] = React.useState(false);
+  const [isSnackbarActive, setIsSnackbarActive] = useState(false);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
@@ -130,7 +128,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
     setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
   };
 
-  const resetErrorsHandler = React.useCallback((path?: string): void => {
+  const resetErrorsHandler = useCallback((path?: string): void => {
     setErrorMessages(prev => prev.filter(error => error.path !== path));
   }, []);
 

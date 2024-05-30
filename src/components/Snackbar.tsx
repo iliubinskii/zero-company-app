@@ -1,12 +1,13 @@
 "use client";
 
+import type { FC } from "react";
 import { MdClose } from "react-icons/md";
 import React, { useEffect } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
 import { noop } from "lodash";
 import styles from "./Snackbar.module.css";
 
-export const Snackbar: React.FC<Props> = ({
+export const Snackbar: FC<Props> = ({
   duration = SHOW_SNACKBAR_DURATION_MS,
   isOpen,
   message,

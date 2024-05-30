@@ -1,9 +1,10 @@
+import type { FC, InputHTMLAttributes } from "react";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
 import { noop } from "lodash";
 
-export const InputElement: React.FC<Props> = ({
+export const InputElement: FC<Props> = ({
   className = "",
   containerClassName = "",
   errorMessages = [],
@@ -29,7 +30,7 @@ export const InputElement: React.FC<Props> = ({
 );
 
 export interface Props
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly onChange: (value: string) => void;
