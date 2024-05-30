@@ -13,8 +13,12 @@ export function useAuthUserUpdater(): void {
   const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    const action = searchParams.get("action");
+    if (!searchParams) {
+      console.error("Search parameters are not available");
+      return;
+    }
 
+    const action = searchParams.get("action");
     const user = searchParams.get("user");
 
     if (action === "login" && typeof user === "string") {

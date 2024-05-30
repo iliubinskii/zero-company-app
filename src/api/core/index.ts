@@ -23,9 +23,9 @@ export async function get<T extends [unknown, unknown]>(
     credentials: "include"
   });
 
-  const json = (await response.json()) as unknown;
+  // const json = (await response.json()) as unknown;
 
-  return json;
+  return response;
 }
 
 /**
@@ -44,7 +44,7 @@ export async function post<T extends [unknown, unknown]>(
     method: "POST"
   });
 
-  const json = (await response.json()) as unknown;
+  // const json = (await response.json()) as unknown;
 
-  return json;
+  return response;
 }
