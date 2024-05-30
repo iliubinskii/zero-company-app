@@ -71,7 +71,9 @@
     "react-spinners": "^0.13.8",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "styled-components": "^6.1.11",
     "swr": "^2.2.5",
+    "tailwind-styled-components": "^2.2.0",
     "ts-toolbelt": "^9.6.0",
     "zod": "^3.23.8"
   },
