@@ -23,9 +23,9 @@ import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
 export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
-  const [categories, setCategories] = useState<readonly [string]>([""]);
+  const [category, setCategory] = useState("");
 
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState("");
 
   const [founders, setFounders] = useState<readonly Founder[]>([
     {
@@ -40,13 +40,13 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
   const [logo, setLogo] = useState<readonly FileWithPreview[]>([]);
 
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState("");
 
   const [privateCompany, setPrivateCompany] = useState<boolean>(false);
 
-  const [targetValue, setTargetValue] = useState<string>("");
+  const [targetValue, setTargetValue] = useState("");
 
-  const [website, setWebsite] = useState<string>("");
+  const [website, setWebsite] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -66,8 +66,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
       for (const file of logo) data.append("logo", file, file.name);
 
-      if (data.get("website") === "") data.delete("website");
-
       const company = await postCompany(data);
 
       if ("error" in company)
@@ -77,7 +75,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
           setIsSnackbarActive(true);
         }
       else {
-        setCategories([""]);
+        setCategory("");
         setDescription("");
         setFounders([
           {
@@ -142,20 +140,17 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
           errorMessages={errorMessages}
           name="categories[0]"
           onChange={value => {
-            setCategories([value]);
-            setErrorMessages(prev =>
-              prev.filter(error => error.path !== "categories[0]")
-            );
+            setCategory(value);
           }}
           onResetErrors={resetErrorsHandler}
-          options={docs.map(category => {
+          options={docs.map(doc => {
             return {
-              label: category.name,
-              value: category._id
+              label: doc.name,
+              value: doc._id
             };
           })}
           placeholder={lang.SelectCategory}
-          value={categories[0]}
+          value={category}
         />
         {/* Category END */}
 
@@ -249,11 +244,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].email`}
                   onChange={value => {
                     editFounder(index, "email", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].email`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.Email}
@@ -268,11 +258,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].firstName`}
                   onChange={value => {
                     editFounder(index, "firstName", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].firstName`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.FirstName}
@@ -287,11 +272,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].lastName`}
                   onChange={value => {
                     editFounder(index, "lastName", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].lastName`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.LastName}
@@ -307,11 +287,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].share`}
                   onChange={value => {
                     editFounder(index, "share", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].share`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.Share}
