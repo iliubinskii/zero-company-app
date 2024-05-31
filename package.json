@@ -32,7 +32,7 @@
     "deploy-prod": "vercel --prod",
     "dev": "next dev -p 3100",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
-    "install-deps": "npm install --strict-peer-deps",
+    "install-deps": "npm install --save-prod --strict-peer-deps",
     "install-dev-deps": "npm install --save-dev --strict-peer-deps",
     "lint": "eslint --fix --max-warnings=0 .",
     "lint-profile": "cross-env TIMING=1 eslint --max-warnings=0 .",
