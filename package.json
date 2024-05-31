@@ -142,9 +142,5 @@
     "ts-jest": "^29.1.4",
     "typescript": "^5.4.5",
     "vercel": "^34.2.4"
-  },
-  "engines": {
-    "node": "20.x",
-    "npm": "10.x"
   }
 }
