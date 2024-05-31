@@ -1,9 +1,10 @@
+import type { FC, TextareaHTMLAttributes } from "react";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
 import { noop } from "lodash";
 
-export const TextareaElement: React.FC<Props> = ({
+export const TextareaElement: FC<Props> = ({
   className = "",
   containerClassName = "",
   errorMessages = [],
@@ -29,7 +30,7 @@ export const TextareaElement: React.FC<Props> = ({
 );
 
 export interface Props
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
+  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly onChange: (value: string) => void;

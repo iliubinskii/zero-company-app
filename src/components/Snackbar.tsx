@@ -1,16 +1,17 @@
 "use client";
 
+import type { FC } from "react";
 import { MdClose } from "react-icons/md";
 import React, { useEffect } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
+import { noop } from "lodash";
 import styles from "./Snackbar.module.css";
 
-export const Snackbar: React.FC<Props> = ({
+export const Snackbar: FC<Props> = ({
   duration = SHOW_SNACKBAR_DURATION_MS,
   isOpen,
   message,
-  // TS71007: Weird typescript error that appears only in the editor, switch to vscode's version of typescript
-  onClose,
+  onClose = noop,
   variant = "info"
 }) => {
   useEffect(() => {
@@ -40,6 +41,6 @@ export interface Props {
   readonly duration?: number;
   readonly isOpen: boolean;
   readonly message: string;
-  readonly onClose: () => void;
+  readonly onClose?: () => void;
   readonly variant?: "error" | "info" | "success";
 }

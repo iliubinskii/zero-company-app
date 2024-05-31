@@ -1,18 +1,19 @@
 "use client";
 
+import type { FC, ReactNode } from "react";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
-import { API_URL } from "../config";
-import { AnimatedLink } from "./AnimatedLink";
+import { API_URL } from "../../config";
+import { AnimatedLink } from "../AnimatedLink";
 import { BsBookmarks } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
-import { lang } from "../langs";
+import { lang } from "../../langs";
 import styles from "./ProfileLayout.module.css";
 import { usePathname } from "next/navigation";
 
-export const ProfileLayout: React.FC<Props> = ({ children }) => {
+export const ProfileLayout: FC<Props> = ({ children }) => {
   const pathname = usePathname();
 
   return (
@@ -37,7 +38,7 @@ export const ProfileLayout: React.FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
 }
 
 const links = [

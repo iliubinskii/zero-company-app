@@ -76,6 +76,7 @@ const config = {
             "destructure",
             "discoverable",
             "dom",
+            "droppable",
             "dropzone",
             "ecma",
             "enum",

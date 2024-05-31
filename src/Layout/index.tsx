@@ -1,4 +1,5 @@
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
+import type { FC, ReactNode } from "react";
 import { AnimatedLink } from "../components";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";
@@ -7,7 +8,7 @@ import React from "react";
 import SiteSearch from "./SiteSearch";
 import { lang } from "../langs";
 
-const Layout: React.FC<Props> = ({ categories, children }) => (
+const Layout: FC<Props> = ({ categories, children }) => (
   <div className="flex flex-col">
     <div className="border-b-1.5 p-5 flex flex-col gap-5">
       {/* Search bar */}
@@ -80,7 +81,7 @@ export default Layout;
 
 export interface Props {
   readonly categories: MultipleDocsResponse<ExistingCategory>;
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
 }
 
 const footerLinkGroups = [

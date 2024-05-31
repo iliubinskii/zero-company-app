@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentProps, FC } from "react";
 import { resetCompanyRegistration, useAppDispatch } from "../services";
 import { AnimatedLink } from "../components";
 import type Link from "next/link";
@@ -7,9 +8,10 @@ import React from "react";
 import { lang } from "../langs";
 import styles from "./CreateCompanyButton.module.css";
 
-const CreateCompanyButton: React.FC<
-  Omit<React.ComponentProps<typeof Link>, "href">
-> = ({ className = "", ...props }) => {
+const CreateCompanyButton: FC<Omit<ComponentProps<typeof Link>, "href">> = ({
+  className = "",
+  ...props
+}) => {
   const dispatch = useAppDispatch();
 
   return (

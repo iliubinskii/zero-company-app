@@ -1,9 +1,10 @@
+import type { FC, SelectHTMLAttributes } from "react";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
 import { noop } from "lodash";
 
-export const SelectElement: React.FC<Props> = ({
+export const SelectElement: FC<Props> = ({
   className = "",
   containerClassName = "",
   errorMessages = [],
@@ -38,7 +39,7 @@ export const SelectElement: React.FC<Props> = ({
 );
 
 export interface Props
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
+  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
   readonly containerClassName?: string;
   readonly errorMessages?: readonly FieldError[];
   readonly onChange: (value: string) => void;

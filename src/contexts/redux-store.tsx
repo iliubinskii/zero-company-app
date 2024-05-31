@@ -1,12 +1,13 @@
 "use client";
 
+import type { FC, ReactNode } from "react";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import React from "react";
+import React, { useMemo } from "react";
 import { createdPersistedStore } from "../services";
 
-export const ReduxStoreProvider: React.FC<Props> = ({ children }) => {
-  const { persistor, store } = React.useMemo(() => createdPersistedStore(), []);
+export const ReduxStoreProvider: FC<Props> = ({ children }) => {
+  const { persistor, store } = useMemo(() => createdPersistedStore(), []);
 
   return (
     <Provider store={store}>
@@ -18,5 +19,5 @@ export const ReduxStoreProvider: React.FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
 }

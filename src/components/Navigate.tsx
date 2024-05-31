@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import type { FC } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export const Navigate: React.FC<Props> = ({ to }) => {
+export const Navigate: FC<Props> = ({ to }) => {
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     router.push(to);
   }, [to, router]);
 

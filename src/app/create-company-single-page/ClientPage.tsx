@@ -1,32 +1,33 @@
 "use client";
 
-import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
-import type {
-  ExistingCategory,
-  FieldError,
-  MultipleDocsResponse
-} from "../../schema";
 import {
+  BlocksLayout,
   FileInputElement,
   InputElement,
   SelectElement,
   Snackbar,
   TextareaElement
 } from "../../components";
+import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
+import type {
+  ExistingCategory,
+  FieldError,
+  MultipleDocsResponse
+} from "../../schema";
+import type { FC, FormEventHandler } from "react";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FileWithPreview } from "../../components";
-import type { FormEventHandler } from "react";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { lang } from "../../langs";
 import { postCompany } from "../../api";
 
-export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
-  const [categories, setCategories] = React.useState<readonly [string]>([""]);
+export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
+  const [category, setCategory] = useState("");
 
-  const [description, setDescription] = React.useState<string>("");
+  const [description, setDescription] = useState("");
 
-  const [founders, setFounders] = React.useState<readonly Founder[]>([
+  const [founders, setFounders] = useState<readonly Founder[]>([
     {
       email: "",
       firstName: "",
@@ -35,25 +36,23 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
     }
   ]);
 
-  const [images, setImages] = React.useState<readonly FileWithPreview[]>([]);
+  const [images, setImages] = useState<readonly FileWithPreview[]>([]);
 
-  const [logo, setLogo] = React.useState<readonly FileWithPreview[]>([]);
+  const [logo, setLogo] = useState<readonly FileWithPreview[]>([]);
 
-  const [name, setName] = React.useState<string>("");
+  const [name, setName] = useState("");
 
-  const [privateCompany, setPrivateCompany] = React.useState<boolean>(false);
+  const [privateCompany, setPrivateCompany] = useState<boolean>(false);
 
-  const [targetValue, setTargetValue] = React.useState<string>("");
+  const [targetValue, setTargetValue] = useState("");
 
-  const [website, setWebsite] = React.useState<string>("");
+  const [website, setWebsite] = useState("");
 
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [errorMessages, setErrorMessages] = React.useState<
-    readonly FieldError[]
-  >([]);
+  const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
-  const [isSnackbarActive, setIsSnackbarActive] = React.useState(false);
+  const [isSnackbarActive, setIsSnackbarActive] = useState(false);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
@@ -67,8 +66,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
 
       for (const file of logo) data.append("logo", file, file.name);
 
-      if (data.get("website") === "") data.delete("website");
-
       const company = await postCompany(data);
 
       if ("error" in company)
@@ -78,7 +75,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
           setIsSnackbarActive(true);
         }
       else {
-        setCategories([""]);
+        setCategory("");
         setDescription("");
         setFounders([
           {
@@ -130,12 +127,12 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
     setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
   };
 
-  const resetErrorsHandler = React.useCallback((path?: string): void => {
+  const resetErrorsHandler = useCallback((path?: string): void => {
     setErrorMessages(prev => prev.filter(error => error.path !== path));
   }, []);
 
   return (
-    <div className="blocks-layout-md">
+    <BlocksLayout>
       <div className="header2">{lang.CreateCompany}</div>
       <form className="flex flex-col gap-11" onSubmit={onSubmit}>
         {/* Category */}
@@ -143,20 +140,17 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
           errorMessages={errorMessages}
           name="categories[0]"
           onChange={value => {
-            setCategories([value]);
-            setErrorMessages(prev =>
-              prev.filter(error => error.path !== "categories[0]")
-            );
+            setCategory(value);
           }}
           onResetErrors={resetErrorsHandler}
-          options={docs.map(category => {
+          options={docs.map(doc => {
             return {
-              label: category.name,
-              value: category._id
+              label: doc.name,
+              value: doc._id
             };
           })}
           placeholder={lang.SelectCategory}
-          value={categories[0]}
+          value={category}
         />
         {/* Category END */}
 
@@ -250,11 +244,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].email`}
                   onChange={value => {
                     editFounder(index, "email", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].email`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.Email}
@@ -269,11 +258,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].firstName`}
                   onChange={value => {
                     editFounder(index, "firstName", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].firstName`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.FirstName}
@@ -288,11 +272,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].lastName`}
                   onChange={value => {
                     editFounder(index, "lastName", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].lastName`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.LastName}
@@ -308,11 +287,6 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
                   name={`founders[${index}].share`}
                   onChange={value => {
                     editFounder(index, "share", value);
-                    setErrorMessages(prev =>
-                      prev.filter(
-                        error => error.path !== `founders[${index}].share`
-                      )
-                    );
                   }}
                   onResetErrors={resetErrorsHandler}
                   placeholder={lang.Share}
@@ -378,7 +352,7 @@ export const SyncPage: React.FC<Props> = ({ categories: { docs } }) => {
         }}
         variant="error"
       />
-    </div>
+    </BlocksLayout>
   );
 };
 

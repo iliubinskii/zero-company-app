@@ -1,8 +1,9 @@
+import type { FC } from "react";
 import type { FieldError } from "../../schema";
 import React from "react";
 import styles from "./ErrorMessage.module.css";
 
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({
+export const ErrorMessage: FC<ErrorMessageProps> = ({
   errorMessages,
   path
 }) => (

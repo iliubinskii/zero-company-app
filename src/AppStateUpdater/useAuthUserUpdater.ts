@@ -1,7 +1,7 @@
 import { callAsync, filterUndefinedProperties } from "../utils";
 import { setAuthUser, updateAuthUser, useAppDispatch } from "../services";
 import { AuthUserEssentialValidationSchema } from "../schema";
-import React from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 /**
@@ -12,7 +12,7 @@ export function useAuthUserUpdater(): void {
 
   const searchParams = useSearchParams();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const action = searchParams.get("action");
 
     const user = searchParams.get("user");
