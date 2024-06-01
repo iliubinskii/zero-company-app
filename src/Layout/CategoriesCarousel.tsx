@@ -3,17 +3,28 @@
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { AnimatedLink } from "../components";
-import React, { useCallback } from "react";
+import { CAROUSEL_SCROLL_STEP } from "../consts";
+import React, { useCallback, useMemo } from "react";
 import tw from "tailwind-styled-components";
 
 export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
   const containerRef = React.useRef<HTMLUListElement>(null);
 
-  const [isOverflowing, setIsOverflowing] = React.useState(false);
+  const [leftButtonVisible, setLeftButtonVisible] = React.useState<boolean>();
 
-  const [leftButtonVisible, setLeftButtonVisible] = React.useState(false);
+  const [rightButtonVisible, setRightButtonVisible] = React.useState<boolean>();
 
-  const [rightButtonVisible, setRightButtonVisible] = React.useState(false);
+  const leftButtonClassName = useMemo(() => {
+    if (leftButtonVisible === undefined) return "invisible";
+
+    return leftButtonVisible ? "" : "invisible";
+  }, [leftButtonVisible]);
+
+  const rightButtonClassName = useMemo(() => {
+    if (rightButtonVisible === undefined) return "md:invisible";
+
+    return rightButtonVisible ? "" : "invisible";
+  }, [rightButtonVisible]);
 
   const updateState = useCallback((): void => {
     const container = containerRef.current;
@@ -21,21 +32,27 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
     if (container) {
       const { clientWidth, scrollLeft, scrollWidth } = container;
 
-      setIsOverflowing(scrollWidth > clientWidth);
-      setLeftButtonVisible(scrollWidth > clientWidth && scrollLeft > 0);
+      const isOverflow = scrollWidth > clientWidth;
+      setLeftButtonVisible(isOverflow && scrollLeft > 0);
       setRightButtonVisible(
         // Added an extra pixel because `scrollWidth` does not precisely reach `scrollWidth - clientWidth` in Chrome.
-        scrollWidth > clientWidth && scrollLeft < scrollWidth - clientWidth - 1
+        isOverflow && scrollLeft < scrollWidth - clientWidth - 1
       );
     }
   }, []);
 
   const scrollLeft = (): void => {
-    containerRef.current?.scrollBy({ behavior: "smooth", left: -200 });
+    containerRef.current?.scrollBy({
+      behavior: "smooth",
+      left: -CAROUSEL_SCROLL_STEP
+    });
   };
 
   const scrollRight = (): void => {
-    containerRef.current?.scrollBy({ behavior: "smooth", left: 200 });
+    containerRef.current?.scrollBy({
+      behavior: "smooth",
+      left: CAROUSEL_SCROLL_STEP
+    });
   };
 
   React.useEffect(() => {
@@ -54,16 +71,10 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
 
   return (
     <Container>
-      <Button
-        className={leftButtonVisible ? undefined : "invisible"}
-        onClick={scrollLeft}
-      >
+      <Button className={leftButtonClassName} onClick={scrollLeft}>
         <LeftArrowIcon />
       </Button>
-      <List
-        className={isOverflowing ? "justify-start" : "justify-center"}
-        ref={containerRef}
-      >
+      <List ref={containerRef}>
         {categories.docs.map(category => (
           <li key={category._id}>
             <AnimatedLink href={`/categories/${category._id}`}>
@@ -72,10 +83,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
           </li>
         ))}
       </List>
-      <Button
-        className={rightButtonVisible ? undefined : "invisible"}
-        onClick={scrollRight}
-      >
+      <Button className={rightButtonClassName} onClick={scrollRight}>
         <RightArrowIcon />
       </Button>
     </Container>
@@ -94,4 +102,4 @@ const LeftArrowIcon = tw(IoIosArrowBack)`text-xl hover:text-blue-600`;
 
 const RightArrowIcon = tw(IoIosArrowForward)`text-xl hover:text-blue-600`;
 
-const List = tw.ul`grow flex gap-4 whitespace-nowrap overflow-x-auto scrollbar-hide font-medium`;
+const List = tw.ul`mx-auto flex gap-4 whitespace-nowrap overflow-x-auto scrollbar-hide font-medium`;

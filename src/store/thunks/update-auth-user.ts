@@ -1,5 +1,5 @@
 import type { AppThunk } from "../types";
-import { getAuthUser } from "../../../api";
+import { getAuthUser } from "../../api";
 import { setAuthUser } from "../slices";
 
 export const updateAuthUser: AppThunk = () => async dispatch => {

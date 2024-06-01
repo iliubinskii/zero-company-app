@@ -13,14 +13,6 @@ body {
   cursor: wait !important;
 }
 
-.app-logo-image {
-  @apply w-[3rem] h-[3rem] sm:w-[4rem] sm:h-[4rem];
-}
-
-.app-logo-text {
-  @apply text-[1.5rem] sm:text-[2rem];
-}
-
 /* Button styles */
 
 .dark-button {

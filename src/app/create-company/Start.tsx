@@ -1,4 +1,4 @@
-import { startCompanyRegistration, useAppDispatch } from "../../services";
+import { startCompanyRegistration, useAppDispatch } from "../../store";
 import { BlocksLayout } from "../../components";
 import type { FC } from "react";
 import React from "react";

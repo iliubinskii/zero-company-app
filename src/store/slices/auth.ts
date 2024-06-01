@@ -1,9 +1,9 @@
-import type { AuthUser, AuthUserEssential } from "../../../schema";
+import type { AuthUser, AuthUserEssential } from "../../schema";
+import type { AppState } from "../types";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../types";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: RootState["auth"] = {};
+const initialState: AppState["auth"] = {};
 
 const authSlice = createSlice({
   initialState,
@@ -29,5 +29,7 @@ export const { setAuthUser } = authSlice.actions;
  * @returns The authenticated user.
  */
 export const selectAuthUser = (
-  state: RootState
+  state: AppState
 ): AuthUser | AuthUserEssential | undefined => state.auth.authUser;
+
+export type AuthActions = ReturnType<typeof setAuthUser>;

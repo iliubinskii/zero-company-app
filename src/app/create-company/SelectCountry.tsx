@@ -3,7 +3,7 @@ import {
   setCompanyCountry,
   useAppDispatch,
   useAppSelector
-} from "../../services";
+} from "../../store";
 import { BlocksLayout } from "../../components/layouts/BlocksLayout";
 import type { FC } from "react";
 import React, { useState } from "react";

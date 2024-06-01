@@ -43,8 +43,6 @@ const config = {
             "next/*",
             "next/font/*",
             "react-icons/*",
-            "redux-persist/integration/react",
-            "redux-persist/lib/storage",
             "tailwindcss/plugin"
           ]
       }
