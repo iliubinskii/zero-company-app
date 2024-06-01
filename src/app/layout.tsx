@@ -5,7 +5,8 @@ import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
 import { AppStateUpdater } from "../AppStateUpdater";
 import Layout from "../Layout";
-import React from "react";
+import React, { Suspense } from "react";
+import { ReduxPersistorProvider } from "../contexts/redux-persistor";
 import { getCategories } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
@@ -36,8 +37,12 @@ export default async function RootLayout({
       <body>
         <AppLoadingProvider>
           <ReduxStoreProvider>
-            <AppStateUpdater />
-            <Layout categories={categories}>{children}</Layout>
+            <ReduxPersistorProvider>
+              <Suspense fallback={null}>
+                <AppStateUpdater />
+              </Suspense>
+              <Layout categories={categories}>{children}</Layout>
+            </ReduxPersistorProvider>
           </ReduxStoreProvider>
         </AppLoadingProvider>
       </body>

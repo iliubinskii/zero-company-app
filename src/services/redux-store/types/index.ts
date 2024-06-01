@@ -4,7 +4,7 @@ import type {
   ExistingCategory
 } from "../../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
-import type { createdPersistedStore } from "../store";
+import type { store } from "../store";
 
 /**
  * The company registration step.
@@ -16,15 +16,13 @@ export enum CompanyReg {
   Start = "Start"
 }
 
-export type AppDispatch = ReturnType<
-  typeof createdPersistedStore
->["store"]["dispatch"];
+export type AppDispatch = (typeof store)["dispatch"];
 
 export interface AppThunk<T = void> {
   (): (dispatch: AppDispatch) => Promise<T>;
 }
 
-export interface RootState {
+export interface AppState {
   readonly auth: {
     readonly authUser?: AuthUser | AuthUserEssential;
   };
@@ -37,4 +35,4 @@ export interface RootState {
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;
 
-export type UseAppSelector = TypedUseSelectorHook<RootState>;
+export type UseAppSelector = TypedUseSelectorHook<AppState>;

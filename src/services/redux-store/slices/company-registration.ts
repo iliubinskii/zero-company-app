@@ -1,15 +1,15 @@
+import { type AppState, CompanyReg } from "../types";
 import type {
   AuthUser,
   AuthUserEssential,
   ExistingCategory
 } from "../../../schema";
-import { CompanyReg, type RootState } from "../types";
 import { API_URL } from "../../../config";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import type { useRouter } from "next/navigation";
 
-const initialState: RootState["companyRegistration"] = {
+const initialState: AppState["companyRegistration"] = {
   currentStep: CompanyReg.Start
 };
 
@@ -60,16 +60,15 @@ export const {
  * @param state - The root state.
  * @returns The category of the company.
  */
-export const selectCategory = (
-  state: RootState
-): ExistingCategory | undefined => state.companyRegistration.category;
+export const selectCategory = (state: AppState): ExistingCategory | undefined =>
+  state.companyRegistration.category;
 
 /**
  * Select the country of the company.
  * @param state - The root state.
  * @returns The country of the company.
  */
-export const selectCountry = (state: RootState): string | undefined =>
+export const selectCountry = (state: AppState): string | undefined =>
   state.companyRegistration.country;
 
 /**
@@ -77,5 +76,11 @@ export const selectCountry = (state: RootState): string | undefined =>
  * @param state - The root state.
  * @returns The current step of the company registration.
  */
-export const selectStep = (state: RootState): CompanyReg =>
+export const selectStep = (state: AppState): CompanyReg =>
   state.companyRegistration.currentStep;
+
+export type CompanyRegistrationActions =
+  | ReturnType<typeof resetCompanyRegistration>
+  | ReturnType<typeof setCompanyCategory>
+  | ReturnType<typeof setCompanyCountry>
+  | ReturnType<typeof startCompanyRegistration>;
