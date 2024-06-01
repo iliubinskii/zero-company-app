@@ -33,6 +33,7 @@ const Link = tw(AnimatedLink)`
   px-4 py-3
   rounded
   border border-gray-400
+  whitespace-nowrap
   transition duration-150 ease-in-out
   hover:border-black
   focus:border-black;
