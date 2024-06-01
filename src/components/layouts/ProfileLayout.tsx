@@ -23,38 +23,40 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
 
   return (
     <Container>
-      <UserContainer>
-        <Gravatar
-          alt={lang.Profile}
-          src={gravatar.url(authUser ? authUser.email : "", {
-            d: GRAVATAR_DEFAULT,
-            r: GRAVATAR_RATING,
-            s: GRAVATAR_SIZE
-          })}
-        />
-        {authUser && (
-          <UserInfo>
-            <UserName>
-              {authUser.user
-                ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                : lang.NoName}
-            </UserName>
-            <UserEmail>{authUser.email}</UserEmail>
-          </UserInfo>
-        )}
-      </UserContainer>
-      <Menu>
-        {links.map(({ Icon, href, text }) => (
-          <MenuItem
-            className={href === pathname ? "bg-slate-200" : undefined}
-            href={href}
-            key={href}
-          >
-            <Icon className="text-2xl" />
-            {text}
-          </MenuItem>
-        ))}
-      </Menu>
+      <SideMenu>
+        <User>
+          <UserImage
+            alt={lang.Profile}
+            src={gravatar.url(authUser ? authUser.email : "", {
+              d: GRAVATAR_DEFAULT,
+              r: GRAVATAR_RATING,
+              s: GRAVATAR_SIZE
+            })}
+          />
+          {authUser && (
+            <UserInfo>
+              <UserName>
+                {authUser.user
+                  ? `${authUser.user.firstName} ${authUser.user.lastName}`
+                  : lang.NoName}
+              </UserName>
+              <UserEmail>{authUser.email}</UserEmail>
+            </UserInfo>
+          )}
+        </User>
+        <Links>
+          {links.map(({ Icon, href, text }) => (
+            <Link
+              className={href === pathname ? "bg-slate-200" : undefined}
+              href={href}
+              key={href}
+            >
+              <Icon className="text-2xl" />
+              {text}
+            </Link>
+          ))}
+        </Links>
+      </SideMenu>
       <Contents>{children}</Contents>
     </Container>
   );
@@ -64,11 +66,13 @@ export interface Props {
   readonly children: ReactNode;
 }
 
-const Container = tw.div`p-3 flex flex-col gap-5`;
+const Container = tw.div`p-3 flex gap-5`;
 
-const UserContainer = tw.div`w-64 flex items-center gap-3`;
+const SideMenu = tw.div`p-3 flex flex-col gap-5`;
 
-const Gravatar = tw.img`h-16 w-16 rounded-full border border-slate-200`;
+const User = tw.div`w-64 flex items-center gap-3`;
+
+const UserImage = tw.img`h-16 w-16 rounded-full border border-slate-200`;
 
 const UserInfo = tw.div`flex flex-col gap-1 overflow-hidden`;
 
@@ -76,9 +80,9 @@ const UserName = tw.div`text-gray-700 font-semibold overflow-hidden overflow-ell
 
 const UserEmail = tw.div`text-sm text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap`;
 
-const Menu = tw.div`w-64 flex flex-col gap-1`;
+const Links = tw.div`w-64 flex flex-col gap-1`;
 
-const MenuItem = tw(AnimatedLink)`
+const Link = tw(AnimatedLink)`
   rounded
   px-5 py-3
   flex items-center gap-4
