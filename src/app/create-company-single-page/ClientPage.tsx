@@ -69,7 +69,30 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
       const company = await postCompany(data);
 
       if ("error" in company)
-        if ("data" in company) setErrorMessages(company.data);
+        if ("data" in company)
+          setErrorMessages([
+            ...(function* prepareErrors(): Generator<FieldError> {
+              for (const error of company.data)
+                if (error.path === "founders") {
+                  yield {
+                    message: error.message,
+                    path: "founders[0].email"
+                  };
+                  yield {
+                    message: error.message,
+                    path: "founders[0].firstName"
+                  };
+                  yield {
+                    message: error.message,
+                    path: "founders[0].lastName"
+                  };
+                  yield {
+                    message: error.message,
+                    path: "founders[0].share"
+                  };
+                } else yield error;
+            })()
+          ]);
         else {
           setErrorMessage(company.errorMessage);
           setIsSnackbarActive(true);
