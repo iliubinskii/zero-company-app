@@ -23,7 +23,8 @@ const CreateCompanyButton: FC<Omit<ComponentProps<typeof Link>, "href">> = ({
         dispatch(resetCompanyRegistration());
       }}
     >
-      {lang.CreateCompany}
+      <span className="block lg:hidden">{lang.CreateCompanyShort}</span>
+      <span className="hidden lg:block">{lang.CreateCompany}</span>
     </AnimatedLink>
   );
 };
