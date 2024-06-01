@@ -3,7 +3,7 @@ import type { FC } from "react";
 import React from "react";
 
 export const Loading: FC = () => (
-  <div className="flex-grow flex justify-center items-center">
+  <div className="grow flex justify-center items-center">
     <BeatLoader />
   </div>
 );

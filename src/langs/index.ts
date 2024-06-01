@@ -15,7 +15,6 @@ export const lang = {
   Continue: "Continue",
   CookiePolicy: "Cookie Policy",
   CreateCompany: "Create a company",
-  CreateCompanyShort: "Create",
   Dashboard: "Dashboard",
   Description: "Description",
   Documents: "Documents",

@@ -19,5 +19,5 @@
 }
 
 .contents {
-  @apply flex-grow p-9 flex flex-col gap-9;
+  @apply grow p-9 flex flex-col gap-9;
 }

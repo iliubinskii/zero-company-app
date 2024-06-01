@@ -23,7 +23,7 @@ const Logo: FC<Omit<ComponentProps<typeof Link>, "href">> = ({
       width={images.appLogo.width}
     />
     <h1
-      className={`${bebas.className} text-2xl sm:text-[2rem] text-blue-700 whitespace-nowrap`}
+      className={`${bebas.className} app-logo-text text-blue-700 whitespace-nowrap`}
     >
       {lang.ZeroCompany}
     </h1>

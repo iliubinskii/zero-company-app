@@ -16,7 +16,7 @@ const config = {
     "csstools/value-no-unknown-custom-properties": true,
     "plugin/no-unsupported-browser-features": [
       true,
-      { ignore: ["css-nesting", "css-scrollbar"] }
+      { ignore: ["css-nesting"] }
     ]
   }
 };

@@ -14,16 +14,15 @@ const Layout: FC<Props> = ({ categories, children }) => (
     <header>
       <div className="border-b-1.5 p-5 flex flex-col gap-5">
         {/* Search bar */}
-
         <div className="flex items-center justify-between gap-4 lg:gap-8">
           <Logo />
-          <SiteSearch className="hidden md:block flex-grow" />
-          <div className="flex justify-start gap-2 sm:gap-4 items-center">
-            <CreateCompanyButton className="" />
+          <SiteSearch className="hidden md:block grow" />
+          <div className="flex items-center gap-2 lg:gap-4">
+            <CreateCompanyButton />
             <ProfileButton />
           </div>
         </div>
-        <SiteSearch className="flex-grow md:hidden" />
+        <SiteSearch className="md:hidden" />
         {/* Search bar END */}
 
         {/* Categories */}

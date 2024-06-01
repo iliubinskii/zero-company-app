@@ -44,7 +44,8 @@ const config = {
             "next/font/*",
             "react-icons/*",
             "redux-persist/integration/react",
-            "redux-persist/lib/storage"
+            "redux-persist/lib/storage",
+            "tailwindcss/plugin"
           ]
       }
     ],
@@ -143,6 +144,7 @@ const config = {
             "ver",
             "vscode",
             "webhooks",
+            "webkit",
             "webp",
             "whitespace",
             "zod"

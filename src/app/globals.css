@@ -6,17 +6,6 @@ body {
   @apply m-0 p-0 font-sans;
 }
 
-/* Hide scrollbar */
-
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
 /* App */
 
 .app-loading,
@@ -25,12 +14,11 @@ body {
 }
 
 .app-logo-image {
-  width: 4rem;
-  height: 4rem;
+  @apply w-[3rem] h-[3rem] sm:w-[4rem] sm:h-[4rem];
 }
 
 .app-logo-text {
-  font-size: 2rem;
+  @apply text-[1.5rem] sm:text-[2rem];
 }
 
 /* Button styles */
