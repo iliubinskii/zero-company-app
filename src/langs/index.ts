@@ -20,6 +20,7 @@ export const lang = {
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
   Email: "E-mail",
+  Explore: "Explore",
   FirstName: "First name",
   Founders: "Founders",
   HelpCenter: "Help Center",

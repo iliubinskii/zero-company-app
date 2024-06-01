@@ -40,9 +40,13 @@ const Layout: FC<Props> = ({ categories, children }) => (
     <footer>
       {/* Footer categories */}
       <div className="border-t-2 border-gray-400">
-        <div className="mx-auto max-w-screen-2xl px-12 py-5 flex gap-4 text-sm">
+        <div className="mx-auto max-w-screen-2xl px-12 py-5 flex flex-col md:flex-row flex-wrap gap-x-3 gap-y-1 text-sm">
+          <h3 className="uppercase font-semibold mb-3 md:hidden">
+            {lang.Explore}
+          </h3>
           {categories.docs.map(category => (
             <AnimatedLink
+              className="inline-block whitespace-nowrap"
               href={`/categories/${category._id}`}
               key={category._id}
             >

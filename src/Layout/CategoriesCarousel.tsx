@@ -21,7 +21,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
   }, [leftButtonVisible]);
 
   const rightButtonClassName = useMemo(() => {
-    if (rightButtonVisible === undefined) return "sm:invisible";
+    if (rightButtonVisible === undefined) return "md:invisible";
 
     return rightButtonVisible ? "" : "invisible";
   }, [rightButtonVisible]);
