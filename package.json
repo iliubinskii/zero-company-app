@@ -32,7 +32,7 @@
     "deploy-prod": "vercel --prod",
     "dev": "next dev -p 3100",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
-    "install-deps": "npm install --strict-peer-deps",
+    "install-deps": "npm install --save-prod --strict-peer-deps",
     "install-dev-deps": "npm install --save-dev --strict-peer-deps",
     "lint": "eslint --fix --max-warnings=0 .",
     "lint-profile": "cross-env TIMING=1 eslint --max-warnings=0 .",
@@ -41,7 +41,7 @@
     "ncu-upgrade": "ncu --dep=dev,peer,prod --upgrade && npm run install-deps",
     "prepare": "husky",
     "start": "next start -p 80",
-    "test": "jest",
+    "test": "jest --coverage",
     "type-check": "tsc --incremental false --noEmit"
   },
   "lint-staged": {
@@ -142,9 +142,5 @@
     "ts-jest": "^29.1.4",
     "typescript": "^5.4.5",
     "vercel": "^34.2.4"
-  },
-  "engines": {
-    "node": "20.x",
-    "npm": "10.x"
   }
 }
