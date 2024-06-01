@@ -59,7 +59,7 @@ export const FileInputElement: FC<Props> = ({
         ) : (
           <List>
             {files.map(file => (
-              <ListItem key={file.name}>
+              <ListItem key={file.preview}>
                 <PreviewContainer>
                   <Preview alt={file.name} src={file.preview} />
                   <FileName>{file.name}</FileName>

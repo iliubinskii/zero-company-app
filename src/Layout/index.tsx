@@ -1,6 +1,7 @@
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import type { FC, ReactNode } from "react";
 import { AnimatedLink } from "../components";
+import { CategoriesCarousel } from "./CategoriesCarousel";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
@@ -10,70 +11,80 @@ import { lang } from "../langs";
 
 const Layout: FC<Props> = ({ categories, children }) => (
   <div className="flex flex-col">
-    <div className="border-b-1.5 p-5 flex flex-col gap-5">
-      {/* Search bar */}
-      <div className="flex items-center gap-8">
-        <Logo />
-        <SiteSearch className="flex-grow" />
-        <CreateCompanyButton />
-        <ProfileButton />
-      </div>
-      {/* Search bar END */}
-
-      {/* Categories */}
-      <div className="flex justify-center gap-4 font-medium">
-        {categories.docs.map(category => (
-          <AnimatedLink href={`/categories/${category._id}`} key={category._id}>
-            {category.name}
-          </AnimatedLink>
-        ))}
-      </div>
-      {/* Categories END */}
-    </div>
-
-    {/* Contents */}
-    {children}
-    {/* Contents END */}
-
-    {/* Footer categories */}
-    <div className="border-t-2 border-gray-400 px-12 py-5 flex gap-4 text-sm">
-      {categories.docs.map(category => (
-        <AnimatedLink href={`/categories/${category._id}`} key={category._id}>
-          {category.name}
-        </AnimatedLink>
-      ))}
-    </div>
-    {/* Footer categories END */}
-
-    {/* Footer link groups */}
-    <div className="border-t-2 p-10">
-      <div className="grid grid-cols-4 gap-10 items-start">
-        <Logo className="scale-75" />
-        {footerLinkGroups.map(({ links, title }, key) => (
-          <div className="flex flex-col gap-4" key={key}>
-            <h3 className="uppercase font-bold">{title}</h3>
-            <div className="flex flex-col gap-1 text-sm text-gray-700">
-              {links.map(({ href, text }) => (
-                <AnimatedLink href={href} key={href}>
-                  {text}
-                </AnimatedLink>
-              ))}
+    <header>
+      <div className="border-b-1.5">
+        <div className="mx-auto max-w-screen-2xl p-5 flex flex-col gap-5">
+          {/* Search bar */}
+          <div className="flex items-center justify-between gap-4 lg:gap-8">
+            <Logo />
+            <SiteSearch className="hidden md:block grow" />
+            <div className="flex items-center gap-2 lg:gap-4">
+              <CreateCompanyButton />
+              <ProfileButton />
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-    {/* Footer link groups END */}
+          <SiteSearch className="md:hidden" />
+          {/* Search bar END */}
 
-    {/* Footer links */}
-    <div className="border-t-2 p-7 flex justify-center gap-10 text-sm text-gray-700">
-      {footerLinks.map(({ href, text }) => (
-        <AnimatedLink href={href} key={href}>
-          {text}
-        </AnimatedLink>
-      ))}
-    </div>
-    {/* Footer links END */}
+          {/* Categories */}
+          <CategoriesCarousel categories={categories} />
+          {/* Categories END */}
+        </div>
+      </div>
+    </header>
+
+    {/* Contents */}
+    <main>{children}</main>
+    {/* Contents END */}
+
+    <footer>
+      {/* Footer categories */}
+      <div className="border-t-2 border-gray-400">
+        <div className="mx-auto max-w-screen-2xl px-12 py-5 flex gap-4 text-sm">
+          {categories.docs.map(category => (
+            <AnimatedLink
+              href={`/categories/${category._id}`}
+              key={category._id}
+            >
+              {category.name}
+            </AnimatedLink>
+          ))}
+        </div>
+      </div>
+      {/* Footer categories END */}
+
+      {/* Footer link groups */}
+      <div className="border-t-2 p-10">
+        <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
+          <Logo className="scale-75" />
+          {footerLinkGroups.map(({ links, title }, key) => (
+            <div className="flex flex-col gap-4" key={key}>
+              <h3 className="uppercase font-bold">{title}</h3>
+              <div className="flex flex-col gap-1 text-sm text-gray-700">
+                {links.map(({ href, text }) => (
+                  <AnimatedLink href={href} key={href}>
+                    {text}
+                  </AnimatedLink>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Footer link groups END */}
+
+      {/* Footer links */}
+      <div className="border-t-2">
+        <div className="mx-auto max-w-screen-2xl p-7 flex justify-center gap-10 text-sm text-gray-700">
+          {footerLinks.map(({ href, text }) => (
+            <AnimatedLink href={href} key={href}>
+              {text}
+            </AnimatedLink>
+          ))}
+        </div>
+      </div>
+      {/* Footer links END */}
+    </footer>
   </div>
 );
 

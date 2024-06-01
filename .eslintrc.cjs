@@ -44,7 +44,8 @@ const config = {
             "next/font/*",
             "react-icons/*",
             "redux-persist/integration/react",
-            "redux-persist/lib/storage"
+            "redux-persist/lib/storage",
+            "tailwindcss/plugin"
           ]
       }
     ],
@@ -118,6 +119,7 @@ const config = {
             "neue",
             "nextjs",
             "nonnegative",
+            "nowrap",
             "nullable",
             "openapi",
             "parens",
@@ -129,10 +131,12 @@ const config = {
             "redeclare",
             "redux",
             "req",
+            "resize",
             "roboto",
             "rofr",
             "safelist",
             "schemas",
+            "scrollbar",
             "semibold",
             "serializable",
             "smacss",
@@ -154,7 +158,9 @@ const config = {
             "ver",
             "vscode",
             "webhooks",
+            "webkit",
             "webp",
+            "whitespace",
             "zod"
           ],
         strings: true,
