@@ -41,7 +41,7 @@
     "ncu-upgrade": "ncu --dep=dev,peer,prod --upgrade && npm run install-deps",
     "prepare": "husky",
     "start": "next start -p 80",
-    "test": "jest",
+    "test": "jest --coverage",
     "type-check": "tsc --incremental false --noEmit"
   },
   "lint-staged": {
