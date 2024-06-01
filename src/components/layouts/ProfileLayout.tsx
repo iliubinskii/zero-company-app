@@ -3,7 +3,7 @@
 import type { FC, ReactNode } from "react";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
-import { selectAuthUser, useAppSelector } from "../../services";
+import { selectAuthUser, useAppSelector } from "../../store";
 import { API_URL } from "../../config";
 import { AnimatedLink } from "../AnimatedLink";
 import { BsBookmarks } from "react-icons/bs";

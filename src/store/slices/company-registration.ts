@@ -3,8 +3,8 @@ import type {
   AuthUser,
   AuthUserEssential,
   ExistingCategory
-} from "../../../schema";
-import { API_URL } from "../../../config";
+} from "../../schema";
+import { API_URL } from "../../config";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import type { useRouter } from "next/navigation";

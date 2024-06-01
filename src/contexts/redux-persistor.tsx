@@ -7,7 +7,7 @@ import {
   setLoaded,
   store,
   useAppDispatch
-} from "../services";
+} from "../store";
 import { REDUX_PERSIST_KEY } from "../consts";
 import React, { useEffect } from "react";
 

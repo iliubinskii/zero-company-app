@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentProps, FC } from "react";
-import { resetCompanyRegistration, useAppDispatch } from "../services";
+import { resetCompanyRegistration, useAppDispatch } from "../store";
 import { AnimatedLink } from "../components";
 import React from "react";
 import { lang } from "../langs";

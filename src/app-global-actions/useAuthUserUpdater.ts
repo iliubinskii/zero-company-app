@@ -1,5 +1,5 @@
 import { callAsync, filterUndefinedProperties } from "../utils";
-import { setAuthUser, updateAuthUser, useAppDispatch } from "../services";
+import { setAuthUser, updateAuthUser, useAppDispatch } from "../store";
 import { AuthUserEssentialValidationSchema } from "../schema";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";

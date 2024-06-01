@@ -2,7 +2,7 @@ import type {
   AuthUser,
   AuthUserEssential,
   ExistingCategory
-} from "../../../schema";
+} from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { store } from "../store";
 

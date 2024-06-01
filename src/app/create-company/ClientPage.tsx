@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyReg, selectStep, useAppSelector } from "../../services";
+import { CompanyReg, selectStep, useAppSelector } from "../../store";
 import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
 import type { FC } from "react";
 import React from "react";
