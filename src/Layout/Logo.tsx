@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentProps, FC } from "react";
 import { AnimatedLink } from "../components";
 import { Bebas_Neue } from "next/font/google";
