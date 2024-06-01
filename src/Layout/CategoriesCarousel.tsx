@@ -9,8 +9,6 @@ import tw from "tailwind-styled-components";
 export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
   const containerRef = React.useRef<HTMLUListElement>(null);
 
-  const [isOverflowing, setIsOverflowing] = React.useState(false);
-
   const [leftButtonVisible, setLeftButtonVisible] = React.useState(false);
 
   const [rightButtonVisible, setRightButtonVisible] = React.useState(false);
@@ -21,11 +19,11 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
     if (container) {
       const { clientWidth, scrollLeft, scrollWidth } = container;
 
-      setIsOverflowing(scrollWidth > clientWidth);
-      setLeftButtonVisible(scrollWidth > clientWidth && scrollLeft > 0);
+      const isOverflow = scrollWidth > clientWidth;
+      setLeftButtonVisible(isOverflow && scrollLeft > 0);
       setRightButtonVisible(
         // Added an extra pixel because `scrollWidth` does not precisely reach `scrollWidth - clientWidth` in Chrome.
-        scrollWidth > clientWidth && scrollLeft < scrollWidth - clientWidth - 1
+        isOverflow && scrollLeft < scrollWidth - clientWidth - 1
       );
     }
   }, []);
@@ -60,10 +58,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
       >
         <LeftArrowIcon />
       </Button>
-      <List
-        className={isOverflowing ? "justify-start" : "justify-center"}
-        ref={containerRef}
-      >
+      <List ref={containerRef}>
         {categories.docs.map(category => (
           <li key={category._id}>
             <AnimatedLink href={`/categories/${category._id}`}>
@@ -94,4 +89,4 @@ const LeftArrowIcon = tw(IoIosArrowBack)`text-xl hover:text-blue-600`;
 
 const RightArrowIcon = tw(IoIosArrowForward)`text-xl hover:text-blue-600`;
 
-const List = tw.ul`grow flex gap-4 whitespace-nowrap overflow-x-auto scrollbar-hide font-medium`;
+const List = tw.ul`mx-auto flex gap-4 whitespace-nowrap overflow-x-auto scrollbar-hide font-medium`;
