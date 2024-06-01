@@ -50,6 +50,20 @@ const config = {
       }
     ],
     "n/no-unsupported-features/node-builtins": "off",
+    "node/no-unsupported-features/es-builtins": [
+      "error",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
+    "node/no-unsupported-features/node-builtins": [
+      "warn",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
     "spellcheck/spell-checker": [
       "warn",
       {

@@ -2,7 +2,6 @@ import { authReducer, companyRegistrationReducer } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { REDUX_PERSIST_KEY } from "../../consts";
-import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 
 /**
@@ -19,7 +18,25 @@ export function createdPersistedStore() {
   const persistedReducer = persistReducer(
     {
       key: REDUX_PERSIST_KEY,
-      storage,
+      storage: {
+        getItem(key) {
+          const result =
+            typeof localStorage === "object" ? localStorage.getItem(key) : null;
+
+          return Promise.resolve(result);
+        },
+        removeItem(key) {
+          if (typeof localStorage === "object") localStorage.removeItem(key);
+
+          return Promise.resolve();
+        },
+        setItem(key, value: string) {
+          if (typeof localStorage === "object")
+            localStorage.setItem(key, value);
+
+          return Promise.resolve();
+        }
+      },
       whitelist: ["auth", "companyRegistration"]
     },
     rootReducer
