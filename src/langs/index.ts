@@ -38,6 +38,7 @@ export const lang = {
   MyDrafts: "My Drafts",
   NDA: "NDA",
   Name: "Name",
+  NoName: "No name",
   NotFound: "Not Found",
   OurCharter: "Our Charter",
   PreemptiveRights: "Preemptive Rights",

@@ -10,6 +10,12 @@ export const COMPANY_SHARE_STEP = 100;
 
 export const COMPANY_TARGET_VALUE_STEP = 1000;
 
+export const GRAVATAR_DEFAULT = "mp";
+
+export const GRAVATAR_RATING = "pg";
+
+export const GRAVATAR_SIZE = "200";
+
 export const REDUX_PERSIST_KEY = "app-state";
 
 export const SHOW_SNACKBAR_DURATION_MS = 3000;
