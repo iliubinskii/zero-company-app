@@ -112,7 +112,7 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards END */}
 
         {/* More button or spinner */}
-        {nextCursor ? (
+        {nextCursor && (
           <div className="flex justify-center">
             <button
               className="dark-button relative"
@@ -132,7 +132,7 @@ export const ClientPage: FC<Props> = ({
               )}
             </button>
           </div>
-        ) : undefined}
+        )}
         {/* More button or spinner END */}
       </BlocksLayout>
     </>

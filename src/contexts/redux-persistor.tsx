@@ -1,7 +1,13 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { isAppState, setAppState, store, useAppDispatch } from "../services";
+import {
+  isAppState,
+  setAppState,
+  setLoaded,
+  store,
+  useAppDispatch
+} from "../services";
 import { REDUX_PERSIST_KEY } from "../consts";
 import React, { useEffect } from "react";
 
@@ -15,6 +21,8 @@ export const ReduxPersistorProvider: FC<Props> = ({ children }) => {
       const json = JSON.parse(stored) as unknown;
 
       if (isAppState(json)) dispatch(setAppState(json));
+
+      dispatch(setLoaded(true));
     }
 
     return store.subscribe(() => {

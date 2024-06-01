@@ -31,6 +31,7 @@ export interface AppState {
     readonly country?: string;
     readonly currentStep: CompanyReg;
   };
+  readonly loaded: boolean;
 }
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;

@@ -1,6 +1,10 @@
 import type { AuthActions, CompanyRegistrationActions } from "./slices";
 import { SET_STATE, setAppStateReducer } from "./root-actions";
-import { authReducer, companyRegistrationReducer } from "./slices";
+import {
+  authReducer,
+  companyRegistrationReducer,
+  loadedReducer
+} from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import type { AppState } from "./types";
 import type { SetStateAction } from "./root-actions";
@@ -8,7 +12,8 @@ import { thunk } from "redux-thunk";
 
 const slicesReducer = combineReducers({
   auth: authReducer,
-  companyRegistration: companyRegistrationReducer
+  companyRegistration: companyRegistrationReducer,
+  loaded: loadedReducer
 });
 
 const rootReducer = (
