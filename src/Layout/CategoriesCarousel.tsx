@@ -3,15 +3,28 @@
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { AnimatedLink } from "../components";
-import React, { useCallback } from "react";
+import { CAROUSEL_SCROLL_STEP } from "../consts";
+import React, { useCallback, useMemo } from "react";
 import tw from "tailwind-styled-components";
 
 export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
   const containerRef = React.useRef<HTMLUListElement>(null);
 
-  const [leftButtonVisible, setLeftButtonVisible] = React.useState(false);
+  const [leftButtonVisible, setLeftButtonVisible] = React.useState<boolean>();
 
-  const [rightButtonVisible, setRightButtonVisible] = React.useState(false);
+  const [rightButtonVisible, setRightButtonVisible] = React.useState<boolean>();
+
+  const leftButtonClassName = useMemo(() => {
+    if (leftButtonVisible === undefined) return "invisible";
+
+    return leftButtonVisible ? "" : "invisible";
+  }, [leftButtonVisible]);
+
+  const rightButtonClassName = useMemo(() => {
+    if (rightButtonVisible === undefined) return "sm:invisible";
+
+    return rightButtonVisible ? "" : "invisible";
+  }, [rightButtonVisible]);
 
   const updateState = useCallback((): void => {
     const container = containerRef.current;
@@ -29,11 +42,17 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
   }, []);
 
   const scrollLeft = (): void => {
-    containerRef.current?.scrollBy({ behavior: "smooth", left: -200 });
+    containerRef.current?.scrollBy({
+      behavior: "smooth",
+      left: -CAROUSEL_SCROLL_STEP
+    });
   };
 
   const scrollRight = (): void => {
-    containerRef.current?.scrollBy({ behavior: "smooth", left: 200 });
+    containerRef.current?.scrollBy({
+      behavior: "smooth",
+      left: CAROUSEL_SCROLL_STEP
+    });
   };
 
   React.useEffect(() => {
@@ -52,10 +71,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
 
   return (
     <Container>
-      <Button
-        className={leftButtonVisible ? undefined : "invisible"}
-        onClick={scrollLeft}
-      >
+      <Button className={leftButtonClassName} onClick={scrollLeft}>
         <LeftArrowIcon />
       </Button>
       <List ref={containerRef}>
@@ -67,10 +83,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
           </li>
         ))}
       </List>
-      <Button
-        className={rightButtonVisible ? undefined : "invisible"}
-        onClick={scrollRight}
-      >
+      <Button className={rightButtonClassName} onClick={scrollRight}>
         <RightArrowIcon />
       </Button>
     </Container>
