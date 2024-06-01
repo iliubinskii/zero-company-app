@@ -26,6 +26,6 @@ const Link = tw(AnimatedLink)`flex items-center gap-2`;
 
 const Image = tw.img`w-[3rem] h-[3rem] sm:w-[4rem] sm:h-[4rem]`;
 
-const Text = tw.h1`text-[1.5rem] sm:text-[2rem]`;
+const Text = tw.h1`text-[1.5rem] sm:text-[2rem] text-blue-700 whitespace-nowrap`;
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
