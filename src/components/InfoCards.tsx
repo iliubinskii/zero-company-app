@@ -1,9 +1,3 @@
-import type { FC, HTMLAttributes } from "react";
-import React from "react";
+import tw from "tailwind-styled-components";
 
-export const InfoCards: FC<HTMLAttributes<HTMLDivElement>> = ({
-  className = "",
-  ...props
-}) => (
-  <div className={`grid grid-cols-3 gap-4 ${className}`.trim()} {...props} />
-);
+export const InfoCards = tw.div`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`;
