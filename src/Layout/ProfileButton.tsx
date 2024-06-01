@@ -14,7 +14,7 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({
   const authUser = useAppSelector(selectAuthUser);
 
   return (
-    <div className={`w-30 flex justify-end ${className}`.trim()} {...props}>
+    <div className={`w-20 flex justify-end ${className}`.trim()} {...props}>
       <AnimatedLink
         className="px-2 py-3 whitespace-nowrap transition-colors duration-150 hover:text-green-800"
         href={authUser ? "/profile" : `${API_URL}auth/login`}
