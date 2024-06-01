@@ -3,7 +3,7 @@
 import "./globals.css";
 import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
-import { AppStateUpdater } from "../AppStateUpdater";
+import { AppGlobalActions } from "../app-global-actions";
 import Layout from "../Layout";
 import React, { Suspense } from "react";
 import { ReduxPersistorProvider } from "../contexts/redux-persistor";
@@ -39,7 +39,7 @@ export default async function RootLayout({
           <ReduxStoreProvider>
             <ReduxPersistorProvider>
               <Suspense fallback={null}>
-                <AppStateUpdater />
+                <AppGlobalActions />
               </Suspense>
               <Layout categories={categories}>{children}</Layout>
             </ReduxPersistorProvider>

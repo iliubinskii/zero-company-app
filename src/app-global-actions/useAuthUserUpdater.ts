@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 /**
- * JWT user updater.
+ * Hook to update the auth user.
  */
 export function useAuthUserUpdater(): void {
   const dispatch = useAppDispatch();
