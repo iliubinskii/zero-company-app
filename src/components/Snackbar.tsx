@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { MdClose } from "react-icons/md";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
 import { noop } from "lodash";
 import tw from "tailwind-styled-components";
@@ -14,21 +14,23 @@ export const Snackbar: FC<Props> = ({
   onClose = noop,
   variant = "info"
 }) => {
-  const Container = (() => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const Surface = useMemo(() => {
     switch (variant) {
       case "error": {
-        return ContainerError;
+        return SurfaceError;
       }
       case "info": {
-        return ContainerInfo;
+        return SurfaceInfo;
       }
       case "success": {
-        return ContainerSuccess;
+        return SurfaceSuccess;
       }
     }
-  })();
+  }, [variant]);
 
-  const CloseIcon = (() => {
+  const CloseIcon = useMemo(() => {
     switch (variant) {
       case "error": {
         return CloseIconError;
@@ -40,25 +42,41 @@ export const Snackbar: FC<Props> = ({
         return CloseIconSuccess;
       }
     }
-  })();
+  }, [variant]);
 
   useEffect(() => {
+    if (isHovered) return;
+
     const timer = setTimeout(onClose, duration);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [duration, onClose]);
+  }, [duration, isHovered, onClose]);
 
   return (
     <Container
-      className={isOpen ? undefined : "pointer-events-none opacity-0"}
+      className={isOpen ? undefined : "pointer-events-none"}
       onClick={e => {
         e.stopPropagation();
       }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
     >
-      <span>{message}</span>
-      <CloseIcon onClick={onClose} />
+      <OpacityTransition className={isOpen ? undefined : "opacity-0"}>
+        <ScaleTransformTransition
+          className={isHovered ? "scale-110" : undefined}
+        >
+          <Surface>
+            <span>{message}</span>
+            <CloseIcon onClick={onClose} />
+          </Surface>
+        </ScaleTransformTransition>
+      </OpacityTransition>
     </Container>
   );
 };
@@ -70,6 +88,20 @@ export interface Props {
   readonly onClose?: () => void;
   readonly variant?: "error" | "info" | "success";
 }
+
+const Container = tw.div`z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2`;
+
+const OpacityTransition = tw.div`transition-opacity duration-300`;
+
+const ScaleTransformTransition = tw.div`transition-transform duration-300`;
+
+const SurfaceBase = tw.div`rounded shadow-lg px-10 py-4`;
+
+const SurfaceError = tw(SurfaceBase)`bg-error text-red-50`;
+
+const SurfaceInfo = tw(SurfaceBase)`bg-gray-800 text-gray-50`;
+
+const SurfaceSuccess = tw(SurfaceBase)`bg-success text-green-50`;
 
 const CloseIconBase = tw(MdClose)`
   absolute top-0.5 right-0.5
@@ -83,17 +115,3 @@ const CloseIconError = tw(CloseIconBase)`text-red-100 hover:text-white`;
 const CloseIconInfo = tw(CloseIconBase)`text-gray-500 hover:text-gray-100`;
 
 const CloseIconSuccess = tw(CloseIconBase)`text-green-100 hover:text-white`;
-
-const ContainerBase = tw.div`
-  z-50
-  fixed bottom-4 left-1/2 transform -translate-x-1/2
-  rounded shadow-lg
-  px-10 py-4
-  transition-opacity duration-300
-`;
-
-const ContainerError = tw(ContainerBase)`bg-error text-red-50`;
-
-const ContainerInfo = tw(ContainerBase)`bg-gray-800 text-gray-50`;
-
-const ContainerSuccess = tw(ContainerBase)`bg-success text-green-50`;
