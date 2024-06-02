@@ -14,6 +14,8 @@ export const Snackbar: FC<Props> = ({
   onClose = noop,
   variant = "info"
 }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   const Container = (() => {
     switch (variant) {
       case "error": {
@@ -43,19 +45,26 @@ export const Snackbar: FC<Props> = ({
   })();
 
   useEffect(() => {
+    if (isHovered) return;
+
     const timer = setTimeout(onClose, duration);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [duration, onClose]);
+  }, [duration, isHovered, onClose]);
 
+  const onHoverHandler = (): void => {
+    setIsHovered(prev => !prev);
+  };
   return (
     <Container
-      className={isOpen ? undefined : "pointer-events-none opacity-0"}
+      className={`${isOpen ? undefined : "pointer-events-none opacity-0"} ${isHovered ? "scale-110" : "scale-100"}`}
       onClick={e => {
         e.stopPropagation();
       }}
+      onMouseEnter={onHoverHandler}
+      onMouseLeave={onHoverHandler}
     >
       <span>{message}</span>
       <CloseIcon onClick={onClose} />
@@ -90,6 +99,7 @@ const ContainerBase = tw.div`
   rounded shadow-lg
   px-10 py-4
   transition-opacity duration-300
+  transition-transform duration-300
 `;
 
 const ContainerError = tw(ContainerBase)`bg-error text-red-50`;
