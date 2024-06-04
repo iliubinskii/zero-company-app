@@ -57,7 +57,7 @@ export const {
 
 /**
  * Select the category of the company.
- * @param state - The root state.
+ * @param state - The app state.
  * @returns The category of the company.
  */
 export const selectCategory = (state: AppState): ExistingCategory | undefined =>
@@ -65,7 +65,7 @@ export const selectCategory = (state: AppState): ExistingCategory | undefined =>
 
 /**
  * Select the country of the company.
- * @param state - The root state.
+ * @param state - The app state.
  * @returns The country of the company.
  */
 export const selectCountry = (state: AppState): string | undefined =>
@@ -73,7 +73,7 @@ export const selectCountry = (state: AppState): string | undefined =>
 
 /**
  * Select the current step of the company registration.
- * @param state - The root state.
+ * @param state - The app state.
  * @returns The current step of the company registration.
  */
 export const selectStep = (state: AppState): CompanyReg =>
