@@ -27,6 +27,7 @@ const Page = createAsyncPage("/", async () => {
       {/* Two cols */}
       <div className="flex">
         {/* Featured companies */}
+        {/* OPTIONS: (A) Use existing CompanyCard component; (B) Create big card variant after kickstarter */}
         {/* Featured companies END */}
 
         {/* Internships */}

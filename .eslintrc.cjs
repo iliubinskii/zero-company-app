@@ -109,6 +109,7 @@ const config = {
             "jsdom",
             "jsx",
             "keydown",
+            "kickstarter",
             "lang",
             "langs",
             "latin",

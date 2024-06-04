@@ -4,6 +4,8 @@ import type { Company } from "../schema";
 import React from "react";
 import { assertDefined } from "../utils";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Design after kickstarter
 export const CompanyCard: React.FC<Props> = ({ className, company }) => {
   const image = assertDefined(company.images[0]);
 
