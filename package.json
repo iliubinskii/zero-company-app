@@ -31,6 +31,8 @@
     "deploy-preview": "vercel",
     "deploy-prod": "vercel --prod",
     "dev": "next dev -p 3100",
+    "docker:build": "docker build -t zero-company-app .",
+    "docker:start": "docker run --env-file .env -p 3100 zero-company-app",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
     "install-deps": "npm install --save-prod --strict-peer-deps",
     "install-dev-deps": "npm install --save-dev --strict-peer-deps",
@@ -40,7 +42,7 @@
     "ncu-check": "ncu --dep=dev,peer,prod",
     "ncu-upgrade": "ncu --dep=dev,peer,prod --upgrade && npm run install-deps",
     "prepare": "husky",
-    "start": "next start -p 80",
+    "start": "next start -p 3100",
     "test": "jest --coverage",
     "type-check": "tsc --incremental false --noEmit"
   },
