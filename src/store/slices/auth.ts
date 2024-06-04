@@ -25,7 +25,7 @@ export const { setAuthUser } = authSlice.actions;
 
 /**
  * Select the authenticated user.
- * @param state - The root state.
+ * @param state - The app state.
  * @returns The authenticated user.
  */
 export const selectAuthUser = (
