@@ -1,7 +1,6 @@
+import { AnimatedLink, CategoriesCarousel } from "../components";
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import type { FC, ReactNode } from "react";
-import { AnimatedLink } from "../components";
-import { CategoriesCarousel } from "./CategoriesCarousel";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
@@ -27,7 +26,18 @@ const Layout: FC<Props> = ({ categories, children }) => (
           {/* Search bar END */}
 
           {/* Categories */}
-          <CategoriesCarousel categories={categories} />
+          <CategoriesCarousel>
+            <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto ">
+              {categories.docs.map(category => (
+                <li key={category._id}>
+                  <AnimatedLink href={`/categories/${category._id}`}>
+                    {category.name}
+                  </AnimatedLink>
+                </li>
+              ))}
+            </ul>
+          </CategoriesCarousel>
+
           {/* Categories END */}
         </div>
       </div>

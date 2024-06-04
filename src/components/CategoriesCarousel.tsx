@@ -1,14 +1,13 @@
 "use client";
 
-import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { AnimatedLink } from "../components";
+
 import { CAROUSEL_SCROLL_STEP } from "../consts";
 import React, { useCallback, useMemo } from "react";
 import tw from "tailwind-styled-components";
 
-export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
-  const containerRef = React.useRef<HTMLUListElement>(null);
+export const CategoriesCarousel: React.FC<Props> = ({ children }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const [leftButtonVisible, setLeftButtonVisible] = React.useState<boolean>();
 
@@ -74,15 +73,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
       <Button className={leftButtonClassName} onClick={scrollLeft}>
         <LeftArrowIcon />
       </Button>
-      <List ref={containerRef}>
-        {categories.docs.map(category => (
-          <li key={category._id}>
-            <AnimatedLink href={`/categories/${category._id}`}>
-              {category.name}
-            </AnimatedLink>
-          </li>
-        ))}
-      </List>
+      <List ref={containerRef}>{children}</List>
       <Button className={rightButtonClassName} onClick={scrollRight}>
         <RightArrowIcon />
       </Button>
@@ -91,7 +82,7 @@ export const CategoriesCarousel: React.FC<Props> = ({ categories }) => {
 };
 
 export interface Props {
-  readonly categories: MultipleDocsResponse<ExistingCategory>;
+  readonly children: React.ReactNode;
 }
 
 const Container = tw.div`flex justify-center items-center`;
@@ -102,4 +93,4 @@ const LeftArrowIcon = tw(IoIosArrowBack)`text-xl hover:text-blue-600`;
 
 const RightArrowIcon = tw(IoIosArrowForward)`text-xl hover:text-blue-600`;
 
-const List = tw.ul`mx-auto flex gap-4 whitespace-nowrap overflow-x-auto scrollbar-hide font-medium`;
+const List = tw.div`overflow-x-auto scrollbar-hide`;

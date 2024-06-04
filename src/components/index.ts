@@ -1,4 +1,5 @@
 export { AnimatedLink } from "./AnimatedLink";
+export { CategoriesCarousel } from "./CategoriesCarousel";
 export { CompanyCard } from "./CompanyCard";
 export { CompanyCards } from "./CompanyCards";
 export { InfoCard } from "./InfoCard";
