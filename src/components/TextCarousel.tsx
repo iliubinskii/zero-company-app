@@ -6,7 +6,7 @@ import { CAROUSEL_SCROLL_STEP } from "../consts";
 import React, { useCallback, useMemo } from "react";
 import tw from "tailwind-styled-components";
 
-export const CategoriesCarousel: React.FC<Props> = ({ children }) => {
+export const TextCarousel: React.FC<Props> = ({ children }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const [leftButtonVisible, setLeftButtonVisible] = React.useState<boolean>();
