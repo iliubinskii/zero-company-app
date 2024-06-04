@@ -73,7 +73,7 @@ export const TextCarousel: React.FC<Props> = ({ children }) => {
       <Button className={leftButtonClassName} onClick={scrollLeft}>
         <LeftArrowIcon />
       </Button>
-      <List ref={containerRef}>{children}</List>
+      <ScrollableArea ref={containerRef}>{children}</ScrollableArea>
       <Button className={rightButtonClassName} onClick={scrollRight}>
         <RightArrowIcon />
       </Button>
@@ -93,4 +93,4 @@ const LeftArrowIcon = tw(IoIosArrowBack)`text-xl hover:text-blue-600`;
 
 const RightArrowIcon = tw(IoIosArrowForward)`text-xl hover:text-blue-600`;
 
-const List = tw.div`overflow-x-auto scrollbar-hide`;
+const ScrollableArea = tw.div`overflow-x-auto scrollbar-hide`;
