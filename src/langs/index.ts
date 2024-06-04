@@ -15,7 +15,7 @@ export const lang = {
   Continue: "Continue",
   CookiePolicy: "Cookie Policy",
   CreateCompany: "Create a company",
-  CreateCompany2: ["Create", "a company"],
+  CreateCompany2: ["Create", " a company"],
   Dashboard: "Dashboard",
   Description: "Description",
   Documents: "Documents",

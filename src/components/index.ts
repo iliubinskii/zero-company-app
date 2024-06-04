@@ -7,6 +7,7 @@ export { Loading } from "./Loading";
 export { Navigate } from "./Navigate";
 export { NotFound } from "./NotFound";
 export { Snackbar } from "./Snackbar";
+export { TextCarousel } from "./TextCarousel";
 export { Unauthorized } from "./Unauthorized";
 export * from "./form";
 export * from "./layouts";

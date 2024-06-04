@@ -134,6 +134,7 @@ const config = {
             "rofr",
             "safelist",
             "schemas",
+            "scrollable",
             "scrollbar",
             "semibold",
             "serializable",
