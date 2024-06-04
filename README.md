@@ -2,10 +2,15 @@
 
 ## Table of Contents
 
+- [Project specification](#project-specification)
 - [Initial Setup](#initial-setup)
 - [Development](#development)
 - [Contributions](#contributions)
 - [How To](#how-to)
+
+## Project Specification
+
+See [SPECIFICATION.md](SPECIFICATION.md) for more details about the project.
 
 ## Initial Setup
 
@@ -32,7 +37,7 @@
 3. SmartGit
 4. VSCode
    - Configuration:
-     - See `vscode.code-workspace` provides with the repo
+     - See `vscode.code-workspace` provided with the repo
    - Plugins:
      - ES6 String HTML (tobermory.es6-string-html)
      - ESLint (dbaeumer.vscode-eslint)

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import type React from "react";
+import type { ReactElement } from "react";
 import { logger } from "../services";
 
 /**
@@ -10,7 +10,7 @@ import { logger } from "../services";
  */
 export function createAsyncPage(
   pageName: string,
-  page: (props: PageProps) => Promise<React.ReactElement>
+  page: (props: PageProps) => Promise<ReactElement>
 ): NextPage<PageProps> {
   return async ({ params = defaultParams, ...props }) => {
     const dynamicPageName = Object.entries(params).reduce(
@@ -39,7 +39,7 @@ export function createAsyncPage(
  */
 export function createPage(
   pageName: string,
-  page: (props: PageProps) => React.ReactElement
+  page: (props: PageProps) => ReactElement
 ): NextPage<PageProps> {
   return ({ params = defaultParams, ...props }) => {
     const dynamicPageName = Object.entries(params).reduce(

@@ -6,8 +6,8 @@ import {
   getCompaniesByCategory
 } from "../../../api";
 import { COMPANY_LIMIT } from "../../../consts";
+import { ClientPage } from "./ClientPage";
 import React from "react";
-import { SyncPage } from "./SyncPage";
 
 /**
  * Generates static parameters.
@@ -33,7 +33,7 @@ const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
     })
   ]);
 
-  return <SyncPage category={category} companies={companies} />;
+  return <ClientPage category={category} companies={companies} />;
 });
 
 export default Page;

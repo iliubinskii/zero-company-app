@@ -1,8 +1,9 @@
+import type { FC, HTMLAttributes } from "react";
 import type { Company } from "../schema";
 import React from "react";
 import { assertDefined } from "../utils";
 
-export const CompanyCard: React.FC<Props> = ({ company, ...props }) => {
+export const CompanyCard: FC<Props> = ({ company, ...props }) => {
   const { height, secureUrl, width } = assertDefined(company.images[0]);
 
   return (
@@ -19,6 +20,6 @@ export const CompanyCard: React.FC<Props> = ({ company, ...props }) => {
   );
 };
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props extends HTMLAttributes<HTMLDivElement> {
   readonly company: Company;
 }

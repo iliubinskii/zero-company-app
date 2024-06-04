@@ -1,29 +1,39 @@
 "use client";
 
-import { resetCompanyRegistration, useAppDispatch } from "../services";
+import type { ComponentProps, FC } from "react";
+import { resetCompanyRegistration, useAppDispatch } from "../store";
 import { AnimatedLink } from "../components";
-import type Link from "next/link";
 import React from "react";
 import { lang } from "../langs";
-import styles from "./CreateCompanyButton.module.css";
+import tw from "tailwind-styled-components";
 
-const CreateCompanyButton: React.FC<
-  Omit<React.ComponentProps<typeof Link>, "href">
-> = ({ className = "", ...props }) => {
+const CreateCompanyButton: FC<
+  Omit<ComponentProps<typeof Link>, "href">
+> = props => {
   const dispatch = useAppDispatch();
 
   return (
-    <AnimatedLink
-      className={`${styles["link"]} ${className}`.trim()}
-      {...props}
+    <Link
       href="/create-company"
       onBeforeClick={() => {
         dispatch(resetCompanyRegistration());
       }}
+      {...props}
     >
-      {lang.CreateCompany}
-    </AnimatedLink>
+      {lang.CreateCompany2[0]}
+      <span className="hidden sm:inline">{lang.CreateCompany2[1]}</span>
+    </Link>
   );
 };
 
 export default CreateCompanyButton;
+
+const Link = tw(AnimatedLink)`
+  px-4 py-3
+  rounded
+  border border-gray-400
+  whitespace-nowrap
+  transition duration-150 ease-in-out
+  hover:border-black
+  focus:border-black;
+`;

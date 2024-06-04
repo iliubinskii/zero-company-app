@@ -1,7 +1,8 @@
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../langs";
 
-export const InfoCard: React.FC<Props> = ({
+export const InfoCard: FC<Props> = ({
   description,
   image,
   imageHeight,
@@ -12,7 +13,7 @@ export const InfoCard: React.FC<Props> = ({
     <img alt={title} height={imageHeight} src={image} width={imageWidth} />
     <div className="px-6 py-4 flex flex-col gap-3">
       <h3 className="text-xl font-bold">{title}</h3>
-      <p className="flex-grow text-gray-500">{description}</p>
+      <p className="grow text-gray-500">{description}</p>
       <button className="dark-button self-start">{lang.LearnMore}</button>
     </div>
   </div>

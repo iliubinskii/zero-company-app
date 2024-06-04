@@ -1,7 +1,9 @@
+/* eslint-disable node/no-unpublished-import -- Ok */
 /* eslint-disable no-magic-numbers -- Ok */
 
 import daisyui from "daisyui";
 import flowbite from "flowbite/plugin";
+import plugin from "tailwindcss/plugin";
 
 /**
  * @type {import("tailwindcss").Config}
@@ -11,7 +13,23 @@ const config = {
     "./node_modules/flowbite-react/lib/**/*.js",
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
-  plugins: [daisyui, flowbite],
+  plugins: [
+    daisyui,
+    flowbite,
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        ".scrollbar-hide": {
+          // Edge, IE
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none"
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          // Chrome, Opera, Safari
+          display: "none"
+        }
+      });
+    })
+  ],
   safelist: [
     "max-w-screen-sm",
     "max-w-screen-md",

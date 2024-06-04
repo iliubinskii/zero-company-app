@@ -11,7 +11,6 @@ export function filterUndefinedProperties<T>(
   for (const key in result) {
     const value = result[key];
 
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete -- Ok
     if (value === undefined) delete result[key];
   }
 

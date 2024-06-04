@@ -43,12 +43,25 @@ const config = {
             "next/*",
             "next/font/*",
             "react-icons/*",
-            "redux-persist/integration/react",
-            "redux-persist/lib/storage"
+            "tailwindcss/plugin"
           ]
       }
     ],
     "n/no-unsupported-features/node-builtins": "off",
+    "node/no-unsupported-features/es-builtins": [
+      "error",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
+    "node/no-unsupported-features/node-builtins": [
+      "warn",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -77,6 +90,7 @@ const config = {
             "discoverable",
             "docuseal",
             "dom",
+            "droppable",
             "dropzone",
             "ecma",
             "enum",
@@ -104,6 +118,7 @@ const config = {
             "neue",
             "nextjs",
             "nonnegative",
+            "nowrap",
             "nullable",
             "openapi",
             "parens",
@@ -115,10 +130,13 @@ const config = {
             "redeclare",
             "redux",
             "req",
+            "resize",
             "roboto",
             "rofr",
             "safelist",
             "schemas",
+            "scrollable",
+            "scrollbar",
             "semibold",
             "serializable",
             "smacss",
@@ -141,7 +159,9 @@ const config = {
             "ver",
             "vscode",
             "webhooks",
+            "webkit",
             "webp",
+            "whitespace",
             "zod"
           ],
         strings: true,

@@ -13,15 +13,6 @@ body {
   cursor: wait !important;
 }
 
-.app-logo-image {
-  width: 4rem;
-  height: 4rem;
-}
-
-.app-logo-text {
-  font-size: 2rem;
-}
-
 /* Button styles */
 
 .dark-button {
@@ -61,31 +52,8 @@ body {
     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
 }
 
-.form-field-error {
-  /* TODO */
-  @apply form-field text-red-700;
-}
-
 .form-field-container {
   @apply flex flex-col gap-1;
-}
-
-/* Layout styles */
-
-.article-layout-md {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
-}
-
-.article-layout-lg {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
-}
-
-.blocks-layout-md {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-9;
-}
-
-.blocks-layout-lg {
-  @apply mx-auto max-w-screen-lg p-9 flex flex-col gap-9;
 }
 
 /* Miscellaneous styles */

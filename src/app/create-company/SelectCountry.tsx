@@ -3,29 +3,30 @@ import {
   setCompanyCountry,
   useAppDispatch,
   useAppSelector
-} from "../../services";
-import { BlocksLayout } from "../../components/BlocksLayout";
-import React from "react";
+} from "../../store";
+import { BlocksLayout } from "../../components/layouts/BlocksLayout";
+import type { FC } from "react";
+import React, { useState } from "react";
 import { SelectElement } from "../../components";
 import type { SelectOption } from "../../components";
 import { lang } from "../../langs";
 import { useRouter } from "next/navigation";
 
-export const SelectCountry: React.FC = () => {
+export const SelectCountry: FC = () => {
   const authUser = useAppSelector(selectAuthUser);
 
   const initialCountry = useAppSelector(
     state => state.companyRegistration.country
   );
 
-  const [country, setCountry] = React.useState(initialCountry);
+  const [country, setCountry] = useState(initialCountry);
 
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
   return (
-    <BlocksLayout size="md">
+    <BlocksLayout>
       <form
         className="py-32 flex flex-col gap-10"
         onSubmit={e => {

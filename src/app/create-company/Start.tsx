@@ -1,13 +1,14 @@
-import { startCompanyRegistration, useAppDispatch } from "../../services";
+import { startCompanyRegistration, useAppDispatch } from "../../store";
 import { BlocksLayout } from "../../components";
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../../langs";
 
-export const Start: React.FC = () => {
+export const Start: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <BlocksLayout size="md">
+    <BlocksLayout>
       <form
         className="py-32 flex flex-col items-center"
         onSubmit={e => {

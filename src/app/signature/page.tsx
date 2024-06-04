@@ -1,6 +1,6 @@
 "use client";
 
-import { selectAuthUser, useAppSelector } from "../../services";
+import { selectAuthUser, useAppSelector } from "../../store";
 import { DocusealForm } from "@docuseal/react";
 import { Navigate } from "../../components";
 import React from "react";

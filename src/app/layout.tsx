@@ -2,9 +2,11 @@
 
 import "./globals.css";
 import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
-import { AppStateUpdater } from "../AppStateUpdater";
+import type { ReactElement, ReactNode } from "react";
+import { AppGlobalActions } from "../app-global-actions";
 import Layout from "../Layout";
-import React from "react";
+import React, { Suspense } from "react";
+import { ReduxPersistorProvider } from "../contexts/redux-persistor";
 import { getCategories } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
@@ -17,7 +19,7 @@ import { logger } from "../services";
  */
 export default async function RootLayout({
   children
-}: Props): Promise<React.ReactElement> {
+}: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
   const categories = await getCategories({ onlyPinned: true });
@@ -35,8 +37,12 @@ export default async function RootLayout({
       <body>
         <AppLoadingProvider>
           <ReduxStoreProvider>
-            <AppStateUpdater />
-            <Layout categories={categories}>{children}</Layout>
+            <ReduxPersistorProvider>
+              <Suspense fallback={null}>
+                <AppGlobalActions />
+              </Suspense>
+              <Layout categories={categories}>{children}</Layout>
+            </ReduxPersistorProvider>
           </ReduxStoreProvider>
         </AppLoadingProvider>
       </body>
@@ -52,5 +58,5 @@ export default async function RootLayout({
 }
 
 export interface Props {
-  children?: React.ReactNode | undefined;
+  children?: ReactNode | undefined;
 }

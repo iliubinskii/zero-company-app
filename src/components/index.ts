@@ -1,5 +1,4 @@
 export { AnimatedLink } from "./AnimatedLink";
-export { BlocksLayout } from "./BlocksLayout";
 export { CompanyCard } from "./CompanyCard";
 export { CompanyCards } from "./CompanyCards";
 export { InfoCard } from "./InfoCard";
@@ -7,7 +6,8 @@ export { InfoCards } from "./InfoCards";
 export { Loading } from "./Loading";
 export { Navigate } from "./Navigate";
 export { NotFound } from "./NotFound";
-export { ProfileLayout } from "./ProfileLayout";
 export { Snackbar } from "./Snackbar";
+export { TextCarousel } from "./TextCarousel";
 export { Unauthorized } from "./Unauthorized";
 export * from "./form";
+export * from "./layouts";
