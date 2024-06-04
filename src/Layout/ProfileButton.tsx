@@ -18,7 +18,13 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
   return (
     <Container {...props}>
       {loaded && (
-        <Link href={authUser ? "/profile" : `${API_URL}auth/login`}>
+        <Link
+          href={
+            authUser
+              ? "/profile"
+              : `${API_URL}auth/login?successReturnUrl=/profile`
+          }
+        >
           {text}
         </Link>
       )}

@@ -28,6 +28,7 @@ export function useAuthUserUpdater(): void {
 
     if (action === "logout") dispatch(setAuthUser(undefined));
 
+    // Send request to /auth/me route to update auth state based on the httpOnly cookie.
     callAsync(async () => {
       await dispatch(updateAuthUser());
     });
