@@ -1,8 +1,8 @@
 "use client";
 
-import { selectAuthUser, useAppSelector } from "../../store";
+import { BlocksLayout, Loading, Navigate } from "../../components";
+import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
 import { DocusealForm } from "@docuseal/react";
-import { Navigate } from "../../components";
 import React from "react";
 import { createPage } from "../../utils";
 
@@ -12,15 +12,33 @@ import { createPage } from "../../utils";
 const Signature = createPage("/signature", () => {
   const authUser = useAppSelector(selectAuthUser);
 
-  return authUser ? (
-    <div className="blocks-layout-lg">
-      <DocusealForm
-        email={authUser.email}
-        src="https://docuseal.co/d/jrJKKG9T8NKhGo"
-      />
-    </div>
-  ) : (
-    <Navigate to="/" />
+  const loaded = useAppSelector(selectLoaded);
+
+  const [docLoaded, setDocLoaded] = React.useState(false);
+
+  if (loaded && !authUser) return <Navigate to="/" />;
+
+  return (
+    <BlocksLayout size="lg">
+      {loaded && docLoaded ? undefined : (
+        <div className="min-h-80 flex justify-center items-center">
+          <Loading />
+        </div>
+      )}
+      <div
+        className={loaded && docLoaded ? undefined : "w-0 h-0 overflow-hidden"}
+      >
+        {authUser && (
+          <DocusealForm
+            email={authUser.email}
+            onLoad={() => {
+              setDocLoaded(true);
+            }}
+            src="https://docuseal.co/d/jrJKKG9T8NKhGo"
+          />
+        )}
+      </div>
+    </BlocksLayout>
   );
 });
 
