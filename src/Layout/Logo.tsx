@@ -1,3 +1,9 @@
+// eslint-disable-next-line no-warning-comments -- Assigned (optional)
+// TODO (OPTIONAL)
+// Find font for logo
+// Use "next/font/google" npm package
+// https://fonts.google.com/
+
 "use client";
 
 import type { ComponentProps, FC } from "react";

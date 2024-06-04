@@ -1,14 +1,7 @@
-import {
-  BlocksLayout,
-  CompanyCard,
-  CompanyCards,
-  InfoCard,
-  InfoCards
-} from "../components";
+import { BlocksLayout, CompanyCard, CompanyCards } from "../components";
 import React from "react";
 import { createAsyncPage } from "../utils";
 import { getCompanies } from "../api";
-import { images } from "../images";
 import { lang } from "../langs";
 
 const Page = createAsyncPage("/", async () => {
@@ -18,39 +11,29 @@ const Page = createAsyncPage("/", async () => {
     sortOrder: "desc"
   });
 
-  const cards = [
-    {
-      description: lang.home.card1.description,
-      image: images.digitalSign,
-      title: lang.home.card1.title
-    },
-    {
-      description: lang.home.card2.description,
-      image: images.IPO,
-      title: lang.home.card2.title
-    },
-    {
-      description: lang.home.card3.description,
-      image: images.unicorn,
-      title: lang.home.card3.title
-    }
-  ];
-
   return (
     <BlocksLayout size="lg">
       <div className="header2 text-center">{lang.home.teaser}</div>
-      <InfoCards>
-        {cards.map(({ description, image, title }, key) => (
-          <InfoCard
-            description={description}
-            image={image.src}
-            imageHeight={image.height}
-            imageWidth={image.width}
-            key={key}
-            title={title}
-          />
-        ))}
-      </InfoCards>
+      {/* Slogan */}
+      {/* Slogan END */}
+
+      {/* Elevated block with number */}
+      {/* Elevated block with number END */}
+
+      {/* Text block */}
+      {/* Not sure (optional) */}
+      {/* Text block END*/}
+
+      {/* Two cols */}
+      <div className="flex">
+        {/* Featured companies */}
+        {/* Featured companies END */}
+
+        {/* Internships */}
+        {/* Internships END */}
+      </div>
+      {/* Two cols END */}
+
       <CompanyCards>
         {companies.docs.map(company => (
           <CompanyCard company={company} key={company._id} />

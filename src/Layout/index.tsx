@@ -11,6 +11,12 @@ import { lang } from "../langs";
 
 const Layout: FC<Props> = ({ categories, children }) => (
   <div className="flex flex-col">
+    {/* eslint-disable-next-line no-warning-comments -- Assigned */}
+    {/*
+    TODO:
+    - Header on dark background
+    - Categories stay under dark background
+     */}
     <header>
       <div className="border-b-1.5">
         <div className="mx-auto max-w-screen-2xl p-5 flex flex-col gap-5">
