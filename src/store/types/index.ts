@@ -7,11 +7,7 @@ import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { CREATE_COMPANY_STEP } from "../../consts";
 import type { store } from "../store";
 
-export type AppDispatch = (typeof store)["dispatch"];
-
-export interface AppThunk<T = void> {
-  (): (dispatch: AppDispatch) => Promise<T>;
-}
+export type AppDispatch = AppStore["dispatch"];
 
 export interface AppState {
   readonly auth: {
@@ -23,6 +19,12 @@ export interface AppState {
     readonly step: (typeof CREATE_COMPANY_STEP)[keyof typeof CREATE_COMPANY_STEP];
   };
   readonly loaded: boolean;
+}
+
+export type AppStore = typeof store;
+
+export interface AppThunk<T = void> {
+  (): (dispatch: AppDispatch) => Promise<T>;
 }
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;

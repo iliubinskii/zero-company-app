@@ -28,16 +28,17 @@ const Page = createPage("/create-company/create-draft", () => {
 
   useEffect(() => {
     callAsync(async () => {
-      if (category && typeof country === "string") {
-        const company = await postCompany({
-          categories: [category._id],
-          country
-        });
+      if (loaded)
+        if (authUser && category && typeof country === "string") {
+          const company = await postCompany({
+            categories: [category._id],
+            country
+          });
 
-        router.push(`/profile/drafts/${company._id}`);
-      } else router.push("/");
+          router.push(`/profile/drafts/${company._id}`);
+        } else router.push("/");
     });
-  });
+  }, [authUser, category, country, loaded, router]);
 
   if (loaded && !authUser) return <Navigate to="/" />;
 
