@@ -11,6 +11,7 @@ export const lang = {
   BuySellAgreement: "Buy-Sell Agreement",
   Category: "Category",
   CommonQuestions: "Common Questions",
+  CompanyHasNoImages: "Company has no images",
   CompanyImages: "Add company images",
   CompanyLogo: "Add company logo",
   Continue: "Continue",

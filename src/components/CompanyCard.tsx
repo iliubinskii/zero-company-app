@@ -1,10 +1,18 @@
 import type { FC, HTMLAttributes } from "react";
 import type { Company } from "../schema";
 import React from "react";
-import { assertDefined } from "../utils";
+import { images } from "../images";
+import { lang } from "../langs";
+import { logger } from "../services";
 
 export const CompanyCard: FC<Props> = ({ company, ...props }) => {
-  const { height, secureUrl, width } = assertDefined(company.images[0]);
+  const image = company.images[0];
+
+  if (image === undefined) logger.error(lang.CompanyHasNoImages, company);
+
+  const src = image ? image.secureUrl : images.noImage.src;
+
+  const { height, width } = image ?? images.noImage;
 
   return (
     <div {...props}>
@@ -12,7 +20,7 @@ export const CompanyCard: FC<Props> = ({ company, ...props }) => {
         alt={company.name}
         className="w-full"
         height={height}
-        src={secureUrl}
+        src={src}
         width={width}
       />
       {company.name}
