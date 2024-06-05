@@ -79,12 +79,6 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
-  creative: {
-    createCompany: {
-      review:
-        "You will be able to add company info and invite team members after creating a draft."
-    }
-  },
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
   home: {

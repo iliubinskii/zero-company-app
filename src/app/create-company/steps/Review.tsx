@@ -12,6 +12,7 @@ import {
 import { API_URL } from "../../../config";
 import type { FC } from "react";
 import React from "react";
+import { countryName } from "../../../utils";
 import { lang } from "../../../langs";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +39,10 @@ export const Review: FC = () => {
         );
       }}
     >
-      {lang.creative.createCompany.review}
+      <div className="flex gap-6 items-center">
+        <div className="badge-outlined">{category.name}</div>
+        <div className="badge-outlined">{countryName(country)}</div>
+      </div>
       <div className="flex justify-between items-center">
         <BackButton
           onClick={() => {
