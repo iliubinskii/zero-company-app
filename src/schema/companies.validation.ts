@@ -1,18 +1,17 @@
+import { COUNTRY_CODE_SIZE, MAX_CATEGORIES } from "./consts";
 import {
-  COMPANY_STATUS,
   type CompanyCreate,
   type CompanyUpdate,
   type ExistingCompany
 } from "./companies";
-import { COUNTRY_CODE_SIZE, MAX_CATEGORIES } from "./consts";
 import {
+  CompanyStatus,
   IdValidationSchema,
   ImageValidationSchema,
   preprocessBoolean,
   preprocessEmail,
   preprocessNumber
 } from "./common";
-import type { ValidationResult } from "./common";
 import zod from "zod";
 
 const _id = IdValidationSchema;
@@ -24,6 +23,8 @@ const categories = zod
   .max(MAX_CATEGORIES);
 
 const country = zod.string().length(COUNTRY_CODE_SIZE);
+
+const createdAt = zod.string().min(1);
 
 const description = zod.string().min(1).optional();
 
@@ -49,9 +50,9 @@ const privateCompany = preprocessBoolean(zod.boolean()).optional();
 const recommended = preprocessBoolean(zod.boolean()).optional();
 
 const status = zod.enum([
-  COMPANY_STATUS.draft,
-  COMPANY_STATUS.founded,
-  COMPANY_STATUS.signing
+  CompanyStatus.draft,
+  CompanyStatus.founded,
+  CompanyStatus.signing
 ]);
 
 const targetValue = preprocessNumber(zod.number().int().positive()).optional();
@@ -62,6 +63,7 @@ export const ExistingCompanyValidationSchema = zod.strictObject({
   _id,
   categories,
   country,
+  createdAt,
   description,
   foundedAt,
   founders,
@@ -91,21 +93,21 @@ export const CompanyUpdateValidationSchema = zod.strictObject({
 });
 
 // Type check the existing company validation schema
-((): ValidationResult<ExistingCompany> | undefined => {
+((): ExistingCompany | undefined => {
   const result = ExistingCompanyValidationSchema.safeParse(undefined);
 
   return result.success ? result.data : undefined;
 })();
 
 // Type check the company create validation schema
-((): ValidationResult<CompanyCreate> | undefined => {
+((): CompanyCreate | undefined => {
   const result = CompanyCreateValidationSchema.safeParse(undefined);
 
   return result.success ? result.data : undefined;
 })();
 
 // Type check the company update validation schema
-((): ValidationResult<CompanyUpdate> | undefined => {
+((): CompanyUpdate | undefined => {
   const result = CompanyUpdateValidationSchema.safeParse(undefined);
 
   return result.success ? result.data : undefined;

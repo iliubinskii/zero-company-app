@@ -1,3 +1,9 @@
+export const CompanyStatus = {
+  draft: "draft",
+  founded: "founded",
+  signing: "signing"
+} as const;
+
 export const DocType = {
   FoundingAgreement: "FoundingAgreement"
 } as const;
@@ -15,6 +21,8 @@ export const ErrorCode = {
   OK: "OK",
   Unauthorized: "Unauthorized"
 } as const;
+
+export type CompanyStatus = (typeof CompanyStatus)[keyof typeof CompanyStatus];
 
 export interface DeleteResponse {
   readonly affectedRows: number;
@@ -50,26 +58,20 @@ export interface FieldError {
 export interface MultipleDocsResponse<T> {
   readonly count: number;
   readonly docs: readonly T[];
-  readonly nextCursor?: readonly [string, string];
+  readonly nextCursor?: readonly [string, string] | undefined;
   readonly total: number;
 }
 
 export interface Signatory {
   readonly email: string;
-  readonly firstName?: string;
-  readonly lastName?: string;
+  readonly firstName?: string | undefined;
+  readonly lastName?: string | undefined;
 }
 
 export type Update<T> = {
   [K in keyof T]?: undefined extends T[K]
-    ? Exclude<T[K], undefined> | null
-    : T[K];
-};
-
-export type ValidationResult<T> = {
-  [K in keyof T]: undefined extends T[K]
-    ? ValidationResult<T[K]> | undefined
-    : ValidationResult<T[K]>;
+    ? T[K] | undefined | null
+    : T[K] | undefined;
 };
 
 export interface WebAccessibleImage {
