@@ -38,7 +38,7 @@ export async function get<
  * @param body - The body.
  * @returns The response.
  */
-export async function post<
+export async function postFormData<
   R extends {
     responses: {
       [K: PropertyKey]: { content: { "application/json": object } };
@@ -51,6 +51,35 @@ export async function post<
   const response = await fetch(`${API_URL}${endpoint}`, {
     body,
     credentials: "include",
+    method: "POST"
+  });
+
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  const json = (await response.json()) as Response<R>;
+
+  return json;
+}
+
+/**
+ * Sends data to the API.
+ * @param endpoint - The endpoint.
+ * @param body - The body.
+ * @returns The response.
+ */
+export async function postJson<
+  R extends {
+    responses: {
+      [K: PropertyKey]: { content: { "application/json": object } };
+    };
+  } = never
+>(
+  endpoint: string,
+  body: unknown
+): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    body: JSON.stringify(body),
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
     method: "POST"
   });
 

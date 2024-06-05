@@ -13,6 +13,13 @@ body {
   cursor: wait !important;
 }
 
+/* Badge styles */
+
+.badge-outlined {
+  @apply border border-gray-400 rounded
+    px-4 py-2;
+}
+
 /* Button styles */
 
 .dark-button {

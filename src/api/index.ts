@@ -1,8 +1,8 @@
 import type {
   AuthUser,
+  CompanyCreate,
   ErrorCode,
   ErrorResponse,
-  ErrorResponseWithData,
   ExistingCategory,
   ExistingCompany,
   GetCategoriesOptions,
@@ -10,7 +10,7 @@ import type {
   MultipleDocsResponse,
   Routes
 } from "../schema";
-import { get, post } from "./core";
+import { get, postJson } from "./core";
 import { filterUndefinedProperties } from "../utils";
 
 /**
@@ -152,16 +152,35 @@ export async function getCompaniesByCategory(
 }
 
 /**
+ * Retrieves the company from the API.
+ * @param id - The company id.
+ * @returns The company.
+ */
+export async function getCompany(
+  id: string
+): Promise<ExistingCompany | ErrorResponse<ErrorCode>> {
+  const company = await get<Routes["/companies/{id}"]["get"]>(
+    `companies/${id}`
+  );
+
+  return company;
+}
+
+/**
  * Sends a company to the API.
  * @param body - The company.
  * @returns The response.
  */
 export async function postCompany(
-  body: FormData
-): Promise<
-  ExistingCompany | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
-> {
-  const company = await post<Routes["/companies"]["post"]>("companies", body);
+  body: CompanyCreate
+): Promise<ExistingCompany> {
+  const company = await postJson<Routes["/companies"]["post"]>(
+    "companies",
+    body
+  );
+
+  if ("error" in company)
+    throw new Error(`${company.error}: ${company.errorMessage}`);
 
   return company;
 }

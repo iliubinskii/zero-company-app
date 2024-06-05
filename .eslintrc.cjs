@@ -74,6 +74,9 @@ const config = {
           [
             "2xl",
             "3xl",
+            "4xl",
+            "5xl",
+            "6xl",
             "autofix",
             "bebas",
             "builtins",

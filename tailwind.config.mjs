@@ -51,6 +51,9 @@ const config = {
       minWidth: {
         "1/3": "33.333333%"
       },
+      transitionProperty: {
+        width: "width"
+      },
       width: {
         "aspect-ratio-16/9": `${0.01 * 1600}rem`
       }

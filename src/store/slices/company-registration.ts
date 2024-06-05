@@ -1,47 +1,41 @@
-import { type AppState, CompanyReg } from "../types";
-import type {
-  AuthUser,
-  AuthUserEssential,
-  ExistingCategory
-} from "../../schema";
-import { API_URL } from "../../config";
+import { type AppState } from "../types";
+import { CREATE_COMPANY_STEP } from "../../consts";
+import type { ExistingCategory } from "../../schema";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import type { useRouter } from "next/navigation";
 
 const initialState: AppState["companyRegistration"] = {
-  currentStep: CompanyReg.Start
+  step: CREATE_COMPANY_STEP.SELECT_CATEGORY
 };
 
 const companyRegistrationSlice = createSlice({
   initialState,
   name: "companyRegistration",
   reducers: {
+    prevCompanyRegistrationStep: state => {
+      switch (state.step) {
+        case CREATE_COMPANY_STEP.REVIEW: {
+          state.step = CREATE_COMPANY_STEP.SELECT_COUNTRY;
+          break;
+        }
+
+        case CREATE_COMPANY_STEP.SELECT_COUNTRY: {
+          state.step = CREATE_COMPANY_STEP.SELECT_CATEGORY;
+        }
+      }
+    },
     resetCompanyRegistration: state => {
-      state.currentStep = CompanyReg.Start;
-      delete state.country;
+      state.step = CREATE_COMPANY_STEP.SELECT_CATEGORY;
       delete state.category;
+      delete state.country;
     },
     setCompanyCategory: (state, action: PayloadAction<ExistingCategory>) => {
-      state.currentStep = CompanyReg.SelectCountry;
+      state.step = CREATE_COMPANY_STEP.SELECT_COUNTRY;
       state.category = action.payload;
     },
-    setCompanyCountry: (
-      state,
-      action: PayloadAction<{
-        readonly authUser: AuthUser | AuthUserEssential | undefined;
-        readonly country: string;
-        readonly router: ReturnType<typeof useRouter>;
-      }>
-    ) => {
-      const { authUser, country, router } = action.payload;
-
-      state.currentStep = CompanyReg.EditDraft;
-      state.country = country;
-      router.push(authUser ? "/profile" : `${API_URL}auth/login`);
-    },
-    startCompanyRegistration: state => {
-      state.currentStep = CompanyReg.SelectCategory;
+    setCompanyCountry: (state, action: PayloadAction<string>) => {
+      state.step = CREATE_COMPANY_STEP.REVIEW;
+      state.country = action.payload;
     }
   }
 });
@@ -49,10 +43,10 @@ const companyRegistrationSlice = createSlice({
 export const companyRegistrationReducer = companyRegistrationSlice.reducer;
 
 export const {
+  prevCompanyRegistrationStep,
   resetCompanyRegistration,
   setCompanyCategory,
-  setCompanyCountry,
-  startCompanyRegistration
+  setCompanyCountry
 } = companyRegistrationSlice.actions;
 
 /**
@@ -60,27 +54,24 @@ export const {
  * @param state - The app state.
  * @returns The category of the company.
  */
-export const selectCategory = (state: AppState): ExistingCategory | undefined =>
-  state.companyRegistration.category;
+export const selectCompanyCategory = (
+  state: AppState
+): ExistingCategory | undefined => state.companyRegistration.category;
 
 /**
  * Select the country of the company.
  * @param state - The app state.
  * @returns The country of the company.
  */
-export const selectCountry = (state: AppState): string | undefined =>
+export const selectCompanyCountry = (state: AppState): string | undefined =>
   state.companyRegistration.country;
 
-/**
- * Select the current step of the company registration.
- * @param state - The app state.
- * @returns The current step of the company registration.
- */
-export const selectStep = (state: AppState): CompanyReg =>
-  state.companyRegistration.currentStep;
+export const selectCompanyRegistrationStep = (
+  state: AppState
+): AppState["companyRegistration"]["step"] => state.companyRegistration.step;
 
 export type CompanyRegistrationActions =
+  | ReturnType<typeof prevCompanyRegistrationStep>
   | ReturnType<typeof resetCompanyRegistration>
   | ReturnType<typeof setCompanyCategory>
-  | ReturnType<typeof setCompanyCountry>
-  | ReturnType<typeof startCompanyRegistration>;
+  | ReturnType<typeof setCompanyCountry>;

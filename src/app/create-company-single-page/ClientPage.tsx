@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment -- Temp */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Temp */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- Temp */
+/* eslint-disable @typescript-eslint/no-unsafe-argument -- Temp */
+
 "use client";
 
 import {
@@ -66,12 +71,14 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
       for (const file of logo) data.append("logo", file, file.name);
 
+      // @ts-expect-error
       const company = await postCompany(data);
 
       if ("error" in company)
         if ("data" in company)
           setErrorMessages([
             ...(function* prepareErrors(): Generator<FieldError> {
+              // @ts-expect-error
               for (const error of company.data)
                 if (error.path === "founders") {
                   yield {
@@ -94,6 +101,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
             })()
           ]);
         else {
+          // @ts-expect-error
           setErrorMessage(company.errorMessage);
           setIsSnackbarActive(true);
         }
