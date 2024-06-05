@@ -152,6 +152,21 @@ export async function getCompaniesByCategory(
 }
 
 /**
+ * Retrieves the company from the API.
+ * @param id - The company id.
+ * @returns The company.
+ */
+export async function getCompany(
+  id: string
+): Promise<ExistingCompany | ErrorResponse<ErrorCode>> {
+  const company = await get<Routes["/companies/{id}"]["get"]>(
+    `companies/${id}`
+  );
+
+  return company;
+}
+
+/**
  * Sends a company to the API.
  * @param body - The company.
  * @returns The response.

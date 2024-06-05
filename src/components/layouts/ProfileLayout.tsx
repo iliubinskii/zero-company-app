@@ -22,7 +22,7 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
   const pathname = usePathname();
 
   return (
-    <Container>
+    <Container className="mx-auto max-w-screen-2xl">
       <SideMenu>
         <User>
           <UserImage
