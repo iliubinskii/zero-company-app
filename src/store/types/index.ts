@@ -5,13 +5,9 @@ import type {
 } from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { CREATE_COMPANY_STEP } from "../../consts";
-import type { store } from "../store";
+import type { createStore } from "../store";
 
-export type AppDispatch = (typeof store)["dispatch"];
-
-export interface AppThunk<T = void> {
-  (): (dispatch: AppDispatch) => Promise<T>;
-}
+export type AppDispatch = AppStore["dispatch"];
 
 export interface AppState {
   readonly auth: {
@@ -25,6 +21,14 @@ export interface AppState {
   readonly loaded: boolean;
 }
 
+export type AppStore = ReturnType<typeof createStore>;
+
+export interface AppThunk<T = void> {
+  (): (dispatch: AppDispatch) => Promise<T>;
+}
+
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;
 
 export type UseAppSelector = TypedUseSelectorHook<AppState>;
+
+export type UseAppStore = () => AppStore;

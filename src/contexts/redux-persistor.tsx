@@ -1,34 +1,83 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
+import { callAsync, filterUndefinedProperties } from "../utils";
 import {
   isAppState,
   setAppState,
   setLoaded,
-  store,
-  useAppDispatch
+  updateAuthUser,
+  useAppDispatch,
+  useAppStore
 } from "../store";
+import { AuthUserEssentialValidationSchema } from "../schema";
 import { REDUX_PERSIST_KEY } from "../consts";
 import React, { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 export const ReduxPersistorProvider: FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
 
+  const params = useSearchParams();
+
+  const store = useAppStore();
+
   useEffect(() => {
-    const stored = localStorage.getItem(REDUX_PERSIST_KEY);
+    let appState = store.getState();
 
-    if (typeof stored === "string") {
-      const json = JSON.parse(stored) as unknown;
+    // Restore from local storage
+    {
+      const stored = localStorage.getItem(REDUX_PERSIST_KEY);
 
-      if (isAppState(json)) dispatch(setAppState(json));
+      if (typeof stored === "string") {
+        const json = JSON.parse(stored) as unknown;
 
-      dispatch(setLoaded(true));
+        if (isAppState(json)) appState = json;
+      }
     }
+
+    // Login action
+    {
+      const action = params.get("action");
+
+      const user = params.get("user");
+
+      if (action === "login" && typeof user === "string") {
+        const authUser = AuthUserEssentialValidationSchema.safeParse(
+          JSON.parse(user)
+        );
+
+        if (authUser.success) {
+          appState = {
+            ...appState,
+            auth: { authUser: filterUndefinedProperties(authUser.data) }
+          };
+          localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(appState));
+        }
+      }
+    }
+
+    // Logout action
+    {
+      const action = params.get("action");
+
+      if (action === "logout") {
+        appState = { ...appState, auth: {} };
+        localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(appState));
+      }
+    }
+
+    dispatch(setAppState(appState));
+    dispatch(setLoaded(true));
+
+    callAsync(async () => {
+      await dispatch(updateAuthUser());
+    });
 
     return store.subscribe(() => {
       localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(store.getState()));
     });
-  }, [dispatch]);
+  }, [dispatch, params, store]);
 
   return <>{children}</>;
 };

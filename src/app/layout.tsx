@@ -3,9 +3,8 @@
 import "./globals.css";
 import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
-import { AppGlobalActions } from "../app-global-actions";
 import Layout from "../Layout";
-import React, { Suspense } from "react";
+import React from "react";
 import { ReduxPersistorProvider } from "../contexts/redux-persistor";
 import { getCategories } from "../api";
 import { lang } from "../langs";
@@ -38,9 +37,6 @@ export default async function RootLayout({
         <AppLoadingProvider>
           <ReduxStoreProvider>
             <ReduxPersistorProvider>
-              <Suspense fallback={null}>
-                <AppGlobalActions />
-              </Suspense>
               <Layout categories={categories}>{children}</Layout>
             </ReduxPersistorProvider>
           </ReduxStoreProvider>
