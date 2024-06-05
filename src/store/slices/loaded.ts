@@ -20,7 +20,7 @@ export const { setLoaded } = loadedSlice.actions;
 
 /**
  * Select the loaded state.
- * @param state - The root state.
+ * @param state - The app state.
  * @returns The loaded state.
  */
 export const selectLoaded = (state: AppState): boolean => state.loaded;
