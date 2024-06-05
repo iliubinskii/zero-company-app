@@ -9,13 +9,16 @@ export const lang = {
   Blog: "Blog",
   Bookmarks: "Bookmarks",
   BuySellAgreement: "Buy-Sell Agreement",
+  Category: "Category",
   CommonQuestions: "Common Questions",
   CompanyImages: "Add company images",
   CompanyLogo: "Add company logo",
   Continue: "Continue",
   CookiePolicy: "Cookie Policy",
+  Country: "Country",
   CreateCompany: "Create a company",
   CreateCompany2: ["Create", " a company"],
+  CreateDraft: "Create a draft",
   Dashboard: "Dashboard",
   Description: "Description",
   Documents: "Documents",
@@ -35,10 +38,13 @@ export const lang = {
   Loading: "Loading...",
   LogIn: "Log In",
   LogOut: "Log Out",
+  LoginToCreateDraft: "Login to create a draft",
+  MakingThingsDone: "Making things done...",
   MyCompanies: "My Companies",
   MyDrafts: "My Drafts",
   NDA: "NDA",
   Name: "Name",
+  Next: "Next",
   NoName: "No name",
   NotFound: "Not Found",
   OurCharter: "Our Charter",
@@ -60,6 +66,7 @@ export const lang = {
   Team: "Team",
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
+  Unknown: "Unknown",
   Website: "Website",
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
@@ -71,6 +78,12 @@ export const lang = {
   countries: {
     il: "Israel",
     us: "United States"
+  },
+  creative: {
+    createCompany: {
+      review:
+        "You will be able to add company info and invite team members after creating a draft."
+    }
   },
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
@@ -97,5 +110,6 @@ export const lang = {
       title: "Secure company assets"
     },
     teaser: "We elevate crowdworking to the corporate level"
-  }
+  },
+  of: "of"
 } as const;

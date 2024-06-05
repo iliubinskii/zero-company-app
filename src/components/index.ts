@@ -9,5 +9,6 @@ export { NotFound } from "./NotFound";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { Unauthorized } from "./Unauthorized";
+export * from "./buttons";
 export * from "./form";
 export * from "./layouts";

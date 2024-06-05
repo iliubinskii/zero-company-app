@@ -10,6 +10,14 @@ export const COMPANY_SHARE_STEP = 100;
 
 export const COMPANY_TARGET_VALUE_STEP = 1000;
 
+export const CREATE_COMPANY_STEP = {
+  REVIEW: 3,
+  SELECT_CATEGORY: 1,
+  SELECT_COUNTRY: 2
+} as const;
+
+export const CREATE_COMPANY_TOTAL_STEPS = 3;
+
 export const GRAVATAR_DEFAULT = "mp";
 
 export const GRAVATAR_RATING = "pg";
