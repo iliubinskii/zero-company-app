@@ -1,9 +1,9 @@
 "use client";
 
 import { ErrorCode, type ExistingCompany } from "../../../../schema";
-import { ProfileLayout, Snackbar } from "../../../../components";
 import { assertDefined, callAsync, createPage } from "../../../../utils";
 import React, { useEffect, useState } from "react";
+import { Snackbar } from "../../../../components";
 import { getCompany } from "../../../../api";
 import { lang } from "../../../../langs";
 import { useRouter } from "next/navigation";
@@ -37,11 +37,11 @@ const Page = createPage("/categories/[id]", ({ params = {} }) => {
     });
   }, [id, router]);
 
-  if (isLoading) return <ProfileLayout>{lang.Loading}</ProfileLayout>;
+  if (isLoading) return <>{lang.Loading}</>;
 
   return (
     <>
-      <ProfileLayout>{JSON.stringify(company)}</ProfileLayout>
+      {JSON.stringify(company)}
       <Snackbar
         isOpen={isSnackbarActive}
         message={errorMessage}
