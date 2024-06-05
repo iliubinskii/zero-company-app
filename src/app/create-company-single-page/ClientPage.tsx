@@ -5,14 +5,6 @@
 
 "use client";
 
-import {
-  BlocksLayout,
-  FileInputElement,
-  InputElement,
-  SelectElement,
-  Snackbar,
-  TextareaElement
-} from "../../components";
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
 import type {
   ExistingCategory,
@@ -20,6 +12,14 @@ import type {
   MultipleDocsResponse
 } from "../../schema";
 import type { FC, FormEventHandler } from "react";
+import {
+  FileInputElement,
+  InputElement,
+  PageLayout,
+  SelectElement,
+  Snackbar,
+  TextareaElement
+} from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FileWithPreview } from "../../components";
@@ -163,7 +163,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   }, []);
 
   return (
-    <BlocksLayout>
+    <PageLayout>
       <div className="header2">{lang.CreateCompany}</div>
       <form className="flex flex-col gap-11" onSubmit={onSubmit}>
         {/* Category */}
@@ -383,7 +383,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
         }}
         variant="error"
       />
-    </BlocksLayout>
+    </PageLayout>
   );
 };
 

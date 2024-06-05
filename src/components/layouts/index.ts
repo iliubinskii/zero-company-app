@@ -1,3 +1,3 @@
 export { ArticleLayout } from "./ArticleLayout";
-export { BlocksLayout } from "./BlocksLayout";
+export { PageLayout } from "./PageLayout";
 export { ProfileLayout } from "./ProfileLayout";

@@ -1,6 +1,6 @@
 "use client";
 
-import { BlocksLayout, Loading, Navigate } from "../../components";
+import { Loading, Navigate, PageLayout } from "../../components";
 import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
 import { DocusealForm } from "@docuseal/react";
 import React from "react";
@@ -19,7 +19,7 @@ const Signature = createPage("/signature", () => {
   if (loaded && !authUser) return <Navigate to="/" />;
 
   return (
-    <BlocksLayout size="lg">
+    <PageLayout size="lg">
       {loaded && docLoaded ? undefined : (
         <div className="min-h-80 flex justify-center items-center">
           <Loading />
@@ -38,7 +38,7 @@ const Signature = createPage("/signature", () => {
           />
         )}
       </div>
-    </BlocksLayout>
+    </PageLayout>
   );
 });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { BlocksLayout, Loading, Navigate } from "../../../components";
+import { Loading, Navigate, PageLayout } from "../../../components";
 
 import { callAsync, createPage } from "../../../utils";
 import {
@@ -43,12 +43,12 @@ const Page = createPage("/create-company/create-draft", () => {
   if (loaded && !authUser) return <Navigate to="/" />;
 
   return (
-    <BlocksLayout>
+    <PageLayout>
       <div className="py-24 flex flex-col items-center gap-3">
         <Loading />
         <div className="text-gray-700">{lang.MakingThingsDone}</div>
       </div>
-    </BlocksLayout>
+    </PageLayout>
   );
 });
 

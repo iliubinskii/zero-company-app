@@ -1,9 +1,9 @@
 import {
-  BlocksLayout,
   CompanyCard,
   CompanyCards,
   InfoCard,
-  InfoCards
+  InfoCards,
+  PageLayout
 } from "../components";
 import React from "react";
 import { createAsyncPage } from "../utils";
@@ -37,7 +37,7 @@ const Page = createAsyncPage("/", async () => {
   ];
 
   return (
-    <BlocksLayout size="lg">
+    <PageLayout size="lg">
       <div className="header2 text-center">{lang.home.teaser}</div>
       <InfoCards>
         {cards.map(({ description, image, title }, key) => (
@@ -56,7 +56,7 @@ const Page = createAsyncPage("/", async () => {
           <CompanyCard company={company} key={company._id} />
         ))}
       </CompanyCards>
-    </BlocksLayout>
+    </PageLayout>
   );
 });
 

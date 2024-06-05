@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedLink, BlocksLayout } from "../../components";
+import { AnimatedLink, PageLayout } from "../../components";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
 import React from "react";
 import { createPage } from "../../utils";
@@ -10,7 +10,7 @@ const Page = createPage("/create-company", () => {
   const dispatch = useAppDispatch();
 
   return (
-    <BlocksLayout>
+    <PageLayout>
       <div className="py-24 flex flex-col items-center">
         <AnimatedLink
           className="dark-button"
@@ -22,7 +22,7 @@ const Page = createPage("/create-company", () => {
           {lang.CreateCompany}
         </AnimatedLink>
       </div>
-    </BlocksLayout>
+    </PageLayout>
   );
 });
 

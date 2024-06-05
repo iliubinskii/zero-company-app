@@ -1,11 +1,11 @@
-import { AnimatedLink, BlocksLayout } from "../components";
+import { AnimatedLink, PageLayout } from "../components";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import React from "react";
 import { createPage } from "../utils";
 import { lang } from "../langs";
 
 const Page = createPage("/not-found", () => (
-  <BlocksLayout>
+  <PageLayout>
     <div className="mx-auto my-12 w-full max-w-md p-8 bg-red-100 border border-red-400 rounded-lg text-center">
       <div className="flex flex-col items-center">
         <AiOutlineExclamationCircle className="text-red-700 text-6xl mb-4" />
@@ -21,7 +21,7 @@ const Page = createPage("/not-found", () => (
         </AnimatedLink>
       </div>
     </div>
-  </BlocksLayout>
+  </PageLayout>
 ));
 
 export default Page;
