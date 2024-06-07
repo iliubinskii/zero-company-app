@@ -1,27 +1,29 @@
 "use client";
 
 import { DraftCard, DraftCards } from "../../../components";
-import type { ExistingCompany, MultipleDocsResponse } from "../../../schema";
-import { CompanyStatus } from "../../../schema";
-import React from "react";
-import { api } from "../../../api";
-import { createPage } from "../../../utils";
-import { useAuthGuardedLoader } from "../../../hooks";
+import { callAsync, createPage } from "../../../utils";
+import {
+  requireDrafts,
+  selectDrafts,
+  useAppDispatch,
+  useAppSelector
+} from "../../../store";
+import React, { useEffect } from "react";
 
 const Page = createPage("/profile/drafts", () => {
-  const { resource: companies = defaultCompanies } = useAuthGuardedLoader(
-    () =>
-      api.getCompaniesByMe({
-        sortBy: "createdAt",
-        sortOrder: "desc",
-        status: CompanyStatus.draft
-      }),
-    []
-  );
+  const dispatch = useAppDispatch();
+
+  const drafts = useAppSelector(selectDrafts);
+
+  useEffect(() => {
+    callAsync(async () => {
+      await dispatch(requireDrafts());
+    });
+  }, [dispatch]);
 
   return (
     <DraftCards>
-      {companies.docs.map(company => (
+      {drafts.map(company => (
         <DraftCard company={company} key={company._id} />
       ))}
     </DraftCards>
@@ -29,9 +31,3 @@ const Page = createPage("/profile/drafts", () => {
 });
 
 export default Page;
-
-const defaultCompanies: MultipleDocsResponse<ExistingCompany> = {
-  count: 0,
-  docs: [],
-  total: 0
-};
