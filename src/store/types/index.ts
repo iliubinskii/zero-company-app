@@ -1,11 +1,26 @@
 import type {
+  AuthActions,
+  CompanyRegistrationActions,
+  DraftsActions,
+  SnackbarActions
+} from "../slices";
+import type {
   AuthUser,
   AuthUserEssential,
-  ExistingCategory
+  ExistingCategory,
+  ExistingCompany
 } from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { CREATE_COMPANY_STEP } from "../../consts";
+import type { SetStateAction } from "../root-actions";
 import type { store } from "../store";
+
+export type AppAction =
+  | SetStateAction
+  | AuthActions
+  | CompanyRegistrationActions
+  | DraftsActions
+  | SnackbarActions;
 
 export type AppDispatch = AppStore["dispatch"];
 
@@ -17,6 +32,10 @@ export interface AppState {
     readonly category?: ExistingCategory | undefined;
     readonly country?: string | undefined;
     readonly step: (typeof CREATE_COMPANY_STEP)[keyof typeof CREATE_COMPANY_STEP];
+  };
+  readonly drafts: {
+    readonly drafts: readonly ExistingCompany[];
+    readonly draftsLoaded: boolean;
   };
   readonly loaded: boolean;
   readonly snackbar: {
