@@ -1,5 +1,6 @@
 "use client";
 
+import { AuthGuard, ProfileLayout } from "../../../../components";
 import { assertDefined, createPage } from "../../../../utils";
 import { ERROR } from "../../../../consts";
 import React from "react";
@@ -9,11 +10,17 @@ import { useAuthGuardedLoader } from "../../../../hooks";
 const Page = createPage("/profile/drafts/[id]", ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_DRAFT_ID_PARAM);
 
-  const company = useAuthGuardedLoader(() => api.getCompany(id), [], {
-    redirectOnNotFound: "/profile/drafts"
-  });
+  const { isLoading, resource: company } = useAuthGuardedLoader(
+    () => api.getCompany(id),
+    [],
+    { redirectOnNotFound: "/profile/drafts" }
+  );
 
-  return <>{JSON.stringify(company)}</>;
+  return (
+    <AuthGuard customLoaded={!isLoading}>
+      <ProfileLayout>{JSON.stringify(company)}</ProfileLayout>
+    </AuthGuard>
+  );
 });
 
 export default Page;

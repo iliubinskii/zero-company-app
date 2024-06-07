@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedLink, AuthGuard } from "../../components";
+import type { FC, ReactNode } from "react";
 import {
   GRAVATAR_DEFAULT,
   GRAVATAR_MP,
@@ -9,9 +9,9 @@ import {
   PLACEHOLDER_EMAIL
 } from "../../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
-import type { ReactElement, ReactNode } from "react";
 import { selectAuthUser, useAppSelector } from "../../store";
 import { API_URL } from "../../config";
+import { AnimatedLink } from "..";
 import { BsBookmarks } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
@@ -28,61 +28,59 @@ import { usePathname } from "next/navigation";
  * @param props.children - The children.
  * @returns The element.
  */
-export default function ProfileLayout({ children }: Props): ReactElement {
+export const ProfileLayout: FC<Props> = ({ children }) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const pathname = usePathname();
 
   return (
-    <AuthGuard>
-      <Container className="mx-auto max-w-screen-2xl">
-        <SideMenu>
-          <User>
-            <UserImage
-              alt={lang.Profile}
-              src={
-                authUser
-                  ? gravatar.url(authUser.email, {
-                      d: GRAVATAR_DEFAULT,
-                      r: GRAVATAR_RATING,
-                      s: GRAVATAR_SIZE
-                    })
-                  : gravatar.url("", {
-                      d: GRAVATAR_MP,
-                      r: GRAVATAR_RATING,
-                      s: GRAVATAR_SIZE
-                    })
-              }
-            />
-            <UserInfo>
-              <UserName>
-                {authUser && authUser.user
-                  ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                  : lang.NoName}
-              </UserName>
-              <UserEmail>
-                {authUser ? authUser.email : PLACEHOLDER_EMAIL}
-              </UserEmail>
-            </UserInfo>
-          </User>
-          <Links>
-            {links.map(({ Icon, href, text }) => (
-              <Link
-                className={href === pathname ? "bg-slate-200" : undefined}
-                href={href}
-                key={href}
-              >
-                <Icon className="text-2xl" />
-                {text}
-              </Link>
-            ))}
-          </Links>
-        </SideMenu>
-        <Contents>{children}</Contents>
-      </Container>
-    </AuthGuard>
+    <Container className="mx-auto max-w-screen-2xl">
+      <SideMenu>
+        <User>
+          <UserImage
+            alt={lang.Profile}
+            src={
+              authUser
+                ? gravatar.url(authUser.email, {
+                    d: GRAVATAR_DEFAULT,
+                    r: GRAVATAR_RATING,
+                    s: GRAVATAR_SIZE
+                  })
+                : gravatar.url("", {
+                    d: GRAVATAR_MP,
+                    r: GRAVATAR_RATING,
+                    s: GRAVATAR_SIZE
+                  })
+            }
+          />
+          <UserInfo>
+            <UserName>
+              {authUser && authUser.user
+                ? `${authUser.user.firstName} ${authUser.user.lastName}`
+                : lang.NoName}
+            </UserName>
+            <UserEmail>
+              {authUser ? authUser.email : PLACEHOLDER_EMAIL}
+            </UserEmail>
+          </UserInfo>
+        </User>
+        <Links>
+          {links.map(({ Icon, href, text }) => (
+            <Link
+              className={href === pathname ? "bg-slate-200" : undefined}
+              href={href}
+              key={href}
+            >
+              <Icon className="text-2xl" />
+              {text}
+            </Link>
+          ))}
+        </Links>
+      </SideMenu>
+      <Contents>{children}</Contents>
+    </Container>
   );
-}
+};
 
 export interface Props {
   readonly children: ReactNode;

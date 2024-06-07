@@ -1,10 +1,16 @@
 "use client";
 
-import { DraftCard, DraftCards } from "../../../components";
+import {
+  AuthGuard,
+  DraftCard,
+  DraftCards,
+  ProfileLayout
+} from "../../../components";
 import { callAsync, createPage } from "../../../utils";
 import {
   requireDrafts,
   selectDrafts,
+  selectDraftsLoaded,
   useAppDispatch,
   useAppSelector
 } from "../../../store";
@@ -15,6 +21,8 @@ const Page = createPage("/profile/drafts", () => {
 
   const drafts = useAppSelector(selectDrafts);
 
+  const draftsLoaded = useAppSelector(selectDraftsLoaded);
+
   useEffect(() => {
     callAsync(async () => {
       await dispatch(requireDrafts());
@@ -22,11 +30,15 @@ const Page = createPage("/profile/drafts", () => {
   }, [dispatch]);
 
   return (
-    <DraftCards>
-      {drafts.map(company => (
-        <DraftCard company={company} key={company._id} />
-      ))}
-    </DraftCards>
+    <AuthGuard customLoaded={draftsLoaded}>
+      <ProfileLayout>
+        <DraftCards>
+          {drafts.map(company => (
+            <DraftCard company={company} key={company._id} />
+          ))}
+        </DraftCards>
+      </ProfileLayout>
+    </AuthGuard>
   );
 });
 

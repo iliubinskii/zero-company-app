@@ -7,7 +7,10 @@ import React, { useEffect } from "react";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 
-export const AuthGuard: FC<Props> = ({ children }): ReactElement => {
+export const AuthGuard: FC<Props> = ({
+  children,
+  customLoaded = true
+}): ReactElement => {
   const authUser = useAppSelector(selectAuthUser);
 
   const loaded = useAppSelector(selectLoaded);
@@ -21,7 +24,7 @@ export const AuthGuard: FC<Props> = ({ children }): ReactElement => {
   return (
     <Container>
       {children}
-      {loaded || (
+      {(loaded && customLoaded) || (
         <Overlay>
           <Loading />
         </Overlay>
@@ -32,6 +35,7 @@ export const AuthGuard: FC<Props> = ({ children }): ReactElement => {
 
 export interface Props {
   readonly children: ReactNode;
+  readonly customLoaded?: boolean;
 }
 
 const Container = tw.div`relative`;
