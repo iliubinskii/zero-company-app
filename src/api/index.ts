@@ -4,6 +4,7 @@ import type {
   DeleteResponse,
   ErrorCode,
   ErrorResponse,
+  ErrorResponseWithData,
   ExistingCategory,
   ExistingCompany,
   GetCategoriesOptions,
@@ -181,14 +182,17 @@ export const api = {
    * @param body - The company.
    * @returns The response.
    */
-  postCompany: async (body: CompanyCreate): Promise<ExistingCompany> => {
+  postCompany: async (
+    body: CompanyCreate
+  ): Promise<
+    | ExistingCompany
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
     const company = await postJsonReq<Routes["/companies"]["post"]>(
       "companies",
       body
     );
-
-    if ("error" in company)
-      throw new Error(`${company.error}: ${company.errorMessage}`);
 
     return company;
   }

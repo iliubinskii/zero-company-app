@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-page-custom-font -- Ok */
 
 import "./globals.css";
-import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
+import {
+  AppLoadingProvider,
+  ReduxPersistor,
+  ReduxStoreProvider,
+  SnackbarProvider
+} from "../contexts";
 import type { ReactElement, ReactNode } from "react";
 import Layout from "../Layout";
 import React, { Suspense } from "react";
-import { ReduxPersistor } from "../contexts/redux-persistor";
 import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
@@ -36,10 +40,12 @@ export default async function RootLayout({
       <body>
         <AppLoadingProvider>
           <ReduxStoreProvider>
-            <Suspense>
-              <ReduxPersistor />
-            </Suspense>
-            <Layout categories={categories}>{children}</Layout>
+            <SnackbarProvider>
+              <Suspense>
+                <ReduxPersistor />
+              </Suspense>
+              <Layout categories={categories}>{children}</Layout>
+            </SnackbarProvider>
           </ReduxStoreProvider>
         </AppLoadingProvider>
       </body>

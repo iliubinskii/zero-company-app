@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-argument -- Temp */
-
 "use client";
 
 import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
@@ -17,7 +12,6 @@ import {
   InputElement,
   PageLayout,
   SelectElement,
-  Snackbar,
   TextareaElement
 } from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
@@ -26,6 +20,7 @@ import type { FileWithPreview } from "../../components";
 import React, { useCallback, useState } from "react";
 import { api } from "../../api";
 import { lang } from "../../langs";
+import { useSnackbar } from "../../contexts";
 
 export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   const [category, setCategory] = useState("");
@@ -49,15 +44,13 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
   const [privateCompany, setPrivateCompany] = useState<boolean>(false);
 
+  const { showSnackbar } = useSnackbar();
+
   const [targetValue, setTargetValue] = useState("");
 
   const [website, setWebsite] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
-
-  const [isSnackbarActive, setIsSnackbarActive] = useState(false);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
@@ -71,59 +64,57 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
       for (const file of logo) data.append("logo", file, file.name);
 
-      // @ts-expect-error
-      const company = await api.postCompany(data);
+      if (category) {
+        const company = await api.postCompany({
+          categories: [category],
+          country: "us"
+        });
 
-      if ("error" in company)
-        if ("data" in company)
-          setErrorMessages([
-            ...(function* prepareErrors(): Generator<FieldError> {
-              // @ts-expect-error
-              for (const error of company.data)
-                if (error.path === "founders") {
-                  yield {
-                    message: error.message,
-                    path: "founders[0].email"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].firstName"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].lastName"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].share"
-                  };
-                } else yield error;
-            })()
-          ]);
+        if ("error" in company)
+          if ("data" in company)
+            setErrorMessages([
+              ...(function* prepareErrors(): Generator<FieldError> {
+                for (const error of company.data)
+                  if (error.path === "founders") {
+                    yield {
+                      message: error.message,
+                      path: "founders[0].email"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].firstName"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].lastName"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].share"
+                    };
+                  } else yield error;
+              })()
+            ]);
+          else showSnackbar(company.errorMessage, "error");
         else {
-          // @ts-expect-error
-          setErrorMessage(company.errorMessage);
-          setIsSnackbarActive(true);
+          setCategory("");
+          setDescription("");
+          setFounders([
+            {
+              email: "",
+              firstName: "",
+              lastName: "",
+              share: ""
+            }
+          ]);
+          setImages([]);
+          setLogo([]);
+          setName("");
+          setPrivateCompany(false);
+          setTargetValue("");
+          setWebsite("");
+          setErrorMessages([]);
         }
-      else {
-        setCategory("");
-        setDescription("");
-        setFounders([
-          {
-            email: "",
-            firstName: "",
-            lastName: "",
-            share: ""
-          }
-        ]);
-        setImages([]);
-        setLogo([]);
-        setName("");
-        setPrivateCompany(false);
-        setTargetValue("");
-        setWebsite("");
-        setErrorMessage("");
-        setErrorMessages([]);
       }
     });
   };
@@ -375,14 +366,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
         </div>
         {/* Buttons END */}
       </form>
-      <Snackbar
-        isOpen={isSnackbarActive}
-        message={errorMessage}
-        onClose={() => {
-          setIsSnackbarActive(false);
-        }}
-        variant="error"
-      />
     </PageLayout>
   );
 };

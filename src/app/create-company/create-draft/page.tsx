@@ -13,6 +13,7 @@ import React, { useEffect } from "react";
 import { api } from "../../../api";
 import { lang } from "../../../langs";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "../../../contexts";
 
 const Page = createPage("/create-company/create-draft", () => {
   const authUser = useAppSelector(selectAuthUser);
@@ -25,6 +26,8 @@ const Page = createPage("/create-company/create-draft", () => {
 
   const router = useRouter();
 
+  const { showSnackbar } = useSnackbar();
+
   useEffect(() => {
     callAsync(async () => {
       if (loaded && authUser)
@@ -34,10 +37,11 @@ const Page = createPage("/create-company/create-draft", () => {
             country
           });
 
-          router.push(`/profile/drafts/${company._id}`);
+          if ("error" in company) showSnackbar(company.error, "error");
+          else router.push(`/profile/drafts/${company._id}`);
         } else router.push("/create-company");
     });
-  }, [authUser, category, country, loaded, router]);
+  }, [authUser, category, country, loaded, router, showSnackbar]);
 
   return (
     <AuthGuard>
