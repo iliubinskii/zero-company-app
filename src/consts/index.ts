@@ -26,6 +26,8 @@ export const GRAVATAR_RATING = "pg";
 
 export const GRAVATAR_SIZE = "200";
 
+export const PLACEHOLDER_EMAIL = "placeholder@email.com";
+
 export const REDUX_PERSIST_KEY = "app-state";
 
 export const SHOW_SNACKBAR_DURATION_MS = 3000;

@@ -1,7 +1,6 @@
 "use client";
 
-import { Loading, PageLayout } from "../../../components";
-
+import { AuthGuard, Loading, PageLayout } from "../../../components";
 import { callAsync, createPage } from "../../../utils";
 import {
   selectAuthUser,
@@ -28,25 +27,27 @@ const Page = createPage("/create-company/create-draft", () => {
 
   useEffect(() => {
     callAsync(async () => {
-      if (loaded)
-        if (authUser && category && typeof country === "string") {
+      if (loaded && authUser)
+        if (category && typeof country === "string") {
           const company = await api.postCompany({
             categories: [category._id],
             country
           });
 
           router.push(`/profile/drafts/${company._id}`);
-        } else router.push("/");
+        } else router.push("/create-company");
     });
   }, [authUser, category, country, loaded, router]);
 
   return (
-    <PageLayout>
-      <div className="py-24 flex flex-col items-center gap-3">
-        <Loading />
-        <div className="text-gray-700">{lang.MakingThingsDone}</div>
-      </div>
-    </PageLayout>
+    <AuthGuard>
+      <PageLayout>
+        <div className="py-24 flex flex-col items-center gap-3">
+          <Loading />
+          <div className="text-gray-700">{lang.MakingThingsDone}</div>
+        </div>
+      </PageLayout>
+    </AuthGuard>
   );
 });
 
