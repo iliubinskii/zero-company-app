@@ -1,6 +1,6 @@
 "use client";
 
-import { Loading, Navigate, PageLayout } from "../../../components";
+import { Loading, PageLayout } from "../../../components";
 
 import { callAsync, createPage } from "../../../utils";
 import {
@@ -11,8 +11,8 @@ import {
   useAppSelector
 } from "../../../store";
 import React, { useEffect } from "react";
+import { api } from "../../../api";
 import { lang } from "../../../langs";
-import { postCompany } from "../../../api";
 import { useRouter } from "next/navigation";
 
 const Page = createPage("/create-company/create-draft", () => {
@@ -30,7 +30,7 @@ const Page = createPage("/create-company/create-draft", () => {
     callAsync(async () => {
       if (loaded)
         if (authUser && category && typeof country === "string") {
-          const company = await postCompany({
+          const company = await api.postCompany({
             categories: [category._id],
             country
           });
@@ -39,8 +39,6 @@ const Page = createPage("/create-company/create-draft", () => {
         } else router.push("/");
     });
   }, [authUser, category, country, loaded, router]);
-
-  if (loaded && !authUser) return <Navigate to="/" />;
 
   return (
     <PageLayout>

@@ -6,7 +6,7 @@ import type { ReactElement, ReactNode } from "react";
 import Layout from "../Layout";
 import React, { Suspense } from "react";
 import { ReduxPersistor } from "../contexts/redux-persistor";
-import { getCategories } from "../api";
+import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await getCategories({ onlyPinned: true });
+  const categories = await api.getCategories({ onlyPinned: true });
 
   const element = (
     <html lang="en">

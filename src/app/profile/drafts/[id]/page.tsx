@@ -4,7 +4,7 @@ import { ErrorCode, type ExistingCompany } from "../../../../schema";
 import { assertDefined, callAsync, createPage } from "../../../../utils";
 import React, { useEffect, useState } from "react";
 import { Snackbar } from "../../../../components";
-import { getCompany } from "../../../../api";
+import { api } from "../../../../api";
 import { lang } from "../../../../langs";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +23,7 @@ const Page = createPage("/categories/[id]", ({ params = {} }) => {
 
   useEffect(() => {
     callAsync(async () => {
-      const result = await getCompany(id);
+      const result = await api.getCompany(id);
 
       setIsLoading(false);
 

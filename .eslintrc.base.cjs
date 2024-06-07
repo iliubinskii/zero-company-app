@@ -77,6 +77,7 @@ const config = {
       "warn",
       { allowNumber: true }
     ],
+    "@typescript-eslint/switch-exhaustiveness-check": "warn",
     "arrow-body-style": [
       "error",
       "as-needed",

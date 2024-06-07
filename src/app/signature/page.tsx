@@ -1,10 +1,11 @@
 "use client";
 
-import { Loading, Navigate, PageLayout } from "../../components";
+import { Loading, PageLayout } from "../../components";
 import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
 import { DocusealForm } from "@docuseal/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { createPage } from "../../utils";
+import { useRouter } from "next/navigation";
 
 // eslint-disable-next-line no-warning-comments -- Assigned to Daniel
 // TODO
@@ -16,7 +17,11 @@ const Signature = createPage("/signature", () => {
 
   const [docLoaded, setDocLoaded] = React.useState(false);
 
-  if (loaded && !authUser) return <Navigate to="/" />;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loaded && !authUser) router.push("/");
+  }, [authUser, loaded, router]);
 
   return (
     <PageLayout size="lg">

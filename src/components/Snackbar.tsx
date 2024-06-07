@@ -99,11 +99,11 @@ export const Snackbar: FC<Props> = ({
 };
 
 export interface Props {
-  readonly duration?: number;
+  readonly duration?: number | undefined;
   readonly isOpen: boolean;
   readonly message: string;
-  readonly onClose?: () => void;
-  readonly variant?: "error" | "info" | "success";
+  readonly onClose?: (() => void) | undefined;
+  readonly variant?: "error" | "info" | "success" | undefined;
 }
 
 const Container = tw.div`z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2`;

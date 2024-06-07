@@ -1,6 +1,7 @@
 import type {
   AuthUser,
   CompanyCreate,
+  DeleteResponse,
   ErrorCode,
   ErrorResponse,
   ExistingCategory,
@@ -10,177 +11,185 @@ import type {
   MultipleDocsResponse,
   Routes
 } from "../schema";
-import { get, postJson } from "./core";
-import { filterUndefinedProperties } from "../utils";
+import { deleteReq, getReq, postJsonReq } from "./core";
 
-/**
- * Retrieves the authenticated user from the API.
- * @returns The authenticated user.
- */
-export async function getAuthUser(): Promise<AuthUser | undefined> {
-  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const user = (await get("auth/me")) as
-    | AuthUser
-    | ErrorResponse<ErrorCode>
-    | null;
+export const api = {
+  /**
+   * Deletes a company from the API.
+   * @param id - The company id.
+   * @returns The response.
+   */
+  deleteCompany: async (id: string): Promise<DeleteResponse> => {
+    const result = await deleteReq<Routes["/companies/{id}"]["delete"]>(
+      `companies/${id}`
+    );
 
-  if (user === null) return;
+    if ("error" in result)
+      throw new Error(`${result.error}: ${result.errorMessage}`);
 
-  if ("error" in user) throw new Error(`${user.error}: ${user.errorMessage}`);
+    return result;
+  },
+  /**
+   * Retrieves the authenticated user from the API.
+   * @returns The authenticated user.
+   */
+  getAuthUser: async (): Promise<AuthUser | undefined> => {
+    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+    const user = (await getReq("auth/me")) as
+      | AuthUser
+      | ErrorResponse<ErrorCode>
+      | null;
 
-  return user;
-}
+    if (user === null) return;
 
-/**
- * Retrieves the categories from the API.
- * @param options - Request options.
- * @param options.onlyPinned - Whether to only retrieve pinned categories.
- * @returns The categories.
- */
-export async function getCategories({
-  onlyPinned = false
-}: GetCategoriesOptions = {}): Promise<MultipleDocsResponse<ExistingCategory>> {
-  const categories = await get<Routes["/categories"]["get"]>("categories", {
-    onlyPinned: onlyPinned ? "yes" : "no"
-  });
+    if ("error" in user) throw new Error(`${user.error}: ${user.errorMessage}`);
 
-  if ("error" in categories)
-    throw new Error(`${categories.error}: ${categories.errorMessage}`);
+    return user;
+  },
+  /**
+   * Retrieves the categories from the API.
+   * @param options - Request options.
+   * @returns The categories.
+   */
+  getCategories: async (
+    options: GetCategoriesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCategory>> => {
+    const categories = await getReq<Routes["/categories"]["get"]>(
+      "categories",
+      {
+        ...options
+      }
+    );
 
-  const { count, docs, nextCursor, total } = categories;
+    if ("error" in categories)
+      throw new Error(`${categories.error}: ${categories.errorMessage}`);
 
-  return filterUndefinedProperties({
-    count,
-    docs,
-    // eslint-disable-next-line no-warning-comments -- Postponed
-    // TODO: Auto-generated schema has string[] instead of [string, string]
-    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
-    nextCursor: nextCursor as [string, string] | undefined,
-    total
-  });
-}
+    const { nextCursor, ...rest } = categories;
 
-/**
- * Retrieves the category from the API.
- * @param id - The category id.
- * @returns The category.
- */
-export async function getCategory(id: string): Promise<ExistingCategory> {
-  const category = await get<Routes["/categories/{id}"]["get"]>(
-    `categories/${id}`
-  );
+    return {
+      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+      nextCursor: nextCursor as [string, string] | undefined,
+      ...rest
+    };
+  },
+  /**
+   * Retrieves the category from the API.
+   * @param id - The category id.
+   * @returns The category.
+   */
+  getCategory: async (id: string): Promise<ExistingCategory> => {
+    const category = await getReq<Routes["/categories/{id}"]["get"]>(
+      `categories/${id}`
+    );
 
-  if ("error" in category)
-    throw new Error(`${category.error}: ${category.errorMessage}`);
+    if ("error" in category)
+      throw new Error(`${category.error}: ${category.errorMessage}`);
 
-  return category;
-}
+    return category;
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompanies: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+    const companies = await getReq<Routes["/companies"]["get"]>("companies", {
+      ...options
+    });
 
-/**
- * Retrieves the companies from the API.
- * @param options - Request options.
- * @param options.cursor - The cursor.
- * @param options.limit - The limit.
- * @param options.offset - The offset.
- * @returns The companies.
- */
-export async function getCompanies({
-  cursor,
-  limit,
-  offset
-}: GetCompaniesOptions = {}): Promise<MultipleDocsResponse<ExistingCompany>> {
-  const companies = await get<Routes["/companies"]["get"]>("companies", {
-    "cursor[0]": cursor ? cursor[0] : undefined,
-    "cursor[1]": cursor ? cursor[1] : undefined,
-    limit,
-    offset
-  });
+    if ("error" in companies)
+      throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  if ("error" in companies)
-    throw new Error(`${companies.error}: ${companies.errorMessage}`);
+    const { nextCursor, ...rest } = companies;
 
-  const { count, docs, nextCursor, total } = companies;
+    return {
+      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+      nextCursor: nextCursor as [string, string] | undefined,
+      ...rest
+    };
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param id - The category id.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompaniesByCategory: async (
+    id: string,
+    options: GetCompaniesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+    const companies = await getReq<Routes["/categories/{id}/companies"]["get"]>(
+      `categories/${id}/companies`,
+      { ...options }
+    );
 
-  return filterUndefinedProperties({
-    count,
-    docs,
-    // eslint-disable-next-line no-warning-comments -- Postponed
-    // TODO: Auto-generated schema has string[] instead of [string, string]
-    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
-    nextCursor: nextCursor as [string, string] | undefined,
-    total
-  });
-}
+    if ("error" in companies)
+      throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-/**
- * Retrieves the companies from the API.
- * @param id - The category id.
- * @param options - Request options.
- * @param options.cursor - The cursor.
- * @param options.limit - The limit.
- * @param options.offset - The offset.
- * @returns The companies.
- */
-export async function getCompaniesByCategory(
-  id: string,
-  { cursor, limit, offset }: GetCompaniesOptions = {}
-): Promise<MultipleDocsResponse<ExistingCompany>> {
-  const companies = await get<Routes["/categories/{id}/companies"]["get"]>(
-    `categories/${id}/companies`,
-    {
-      "cursor[0]": cursor ? cursor[0] : undefined,
-      "cursor[1]": cursor ? cursor[1] : undefined,
-      limit,
-      offset
-    }
-  );
+    const { nextCursor, ...rest } = companies;
 
-  if ("error" in companies)
-    throw new Error(`${companies.error}: ${companies.errorMessage}`);
+    return {
+      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+      nextCursor: nextCursor as [string, string] | undefined,
+      ...rest
+    };
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompaniesByMe: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+    const companies = await getReq<Routes["/me/companies"]["get"]>(
+      "me/companies",
+      {
+        ...options
+      }
+    );
 
-  const { count, docs, nextCursor, total } = companies;
+    if ("error" in companies)
+      throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  return filterUndefinedProperties({
-    count,
-    docs,
-    // eslint-disable-next-line no-warning-comments -- Postponed
-    // TODO: Auto-generated schema has string[] instead of [string, string]
-    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Postponed
-    nextCursor: nextCursor as [string, string] | undefined,
-    total
-  });
-}
+    const { nextCursor, ...rest } = companies;
 
-/**
- * Retrieves the company from the API.
- * @param id - The company id.
- * @returns The company.
- */
-export async function getCompany(
-  id: string
-): Promise<ExistingCompany | ErrorResponse<ErrorCode>> {
-  const company = await get<Routes["/companies/{id}"]["get"]>(
-    `companies/${id}`
-  );
+    return {
+      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+      nextCursor: nextCursor as [string, string] | undefined,
+      ...rest
+    };
+  },
+  /**
+   * Retrieves the company from the API.
+   * @param id - The company id.
+   * @returns The company.
+   */
+  getCompany: async (
+    id: string
+  ): Promise<ExistingCompany | ErrorResponse<ErrorCode>> => {
+    const company = await getReq<Routes["/companies/{id}"]["get"]>(
+      `companies/${id}`
+    );
 
-  return company;
-}
+    return company;
+  },
+  /**
+   * Sends a company to the API.
+   * @param body - The company.
+   * @returns The response.
+   */
+  postCompany: async (body: CompanyCreate): Promise<ExistingCompany> => {
+    const company = await postJsonReq<Routes["/companies"]["post"]>(
+      "companies",
+      body
+    );
 
-/**
- * Sends a company to the API.
- * @param body - The company.
- * @returns The response.
- */
-export async function postCompany(
-  body: CompanyCreate
-): Promise<ExistingCompany> {
-  const company = await postJson<Routes["/companies"]["post"]>(
-    "companies",
-    body
-  );
+    if ("error" in company)
+      throw new Error(`${company.error}: ${company.errorMessage}`);
 
-  if ("error" in company)
-    throw new Error(`${company.error}: ${company.errorMessage}`);
-
-  return company;
-}
+    return company;
+  }
+};

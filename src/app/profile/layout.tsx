@@ -3,18 +3,18 @@
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
 import type { ReactElement, ReactNode } from "react";
-import { selectAuthUser, useAppSelector } from "../../store";
+import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
+import { usePathname, useRouter } from "next/navigation";
 import { API_URL } from "../../config";
 import { AnimatedLink } from "../../components";
 import { BsBookmarks } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
-import React from "react";
+import React, { useEffect } from "react";
 import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
-import { usePathname } from "next/navigation";
 
 /**
  * Profile layout.
@@ -25,29 +25,39 @@ import { usePathname } from "next/navigation";
 export default function ProfileLayout({ children }: Props): ReactElement {
   const authUser = useAppSelector(selectAuthUser);
 
+  const loaded = useAppSelector(selectLoaded);
+
   const pathname = usePathname();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loaded && !authUser) router.push("/");
+  }, [authUser, loaded, router]);
 
   return (
     <Container className="mx-auto max-w-screen-2xl">
       <SideMenu>
         <User>
-          <UserImage
-            alt={lang.Profile}
-            src={gravatar.url(authUser ? authUser.email : "", {
-              d: GRAVATAR_DEFAULT,
-              r: GRAVATAR_RATING,
-              s: GRAVATAR_SIZE
-            })}
-          />
           {authUser && (
-            <UserInfo>
-              <UserName>
-                {authUser.user
-                  ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                  : lang.NoName}
-              </UserName>
-              <UserEmail>{authUser.email}</UserEmail>
-            </UserInfo>
+            <>
+              <UserImage
+                alt={lang.Profile}
+                src={gravatar.url(authUser.email, {
+                  d: GRAVATAR_DEFAULT,
+                  r: GRAVATAR_RATING,
+                  s: GRAVATAR_SIZE
+                })}
+              />
+              <UserInfo>
+                <UserName>
+                  {authUser.user
+                    ? `${authUser.user.firstName} ${authUser.user.lastName}`
+                    : lang.NoName}
+                </UserName>
+                <UserEmail>{authUser.email}</UserEmail>
+              </UserInfo>
+            </>
           )}
         </User>
         <Links>
@@ -76,7 +86,7 @@ const Container = tw.div`p-3 flex gap-5`;
 
 const SideMenu = tw.div`p-3 flex flex-col gap-5`;
 
-const User = tw.div`w-64 flex items-center gap-3`;
+const User = tw.div`h-16 w-64 flex items-center gap-3`;
 
 const UserImage = tw.img`h-16 w-16 rounded-full border border-slate-200`;
 

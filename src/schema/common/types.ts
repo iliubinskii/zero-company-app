@@ -1,3 +1,5 @@
+import type { Readonly } from "ts-toolbelt/out/Object/Readonly";
+
 export const CompanyStatus = {
   draft: "draft",
   founded: "founded",
@@ -61,6 +63,18 @@ export interface MultipleDocsResponse<T> {
   readonly nextCursor?: readonly [string, string] | undefined;
   readonly total: number;
 }
+
+export type SchemaItem = {
+  responses: {
+    [K: PropertyKey]: { content: { "application/json": object } };
+  };
+};
+
+export type SchemaResponse<T extends SchemaItem = never> = Readonly<
+  T["responses"][keyof T["responses"]]["content"]["application/json"],
+  PropertyKey,
+  "deep"
+>;
 
 export interface Signatory {
   readonly email: string;

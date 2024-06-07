@@ -40,12 +40,12 @@ export const SelectElement: FC<Props> = ({
 
 export interface Props
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
-  readonly containerClassName?: string;
-  readonly errorMessages?: readonly FieldError[];
+  readonly containerClassName?: string | undefined;
+  readonly errorMessages?: readonly FieldError[] | undefined;
   readonly onChange: (value: string) => void;
-  readonly onResetErrors?: (name?: string) => void;
+  readonly onResetErrors?: ((name?: string) => void) | undefined;
   readonly options: SelectOption[];
-  readonly placeholder?: string;
+  readonly placeholder?: string | undefined;
 }
 
 export interface SelectOption {

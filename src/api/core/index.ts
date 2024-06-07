@@ -1,8 +1,31 @@
-import type { ErrorCode, ErrorResponse } from "../../schema";
+import type {
+  ErrorCode,
+  ErrorResponse,
+  SchemaItem,
+  SchemaResponse
+} from "../../schema";
 import { API_URL } from "../../config";
 import type { Query } from "../../utils";
-import type { Readonly } from "ts-toolbelt/out/Object/Readonly";
 import { buildQuery } from "../../utils";
+
+/**
+ * Retrieves data from the API.
+ * @param endpoint - The endpoint.
+ * @returns The data.
+ */
+export async function deleteReq<T extends SchemaItem = never>(
+  endpoint: string
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    credentials: "include",
+    method: "DELETE"
+  });
+
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  const json = (await response.json()) as SchemaResponse<T>;
+
+  return json;
+}
 
 /**
  * Retrieves data from the API.
@@ -10,16 +33,10 @@ import { buildQuery } from "../../utils";
  * @param query - The query.
  * @returns The data.
  */
-export async function get<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function getReq<T extends SchemaItem = never>(
   endpoint: string,
   query: Query = {}
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const queryStr = buildQuery(query);
 
   const response = await fetch(`${API_URL}${endpoint}${queryStr}`, {
@@ -27,7 +44,7 @@ export async function get<
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
@@ -38,16 +55,10 @@ export async function get<
  * @param body - The body.
  * @returns The response.
  */
-export async function postFormData<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function postFormDataReq<T extends SchemaItem = never>(
   endpoint: string,
   body: FormData
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const response = await fetch(`${API_URL}${endpoint}`, {
     body,
     credentials: "include",
@@ -55,7 +66,7 @@ export async function postFormData<
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
@@ -66,16 +77,10 @@ export async function postFormData<
  * @param body - The body.
  * @returns The response.
  */
-export async function postJson<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function postJsonReq<T extends SchemaItem = never>(
   endpoint: string,
   body: unknown
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const response = await fetch(`${API_URL}${endpoint}`, {
     body: JSON.stringify(body),
     credentials: "include",
@@ -84,19 +89,7 @@ export async function postJson<
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
-
-export type Response<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
-> = Readonly<
-  R["responses"][keyof R["responses"]]["content"]["application/json"],
-  PropertyKey,
-  "deep"
->;

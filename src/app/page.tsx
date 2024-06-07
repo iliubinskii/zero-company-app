@@ -5,17 +5,19 @@ import {
   InfoCards,
   PageLayout
 } from "../components";
+import { CompanyStatus } from "../schema";
 import React from "react";
+import { api } from "../api";
 import { createAsyncPage } from "../utils";
-import { getCompanies } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
 
 const Page = createAsyncPage("/", async () => {
-  const companies = await getCompanies({
+  const companies = await api.getCompanies({
     limit: 3,
     sortBy: "foundedAt",
-    sortOrder: "desc"
+    sortOrder: "desc",
+    status: CompanyStatus.founded
   });
 
   const cards = [

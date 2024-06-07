@@ -1,6 +1,8 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { CompanyCard } from "./CompanyCard";
 export { CompanyCards } from "./CompanyCards";
+export { DraftCard } from "./DraftCard";
+export { DraftCards } from "./DraftCards";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
 export { Loading } from "./Loading";

@@ -24,8 +24,8 @@ import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import type { FileWithPreview } from "../../components";
 import React, { useCallback, useState } from "react";
+import { api } from "../../api";
 import { lang } from "../../langs";
-import { postCompany } from "../../api";
 
 export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   const [category, setCategory] = useState("");
@@ -72,7 +72,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
       for (const file of logo) data.append("logo", file, file.name);
 
       // @ts-expect-error
-      const company = await postCompany(data);
+      const company = await api.postCompany(data);
 
       if ("error" in company)
         if ("data" in company)

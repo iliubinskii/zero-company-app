@@ -1,6 +1,5 @@
 "use client";
 
-import { callAsync, filterUndefinedProperties } from "../utils";
 import {
   isAppState,
   setAppState,
@@ -13,6 +12,7 @@ import { AuthUserEssentialValidationSchema } from "../schema";
 import type { FC } from "react";
 import { REDUX_PERSIST_KEY } from "../consts";
 import React, { useEffect } from "react";
+import { callAsync } from "../utils";
 import { useSearchParams } from "next/navigation";
 
 export const ReduxPersistor: FC = () => {
@@ -46,10 +46,7 @@ export const ReduxPersistor: FC = () => {
         );
 
         if (authUser.success) {
-          appState = {
-            ...appState,
-            auth: { authUser: filterUndefinedProperties(authUser.data) }
-          };
+          appState = { ...appState, auth: { authUser: authUser.data } };
           localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(appState));
         }
       }

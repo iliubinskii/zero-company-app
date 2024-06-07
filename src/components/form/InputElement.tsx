@@ -31,8 +31,8 @@ export const InputElement: FC<Props> = ({
 
 export interface Props
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  readonly containerClassName?: string;
-  readonly errorMessages?: readonly FieldError[];
+  readonly containerClassName?: string | undefined;
+  readonly errorMessages?: readonly FieldError[] | undefined;
   readonly onChange: (value: string) => void;
-  readonly onResetErrors?: (name?: string) => void;
+  readonly onResetErrors?: ((name?: string) => void) | undefined;
 }

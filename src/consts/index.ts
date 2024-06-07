@@ -18,7 +18,9 @@ export const CREATE_COMPANY_STEP = {
 
 export const CREATE_COMPANY_TOTAL_STEPS = 3;
 
-export const GRAVATAR_DEFAULT = "mp";
+export const GRAVATAR_DEFAULT = "retro";
+
+export const GRAVATAR_MP = "mp";
 
 export const GRAVATAR_RATING = "pg";
 

@@ -6,13 +6,13 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { callAsync, filterUndefinedProperties } from "../../../utils";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { getCompaniesByCategory } from "../../../api";
+import { api } from "../../../api";
+import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
 
 export const ClientPage: FC<Props> = ({
@@ -35,15 +35,12 @@ export const ClientPage: FC<Props> = ({
       setLoading(true);
 
       try {
-        const response = await getCompaniesByCategory(
-          category._id,
-          filterUndefinedProperties({
-            cursor: nextCursor,
-            limit: COMPANY_LIMIT,
-            sortBy: "foundedAt",
-            sortOrder: "desc"
-          })
-        );
+        const response = await api.getCompaniesByCategory(category._id, {
+          cursor: nextCursor,
+          limit: COMPANY_LIMIT,
+          sortBy: "foundedAt",
+          sortOrder: "desc"
+        });
 
         setCompanies([...companies, ...response.docs]);
         setNextCursor(response.nextCursor);

@@ -17,7 +17,7 @@ export const BackButton: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
 
 export interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   readonly href: string;
-  readonly onBeforeClick?: () => void;
+  readonly onBeforeClick?: (() => void) | undefined;
 }
 
 const Link = tw.a`flex items-center gap-1 cursor-pointer`;

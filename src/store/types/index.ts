@@ -11,11 +11,11 @@ export type AppDispatch = AppStore["dispatch"];
 
 export interface AppState {
   readonly auth: {
-    readonly authUser?: AuthUser | AuthUserEssential;
+    readonly authUser?: AuthUser | AuthUserEssential | undefined;
   };
   readonly companyRegistration: {
-    readonly category?: ExistingCategory;
-    readonly country?: string;
+    readonly category?: ExistingCategory | undefined;
+    readonly country?: string | undefined;
     readonly step: (typeof CREATE_COMPANY_STEP)[keyof typeof CREATE_COMPANY_STEP];
   };
   readonly loaded: boolean;
