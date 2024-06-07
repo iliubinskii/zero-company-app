@@ -4,6 +4,7 @@ import { MdCheckCircle, MdClose, MdError, MdInfo } from "react-icons/md";
 import type { FC } from "react";
 import React, { useEffect, useMemo } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
+import type { SnackbarVariant } from "../store";
 import { noop } from "lodash";
 import tw from "tailwind-styled-components";
 
@@ -103,7 +104,7 @@ export interface Props {
   readonly isOpen: boolean;
   readonly message: string;
   readonly onClose?: (() => void) | undefined;
-  readonly variant?: "error" | "info" | "success" | undefined;
+  readonly variant: SnackbarVariant;
 }
 
 const Container = tw.div`z-50 fixed bottom-4 left-1/2 transform -translate-x-1/2`;

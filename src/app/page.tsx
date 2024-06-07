@@ -20,6 +20,9 @@ const Page = createAsyncPage("/", async () => {
     status: CompanyStatus.founded
   });
 
+  if ("error" in companies)
+    throw new Error(`${companies.error}: ${companies.errorMessage}`);
+
   const cards = [
     {
       description: lang.home.card1.description,

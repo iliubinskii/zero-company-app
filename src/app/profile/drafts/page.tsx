@@ -2,37 +2,22 @@
 
 import { DraftCard, DraftCards } from "../../../components";
 import type { ExistingCompany, MultipleDocsResponse } from "../../../schema";
-import { callAsync, createPage } from "../../../utils";
-import { selectAuthUser, selectLoaded, useAppSelector } from "../../../store";
 import { CompanyStatus } from "../../../schema";
-import React, { useEffect } from "react";
+import React from "react";
 import { api } from "../../../api";
+import { createPage } from "../../../utils";
+import { useAuthGuardedLoader } from "../../../hooks";
 
-const Page = createPage("/drafts", () => {
-  const authUser = useAppSelector(selectAuthUser);
-
-  const [companies, setCompanies] = React.useState<
-    MultipleDocsResponse<ExistingCompany>
-  >({
-    count: 0,
-    docs: [],
-    total: 0
-  });
-
-  const loaded = useAppSelector(selectLoaded);
-
-  useEffect(() => {
-    if (loaded && authUser)
-      callAsync(async () => {
-        const nextCompanies = await api.getCompanies({
-          sortBy: "createdAt",
-          sortOrder: "desc",
-          status: CompanyStatus.draft
-        });
-
-        setCompanies(nextCompanies);
-      });
-  }, [loaded, authUser]);
+const Page = createPage("/profile/drafts", () => {
+  const { resource: companies = defaultCompanies } = useAuthGuardedLoader(
+    () =>
+      api.getCompaniesByMe({
+        sortBy: "createdAt",
+        sortOrder: "desc",
+        status: CompanyStatus.draft
+      }),
+    []
+  );
 
   return (
     <DraftCards>
@@ -44,3 +29,9 @@ const Page = createPage("/drafts", () => {
 });
 
 export default Page;
+
+const defaultCompanies: MultipleDocsResponse<ExistingCompany> = {
+  count: 0,
+  docs: [],
+  total: 0
+};

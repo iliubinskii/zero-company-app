@@ -3,7 +3,8 @@ import { SET_STATE, setAppStateReducer } from "./root-actions";
 import {
   authReducer,
   companyRegistrationReducer,
-  loadedReducer
+  loadedReducer,
+  snackbarReducer
 } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import type { AppState } from "./types";
@@ -13,7 +14,8 @@ import { thunk } from "redux-thunk";
 const slicesReducer = combineReducers({
   auth: authReducer,
   companyRegistration: companyRegistrationReducer,
-  loaded: loadedReducer
+  loaded: loadedReducer,
+  snackbar: snackbarReducer
 });
 
 const rootReducer = (

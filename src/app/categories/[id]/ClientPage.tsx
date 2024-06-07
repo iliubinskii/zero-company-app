@@ -6,6 +6,7 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
+import { showSnackbar, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
@@ -14,6 +15,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../../api";
 import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
+import { logger } from "../../../services";
 
 export const ClientPage: FC<Props> = ({
   category,
@@ -22,6 +24,8 @@ export const ClientPage: FC<Props> = ({
   const [autoMode, setAutoMode] = useState(false);
 
   const [companies, setCompanies] = useState(initialCompanies);
+
+  const dispatch = useAppDispatch();
 
   const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -42,15 +46,24 @@ export const ClientPage: FC<Props> = ({
           sortOrder: "desc"
         });
 
-        setCompanies([...companies, ...response.docs]);
-        setNextCursor(response.nextCursor);
-      } catch {
+        if ("error" in response) {
+          logger.error(`${response.error}: ${response.errorMessage}`);
+          dispatch(
+            showSnackbar({ message: response.errorMessage, variant: "error" })
+          );
+          setAutoMode(false);
+        } else {
+          setCompanies([...companies, ...response.docs]);
+          setNextCursor(response.nextCursor);
+        }
+      } catch (err) {
         setAutoMode(false);
+        throw err;
       } finally {
         setLoading(false);
       }
     });
-  }, [category, companies, nextCursor]);
+  }, [category, companies, dispatch, nextCursor]);
 
   useEffect(() => {
     setAutoMode(false);

@@ -1,6 +1,5 @@
+import { COMPANY_LIMIT, ERROR } from "../../../consts";
 import { assertDefined, createAsyncPage } from "../../../utils";
-
-import { COMPANY_LIMIT } from "../../../consts";
 import { ClientPage } from "./ClientPage";
 import { CompanyStatus } from "../../../schema";
 import React from "react";
@@ -13,13 +12,16 @@ import { api } from "../../../api";
 export async function generateStaticParams(): Promise<unknown[]> {
   const categories = await api.getCategories({ onlyPinned: true });
 
+  if ("error" in categories)
+    throw new Error(`${categories.error}: ${categories.errorMessage}`);
+
   return categories.docs.map(category => {
     return { id: category._id };
   });
 }
 
 const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
-  const id = assertDefined(params["id"]);
+  const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
 
   const [category, companies] = await Promise.all([
     api.getCategory(id),
@@ -30,6 +32,12 @@ const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
       status: CompanyStatus.founded
     })
   ]);
+
+  if ("error" in category)
+    throw new Error(`${category.error}: ${category.errorMessage}`);
+
+  if ("error" in companies)
+    throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
   return <ClientPage category={category} companies={companies} />;
 });

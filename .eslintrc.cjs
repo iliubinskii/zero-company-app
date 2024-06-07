@@ -62,6 +62,10 @@ const config = {
         version: ">=20.0.0"
       }
     ],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      { additionalHooks: "^(useGuardedLoader)$" }
+    ],
     "spellcheck/spell-checker": [
       "warn",
       {

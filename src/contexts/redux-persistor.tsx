@@ -15,7 +15,7 @@ import React, { useEffect } from "react";
 import { callAsync } from "../utils";
 import { useSearchParams } from "next/navigation";
 
-export const ReduxPersistor: FC = () => {
+export const ReduxPersistorProvider: FC = () => {
   const dispatch = useAppDispatch();
 
   const params = useSearchParams();
@@ -57,7 +57,7 @@ export const ReduxPersistor: FC = () => {
       const action = params.get("action");
 
       if (action === "logout") {
-        appState = { ...appState, auth: {} };
+        appState = { ...appState, auth: { authUser: null } };
         localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(appState));
       }
     }

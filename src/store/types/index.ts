@@ -11,7 +11,7 @@ export type AppDispatch = AppStore["dispatch"];
 
 export interface AppState {
   readonly auth: {
-    readonly authUser?: AuthUser | AuthUserEssential | undefined;
+    readonly authUser: AuthUser | AuthUserEssential | null;
   };
   readonly companyRegistration: {
     readonly category?: ExistingCategory | undefined;
@@ -19,6 +19,11 @@ export interface AppState {
     readonly step: (typeof CREATE_COMPANY_STEP)[keyof typeof CREATE_COMPANY_STEP];
   };
   readonly loaded: boolean;
+  readonly snackbar: {
+    readonly isOpen: boolean;
+    readonly message: string;
+    readonly variant: SnackbarVariant;
+  };
 }
 
 export type AppStore = typeof store;
@@ -26,6 +31,8 @@ export type AppStore = typeof store;
 export interface AppThunk<T = void> {
   (): (dispatch: AppDispatch) => Promise<T>;
 }
+
+export type SnackbarVariant = "error" | "info" | "success";
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;
 

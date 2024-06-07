@@ -7,13 +7,14 @@ import {
   selectCompanyCategory,
   selectCompanyCountry,
   selectLoaded,
+  showSnackbar,
+  useAppDispatch,
   useAppSelector
 } from "../../../store";
 import React, { useEffect } from "react";
 import { api } from "../../../api";
 import { lang } from "../../../langs";
 import { useRouter } from "next/navigation";
-import { useSnackbar } from "../../../contexts";
 
 const Page = createPage("/create-company/create-draft", () => {
   const authUser = useAppSelector(selectAuthUser);
@@ -22,26 +23,32 @@ const Page = createPage("/create-company/create-draft", () => {
 
   const country = useAppSelector(selectCompanyCountry);
 
+  const dispatch = useAppDispatch();
+
   const loaded = useAppSelector(selectLoaded);
 
   const router = useRouter();
 
-  const { showSnackbar } = useSnackbar();
-
   useEffect(() => {
-    callAsync(async () => {
-      if (loaded && authUser)
-        if (category && typeof country === "string") {
+    if (loaded && authUser)
+      if (category && typeof country === "string")
+        callAsync(async () => {
           const company = await api.postCompany({
             categories: [category._id],
             country
           });
 
-          if ("error" in company) showSnackbar(company.error, "error");
+          if ("error" in company)
+            dispatch(
+              showSnackbar({
+                message: company.errorMessage,
+                variant: "error"
+              })
+            );
           else router.push(`/profile/drafts/${company._id}`);
-        } else router.push("/create-company");
-    });
-  }, [authUser, category, country, loaded, router, showSnackbar]);
+        });
+      else router.push("/create-company");
+  }, [authUser, category, country, dispatch, loaded, router]);
 
   return (
     <AuthGuard>

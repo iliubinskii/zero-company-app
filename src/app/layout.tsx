@@ -27,6 +27,9 @@ export default async function RootLayout({
 
   const categories = await api.getCategories({ onlyPinned: true });
 
+  if ("error" in categories)
+    throw new Error(`${categories.error}: ${categories.errorMessage}`);
+
   const element = (
     <html lang="en">
       <head>

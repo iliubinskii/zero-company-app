@@ -1,6 +1,10 @@
 "use client";
 
-import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
+import {
+  COMPANY_SHARE_STEP,
+  COMPANY_TARGET_VALUE_STEP,
+  ERROR
+} from "../../consts";
 import type {
   ExistingCategory,
   FieldError,
@@ -16,16 +20,18 @@ import {
 } from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
+import { showSnackbar, useAppDispatch } from "../../store";
 import type { FileWithPreview } from "../../components";
 import React, { useCallback, useState } from "react";
 import { api } from "../../api";
 import { lang } from "../../langs";
-import { useSnackbar } from "../../contexts";
 
 export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   const [category, setCategory] = useState("");
 
   const [description, setDescription] = useState("");
+
+  const dispatch = useAppDispatch();
 
   const [founders, setFounders] = useState<readonly Founder[]>([
     {
@@ -44,8 +50,6 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
   const [privateCompany, setPrivateCompany] = useState<boolean>(false);
 
-  const { showSnackbar } = useSnackbar();
-
   const [targetValue, setTargetValue] = useState("");
 
   const [website, setWebsite] = useState("");
@@ -56,7 +60,10 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
     callAsync(async () => {
       e.preventDefault();
 
-      const target = assertHTMLFormElement(e.target);
+      const target = assertHTMLFormElement(
+        e.target,
+        ERROR.EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT
+      );
 
       const data = new FormData(target);
 
@@ -95,7 +102,10 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
                   } else yield error;
               })()
             ]);
-          else showSnackbar(company.errorMessage, "error");
+          else
+            dispatch(
+              showSnackbar({ message: company.errorMessage, variant: "error" })
+            );
         else {
           setCategory("");
           setDescription("");
@@ -136,7 +146,10 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
     field: keyof Founder,
     email: string
   ): void => {
-    const founder = assertDefined(founders[index]);
+    const founder = assertDefined(
+      founders[index],
+      ERROR.EXPECTING_VALID_FOUNDERS_ARRAY_INDEX
+    );
 
     setFounders([
       ...founders.slice(0, index),

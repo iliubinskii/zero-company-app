@@ -20,13 +20,12 @@ export const api = {
    * @param id - The company id.
    * @returns The response.
    */
-  deleteCompany: async (id: string): Promise<DeleteResponse> => {
+  deleteCompany: async (
+    id: string
+  ): Promise<DeleteResponse | ErrorResponse<ErrorCode>> => {
     const result = await deleteReq<Routes["/companies/{id}"]["delete"]>(
       `companies/${id}`
     );
-
-    if ("error" in result)
-      throw new Error(`${result.error}: ${result.errorMessage}`);
 
     return result;
   },
@@ -34,16 +33,10 @@ export const api = {
    * Retrieves the authenticated user from the API.
    * @returns The authenticated user.
    */
-  getAuthUser: async (): Promise<AuthUser | undefined> => {
-    // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-    const user = (await getReq("auth/me")) as
-      | AuthUser
-      | ErrorResponse<ErrorCode>
-      | null;
-
-    if (user === null) return;
-
-    if ("error" in user) throw new Error(`${user.error}: ${user.errorMessage}`);
+  getAuthUser: async (): Promise<
+    AuthUser | null | ErrorResponse<ErrorCode>
+  > => {
+    const user = await getReq("auth/me");
 
     return user;
   },
@@ -54,37 +47,27 @@ export const api = {
    */
   getCategories: async (
     options: GetCategoriesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCategory>> => {
+  ): Promise<
+    MultipleDocsResponse<ExistingCategory> | ErrorResponse<ErrorCode>
+  > => {
     const categories = await getReq<Routes["/categories"]["get"]>(
       "categories",
-      {
-        ...options
-      }
+      { ...options }
     );
 
-    if ("error" in categories)
-      throw new Error(`${categories.error}: ${categories.errorMessage}`);
-
-    const { nextCursor, ...rest } = categories;
-
-    return {
-      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-      nextCursor: nextCursor as [string, string] | undefined,
-      ...rest
-    };
+    return multipleDocsResponse(categories);
   },
   /**
    * Retrieves the category from the API.
    * @param id - The category id.
    * @returns The category.
    */
-  getCategory: async (id: string): Promise<ExistingCategory> => {
+  getCategory: async (
+    id: string
+  ): Promise<ExistingCategory | ErrorResponse<ErrorCode>> => {
     const category = await getReq<Routes["/categories/{id}"]["get"]>(
       `categories/${id}`
     );
-
-    if ("error" in category)
-      throw new Error(`${category.error}: ${category.errorMessage}`);
 
     return category;
   },
@@ -95,21 +78,14 @@ export const api = {
    */
   getCompanies: async (
     options: GetCompaniesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+  ): Promise<
+    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
+  > => {
     const companies = await getReq<Routes["/companies"]["get"]>("companies", {
       ...options
     });
 
-    if ("error" in companies)
-      throw new Error(`${companies.error}: ${companies.errorMessage}`);
-
-    const { nextCursor, ...rest } = companies;
-
-    return {
-      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-      nextCursor: nextCursor as [string, string] | undefined,
-      ...rest
-    };
+    return multipleDocsResponse(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -120,22 +96,15 @@ export const api = {
   getCompaniesByCategory: async (
     id: string,
     options: GetCompaniesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+  ): Promise<
+    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
+  > => {
     const companies = await getReq<Routes["/categories/{id}/companies"]["get"]>(
       `categories/${id}/companies`,
       { ...options }
     );
 
-    if ("error" in companies)
-      throw new Error(`${companies.error}: ${companies.errorMessage}`);
-
-    const { nextCursor, ...rest } = companies;
-
-    return {
-      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-      nextCursor: nextCursor as [string, string] | undefined,
-      ...rest
-    };
+    return multipleDocsResponse(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -144,24 +113,15 @@ export const api = {
    */
   getCompaniesByMe: async (
     options: GetCompaniesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+  ): Promise<
+    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
+  > => {
     const companies = await getReq<Routes["/me/companies"]["get"]>(
       "me/companies",
-      {
-        ...options
-      }
+      { ...options }
     );
 
-    if ("error" in companies)
-      throw new Error(`${companies.error}: ${companies.errorMessage}`);
-
-    const { nextCursor, ...rest } = companies;
-
-    return {
-      // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-      nextCursor: nextCursor as [string, string] | undefined,
-      ...rest
-    };
+    return multipleDocsResponse(companies);
   },
   /**
    * Retrieves the company from the API.
@@ -197,3 +157,20 @@ export const api = {
     return company;
   }
 };
+
+/**
+ * Fixes the type of the nextCursor property.
+ * @param response - The response.
+ * @returns The fixed response.
+ */
+function multipleDocsResponse<T>(
+  response: MultipleDocsResponseFromRoutes<T> | ErrorResponse<ErrorCode>
+): MultipleDocsResponse<T> | ErrorResponse<ErrorCode> {
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  return response as MultipleDocsResponse<T> | ErrorResponse<ErrorCode>;
+}
+
+interface MultipleDocsResponseFromRoutes<T>
+  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
+  readonly nextCursor?: readonly string[] | undefined;
+}
