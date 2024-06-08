@@ -1,21 +1,23 @@
 import {
-  BlocksLayout,
   CompanyCard,
   CompanyCards,
   InfoCard,
-  InfoCards
+  InfoCards,
+  PageLayout
 } from "../components";
+import { CompanyStatus } from "../schema";
 import React from "react";
+import { api } from "../api";
 import { createAsyncPage } from "../utils";
-import { getCompanies } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
 
 const Page = createAsyncPage("/", async () => {
-  const companies = await getCompanies({
+  const companies = await api.getCompaniesSrv({
     limit: 3,
     sortBy: "foundedAt",
-    sortOrder: "desc"
+    sortOrder: "desc",
+    status: CompanyStatus.founded
   });
 
   const cards = [
@@ -37,7 +39,7 @@ const Page = createAsyncPage("/", async () => {
   ];
 
   return (
-    <BlocksLayout size="lg">
+    <PageLayout size="lg">
       <div className="header2 text-center">{lang.home.teaser}</div>
       <InfoCards>
         {cards.map(({ description, image, title }, key) => (
@@ -56,7 +58,7 @@ const Page = createAsyncPage("/", async () => {
           <CompanyCard company={company} key={company._id} />
         ))}
       </CompanyCards>
-    </BlocksLayout>
+    </PageLayout>
   );
 });
 

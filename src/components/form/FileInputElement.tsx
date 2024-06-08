@@ -3,7 +3,6 @@ import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React, { useCallback } from "react";
 import { SlClose } from "react-icons/sl";
-import { filterUndefinedProperties } from "../../utils";
 import { lang } from "../../langs";
 import { noop } from "lodash";
 import tw from "tailwind-styled-components";
@@ -37,13 +36,11 @@ export const FileInputElement: FC<Props> = ({
     [multiple, name, setFiles, onResetErrors]
   );
 
-  const { getInputProps, getRootProps } = useDropzone(
-    filterUndefinedProperties({
-      accept: { [accept]: [] },
-      multiple,
-      onDrop
-    })
-  );
+  const { getInputProps, getRootProps } = useDropzone({
+    accept: { [accept]: [] },
+    multiple,
+    onDrop
+  });
 
   const handleReset = (file: FileWithPreview): void => {
     setFiles(prevFiles => prevFiles.filter(f => f !== file));
@@ -84,11 +81,11 @@ export const FileInputElement: FC<Props> = ({
 
 export interface Props {
   readonly accept: string;
-  readonly className?: string;
-  readonly errorMessages?: readonly FieldError[];
+  readonly className?: string | undefined;
+  readonly errorMessages?: readonly FieldError[] | undefined;
   readonly files: readonly FileWithPreview[];
-  readonly multiple?: boolean;
-  readonly name?: string;
+  readonly multiple?: boolean | undefined;
+  readonly name?: string | undefined;
   readonly onResetErrors?: (name?: string) => void;
   readonly setFiles: Dispatch<SetStateAction<readonly FileWithPreview[]>>;
 }

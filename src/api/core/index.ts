@@ -1,33 +1,56 @@
-import type { ErrorCode, ErrorResponse } from "../../schema";
+import type {
+  ErrorCode,
+  ErrorResponse,
+  SchemaItem,
+  SchemaResponse
+} from "../../schema";
 import { API_URL } from "../../config";
 import type { Query } from "../../utils";
-import type { Readonly } from "ts-toolbelt/out/Object/Readonly";
 import { buildQuery } from "../../utils";
+import { logger } from "../../services";
+
+/**
+ * Retrieves data from the API.
+ * @param endpoint - The endpoint.
+ * @returns The data.
+ */
+export async function deleteReq<T extends SchemaItem = never>(
+  endpoint: string
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    credentials: "include",
+    method: "DELETE"
+  });
+
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  const json = (await response.json()) as SchemaResponse<T>;
+
+  return json;
+}
 
 /**
  * Retrieves data from the API.
  * @param endpoint - The endpoint.
  * @param query - The query.
+ * @param options - The options.
+ * @param options.logQuery - Whether to log the query.
  * @returns The data.
  */
-export async function get<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function getReq<T extends SchemaItem = never>(
   endpoint: string,
-  query: Query = {}
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+  query: Query = {},
+  { logQuery = false }: GetOptions = {}
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const queryStr = buildQuery(query);
 
-  const response = await fetch(`${API_URL}${endpoint}${queryStr}`, {
-    credentials: "include"
-  });
+  const url = `${API_URL}${endpoint}${queryStr}`;
+
+  if (logQuery) logger.info(`GET: ${url}`);
+
+  const response = await fetch(url, { credentials: "include" });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
@@ -38,16 +61,10 @@ export async function get<
  * @param body - The body.
  * @returns The response.
  */
-export async function postFormData<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function postFormDataReq<T extends SchemaItem = never>(
   endpoint: string,
   body: FormData
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const response = await fetch(`${API_URL}${endpoint}`, {
     body,
     credentials: "include",
@@ -55,7 +72,7 @@ export async function postFormData<
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
@@ -66,16 +83,10 @@ export async function postFormData<
  * @param body - The body.
  * @returns The response.
  */
-export async function postJson<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
->(
+export async function postJsonReq<T extends SchemaItem = never>(
   endpoint: string,
   body: unknown
-): Promise<Response<R> | ErrorResponse<ErrorCode>> {
+): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const response = await fetch(`${API_URL}${endpoint}`, {
     body: JSON.stringify(body),
     credentials: "include",
@@ -84,19 +95,11 @@ export async function postJson<
   });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  const json = (await response.json()) as Response<R>;
+  const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
 }
 
-export type Response<
-  R extends {
-    responses: {
-      [K: PropertyKey]: { content: { "application/json": object } };
-    };
-  } = never
-> = Readonly<
-  R["responses"][keyof R["responses"]]["content"]["application/json"],
-  PropertyKey,
-  "deep"
->;
+export interface GetOptions {
+  readonly logQuery?: boolean | undefined;
+}

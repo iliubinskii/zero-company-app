@@ -1,24 +1,27 @@
-import type { AuthActions, CompanyRegistrationActions } from "./slices";
+import type { AppAction, AppState } from "./types";
 import { SET_STATE, setAppStateReducer } from "./root-actions";
 import {
   authReducer,
   companyRegistrationReducer,
-  loadedReducer
+  draftsReducer,
+  loadedReducer,
+  snackbarReducer
 } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import type { AppState } from "./types";
-import type { SetStateAction } from "./root-actions";
+import { clearDraftsOnAuthUserChange } from "./middleware";
 import { thunk } from "redux-thunk";
 
 const slicesReducer = combineReducers({
   auth: authReducer,
   companyRegistration: companyRegistrationReducer,
-  loaded: loadedReducer
+  drafts: draftsReducer,
+  loaded: loadedReducer,
+  snackbar: snackbarReducer
 });
 
 const rootReducer = (
   state: AppState | undefined,
-  action: SetStateAction | AuthActions | CompanyRegistrationActions
+  action: AppAction
 ): AppState => {
   if (action.type === SET_STATE) return setAppStateReducer(state, action);
 
@@ -32,7 +35,7 @@ export const store = configureStore({
     });
 
     // eslint-disable-next-line unicorn/prefer-spread -- Ok
-    return defaultMiddleware.concat(thunk);
+    return defaultMiddleware.concat(thunk, clearDraftsOnAuthUserChange);
   },
   reducer: rootReducer
 });

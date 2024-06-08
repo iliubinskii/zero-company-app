@@ -1,10 +1,10 @@
 import { ClientPage } from "./ClientPage";
 import React from "react";
+import { api } from "../../../api";
 import { createAsyncPage } from "../../../utils";
-import { getCategories } from "../../../api";
 
 const Page = createAsyncPage("/create-company/steps", async () => {
-  const categories = await getCategories();
+  const categories = await api.getCategoriesSrv();
 
   return <ClientPage categories={categories} />;
 });

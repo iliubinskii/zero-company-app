@@ -61,8 +61,8 @@ export function createPage(
 }
 
 export interface PageProps {
-  readonly params?: Readonly<Record<string, string>>;
-  readonly searchParams?: Readonly<Record<string, string>>;
+  readonly params?: Readonly<Record<string, string>> | undefined;
+  readonly searchParams?: Readonly<Record<string, string>> | undefined;
 }
 
 const defaultParams: Readonly<Record<string, string>> = {};

@@ -77,6 +77,7 @@ const config = {
       "warn",
       { allowNumber: true }
     ],
+    "@typescript-eslint/switch-exhaustiveness-check": "warn",
     "arrow-body-style": [
       "error",
       "as-needed",
@@ -165,6 +166,7 @@ const config = {
     "unicorn/no-unnecessary-polyfills": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/prefer-logical-operator-over-ternary": "off",
+    "unicorn/prefer-regexp-test": "off",
     "unicorn/prefer-top-level-await": "off",
     "unicorn/prevent-abbreviations": "off",
     "unused-imports/no-unused-imports": "warn"

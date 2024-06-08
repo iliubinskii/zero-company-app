@@ -6,10 +6,14 @@
 export function buildQuery(query: Query): string {
   const queryObject = Object.fromEntries(
     (function* yieldEntries(): Generator<[string, string]> {
-      // eslint-disable-next-line no-warning-comments -- Postponed
-      // TODO: ESLint should check for exhaustive switch cases
       for (const [key, value] of Object.entries(query))
         switch (typeof value) {
+          case "boolean": {
+            yield [key, value ? "yes" : "no"];
+
+            break;
+          }
+
           case "number": {
             yield [key, value.toString()];
 
@@ -21,6 +25,15 @@ export function buildQuery(query: Query): string {
 
             break;
           }
+
+          case "object": {
+            for (const [i, v] of value.entries())
+              yield [`${key}[${i}]`, v.toString()];
+
+            break;
+          }
+
+          default:
         }
     })()
   );
@@ -33,5 +46,10 @@ export function buildQuery(query: Query): string {
 }
 
 export interface Query {
-  readonly [key: string]: number | string | undefined;
+  readonly [key: string]:
+    | boolean
+    | number
+    | string
+    | undefined
+    | readonly string[];
 }

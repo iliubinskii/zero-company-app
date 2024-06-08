@@ -1,13 +1,45 @@
 "use client";
 
-import { ProfileLayout } from "../../../components";
-import React from "react";
-import { createPage } from "../../../utils";
+import {
+  AuthGuard,
+  DraftCard,
+  DraftCards,
+  ProfileLayout
+} from "../../../components";
+import { callAsync, createPage } from "../../../utils";
+import {
+  requireDrafts,
+  selectDrafts,
+  selectDraftsLoaded,
+  useAppDispatch,
+  useAppSelector
+} from "../../../store";
+import React, { useEffect } from "react";
 
-// eslint-disable-next-line no-warning-comments -- Postponed
-// TODO: Add drafts contents
-const Page = createPage("/drafts", () => (
-  <ProfileLayout>TODO: Add drafts contents</ProfileLayout>
-));
+const Page = createPage("/profile/drafts", () => {
+  const dispatch = useAppDispatch();
+
+  const drafts = useAppSelector(selectDrafts);
+
+  const draftsLoaded = useAppSelector(selectDraftsLoaded);
+
+  useEffect(() => {
+    callAsync(async () => {
+      await dispatch(requireDrafts());
+    });
+  }, [dispatch]);
+
+  return (
+    <AuthGuard customLoaded={draftsLoaded}>
+      <ProfileLayout>
+        <DraftCards>
+          {drafts.map(company => (
+            <DraftCard company={company} key={company._id} />
+          ))}
+        </DraftCards>
+      </ProfileLayout>
+    </AuthGuard>
+  );
+});
 
 export default Page;

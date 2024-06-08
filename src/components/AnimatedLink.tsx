@@ -34,5 +34,5 @@ export const AnimatedLink: FC<Props> = ({
 
 export interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   readonly href: string;
-  readonly onBeforeClick?: () => void;
+  readonly onBeforeClick?: (() => void) | undefined;
 }

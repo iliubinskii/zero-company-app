@@ -1,36 +1,37 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access -- Temp */
-/* eslint-disable @typescript-eslint/no-unsafe-argument -- Temp */
-
 "use client";
 
 import {
-  BlocksLayout,
-  FileInputElement,
-  InputElement,
-  SelectElement,
-  Snackbar,
-  TextareaElement
-} from "../../components";
-import { COMPANY_SHARE_STEP, COMPANY_TARGET_VALUE_STEP } from "../../consts";
+  COMPANY_SHARE_STEP,
+  COMPANY_TARGET_VALUE_STEP,
+  ERROR
+} from "../../consts";
 import type {
   ExistingCategory,
   FieldError,
   MultipleDocsResponse
 } from "../../schema";
 import type { FC, FormEventHandler } from "react";
+import {
+  FileInputElement,
+  InputElement,
+  PageLayout,
+  SelectElement,
+  TextareaElement
+} from "../../components";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
+import { showSnackbar, useAppDispatch } from "../../store";
 import type { FileWithPreview } from "../../components";
 import React, { useCallback, useState } from "react";
+import { api } from "../../api";
 import { lang } from "../../langs";
-import { postCompany } from "../../api";
 
 export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   const [category, setCategory] = useState("");
 
   const [description, setDescription] = useState("");
+
+  const dispatch = useAppDispatch();
 
   const [founders, setFounders] = useState<readonly Founder[]>([
     {
@@ -53,17 +54,16 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
   const [website, setWebsite] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
-
-  const [isSnackbarActive, setIsSnackbarActive] = useState(false);
 
   const onSubmit: FormEventHandler = e => {
     callAsync(async () => {
       e.preventDefault();
 
-      const target = assertHTMLFormElement(e.target);
+      const target = assertHTMLFormElement(
+        e.target,
+        ERROR.EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT
+      );
 
       const data = new FormData(target);
 
@@ -71,59 +71,60 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
 
       for (const file of logo) data.append("logo", file, file.name);
 
-      // @ts-expect-error
-      const company = await postCompany(data);
+      if (category) {
+        const company = await api.postCompany({
+          categories: [category],
+          country: "us"
+        });
 
-      if ("error" in company)
-        if ("data" in company)
-          setErrorMessages([
-            ...(function* prepareErrors(): Generator<FieldError> {
-              // @ts-expect-error
-              for (const error of company.data)
-                if (error.path === "founders") {
-                  yield {
-                    message: error.message,
-                    path: "founders[0].email"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].firstName"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].lastName"
-                  };
-                  yield {
-                    message: error.message,
-                    path: "founders[0].share"
-                  };
-                } else yield error;
-            })()
-          ]);
+        if ("error" in company)
+          if ("data" in company)
+            setErrorMessages([
+              ...(function* prepareErrors(): Generator<FieldError> {
+                for (const error of company.data)
+                  if (error.path === "founders") {
+                    yield {
+                      message: error.message,
+                      path: "founders[0].email"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].firstName"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].lastName"
+                    };
+                    yield {
+                      message: error.message,
+                      path: "founders[0].share"
+                    };
+                  } else yield error;
+              })()
+            ]);
+          else
+            dispatch(
+              showSnackbar({ message: company.errorMessage, variant: "error" })
+            );
         else {
-          // @ts-expect-error
-          setErrorMessage(company.errorMessage);
-          setIsSnackbarActive(true);
+          setCategory("");
+          setDescription("");
+          setFounders([
+            {
+              email: "",
+              firstName: "",
+              lastName: "",
+              share: ""
+            }
+          ]);
+          setImages([]);
+          setLogo([]);
+          setName("");
+          setPrivateCompany(false);
+          setTargetValue("");
+          setWebsite("");
+          setErrorMessages([]);
         }
-      else {
-        setCategory("");
-        setDescription("");
-        setFounders([
-          {
-            email: "",
-            firstName: "",
-            lastName: "",
-            share: ""
-          }
-        ]);
-        setImages([]);
-        setLogo([]);
-        setName("");
-        setPrivateCompany(false);
-        setTargetValue("");
-        setWebsite("");
-        setErrorMessage("");
-        setErrorMessages([]);
       }
     });
   };
@@ -145,7 +146,10 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
     field: keyof Founder,
     email: string
   ): void => {
-    const founder = assertDefined(founders[index]);
+    const founder = assertDefined(
+      founders[index],
+      ERROR.EXPECTING_VALID_FOUNDERS_ARRAY_INDEX
+    );
 
     setFounders([
       ...founders.slice(0, index),
@@ -163,7 +167,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
   }, []);
 
   return (
-    <BlocksLayout>
+    <PageLayout>
       <div className="header2">{lang.CreateCompany}</div>
       <form className="flex flex-col gap-11" onSubmit={onSubmit}>
         {/* Category */}
@@ -375,15 +379,7 @@ export const ClientPage: FC<Props> = ({ categories: { docs } }) => {
         </div>
         {/* Buttons END */}
       </form>
-      <Snackbar
-        isOpen={isSnackbarActive}
-        message={errorMessage}
-        onClose={() => {
-          setIsSnackbarActive(false);
-        }}
-        variant="error"
-      />
-    </BlocksLayout>
+    </PageLayout>
   );
 };
 

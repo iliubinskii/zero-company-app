@@ -1,11 +1,17 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
-import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../../consts";
+import {
+  GRAVATAR_DEFAULT,
+  GRAVATAR_MP,
+  GRAVATAR_RATING,
+  GRAVATAR_SIZE,
+  PLACEHOLDER_EMAIL
+} from "../../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../../store";
 import { API_URL } from "../../config";
-import { AnimatedLink } from "../AnimatedLink";
+import { AnimatedLink } from "..";
 import { BsBookmarks } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
@@ -16,6 +22,12 @@ import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 import { usePathname } from "next/navigation";
 
+/**
+ * Profile layout.
+ * @param props - The properties.
+ * @param props.children - The children.
+ * @returns The element.
+ */
 export const ProfileLayout: FC<Props> = ({ children }) => {
   const authUser = useAppSelector(selectAuthUser);
 
@@ -27,22 +39,30 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
         <User>
           <UserImage
             alt={lang.Profile}
-            src={gravatar.url(authUser ? authUser.email : "", {
-              d: GRAVATAR_DEFAULT,
-              r: GRAVATAR_RATING,
-              s: GRAVATAR_SIZE
-            })}
+            src={
+              authUser
+                ? gravatar.url(authUser.email, {
+                    d: GRAVATAR_DEFAULT,
+                    r: GRAVATAR_RATING,
+                    s: GRAVATAR_SIZE
+                  })
+                : gravatar.url("", {
+                    d: GRAVATAR_MP,
+                    r: GRAVATAR_RATING,
+                    s: GRAVATAR_SIZE
+                  })
+            }
           />
-          {authUser && (
-            <UserInfo>
-              <UserName>
-                {authUser.user
-                  ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                  : lang.NoName}
-              </UserName>
-              <UserEmail>{authUser.email}</UserEmail>
-            </UserInfo>
-          )}
+          <UserInfo>
+            <UserName>
+              {authUser && authUser.user
+                ? `${authUser.user.firstName} ${authUser.user.lastName}`
+                : lang.NoName}
+            </UserName>
+            <UserEmail>
+              {authUser ? authUser.email : PLACEHOLDER_EMAIL}
+            </UserEmail>
+          </UserInfo>
         </User>
         <Links>
           {links.map(({ Icon, href, text }) => (
@@ -70,7 +90,7 @@ const Container = tw.div`p-3 flex gap-5`;
 
 const SideMenu = tw.div`p-3 flex flex-col gap-5`;
 
-const User = tw.div`w-64 flex items-center gap-3`;
+const User = tw.div`h-16 w-64 flex items-center gap-3`;
 
 const UserImage = tw.img`h-16 w-16 rounded-full border border-slate-200`;
 

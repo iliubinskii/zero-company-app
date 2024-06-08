@@ -18,11 +18,24 @@ export const CREATE_COMPANY_STEP = {
 
 export const CREATE_COMPANY_TOTAL_STEPS = 3;
 
-export const GRAVATAR_DEFAULT = "mp";
+export const ERROR = {
+  EXPECTING_API_URL_ENV: "Expecting API URL environment variable",
+  EXPECTING_CATEGORY_ID_PARAM: "Expecting category ID param",
+  EXPECTING_DRAFT_ID_PARAM: "Expecting draft ID param",
+  EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
+  EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
+    "Expecting event target as HTMLFormElement"
+} as const;
+
+export const GRAVATAR_DEFAULT = "retro";
+
+export const GRAVATAR_MP = "mp";
 
 export const GRAVATAR_RATING = "pg";
 
 export const GRAVATAR_SIZE = "200";
+
+export const PLACEHOLDER_EMAIL = "placeholder@email.com";
 
 export const REDUX_PERSIST_KEY = "app-state";
 

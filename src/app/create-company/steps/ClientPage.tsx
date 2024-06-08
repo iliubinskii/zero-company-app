@@ -6,8 +6,8 @@ import {
 } from "../../../consts";
 import type { ExistingCategory, MultipleDocsResponse } from "../../../schema";
 import { selectCompanyRegistrationStep, useAppSelector } from "../../../store";
-import { BlocksLayout } from "../../../components";
 import type { FC } from "react";
+import { PageLayout } from "../../../components";
 import React from "react";
 import { Review } from "./Review";
 import { SelectCategory } from "./SelectCategory";
@@ -18,7 +18,7 @@ export const ClientPage: FC<Props> = ({ categories }) => {
   const step = useAppSelector(selectCompanyRegistrationStep);
 
   return (
-    <BlocksLayout>
+    <PageLayout>
       <div className="py-8 flex flex-col gap-12">
         <Stepper step={step} totalSteps={CREATE_COMPANY_TOTAL_STEPS} />
         {(() => {
@@ -37,7 +37,7 @@ export const ClientPage: FC<Props> = ({ categories }) => {
           }
         })()}
       </div>
-    </BlocksLayout>
+    </PageLayout>
   );
 };
 
