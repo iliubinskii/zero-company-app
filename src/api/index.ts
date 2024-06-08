@@ -5,14 +5,22 @@ import type {
   ErrorCode,
   ErrorResponse,
   ErrorResponseWithData,
+  ExistingCategories,
   ExistingCategory,
+  ExistingCompanies,
   ExistingCompany,
   GetCategoriesOptions,
   GetCompaniesOptions,
-  MultipleDocsResponse,
   Routes
 } from "../schema";
-import { deleteReq, getReq, postJsonReq } from "./core";
+import {
+  deleteReq,
+  getReq,
+  postJsonReq,
+  restoreCategories,
+  restoreCompanies,
+  restoreCompany
+} from "./helpers";
 
 export const api = {
   /**
@@ -47,15 +55,13 @@ export const api = {
    */
   getCategories: async (
     options: GetCategoriesOptions = {}
-  ): Promise<
-    MultipleDocsResponse<ExistingCategory> | ErrorResponse<ErrorCode>
-  > => {
+  ): Promise<ExistingCategories | ErrorResponse<ErrorCode>> => {
     const categories = await getReq<Routes["/categories"]["get"]>(
       "categories",
       { ...options }
     );
 
-    return multipleDocsResponse(categories);
+    return "error" in categories ? categories : restoreCategories(categories);
   },
   /**
    * Retrieves the categories from the API.
@@ -64,7 +70,7 @@ export const api = {
    */
   getCategoriesSrv: async (
     options: GetCategoriesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCategory>> => {
+  ): Promise<ExistingCategories> => {
     const categories = await getReq<Routes["/categories"]["get"]>(
       "categories",
       { ...options },
@@ -74,7 +80,7 @@ export const api = {
     if ("error" in categories)
       throw new Error(`${categories.error}: ${categories.errorMessage}`);
 
-    return multipleDocsResponseSrv(categories);
+    return restoreCategories(categories);
   },
   /**
    * Retrieves the category from the API.
@@ -97,14 +103,12 @@ export const api = {
    */
   getCompanies: async (
     options: GetCompaniesOptions = {}
-  ): Promise<
-    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
-  > => {
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/companies"]["get"]>("companies", {
       ...options
     });
 
-    return multipleDocsResponse(companies);
+    return "error" in companies ? companies : restoreCompanies(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -115,15 +119,13 @@ export const api = {
   getCompaniesByCategory: async (
     id: string,
     options: GetCompaniesOptions = {}
-  ): Promise<
-    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
-  > => {
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/categories/{id}/companies"]["get"]>(
       `categories/${id}/companies`,
       { ...options }
     );
 
-    return multipleDocsResponse(companies);
+    return "error" in companies ? companies : restoreCompanies(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -132,15 +134,13 @@ export const api = {
    */
   getCompaniesByMe: async (
     options: GetCompaniesOptions = {}
-  ): Promise<
-    MultipleDocsResponse<ExistingCompany> | ErrorResponse<ErrorCode>
-  > => {
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/me/companies"]["get"]>(
       "me/companies",
       { ...options }
     );
 
-    return multipleDocsResponse(companies);
+    return "error" in companies ? companies : restoreCompanies(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -149,7 +149,7 @@ export const api = {
    */
   getCompaniesSrv: async (
     options: GetCompaniesOptions = {}
-  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+  ): Promise<ExistingCompanies> => {
     const companies = await getReq<Routes["/companies"]["get"]>(
       "companies",
       { ...options },
@@ -159,7 +159,7 @@ export const api = {
     if ("error" in companies)
       throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-    return multipleDocsResponseSrv(companies);
+    return restoreCompanies(companies);
   },
   /**
    * Retrieves the company from the API.
@@ -173,7 +173,7 @@ export const api = {
       `companies/${id}`
     );
 
-    return company;
+    return "error" in company ? company : restoreCompany(company);
   },
   /**
    * Sends a company to the API.
@@ -192,35 +192,6 @@ export const api = {
       body
     );
 
-    return company;
+    return "error" in company ? company : restoreCompany(company);
   }
 };
-
-/**
- * Fixes the type of the nextCursor property.
- * @param response - The response.
- * @returns The fixed response.
- */
-function multipleDocsResponse<T>(
-  response: MultipleDocsResponseFromRoutes<T> | ErrorResponse<ErrorCode>
-): MultipleDocsResponse<T> | ErrorResponse<ErrorCode> {
-  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  return response as MultipleDocsResponse<T> | ErrorResponse<ErrorCode>;
-}
-
-/**
- * Fixes the type of the nextCursor property.
- * @param response - The response.
- * @returns The fixed response.
- */
-function multipleDocsResponseSrv<T>(
-  response: MultipleDocsResponseFromRoutes<T>
-): MultipleDocsResponse<T> {
-  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  return response as MultipleDocsResponse<T>;
-}
-
-interface MultipleDocsResponseFromRoutes<T>
-  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
-  readonly nextCursor?: readonly string[] | undefined;
-}
