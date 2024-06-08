@@ -13,15 +13,12 @@ import { images } from "../images";
 import { lang } from "../langs";
 
 const Page = createAsyncPage("/", async () => {
-  const companies = await api.getCompanies({
+  const companies = await api.getCompaniesSrv({
     limit: 3,
     sortBy: "foundedAt",
     sortOrder: "desc",
     status: CompanyStatus.founded
   });
-
-  if ("error" in companies)
-    throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
   const cards = [
     {

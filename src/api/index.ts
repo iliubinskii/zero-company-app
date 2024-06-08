@@ -58,6 +58,25 @@ export const api = {
     return multipleDocsResponse(categories);
   },
   /**
+   * Retrieves the categories from the API.
+   * @param options - Request options.
+   * @returns The categories.
+   */
+  getCategoriesSrv: async (
+    options: GetCategoriesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCategory>> => {
+    const categories = await getReq<Routes["/categories"]["get"]>(
+      "categories",
+      { ...options },
+      { logQuery: true }
+    );
+
+    if ("error" in categories)
+      throw new Error(`${categories.error}: ${categories.errorMessage}`);
+
+    return multipleDocsResponseSrv(categories);
+  },
+  /**
    * Retrieves the category from the API.
    * @param id - The category id.
    * @returns The category.
@@ -124,6 +143,25 @@ export const api = {
     return multipleDocsResponse(companies);
   },
   /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompaniesSrv: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<MultipleDocsResponse<ExistingCompany>> => {
+    const companies = await getReq<Routes["/companies"]["get"]>(
+      "companies",
+      { ...options },
+      { logQuery: true }
+    );
+
+    if ("error" in companies)
+      throw new Error(`${companies.error}: ${companies.errorMessage}`);
+
+    return multipleDocsResponseSrv(companies);
+  },
+  /**
    * Retrieves the company from the API.
    * @param id - The company id.
    * @returns The company.
@@ -168,6 +206,18 @@ function multipleDocsResponse<T>(
 ): MultipleDocsResponse<T> | ErrorResponse<ErrorCode> {
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
   return response as MultipleDocsResponse<T> | ErrorResponse<ErrorCode>;
+}
+
+/**
+ * Fixes the type of the nextCursor property.
+ * @param response - The response.
+ * @returns The fixed response.
+ */
+function multipleDocsResponseSrv<T>(
+  response: MultipleDocsResponseFromRoutes<T>
+): MultipleDocsResponse<T> {
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  return response as MultipleDocsResponse<T>;
 }
 
 interface MultipleDocsResponseFromRoutes<T>

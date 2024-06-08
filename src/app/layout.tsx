@@ -25,10 +25,7 @@ export default async function RootLayout({
 }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await api.getCategories({ onlyPinned: true });
-
-  if ("error" in categories)
-    throw new Error(`${categories.error}: ${categories.errorMessage}`);
+  const categories = await api.getCategoriesSrv({ onlyPinned: true });
 
   const element = (
     <html lang="en">

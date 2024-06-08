@@ -10,10 +10,7 @@ import { api } from "../../../api";
  * @returns Static parameters.
  */
 export async function generateStaticParams(): Promise<unknown[]> {
-  const categories = await api.getCategories({ onlyPinned: true });
-
-  if ("error" in categories)
-    throw new Error(`${categories.error}: ${categories.errorMessage}`);
+  const categories = await api.getCategoriesSrv({ onlyPinned: true });
 
   return categories.docs.map(category => {
     return { id: category._id };

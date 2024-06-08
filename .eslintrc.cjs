@@ -149,6 +149,7 @@ const config = {
             "smacss",
             "snackbar",
             "sonarjs",
+            "srv",
             "str",
             "stylelint",
             "stylelintrc",

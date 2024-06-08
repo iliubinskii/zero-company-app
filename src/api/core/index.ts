@@ -7,6 +7,7 @@ import type {
 import { API_URL } from "../../config";
 import type { Query } from "../../utils";
 import { buildQuery } from "../../utils";
+import { logger } from "../../services";
 
 /**
  * Retrieves data from the API.
@@ -31,17 +32,22 @@ export async function deleteReq<T extends SchemaItem = never>(
  * Retrieves data from the API.
  * @param endpoint - The endpoint.
  * @param query - The query.
+ * @param options - The options.
+ * @param options.logQuery - Whether to log the query.
  * @returns The data.
  */
 export async function getReq<T extends SchemaItem = never>(
   endpoint: string,
-  query: Query = {}
+  query: Query = {},
+  { logQuery = false }: GetOptions = {}
 ): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const queryStr = buildQuery(query);
 
-  const response = await fetch(`${API_URL}${endpoint}${queryStr}`, {
-    credentials: "include"
-  });
+  const url = `${API_URL}${endpoint}${queryStr}`;
+
+  if (logQuery) logger.info(`GET: ${url}`);
+
+  const response = await fetch(url, { credentials: "include" });
 
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
   const json = (await response.json()) as SchemaResponse<T>;
@@ -92,4 +98,8 @@ export async function postJsonReq<T extends SchemaItem = never>(
   const json = (await response.json()) as SchemaResponse<T>;
 
   return json;
+}
+
+export interface GetOptions {
+  readonly logQuery?: boolean | undefined;
 }
