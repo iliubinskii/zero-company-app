@@ -14,6 +14,9 @@ const draftsSlice = createSlice({
       state.drafts = [];
       state.draftsLoaded = false;
     },
+    deleteDraftFromSlice: (state, action: PayloadAction<string>) => {
+      state.drafts = state.drafts.filter(draft => draft._id !== action.payload);
+    },
     setDrafts: (state, action: PayloadAction<readonly ExistingCompany[]>) => {
       state.drafts = dangerouslyAssumeWritable(action.payload);
       state.draftsLoaded = true;
@@ -23,7 +26,8 @@ const draftsSlice = createSlice({
 
 export const draftsReducer = draftsSlice.reducer;
 
-export const { clearDrafts, setDrafts } = draftsSlice.actions;
+export const { clearDrafts, deleteDraftFromSlice, setDrafts } =
+  draftsSlice.actions;
 
 /**
  * Selects the drafts from the state.
@@ -43,4 +47,5 @@ export const selectDraftsLoaded = (state: AppState): boolean =>
 
 export type DraftsActions =
   | ReturnType<typeof clearDrafts>
+  | ReturnType<typeof deleteDraftFromSlice>
   | ReturnType<typeof setDrafts>;

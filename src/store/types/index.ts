@@ -48,7 +48,7 @@ export interface AppState {
 export type AppStore = typeof store;
 
 export interface AppThunk<T = void> {
-  (): (dispatch: AppDispatch) => Promise<T>;
+  (dispatch: AppDispatch): Promise<T>;
 }
 
 export type SnackbarVariant = "error" | "info" | "success";

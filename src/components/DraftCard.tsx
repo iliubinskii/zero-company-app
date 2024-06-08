@@ -2,18 +2,20 @@
 
 import { FaDraftingCompass, FaPlus } from "react-icons/fa";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
+import { deleteDraft, useAppDispatch } from "../store";
 import type { ExistingCompany } from "../schema";
 import type { FC } from "react";
 import React from "react";
-import { api } from "../api";
 import { callAsync } from "../utils";
 import gravatar from "gravatar";
 import tw from "tailwind-styled-components";
 
 export const DraftCard: FC<Props> = ({ company }) => {
+  const dispatch = useAppDispatch();
+
   const deleteButtonClickHandler = (): void => {
     callAsync(async () => {
-      await api.deleteCompany(company._id);
+      await dispatch(deleteDraft(company._id));
     });
   };
 
