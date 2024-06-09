@@ -40,7 +40,7 @@ export const ClientPage: FC<Props> = ({
 
       try {
         const response = await api.getCompaniesByCategory(category._id, {
-          cursor: nextCursor,
+          cursor: nextCursor ?? undefined,
           limit: COMPANY_LIMIT,
           sortBy: "foundedAt",
           sortOrder: "desc"

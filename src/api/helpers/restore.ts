@@ -71,7 +71,7 @@ export function restoreCategories(
 
 export interface RawMultipleDocsResponse<T>
   extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
-  readonly nextCursor?: readonly string[] | undefined;
+  readonly nextCursor?: readonly string[] | null | undefined;
 }
 
 /**
@@ -80,8 +80,8 @@ export interface RawMultipleDocsResponse<T>
  * @returns The restored cursor.
  */
 function restoreCursor(
-  cursor?: readonly string[]
-): readonly [string, string] | undefined {
+  cursor: readonly string[] | null | undefined
+): readonly [string, string] | null | undefined {
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  return cursor as readonly [string, string] | undefined;
+  return cursor as readonly [string, string] | null | undefined;
 }

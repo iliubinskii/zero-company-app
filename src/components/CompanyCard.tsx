@@ -17,7 +17,7 @@ export const CompanyCard: FC<Props> = ({ company, ...props }) => {
   return (
     <div {...props}>
       <img
-        alt={company.name}
+        alt={company.name ?? undefined}
         className="w-full"
         height={height}
         src={src}

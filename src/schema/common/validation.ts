@@ -7,6 +7,13 @@ export const DigitalDocumentValidationSchema = zod.strictObject({
   url: zod.string().url()
 });
 
+export const founder = zod.strictObject({
+  email: preprocessEmail(zod.string().email()),
+  firstName: zod.string().min(1).nullable().optional(),
+  lastName: zod.string().min(1).nullable().optional(),
+  share: preprocessNumber(zod.number().int().positive()).nullable().optional()
+});
+
 export const IdValidationSchema = zod
   .string()
   .refine(value => /^[\da-f]{24}$/u.test(value));
@@ -21,8 +28,8 @@ export const ImageValidationSchema = zod.strictObject({
 
 export const SignatoryValidationSchema = zod.strictObject({
   email: zod.string().email(),
-  firstName: zod.string().optional(),
-  lastName: zod.string().optional()
+  firstName: zod.string().nullable().optional(),
+  lastName: zod.string().nullable().optional()
 });
 
 /**
