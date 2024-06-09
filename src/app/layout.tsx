@@ -3,6 +3,7 @@
 import "./globals.css";
 import {
   AppLoadingProvider,
+  CategoriesProvider,
   ReduxPersistor,
   ReduxStoreProvider,
   SnackbarProvider
@@ -23,7 +24,7 @@ import { logger } from "../services";
 export default async function App({ children }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await api.getCategoriesSrv({ onlyPinned: true });
+  const categories = await api.getCategoriesSrv();
 
   const element = (
     <html lang="en">
@@ -37,14 +38,16 @@ export default async function App({ children }: Props): Promise<ReactElement> {
       </head>
       <body>
         <AppLoadingProvider>
-          <ReduxStoreProvider>
-            <SnackbarProvider>
-              <Suspense>
-                <ReduxPersistor />
-              </Suspense>
-              <RootLayout categories={categories}>{children}</RootLayout>
-            </SnackbarProvider>
-          </ReduxStoreProvider>
+          <CategoriesProvider categories={categories}>
+            <ReduxStoreProvider>
+              <SnackbarProvider>
+                <Suspense>
+                  <ReduxPersistor />
+                </Suspense>
+                <RootLayout>{children}</RootLayout>
+              </SnackbarProvider>
+            </ReduxStoreProvider>
+          </CategoriesProvider>
         </AppLoadingProvider>
       </body>
     </html>
