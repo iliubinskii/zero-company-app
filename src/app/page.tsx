@@ -1,13 +1,13 @@
 import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
 import { CompanyStatus } from "../schema";
+import type { NextPage } from "next";
 import { PageLayout } from "../layouts";
 import React from "react";
 import { api } from "../api";
-import { createAsyncPage } from "../utils";
 import { images } from "../images";
 import { lang } from "../langs";
 
-const Page = createAsyncPage("/", async () => {
+const Page: NextPage = async () => {
   const companies = await api.getCompaniesSrv({
     limit: 3,
     sortBy: "foundedAt",
@@ -55,6 +55,6 @@ const Page = createAsyncPage("/", async () => {
       </CompanyCards>
     </PageLayout>
   );
-});
+};
 
 export default Page;

@@ -5,15 +5,15 @@ import {
   CREATE_COMPANY_TOTAL_STEPS
 } from "../../../consts";
 import { selectCompanyRegistrationStep, useAppSelector } from "../../../store";
+import type { NextPage } from "next";
 import { PageLayout } from "../../../layouts";
 import React, { useMemo } from "react";
 import { Review } from "./Review";
 import { SelectCategory } from "./SelectCategory";
 import { SelectCountry } from "./SelectCountry";
 import { Stepper } from "../../../components/Stepper";
-import { createPage } from "../../../utils";
 
-const Page = createPage("/create-company/steps", () => {
+const Page: NextPage = () => {
   const step = useAppSelector(selectCompanyRegistrationStep);
 
   const Component = useMemo(() => {
@@ -40,6 +40,6 @@ const Page = createPage("/create-company/steps", () => {
       </div>
     </PageLayout>
   );
-});
+};
 
 export default Page;

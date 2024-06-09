@@ -1,7 +1,6 @@
 "use client";
 
 import { AuthGuard, DraftCard, DraftCards } from "../../../components";
-import { callAsync, createPage } from "../../../utils";
 import {
   requireDrafts,
   selectDrafts,
@@ -9,10 +8,12 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React, { useEffect } from "react";
+import { callAsync } from "../../../utils";
 
-const Page = createPage("/profile/drafts", () => {
+const Page: NextPage = () => {
   const dispatch = useAppDispatch();
 
   const drafts = useAppSelector(selectDrafts);
@@ -36,6 +37,6 @@ const Page = createPage("/profile/drafts", () => {
       </ProfileLayout>
     </AuthGuard>
   );
-});
+};
 
 export default Page;

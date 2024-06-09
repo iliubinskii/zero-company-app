@@ -1,7 +1,6 @@
 "use client";
 
 import { AuthGuard, Loading } from "../../../components";
-import { callAsync, createPage } from "../../../utils";
 import {
   selectAuthUser,
   selectCompanyCategory,
@@ -11,13 +10,15 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import type { NextPage } from "next";
 import { PageLayout } from "../../../layouts";
 import React, { useEffect } from "react";
 import { api } from "../../../api";
+import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
 import { useRouter } from "next/navigation";
 
-const Page = createPage("/create-company/create-draft", () => {
+const Page: NextPage = () => {
   const authUser = useAppSelector(selectAuthUser);
 
   const category = useAppSelector(selectCompanyCategory);
@@ -61,6 +62,6 @@ const Page = createPage("/create-company/create-draft", () => {
       </PageLayout>
     </AuthGuard>
   );
-});
+};
 
 export default Page;

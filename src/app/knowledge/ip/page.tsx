@@ -1,11 +1,11 @@
 import { ArticleLayout } from "../../../layouts";
+import type { NextPage } from "next";
 import React from "react";
-import { createPage } from "../../../utils";
 import { lang } from "../../../langs";
 
 // eslint-disable-next-line no-warning-comments -- Ok
 // TODO: Add real content
-const Page = createPage("/knowledge/ip", () => (
+const Page: NextPage = () => (
   <ArticleLayout>
     <div className="header2">{lang.IpAgreement}</div>
     <div className="paragraphs">
@@ -40,6 +40,6 @@ const Page = createPage("/knowledge/ip", () => (
       </p>
     </div>
   </ArticleLayout>
-));
+);
 
 export default Page;

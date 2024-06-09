@@ -6,12 +6,7 @@ import type {
   ExistingCompany,
   FieldError
 } from "../../../../schema";
-import {
-  assertDefined,
-  buildFormData,
-  callAsync,
-  createPage
-} from "../../../../utils";
+import { assertDefined, buildFormData, callAsync } from "../../../../utils";
 import { isUndefined, omitBy } from "lodash";
 import { showSnackbar, useAppDispatch } from "../../../../store";
 import { Basics } from "./Basics";
@@ -19,6 +14,8 @@ import { CircularAccordionItem } from "./CircularAccordionItem";
 import { ERROR } from "../../../../consts";
 import type { FormEventHandler } from "react";
 import { Management } from "./Management";
+import type { NextPage } from "next";
+import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -28,7 +25,7 @@ import { lang } from "../../../../langs";
 import { useAuthGuardedLoader } from "../../../../hooks";
 import { useCategories } from "../../../../contexts";
 
-const Page = createPage("/profile/drafts/[id]", ({ params = {} }) => {
+const Page: NextPage<NextPageProps> = ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_DRAFT_ID_PARAM);
 
   const {
@@ -169,7 +166,7 @@ const Page = createPage("/profile/drafts/[id]", ({ params = {} }) => {
       </ProfileLayout>
     </AuthGuard>
   );
-});
+};
 
 export default Page;
 
