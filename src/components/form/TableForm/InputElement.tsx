@@ -1,22 +1,22 @@
 import type { FC, InputHTMLAttributes } from "react";
-import { ErrorMessage } from "../ErrorMessage";
 import type { FieldError } from "../../../schema";
 import React from "react";
 import { noop } from "lodash";
 import tw from "tailwind-styled-components";
 
 export const InputElement: FC<Props> = ({
-  containerClassName,
   errorMessages = [],
-  inputClassName,
   name,
   onChange,
   onResetErrors = noop,
   ...props
-}) => (
-  <Container className={containerClassName}>
+}) => {
+  const Input = errorMessages.some(field => field.path === name)
+    ? InputWithError
+    : InputWithoutError;
+
+  return (
     <Input
-      className={inputClassName}
       name={name}
       onChange={e => {
         onChange(e.target.value);
@@ -24,17 +24,11 @@ export const InputElement: FC<Props> = ({
       }}
       {...props}
     />
-    {errorMessages.length > 0 && (
-      <ErrorMessage errorMessages={errorMessages} path={name} />
-    )}
-  </Container>
-);
+  );
+};
 
 export interface Props
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    "className" | "onChange"
-  > {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   readonly containerClassName?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
   readonly inputClassName?: string | undefined;
@@ -42,10 +36,15 @@ export interface Props
   readonly onResetErrors?: ((name?: string) => void) | undefined;
 }
 
-const Container = tw.div`relative`;
-
-const Input = tw.input`
+const BaseInput = tw.input`
   w-full rounded
   appearance-none bg-transparent border-none
-  focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-600
+  focus:bg-white focus:outline-none
 `;
+
+const InputWithError = tw(BaseInput)`
+  ring-1 ring-red-600
+  focus:ring-1 focus:ring-red-600
+`;
+
+const InputWithoutError = tw(BaseInput)`focus:ring-1 focus:ring-blue-600`;
