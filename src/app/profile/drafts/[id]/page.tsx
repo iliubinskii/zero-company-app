@@ -71,7 +71,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
       e.preventDefault();
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Postponed
-      const { founders, images, logo, ...rest } = companyUpdate;
+      const { images, logo, ...rest } = companyUpdate;
+
       const data = buildFormData(rest);
 
       callAsync(async () => {

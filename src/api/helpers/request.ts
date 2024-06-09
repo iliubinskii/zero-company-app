@@ -5,7 +5,6 @@ import type {
   SchemaResponse
 } from "../../schema";
 import { API_URL } from "../../config";
-import type { RequestData } from "../../utils";
 import { buildQuery } from "../../utils";
 import { logger } from "../../services";
 
@@ -31,17 +30,17 @@ export async function deleteReq<T extends SchemaItem = never>(
 /**
  * Retrieves data from the API.
  * @param endpoint - The endpoint.
- * @param query - The query.
+ * @param data - The data.
  * @param options - The options.
  * @param options.logQuery - Whether to log the query.
  * @returns The data.
  */
 export async function getReq<T extends SchemaItem = never>(
   endpoint: string,
-  query: RequestData = {},
+  data: object = {},
   { logQuery = false }: GetOptions = {}
 ): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
-  const queryStr = buildQuery(query);
+  const queryStr = buildQuery(data);
 
   const url = `${API_URL}${endpoint}${queryStr}`;
 

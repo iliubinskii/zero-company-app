@@ -5,6 +5,7 @@ export const lang = {
   About: "About",
   AboutUs: "About Us",
   AccessibilityStatement: "Accessibility Statement",
+  AddTeamMember: "Add team member",
   ApiUrl: "API URL",
   AppLoadingContextNotInitialized: "App loading context not initialized",
   Blog: "Blog",

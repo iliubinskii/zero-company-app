@@ -1,6 +1,6 @@
 import type { FC, InputHTMLAttributes } from "react";
-import { ErrorMessage } from "./ErrorMessage";
-import type { FieldError } from "../../schema";
+import { ErrorMessage } from "../ErrorMessage";
+import type { FieldError } from "../../../schema";
 import React from "react";
 import { noop } from "lodash";
 import tw from "tailwind-styled-components";
@@ -44,4 +44,8 @@ export interface Props
 
 const Container = tw.div`relative`;
 
-const Input = tw.input`w-full form-field`;
+const Input = tw.input`
+  w-full rounded
+  appearance-none bg-transparent border-none
+  focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-600
+`;

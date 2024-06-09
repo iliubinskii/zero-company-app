@@ -1,235 +1,160 @@
-import { COMPANY_SHARE_STEP, ERROR } from "../../../../consts";
 import type {
-  ExistingCategory,
+  CompanyUpdate,
   ExistingCompany,
   FieldError,
   Founder
 } from "../../../../schema";
 import type { FC, FormEventHandler } from "react";
-import { type FileWithPreview, InputElement } from "../../../../components";
-import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
-import {
-  assertDefined,
-  assertHTMLFormElement,
-  callAsync
-} from "../../../../utils";
-import { showSnackbar, useAppDispatch } from "../../../../store";
-import React, { useCallback, useState } from "react";
-import { api } from "../../../../api";
+import { AiOutlineUserDelete } from "react-icons/ai";
+import { COMPANY_SHARE_STEP } from "../../../../consts";
+import { IoAddSharp } from "react-icons/io5";
+import React from "react";
+import { TableForm } from "../../../../components";
 import { lang } from "../../../../langs";
+import tw from "tailwind-styled-components";
 
-export const Team: FC<Props> = () => {
-  const [category, setCategory] = useState("");
-
-  const dispatch = useAppDispatch();
-
-  const [founders, setFounders] = useState<readonly Founder[]>([
-    {
-      email: "",
-      firstName: "",
-      lastName: "",
-      share: 0
-    }
-  ]);
-
-  const [images, setImages] = useState<readonly FileWithPreview[]>([]);
-
-  const [logo, setLogo] = useState<readonly FileWithPreview[]>([]);
-
-  const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
-
-  const onSubmit: FormEventHandler = e => {
-    callAsync(async () => {
-      e.preventDefault();
-
-      const target = assertHTMLFormElement(
-        e.target,
-        ERROR.EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT
-      );
-
-      const data = new FormData(target);
-
-      for (const file of images) data.append("images", file, file.name);
-
-      for (const file of logo) data.append("logo", file, file.name);
-
-      if (category) {
-        const company = await api.postCompany({
-          categories: [category],
-          country: "us"
-        });
-
-        if ("error" in company)
-          if ("data" in company)
-            setErrorMessages([
-              ...(function* prepareErrors(): Generator<FieldError> {
-                for (const error of company.data)
-                  if (error.path === "founders") {
-                    yield {
-                      message: error.message,
-                      path: "founders[0].email"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].firstName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].lastName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].share"
-                    };
-                  } else yield error;
-              })()
-            ]);
-          else
-            dispatch(
-              showSnackbar({ message: company.errorMessage, variant: "error" })
-            );
-        else {
-          setCategory("");
-          setFounders([
-            {
-              email: ""
-            }
-          ]);
-          setImages([]);
-          setLogo([]);
-          setErrorMessages([]);
-        }
-      }
+export const Team: FC<Props> = ({
+  company,
+  errorMessages,
+  modified,
+  onResetErrors,
+  onSave,
+  setCompany
+}) => {
+  const addFounder = (): void => {
+    setCompany({
+      founders: [...company.founders, { email: "" }]
     });
   };
 
-  const addFounder = (): void => {
-    setFounders([
-      ...founders,
-      {
-        email: ""
-      }
-    ]);
+  const editFounder = (index: number, update: Partial<Founder>): void => {
+    setCompany({
+      founders: company.founders.map((founder, i) =>
+        i === index ? { ...founder, ...update } : founder
+      )
+    });
   };
 
-  const editFounder = (
-    index: number,
-    field: keyof Founder,
-    email: string
-  ): void => {
-    const founder = assertDefined(
-      founders[index],
-      ERROR.EXPECTING_VALID_FOUNDERS_ARRAY_INDEX
-    );
-
-    setFounders([
-      ...founders.slice(0, index),
-      { ...founder, [field]: email },
-      ...founders.slice(index + 1)
-    ]);
+  const deleteFounder = (index: number): void => {
+    setCompany({
+      founders: company.founders.filter((_, i) => i !== index)
+    });
   };
-
-  const removeFounder = (index: number): void => {
-    setFounders([...founders.slice(0, index), ...founders.slice(index + 1)]);
-  };
-
-  const resetErrorsHandler = useCallback((path?: string): void => {
-    setErrorMessages(prev => prev.filter(error => error.path !== path));
-  }, []);
 
   return (
-    <form className="flex flex-col gap-11" onSubmit={onSubmit}>
-      {/* Founders */}
-      <div className="flex flex-col gap-2">
-        <h3>{lang.Founders}</h3>
-        {founders.map((founder, index) => (
-          <div className="flex gap-4 items-center w-full" key={index}>
-            {/* Fields */}
-            <div className="grid grid-cols-4 gap-2 w-full">
-              {/* E-mail */}
-              <InputElement
-                errorMessages={errorMessages}
-                name={`founders[${index}].email`}
-                onChange={value => {
-                  editFounder(index, "email", value);
-                }}
-                onResetErrors={resetErrorsHandler}
-                placeholder={lang.Email}
-                type="email"
-                value={founder.email}
-              />
-              {/* E-mail END */}
+    <form className="flex flex-col gap-2" onSubmit={onSave}>
+      <Founders>
+        <List>
+          <Row>
+            <Grid>
+              <HeadCol>{lang.Email}</HeadCol>
+              <HeadCol>{lang.FirstName}</HeadCol>
+              <HeadCol>{lang.LastName}</HeadCol>
+              <HeadCol>{lang.Share}</HeadCol>
+            </Grid>
+            <ButtonsCol />
+          </Row>
+          {company.founders.map((founder, index) => (
+            <Row key={index}>
+              <Grid>
+                {/* E-mail */}
+                <BodyCol>
+                  <TableForm.InputElement
+                    autoComplete="email"
+                    containerClassName="w-full"
+                    errorMessages={errorMessages}
+                    name={`founders[${index}].email`}
+                    onChange={value => {
+                      editFounder(index, { email: value });
+                    }}
+                    onResetErrors={onResetErrors}
+                    type="email"
+                    value={founder.email}
+                  />
+                </BodyCol>
+                {/* E-mail END */}
 
-              {/* First name */}
-              <InputElement
-                errorMessages={errorMessages}
-                name={`founders[${index}].firstName`}
-                onChange={value => {
-                  editFounder(index, "firstName", value);
-                }}
-                onResetErrors={resetErrorsHandler}
-                placeholder={lang.FirstName}
-                type="text"
-                value={founder.firstName ?? ""}
-              />
-              {/* First name END */}
+                {/* First name */}
+                <BodyCol>
+                  <TableForm.InputElement
+                    autoComplete="given-name"
+                    containerClassName="w-full"
+                    errorMessages={errorMessages}
+                    name={`founders[${index}].firstName`}
+                    onChange={value => {
+                      editFounder(index, { firstName: value });
+                    }}
+                    onResetErrors={onResetErrors}
+                    type="text"
+                    value={founder.firstName ?? ""}
+                  />
+                </BodyCol>
+                {/* First name END */}
 
-              {/* Last name */}
-              <InputElement
-                errorMessages={errorMessages}
-                name={`founders[${index}].lastName`}
-                onChange={value => {
-                  editFounder(index, "lastName", value);
-                }}
-                onResetErrors={resetErrorsHandler}
-                placeholder={lang.LastName}
-                type="text"
-                value={founder.lastName ?? ""}
-              />
-              {/* Last name END */}
+                {/* Last name */}
+                <BodyCol>
+                  <TableForm.InputElement
+                    autoComplete="family-name"
+                    containerClassName="w-full"
+                    errorMessages={errorMessages}
+                    name={`founders[${index}].lastName`}
+                    onChange={value => {
+                      editFounder(index, { lastName: value });
+                    }}
+                    onResetErrors={onResetErrors}
+                    type="text"
+                    value={founder.lastName ?? ""}
+                  />
+                </BodyCol>
+                {/* Last name END */}
 
-              {/* Share */}
-              <InputElement
-                errorMessages={errorMessages}
-                min={COMPANY_SHARE_STEP}
-                name={`founders[${index}].share`}
-                onChange={value => {
-                  editFounder(index, "share", value);
-                }}
-                onResetErrors={resetErrorsHandler}
-                placeholder={lang.Share}
-                step={COMPANY_SHARE_STEP}
-                type="number"
-                value={founder.share ?? ""}
-              />
-              {/* Share END */}
-            </div>
-            {/* Fields END */}
+                {/* Share */}
+                <BodyCol>
+                  <TableForm.InputElement
+                    containerClassName="w-full bg-transparent"
+                    errorMessages={errorMessages}
+                    min={COMPANY_SHARE_STEP}
+                    name={`founders[${index}].share`}
+                    onChange={value => {
+                      const share =
+                        value.length > 0
+                          ? Number.parseFloat(value)
+                          : Number.NaN;
 
-            {/* Buttons */}
-            {index === founders.length - 1 ? (
-              <button onClick={addFounder} type="button">
-                <IoIosAddCircle className="h-6 w-6 text-success" />
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  removeFounder(index);
-                }}
-                type="button"
-              >
-                <IoMdRemoveCircle className="h-6 w-6 text-error" />
-              </button>
-            )}
-            {/* Buttons END */}
-          </div>
-        ))}
-      </div>
-      {/* Founders END */}
+                      editFounder(index, {
+                        share: Number.isNaN(share) ? null : share
+                      });
+                    }}
+                    onResetErrors={onResetErrors}
+                    step={COMPANY_SHARE_STEP}
+                    type="number"
+                    value={founder.share ?? ""}
+                  />
+                </BodyCol>
+                {/* Share END */}
+              </Grid>
+              <ButtonsCol>
+                <DeleteButton
+                  onClick={() => {
+                    deleteFounder(index);
+                  }}
+                  type="button"
+                >
+                  <DeleteIcon />
+                </DeleteButton>
+              </ButtonsCol>
+            </Row>
+          ))}
+        </List>
+        <AddButton onClick={addFounder} type="button">
+          <AddIcon />
+          <AddLabel>{lang.AddTeamMember}</AddLabel>
+        </AddButton>
+      </Founders>
 
       {/* Submit button */}
       <div className="flex justify-end">
-        <button className="primary-button" type="submit">
+        <button className="primary-button" disabled={!modified} type="submit">
           {lang.Save}
         </button>
       </div>
@@ -239,6 +164,44 @@ export const Team: FC<Props> = () => {
 };
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
   readonly company: ExistingCompany;
+  readonly errorMessages: readonly FieldError[];
+  readonly modified: boolean;
+  readonly onResetErrors: (name?: string | undefined) => void;
+  readonly onSave: FormEventHandler<HTMLFormElement>;
+  readonly setCompany: (update: CompanyUpdate) => void;
 }
+
+const Founders = tw.div`rounded p-2 bg-gray-50 flex flex-col gap-1`;
+
+const List = tw.div`bg-white border border-gray-200 divide-y divide-gray-200`;
+
+const Row = tw.div`
+  group flex px-5
+  hover:bg-gray-100
+  focus:bg-gray-100
+  focus-within:bg-gray-100
+`;
+
+const Grid = tw.div`w-full grid grid-cols-4 gap-2`;
+
+const HeadCol = tw.div`h-10 flex justify-center items-center font-semibold`;
+
+const BodyCol = tw.div`h-12 flex items-center`;
+
+const ButtonsCol = tw.div`
+  w-20 flex justify-end
+  opacity-0 pointer-events-none
+  group-hover:opacity-100 group-hover:pointer-events-auto
+  group-focus:opacity-100 group-focus:pointer-events-auto
+  group-focus-within:opacity-100 group-focus-within:pointer-events-auto`;
+
+const DeleteButton = tw.button``;
+
+const DeleteIcon = tw(AiOutlineUserDelete)`text-xl text-gray-700`;
+
+const AddButton = tw.button`w-full h-10 rounded-sm px-2 flex items-center gap-2`;
+
+const AddIcon = tw(IoAddSharp)`text-lg`;
+
+const AddLabel = tw.div`text-sm font-medium`;

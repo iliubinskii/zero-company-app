@@ -1,12 +1,17 @@
+import dot from "dot-object";
+
 /**
  * Build form data
  * @param data - Form object.
  * @returns Form data.
  */
-export function buildFormData(data: RequestData): FormData {
+export function buildFormData(data: object): FormData {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
+  const flat: RequestDataFlat = dot.dot(data);
+
   const formData = new FormData();
 
-  for (const [key, value] of Object.entries(data))
+  for (const [key, value] of Object.entries(flat))
     switch (typeof value) {
       case "boolean": {
         formData.append(key, value ? "yes" : "no");
@@ -26,17 +31,9 @@ export function buildFormData(data: RequestData): FormData {
         break;
       }
 
-      case "object": {
-        if (value === null) formData.append(key, "");
-        else
-          for (const [i, v] of value.entries())
-            formData.append(`${key}[${i}]`, v.toString());
-
-        break;
+      default: {
+        formData.append(key, "");
       }
-
-      default:
-      // Not reachable
     }
 
   return formData;
@@ -47,10 +44,13 @@ export function buildFormData(data: RequestData): FormData {
  * @param data - Query object.
  * @returns Query string.
  */
-export function buildQuery(data: RequestData): string {
+export function buildQuery(data: object): string {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
+  const flat: RequestDataFlat = dot.dot(data);
+
   const queryObject: Record<string, string> = {};
 
-  for (const [key, value] of Object.entries(data))
+  for (const [key, value] of Object.entries(flat))
     switch (typeof value) {
       case "boolean": {
         queryObject[key] = value ? "yes" : "no";
@@ -70,17 +70,9 @@ export function buildQuery(data: RequestData): string {
         break;
       }
 
-      case "object": {
-        if (value === null) queryObject[key] = "";
-        else
-          for (const [i, v] of value.entries())
-            queryObject[`${key}[${i}]`] = v.toString();
-
-        break;
+      default: {
+        queryObject[key] = "";
       }
-
-      default:
-      // Not reachable
     }
 
   const queryParams = new URLSearchParams(queryObject);
@@ -90,12 +82,4 @@ export function buildQuery(data: RequestData): string {
   return queryStr.length > 0 ? `?${queryStr}` : "";
 }
 
-export interface RequestData {
-  readonly [key: string]:
-    | boolean
-    | number
-    | string
-    | null
-    | undefined
-    | readonly string[];
-}
+type RequestDataFlat = Readonly<Record<string, unknown>>;
