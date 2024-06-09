@@ -1,4 +1,4 @@
-import { ArticleLayout } from "../../../components";
+import { ArticleLayout } from "../../../layouts";
 import React from "react";
 import { createPage } from "../../../utils";
 import { lang } from "../../../langs";

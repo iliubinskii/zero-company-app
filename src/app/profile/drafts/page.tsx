@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  AuthGuard,
-  DraftCard,
-  DraftCards,
-  ProfileLayout
-} from "../../../components";
+import { AuthGuard, DraftCard, DraftCards } from "../../../components";
 import { callAsync, createPage } from "../../../utils";
 import {
   requireDrafts,
@@ -14,6 +9,7 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import { ProfileLayout } from "../../../layouts";
 import React, { useEffect } from "react";
 
 const Page = createPage("/profile/drafts", () => {

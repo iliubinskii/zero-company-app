@@ -7,7 +7,7 @@ import {
 import type { ExistingCategory, MultipleDocsResponse } from "../../../schema";
 import { selectCompanyRegistrationStep, useAppSelector } from "../../../store";
 import type { FC } from "react";
-import { PageLayout } from "../../../components";
+import { PageLayout } from "../../../layouts";
 import React from "react";
 import { Review } from "./Review";
 import { SelectCategory } from "./SelectCategory";

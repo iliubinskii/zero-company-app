@@ -1,7 +1,8 @@
 "use client";
 
-import { AnimatedLink, PageLayout } from "../../components";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
+import { AnimatedLink } from "../../components";
+import { PageLayout } from "../../layouts";
 import React from "react";
 import { createPage } from "../../utils";
 import { lang } from "../../langs";

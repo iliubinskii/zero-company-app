@@ -13,4 +13,3 @@ export { TextCarousel } from "./TextCarousel";
 export { Unauthorized } from "./Unauthorized";
 export * from "./buttons";
 export * from "./form";
-export * from "./layouts";

@@ -1,7 +1,7 @@
 import type { FC, HTMLAttributes } from "react";
 import { IoSearch } from "react-icons/io5";
 import React from "react";
-import { lang } from "../langs";
+import { lang } from "../../langs";
 
 const SiteSearch: FC<HTMLAttributes<HTMLDivElement>> = ({
   className = "",

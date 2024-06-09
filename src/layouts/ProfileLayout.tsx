@@ -7,18 +7,18 @@ import {
   GRAVATAR_RATING,
   GRAVATAR_SIZE,
   PLACEHOLDER_EMAIL
-} from "../../consts";
+} from "../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
-import { selectAuthUser, useAppSelector } from "../../store";
-import { API_URL } from "../../config";
-import { AnimatedLink } from "..";
+import { selectAuthUser, useAppSelector } from "../store";
+import { API_URL } from "../config";
+import { AnimatedLink } from "../components";
 import { BsBookmarks } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
-import { lang } from "../../langs";
+import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 import { usePathname } from "next/navigation";
 

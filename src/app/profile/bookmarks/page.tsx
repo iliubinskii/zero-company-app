@@ -1,6 +1,7 @@
 "use client";
 
-import { AuthGuard, ProfileLayout } from "../../../components";
+import { AuthGuard } from "../../../components";
+import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { createPage } from "../../../utils";
 

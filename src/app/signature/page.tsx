@@ -1,8 +1,9 @@
 "use client";
 
-import { AuthGuard, PageLayout } from "../../components";
 import { selectAuthUser, useAppSelector } from "../../store";
+import { AuthGuard } from "../../components";
 import { DocusealForm } from "@docuseal/react";
+import { PageLayout } from "../../layouts";
 import React from "react";
 import { createPage } from "../../utils";
 

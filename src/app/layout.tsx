@@ -8,8 +8,8 @@ import {
   SnackbarProvider
 } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
-import Layout from "../Layout";
 import React, { Suspense } from "react";
+import { RootLayout } from "../layouts";
 import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
@@ -20,9 +20,7 @@ import { logger } from "../services";
  * @param props.children - Children.
  * @returns The root layout.
  */
-export default async function RootLayout({
-  children
-}: Props): Promise<ReactElement> {
+export default async function App({ children }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
   const categories = await api.getCategoriesSrv({ onlyPinned: true });
@@ -44,7 +42,7 @@ export default async function RootLayout({
               <Suspense>
                 <ReduxPersistor />
               </Suspense>
-              <Layout categories={categories}>{children}</Layout>
+              <RootLayout categories={categories}>{children}</RootLayout>
             </SnackbarProvider>
           </ReduxStoreProvider>
         </AppLoadingProvider>

@@ -1,14 +1,14 @@
-import { AnimatedLink, TextCarousel } from "../components";
-import type { ExistingCategory, MultipleDocsResponse } from "../schema";
+import { AnimatedLink, TextCarousel } from "../../components";
+import type { ExistingCategory, MultipleDocsResponse } from "../../schema";
 import type { FC, ReactNode } from "react";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
 import React from "react";
 import SiteSearch from "./SiteSearch";
-import { lang } from "../langs";
+import { lang } from "../../langs";
 
-const Layout: FC<Props> = ({ categories, children }) => (
+export const RootLayout: FC<Props> = ({ categories, children }) => (
   <div className="flex flex-col">
     <header>
       <div className="border-b-1.5">
@@ -101,8 +101,6 @@ const Layout: FC<Props> = ({ categories, children }) => (
     </footer>
   </div>
 );
-
-export default Layout;
 
 export interface Props {
   readonly categories: MultipleDocsResponse<ExistingCategory>;

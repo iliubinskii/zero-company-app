@@ -1,8 +1,9 @@
 "use client";
 
-import { AuthGuard, ProfileLayout } from "../../../../components";
 import { assertDefined, createPage } from "../../../../utils";
+import { AuthGuard } from "../../../../components";
 import { ERROR } from "../../../../consts";
+import { ProfileLayout } from "../../../../layouts";
 import React from "react";
 import { api } from "../../../../api";
 import { useAuthGuardedLoader } from "../../../../hooks";

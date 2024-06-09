@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthGuard, Loading, PageLayout } from "../../../components";
+import { AuthGuard, Loading } from "../../../components";
 import { callAsync, createPage } from "../../../utils";
 import {
   selectAuthUser,
@@ -11,6 +11,7 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import { PageLayout } from "../../../layouts";
 import React, { useEffect } from "react";
 import { api } from "../../../api";
 import { lang } from "../../../langs";

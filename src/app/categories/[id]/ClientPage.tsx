@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyCard, CompanyCards, PageLayout } from "../../../components";
+import { CompanyCard, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
@@ -11,6 +11,7 @@ import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
+import { PageLayout } from "../../../layouts";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../../api";
 import { callAsync } from "../../../utils";

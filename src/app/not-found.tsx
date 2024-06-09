@@ -1,5 +1,6 @@
-import { AnimatedLink, PageLayout } from "../components";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { AnimatedLink } from "../components";
+import { PageLayout } from "../layouts";
 import React from "react";
 import { createPage } from "../utils";
 import { lang } from "../langs";

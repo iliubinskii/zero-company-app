@@ -14,7 +14,6 @@ import type { FC, FormEventHandler } from "react";
 import {
   FileInputElement,
   InputElement,
-  PageLayout,
   SelectElement,
   TextareaElement
 } from "../../components";
@@ -22,6 +21,7 @@ import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { assertDefined, assertHTMLFormElement, callAsync } from "../../utils";
 import { showSnackbar, useAppDispatch } from "../../store";
 import type { FileWithPreview } from "../../components";
+import { PageLayout } from "../../layouts";
 import React, { useCallback, useState } from "react";
 import { api } from "../../api";
 import { lang } from "../../langs";

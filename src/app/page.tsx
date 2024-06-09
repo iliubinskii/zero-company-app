@@ -1,11 +1,6 @@
-import {
-  CompanyCard,
-  CompanyCards,
-  InfoCard,
-  InfoCards,
-  PageLayout
-} from "../components";
+import { CompanyCard, CompanyCards, InfoCard, InfoCards } from "../components";
 import { CompanyStatus } from "../schema";
+import { PageLayout } from "../layouts";
 import React from "react";
 import { api } from "../api";
 import { createAsyncPage } from "../utils";
