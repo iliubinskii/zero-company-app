@@ -3,19 +3,20 @@ import { ErrorMessage } from "./ErrorMessage";
 import type { FieldError } from "../../schema";
 import React from "react";
 import { noop } from "lodash";
+import tw from "tailwind-styled-components";
 
 export const InputElement: FC<Props> = ({
-  className = "",
-  containerClassName = "",
+  containerClassName,
   errorMessages = [],
+  inputClassName,
   name,
   onChange,
   onResetErrors = noop,
   ...props
 }) => (
-  <div className={`relative ${containerClassName}`.trim()}>
-    <input
-      className={`form-field w-full ${className}`.trim()}
+  <Container className={containerClassName}>
+    <Input
+      className={inputClassName}
       name={name}
       onChange={e => {
         onChange(e.target.value);
@@ -26,13 +27,21 @@ export const InputElement: FC<Props> = ({
     {errorMessages.length > 0 && (
       <ErrorMessage errorMessages={errorMessages} path={name} />
     )}
-  </div>
+  </Container>
 );
 
 export interface Props
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "className" | "onChange"
+  > {
   readonly containerClassName?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
+  readonly inputClassName?: string | undefined;
   readonly onChange: (value: string) => void;
   readonly onResetErrors?: ((name?: string) => void) | undefined;
 }
+
+const Container = tw.div`relative`;
+
+const Input = tw.input`w-full form-field`;

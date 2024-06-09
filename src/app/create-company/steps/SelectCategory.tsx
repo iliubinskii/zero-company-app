@@ -1,6 +1,5 @@
 "use client";
 
-import type { ExistingCategory, MultipleDocsResponse } from "../../../schema";
 import {
   setCompanyCategory,
   useAppDispatch,
@@ -10,8 +9,11 @@ import type { FC } from "react";
 import React, { useState } from "react";
 import { SelectElement } from "../../../components";
 import { lang } from "../../../langs";
+import { useCategories } from "../../../contexts";
 
-export const SelectCategory: FC<Props> = ({ categories: { docs } }) => {
+export const SelectCategory: FC = () => {
+  const categories = useCategories();
+
   const initialCategory = useAppSelector(
     state => state.companyRegistration.category
   );
@@ -31,13 +33,10 @@ export const SelectCategory: FC<Props> = ({ categories: { docs } }) => {
     >
       <SelectElement
         onChange={value => {
-          setCategory(docs.find(doc => doc._id === value));
+          setCategory(categories.find(c => c._id === value));
         }}
-        options={docs.map(doc => {
-          return {
-            label: doc.name,
-            value: doc._id
-          };
+        options={categories.map(c => {
+          return { label: c.name, value: c._id };
         })}
         placeholder={lang.SelectCategory}
         value={category ? category._id : ""}
@@ -50,7 +49,3 @@ export const SelectCategory: FC<Props> = ({ categories: { docs } }) => {
     </form>
   );
 };
-
-export interface Props {
-  categories: MultipleDocsResponse<ExistingCategory>;
-}

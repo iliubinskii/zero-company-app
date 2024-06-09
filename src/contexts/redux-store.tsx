@@ -10,5 +10,5 @@ export const ReduxStoreProvider: FC<Props> = ({ children }) => (
 );
 
 export interface Props {
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
 }

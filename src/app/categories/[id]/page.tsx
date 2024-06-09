@@ -1,9 +1,11 @@
 import { COMPANY_LIMIT, ERROR } from "../../../consts";
-import { assertDefined, createAsyncPage } from "../../../utils";
 import { ClientPage } from "./ClientPage";
 import { CompanyStatus } from "../../../schema";
+import type { NextPage } from "next";
+import type { NextPageProps } from "../../../types";
 import React from "react";
 import { api } from "../../../api";
+import { assertDefined } from "../../../utils";
 
 /**
  * Generates static parameters.
@@ -17,7 +19,7 @@ export async function generateStaticParams(): Promise<unknown[]> {
   });
 }
 
-const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
+const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
 
   const [category, companies] = await Promise.all([
@@ -37,6 +39,6 @@ const Page = createAsyncPage("/categories/[id]", async ({ params = {} }) => {
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
   return <ClientPage category={category} companies={companies} />;
-});
+};
 
 export default Page;

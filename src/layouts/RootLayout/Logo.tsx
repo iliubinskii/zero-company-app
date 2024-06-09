@@ -1,11 +1,11 @@
 "use client";
 
 import type { ComponentProps, FC } from "react";
-import { AnimatedLink } from "../components";
+import { AnimatedLink } from "../../components";
 import { Bebas_Neue } from "next/font/google";
 import React from "react";
-import { images } from "../images";
-import { lang } from "../langs";
+import { images } from "../../images";
+import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
 const Logo: FC<Omit<ComponentProps<typeof Link>, "href">> = props => (

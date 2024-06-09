@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyCard, CompanyCards, PageLayout } from "../../../components";
+import { CompanyCard, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
@@ -11,6 +11,7 @@ import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
+import { PageLayout } from "../../../layouts";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../../api";
 import { callAsync } from "../../../utils";
@@ -40,7 +41,7 @@ export const ClientPage: FC<Props> = ({
 
       try {
         const response = await api.getCompaniesByCategory(category._id, {
-          cursor: nextCursor,
+          cursor: nextCursor ?? undefined,
           limit: COMPANY_LIMIT,
           sortBy: "foundedAt",
           sortOrder: "desc"
@@ -100,7 +101,7 @@ export const ClientPage: FC<Props> = ({
   return (
     <>
       <Head>
-        <title>{`${category.name} - ${lang.app.title}`}</title>
+        <title>{`${category.name} - ${lang.meta.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
       <PageLayout size="lg">

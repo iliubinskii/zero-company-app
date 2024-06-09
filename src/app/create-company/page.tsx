@@ -1,12 +1,13 @@
 "use client";
 
-import { AnimatedLink, PageLayout } from "../../components";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
+import { AnimatedLink } from "../../components";
+import type { NextPage } from "next";
+import { PageLayout } from "../../layouts";
 import React from "react";
-import { createPage } from "../../utils";
 import { lang } from "../../langs";
 
-const Page = createPage("/create-company", () => {
+const Page: NextPage = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -24,6 +25,6 @@ const Page = createPage("/create-company", () => {
       </div>
     </PageLayout>
   );
-});
+};
 
 export default Page;

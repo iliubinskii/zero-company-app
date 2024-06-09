@@ -57,7 +57,7 @@ export interface Context {
 }
 
 export interface Props {
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
 }
 
 const AppLoadingContext = createContext<Context>({

@@ -1,11 +1,11 @@
 "use client";
 
 import type { FC, HTMLAttributes } from "react";
-import { selectAuthUser, selectLoaded, useAppSelector } from "../store";
-import { API_URL } from "../config";
-import { AnimatedLink } from "../components";
+import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
+import { API_URL } from "../../config";
+import { AnimatedLink } from "../../components";
 import React from "react";
-import { lang } from "../langs";
+import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
 const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {

@@ -3,13 +3,14 @@
 import "./globals.css";
 import {
   AppLoadingProvider,
+  CategoriesProvider,
   ReduxPersistor,
   ReduxStoreProvider,
   SnackbarProvider
 } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
-import Layout from "../Layout";
 import React, { Suspense } from "react";
+import { RootLayout } from "../layouts";
 import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
@@ -20,18 +21,16 @@ import { logger } from "../services";
  * @param props.children - Children.
  * @returns The root layout.
  */
-export default async function RootLayout({
-  children
-}: Props): Promise<ReactElement> {
+export default async function App({ children }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await api.getCategoriesSrv({ onlyPinned: true });
+  const categories = await api.getCategoriesSrv();
 
   const element = (
     <html lang="en">
       <head>
-        <title>{lang.app.title}</title>
-        <meta content={lang.app.description} name="description" />
+        <title>{lang.meta.title}</title>
+        <meta content={lang.meta.description} name="description" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -39,14 +38,16 @@ export default async function RootLayout({
       </head>
       <body>
         <AppLoadingProvider>
-          <ReduxStoreProvider>
-            <SnackbarProvider>
-              <Suspense>
-                <ReduxPersistor />
-              </Suspense>
-              <Layout categories={categories}>{children}</Layout>
-            </SnackbarProvider>
-          </ReduxStoreProvider>
+          <CategoriesProvider categories={categories}>
+            <ReduxStoreProvider>
+              <SnackbarProvider>
+                <Suspense>
+                  <ReduxPersistor />
+                </Suspense>
+                <RootLayout>{children}</RootLayout>
+              </SnackbarProvider>
+            </ReduxStoreProvider>
+          </CategoriesProvider>
         </AppLoadingProvider>
       </body>
     </html>

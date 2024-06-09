@@ -80,7 +80,7 @@ const Avatar = tw.img`w-10 h-10 rounded-full border-2 border-white`;
 const AddCollaboratorButton = tw.button`
   w-10 h-10 rounded-full border-2 border-white bg-gray-200 text-gray-600
   flex items-center justify-center
-  hover:bg-gray-300 hover:text-gray-800
+  hover:bg-gray-300 hover:text-gray-700
   transition-colors duration-200
 `;
 const Status = tw.div`flex items-center text-sm text-gray-500`;

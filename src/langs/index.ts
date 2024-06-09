@@ -5,6 +5,7 @@ export const lang = {
   About: "About",
   AboutUs: "About Us",
   AccessibilityStatement: "Accessibility Statement",
+  AddTeamMember: "Add team member",
   ApiUrl: "API URL",
   AppLoadingContextNotInitialized: "App loading context not initialized",
   Blog: "Blog",
@@ -25,6 +26,7 @@ export const lang = {
   Description: "Description",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
+  EditYourProjectDraft: "Edit your project draft",
   Email: "E-mail",
   Explore: "Explore",
   FirstName: "First name",
@@ -59,6 +61,7 @@ export const lang = {
   Profile: "Profile",
   ROFR: "ROFR",
   Resources: "Resources",
+  Save: "Save",
   SelectCategory: "Select a category",
   SelectCountry: "Select a country",
   Settings: "Settings",
@@ -76,39 +79,86 @@ export const lang = {
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
   app: {
-    description:
-      "Create a virtual company at zero cost and grow it into your first unicorn!",
-    title: "Zero Company"
+    home: {
+      card1: {
+        description: `
+          Drop in a legal foundation into your project at a very early stage.
+        `,
+        title: "Create a virtual company"
+      },
+      card2: {
+        description: `
+          With our legally backed process, you can attract contributors for a
+          share in your company.
+        `,
+        title: "Receive work contributions"
+      },
+      card3: {
+        description: `
+          We design a seamless process of asset transfer to the company,
+          where you can manage them collectively with your team.
+        `,
+        title: "Secure company assets"
+      },
+      teaser: "We elevate crowdworking to the corporate level"
+    },
+    profile: {
+      drafts: {
+        draft: {
+          Basics: {
+            description: `
+              Name your project, edit country and categories.
+            `,
+            title: "Basics"
+          },
+          Management: {
+            description: `
+              Choose how you will manage business processes, including making decisions,
+              distributing shares, and more.
+            `,
+            title: "Management"
+          },
+          Public: {
+            description: `
+              Make your company visible to other people, find co-founders,
+              post internship positions.
+            `,
+            title: "Public profile"
+          },
+          Team: {
+            description: `
+              Add people you are working with on this project.
+            `,
+            title: "Team"
+          }
+        }
+      }
+    }
+  },
+  components: {
+    form: {
+      FileInputElement: {
+        dragAndDropPrompt: "Drag & drop files here, or click to select files"
+      }
+    }
   },
   countries: {
     il: "Israel",
     us: "United States"
   },
-  dragAndDropPrompt: "Drag & drop files here, or click to select files",
-  header: { searchPlaceholder: "Search..." },
-  home: {
-    card1: {
-      description: `
-              Drop in a legal foundation into your project at a very early
-              stage.
-            `,
-      title: "Create a virtual company"
-    },
-    card2: {
-      description: `
-              With our legally backed process, you can attract contributors
-              for a share in your company.
-            `,
-      title: "Receive work contributions"
-    },
-    card3: {
-      description: `
-              We design a seamless process of asset transfer to the company,
-              where you can manage them collectively with your team.
-            `,
-      title: "Secure company assets"
-    },
-    teaser: "We elevate crowdworking to the corporate level"
+  layouts: {
+    RootLayout: {
+      SiteSearch: {
+        searchPlaceholder: "Search..."
+      }
+    }
   },
-  of: "of"
+  meta: {
+    description: `
+      Create a virtual company at zero cost and grow it into your first unicorn!
+    `,
+    title: "Zero Company"
+  },
+  of: "of",
+  projectDraft: "project draft"
 } as const;

@@ -1,42 +1,79 @@
+import dot from "dot-object";
+
 /**
- * Builds a query.
- * @param query - Query object.
- * @returns The query string with question mark.
+ * Build form data
+ * @param data - Form object.
+ * @returns Form data.
  */
-export function buildQuery(query: Query): string {
-  const queryObject = Object.fromEntries(
-    (function* yieldEntries(): Generator<[string, string]> {
-      for (const [key, value] of Object.entries(query))
-        switch (typeof value) {
-          case "boolean": {
-            yield [key, value ? "yes" : "no"];
+export function buildFormData(data: object): FormData {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
+  const flat: RequestDataFlat = dot.dot(data);
 
-            break;
-          }
+  const formData = new FormData();
 
-          case "number": {
-            yield [key, value.toString()];
+  for (const [key, value] of Object.entries(flat))
+    switch (typeof value) {
+      case "boolean": {
+        formData.append(key, value ? "yes" : "no");
 
-            break;
-          }
+        break;
+      }
 
-          case "string": {
-            yield [key, value];
+      case "number": {
+        formData.append(key, value.toString());
 
-            break;
-          }
+        break;
+      }
 
-          case "object": {
-            for (const [i, v] of value.entries())
-              yield [`${key}[${i}]`, v.toString()];
+      case "string": {
+        formData.append(key, value);
 
-            break;
-          }
+        break;
+      }
 
-          default:
-        }
-    })()
-  );
+      default: {
+        formData.append(key, "");
+      }
+    }
+
+  return formData;
+}
+
+/**
+ * Build query string
+ * @param data - Query object.
+ * @returns Query string.
+ */
+export function buildQuery(data: object): string {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
+  const flat: RequestDataFlat = dot.dot(data);
+
+  const queryObject: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(flat))
+    switch (typeof value) {
+      case "boolean": {
+        queryObject[key] = value ? "yes" : "no";
+
+        break;
+      }
+
+      case "number": {
+        queryObject[key] = value.toString();
+
+        break;
+      }
+
+      case "string": {
+        queryObject[key] = value;
+
+        break;
+      }
+
+      default: {
+        queryObject[key] = "";
+      }
+    }
 
   const queryParams = new URLSearchParams(queryObject);
 
@@ -45,11 +82,4 @@ export function buildQuery(query: Query): string {
   return queryStr.length > 0 ? `?${queryStr}` : "";
 }
 
-export interface Query {
-  readonly [key: string]:
-    | boolean
-    | number
-    | string
-    | undefined
-    | readonly string[];
-}
+type RequestDataFlat = Readonly<Record<string, unknown>>;
