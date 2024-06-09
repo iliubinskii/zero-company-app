@@ -17,6 +17,7 @@ import {
   deleteReq,
   getReq,
   postJsonReq,
+  putFormDataReq,
   restoreCategories,
   restoreCompanies,
   restoreCompany
@@ -192,6 +193,20 @@ export const api = {
       body
     );
 
+    return "error" in company ? company : restoreCompany(company);
+  },
+  putCompany: async (
+    id: string,
+    body: FormData
+  ): Promise<
+    | ExistingCompany
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const company = await putFormDataReq<Routes["/companies/{id}"]["put"]>(
+      `companies/${id}`,
+      body
+    );
     return "error" in company ? company : restoreCompany(company);
   }
 };

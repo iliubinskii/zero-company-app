@@ -1,42 +1,87 @@
 /**
- * Builds a query.
- * @param query - Query object.
- * @returns The query string with question mark.
+ * Build form data
+ * @param data - Form object.
+ * @returns Form data.
  */
-export function buildQuery(query: Query): string {
-  const queryObject = Object.fromEntries(
-    (function* yieldEntries(): Generator<[string, string]> {
-      for (const [key, value] of Object.entries(query))
-        switch (typeof value) {
-          case "boolean": {
-            yield [key, value ? "yes" : "no"];
+export function buildFormData(data: RequestData): FormData {
+  const formData = new FormData();
 
-            break;
-          }
+  for (const [key, value] of Object.entries(data))
+    switch (typeof value) {
+      case "boolean": {
+        formData.append(key, value ? "yes" : "no");
 
-          case "number": {
-            yield [key, value.toString()];
+        break;
+      }
 
-            break;
-          }
+      case "number": {
+        formData.append(key, value.toString());
 
-          case "string": {
-            yield [key, value];
+        break;
+      }
 
-            break;
-          }
+      case "string": {
+        formData.append(key, value);
 
-          case "object": {
-            for (const [i, v] of value.entries())
-              yield [`${key}[${i}]`, v.toString()];
+        break;
+      }
 
-            break;
-          }
+      case "object": {
+        if (value === null) formData.append(key, "");
+        else
+          for (const [i, v] of value.entries())
+            formData.append(`${key}[${i}]`, v.toString());
 
-          default:
-        }
-    })()
-  );
+        break;
+      }
+
+      default:
+      // Not reachable
+    }
+
+  return formData;
+}
+
+/**
+ * Build query string
+ * @param data - Query object.
+ * @returns Query string.
+ */
+export function buildQuery(data: RequestData): string {
+  const queryObject: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(data))
+    switch (typeof value) {
+      case "boolean": {
+        queryObject[key] = value ? "yes" : "no";
+
+        break;
+      }
+
+      case "number": {
+        queryObject[key] = value.toString();
+
+        break;
+      }
+
+      case "string": {
+        queryObject[key] = value;
+
+        break;
+      }
+
+      case "object": {
+        if (value === null) queryObject[key] = "";
+        else
+          for (const [i, v] of value.entries())
+            queryObject[`${key}[${i}]`] = v.toString();
+
+        break;
+      }
+
+      default:
+      // Not reachable
+    }
 
   const queryParams = new URLSearchParams(queryObject);
 
@@ -45,11 +90,12 @@ export function buildQuery(query: Query): string {
   return queryStr.length > 0 ? `?${queryStr}` : "";
 }
 
-export interface Query {
+export interface RequestData {
   readonly [key: string]:
     | boolean
     | number
     | string
+    | null
     | undefined
     | readonly string[];
 }

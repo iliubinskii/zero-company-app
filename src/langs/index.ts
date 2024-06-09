@@ -60,6 +60,7 @@ export const lang = {
   Profile: "Profile",
   ROFR: "ROFR",
   Resources: "Resources",
+  Save: "Save",
   SelectCategory: "Select a category",
   SelectCountry: "Select a country",
   Settings: "Settings",
