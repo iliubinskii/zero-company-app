@@ -83,7 +83,7 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
 }
 
 const Container = tw.div`p-3 flex gap-5`;

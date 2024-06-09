@@ -104,7 +104,7 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
 
 export interface Props {
   readonly categories: MultipleDocsResponse<ExistingCategory>;
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
 }
 
 const footerLinkGroups = [
