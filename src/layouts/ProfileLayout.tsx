@@ -65,16 +65,23 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
           </UserInfo>
         </User>
         <Links>
-          {links.map(({ Icon, href, text }) => (
-            <Link
-              className={href === pathname ? "bg-slate-200" : undefined}
-              href={href}
-              key={href}
-            >
-              <Icon className="text-2xl" />
-              {text}
-            </Link>
-          ))}
+          {links.map(({ Icon, href, text }) => {
+            const active =
+              href === "/profile"
+                ? pathname === href
+                : pathname.startsWith(href);
+
+            return (
+              <Link
+                className={active ? "bg-slate-200" : undefined}
+                href={href}
+                key={href}
+              >
+                <Icon className="text-2xl" />
+                {text}
+              </Link>
+            );
+          })}
         </Links>
       </SideMenu>
       <Contents>{children}</Contents>

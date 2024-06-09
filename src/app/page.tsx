@@ -17,25 +17,25 @@ const Page = createAsyncPage("/", async () => {
 
   const cards = [
     {
-      description: lang.home.card1.description,
+      description: lang.app.home.card1.description,
       image: images.digitalSign,
-      title: lang.home.card1.title
+      title: lang.app.home.card1.title
     },
     {
-      description: lang.home.card2.description,
+      description: lang.app.home.card2.description,
       image: images.IPO,
-      title: lang.home.card2.title
+      title: lang.app.home.card2.title
     },
     {
-      description: lang.home.card3.description,
+      description: lang.app.home.card3.description,
       image: images.unicorn,
-      title: lang.home.card3.title
+      title: lang.app.home.card3.title
     }
   ];
 
   return (
     <PageLayout size="lg">
-      <div className="header2 text-center">{lang.home.teaser}</div>
+      <div className="header2 text-center">{lang.app.home.teaser}</div>
       <InfoCards>
         {cards.map(({ description, image, title }, key) => (
           <InfoCard

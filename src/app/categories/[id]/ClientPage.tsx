@@ -101,7 +101,7 @@ export const ClientPage: FC<Props> = ({
   return (
     <>
       <Head>
-        <title>{`${category.name} - ${lang.app.title}`}</title>
+        <title>{`${category.name} - ${lang.meta.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
       <PageLayout size="lg">
