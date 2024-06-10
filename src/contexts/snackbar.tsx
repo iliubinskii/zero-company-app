@@ -37,5 +37,5 @@ export const SnackbarProvider: FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
 }

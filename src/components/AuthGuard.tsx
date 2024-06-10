@@ -34,7 +34,7 @@ export const AuthGuard: FC<Props> = ({
 };
 
 export interface Props {
-  readonly children: ReactNode;
+  children?: ReactNode | undefined;
   readonly customLoaded?: boolean;
 }
 

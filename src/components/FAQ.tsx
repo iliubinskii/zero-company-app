@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import { images } from "../images";
 
-const FAQ: React.FC = () => {
+export const FAQ: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAnswer = (index: number): void => {
@@ -65,5 +67,3 @@ const FAQ: React.FC = () => {
     </div>
   );
 };
-
-export default FAQ;

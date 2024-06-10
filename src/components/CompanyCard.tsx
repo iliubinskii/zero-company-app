@@ -1,5 +1,7 @@
-import type { FC, HTMLAttributes } from "react";
+"use client";
+
 import type { Company } from "../schema";
+import type { FC } from "react";
 import React from "react";
 import { images } from "../images";
 import { lang } from "../langs";
@@ -17,7 +19,7 @@ export const CompanyCard: FC<Props> = ({ company, ...props }) => {
   return (
     <div {...props}>
       <img
-        alt={company.name}
+        alt={company.name ?? undefined}
         className="w-full"
         height={height}
         src={src}
@@ -28,6 +30,7 @@ export const CompanyCard: FC<Props> = ({ company, ...props }) => {
   );
 };
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props {
+  readonly className?: string | undefined;
   readonly company: Company;
 }

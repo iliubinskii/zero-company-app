@@ -52,7 +52,9 @@ export const FileInputElement: FC<Props> = ({
       <DroppableArea {...getRootProps()}>
         <input name={name} {...props} {...getInputProps()} />
         {files.length === 0 ? (
-          <Prompt>{lang.dragAndDropPrompt}</Prompt>
+          <Prompt>
+            {lang.components.form.FileInputElement.dragAndDropPrompt}
+          </Prompt>
         ) : (
           <List>
             {files.map(file => (

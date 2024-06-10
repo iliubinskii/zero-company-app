@@ -1,18 +1,19 @@
 "use client";
 
-import { AnimatedLink, PageLayout } from "../../components";
+import { AnimatedLink, FAQ } from "../../components";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
-import FAQ from "../../components/FAQ";
+import type { NextPage } from "next";
+import { PageLayout } from "../../layouts";
 import React from "react";
-import { createPage } from "../../utils";
 import { images } from "../../images";
-const Page = createPage("/create-company", () => {
+
+const Page: NextPage = () => {
   const dispatch = useAppDispatch();
 
   return (
     <>
       <PageLayout>
-        <div className="py-24 flex flex-col items-center">
+        <div className="py-16 flex flex-col items-center">
           <h1 className="text-3xl font-bold mb-4 text-blue-700">
             Do you have a great idea for a startup?{" "}
           </h1>
@@ -121,6 +122,6 @@ const Page = createPage("/create-company", () => {
       </div>
     </>
   );
-});
+};
 
 export default Page;

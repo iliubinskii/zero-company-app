@@ -37,10 +37,20 @@ export function useAuthGuardedLoader<T extends object>(
 
   const router = useRouter();
 
-  const [state, setState] = useState<GuardedLoaderState<T>>({
+  const [state, setState] = useState<
+    Omit<GuardedLoaderState<T>, "setResource">
+  >({
     isError: false,
     isLoading: true
   });
+
+  const setResource = useCallback((resource?: T) => {
+    setState({
+      isError: false,
+      isLoading: false,
+      resource
+    });
+  }, []);
 
   useEffect(() => {
     if (loaded && authUser)
@@ -72,7 +82,7 @@ export function useAuthGuardedLoader<T extends object>(
       });
   }, [authUser, dispatch, loaded, memorizedLoader, redirectOnNotFound, router]);
 
-  return state;
+  return { ...state, setResource };
 }
 
 export interface Options {
@@ -84,4 +94,5 @@ interface GuardedLoaderState<T extends object> {
   readonly isError: boolean;
   readonly isLoading: boolean;
   readonly resource?: T | undefined;
+  readonly setResource: (resource?: T) => void;
 }

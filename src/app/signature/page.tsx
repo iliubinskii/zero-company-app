@@ -1,12 +1,13 @@
 "use client";
 
-import { AuthGuard, PageLayout } from "../../components";
 import { selectAuthUser, useAppSelector } from "../../store";
+import { AuthGuard } from "../../components";
 import { DocusealForm } from "@docuseal/react";
+import type { NextPage } from "next";
+import { PageLayout } from "../../layouts";
 import React from "react";
-import { createPage } from "../../utils";
 
-const Signature = createPage("/signature", () => {
+const Signature: NextPage = () => {
   const authUser = useAppSelector(selectAuthUser);
 
   return (
@@ -23,6 +24,6 @@ const Signature = createPage("/signature", () => {
       </PageLayout>
     </AuthGuard>
   );
-});
+};
 
 export default Signature;
