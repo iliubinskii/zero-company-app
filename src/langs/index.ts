@@ -118,6 +118,10 @@ export const lang = {
             `,
             title: "Public profile"
           },
+          Signing: {
+            description: "Generate company founding agreement.",
+            title: "Signing"
+          },
           Team: {
             description: `
               Add people you are working with on this project.

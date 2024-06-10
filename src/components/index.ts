@@ -1,5 +1,3 @@
-export { AccordionFlatContainer } from "./AccordionFlatContainer";
-export { AccordionItem } from "./AccordionItem";
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
 export { CircularProgress } from "./CircularProgress";
@@ -14,5 +12,6 @@ export { Navigate } from "./Navigate";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { Unauthorized } from "./Unauthorized";
+export * from "./accordion";
 export * from "./buttons";
 export * from "./form";
