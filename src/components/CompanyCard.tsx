@@ -8,7 +8,7 @@ import { FaRegClock } from "react-icons/fa";
 import { HiOutlineHeart } from "react-icons/hi2";
 import React from "react";
 
-export const CompanyCardNew: React.FC<Props> = ({ company, isExpandable }) => {
+export const CompanyCard: React.FC<Props> = ({ company, isExpandable }) => {
   const [isHovering, setIsHovering] = React.useState(false);
 
   const image = getSafeImage(company);
