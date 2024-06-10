@@ -7,7 +7,7 @@ import dot from "dot-object";
  */
 export function buildFormData(data: object): FormData {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const flat: RequestDataFlat = dot.dot(data);
+  const flat: Readonly<Record<string, unknown>> = dot.dot(data);
 
   const formData = new FormData();
 
@@ -31,6 +31,14 @@ export function buildFormData(data: object): FormData {
         break;
       }
 
+      case "object": {
+        if (value instanceof File)
+          formData.append(key.replace(/\[\d*\]$/u, ""), value, value.name);
+        else formData.append(key, "");
+
+        break;
+      }
+
       default: {
         formData.append(key, "");
       }
@@ -46,7 +54,7 @@ export function buildFormData(data: object): FormData {
  */
 export function buildQuery(data: object): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const flat: RequestDataFlat = dot.dot(data);
+  const flat: Readonly<Record<string, unknown>> = dot.dot(data);
 
   const queryObject: Record<string, string> = {};
 
@@ -81,5 +89,3 @@ export function buildQuery(data: object): string {
 
   return queryStr.length > 0 ? `?${queryStr}` : "";
 }
-
-type RequestDataFlat = Readonly<Record<string, unknown>>;

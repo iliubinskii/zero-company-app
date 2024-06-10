@@ -1,17 +1,19 @@
 "use client";
 
 import { AccordionFlatContainer, AuthGuard } from "../../../../components";
-import type {
-  CompanyUpdate,
-  ExistingCompany,
-  FieldError
-} from "../../../../schema";
-import { assertDefined, buildFormData, callAsync } from "../../../../utils";
-import { isUndefined, omitBy } from "lodash";
+import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
+import {
+  assertDefined,
+  buildFormData,
+  callAsync,
+  removeUndefined
+} from "../../../../utils";
 import { showSnackbar, useAppDispatch } from "../../../../store";
 import { Basics } from "./Basics";
 import { CircularAccordionItem } from "./CircularAccordionItem";
 import { ERROR } from "../../../../consts";
+import type { FieldError } from "../../../../schema";
+import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
 import { Management } from "./Management";
 import type { NextPage } from "next";
@@ -36,6 +38,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     redirectOnNotFound: "/profile/drafts"
   });
 
+  const [addImages, setAddImages] = useState<readonly FileWithPreview[]>([]);
+
   const categories = useCategories();
 
   const category = useMemo(() => {
@@ -49,18 +53,20 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     return undefined;
   }, [categories, company]);
 
-  const [companyUpdate, setCompanyUpdate] = useState<CompanyUpdate>({});
+  const [companyUpdate, setCompanyUpdate] = useState<CustomCompanyUpdate>({});
 
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
   const dispatch = useAppDispatch();
 
+  const [removeImages, setRemoveImages] = useState<readonly string[]>([]);
+
   const updatedCompany = useMemo(
-    (): ExistingCompany | undefined =>
+    (): CustomExistingCompany | undefined =>
       company
         ? {
             ...company,
-            ...omitBy(companyUpdate, isUndefined)
+            ...removeUndefined(companyUpdate)
           }
         : undefined,
     [company, companyUpdate]
@@ -70,10 +76,12 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     e => {
       e.preventDefault();
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Postponed
-      const { images, logo, ...rest } = companyUpdate;
+      const data = buildFormData(companyUpdate);
 
-      const data = buildFormData(rest);
+      for (const image of addImages) data.append("addImages", image);
+
+      for (const assetId of removeImages)
+        data.append("removeImages[]", assetId);
 
       callAsync(async () => {
         const response = await api.putCompany(id, data);
@@ -113,10 +121,12 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
         else {
           setResource(response);
           setCompanyUpdate({});
+          setAddImages([]);
+          setRemoveImages([]);
         }
       });
     },
-    [companyUpdate, dispatch, id, setResource]
+    [addImages, companyUpdate, dispatch, id, removeImages, setResource]
   );
 
   useEffect(() => {
@@ -139,12 +149,30 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
               progress={progress}
               title={title}
             >
-              {updatedCompany && (
+              {company && updatedCompany && (
                 <Component
                   categories={categories}
                   company={updatedCompany}
                   errorMessages={errorMessages}
-                  modified={Object.keys(companyUpdate).length > 0}
+                  images={[
+                    ...company.images.filter(
+                      image => !removeImages.includes(image.assetId)
+                    ),
+                    ...addImages
+                  ]}
+                  modified={
+                    Object.keys(companyUpdate).length > 0 ||
+                    addImages.length > 0 ||
+                    removeImages.length > 0
+                  }
+                  onAddImages={images => {
+                    setAddImages(prev => [...prev, ...images]);
+                  }}
+                  onRemoveImage={image => {
+                    if ("preview" in image)
+                      setAddImages(prev => prev.filter(x => x !== image));
+                    else setRemoveImages(prev => [...prev, image.assetId]);
+                  }}
                   onResetErrors={(path): void => {
                     setErrorMessages(prev =>
                       prev.filter(error => error.path !== path)

@@ -1,6 +1,6 @@
-import type { Dispatch, FC, SetStateAction } from "react";
+import type { FieldError, WebAccessibleImage } from "../../schema";
 import { ErrorMessage } from "./ErrorMessage";
-import type { FieldError } from "../../schema";
+import type { FC } from "react";
 import React, { useCallback } from "react";
 import { SlClose } from "react-icons/sl";
 import { lang } from "../../langs";
@@ -15,9 +15,9 @@ export const FileInputElement: FC<Props> = ({
   files,
   multiple = false,
   name,
+  onAddImages = noop,
+  onRemoveImage = noop,
   onResetErrors = noop,
-  // TS71007: Weird typescript error that appears only in the editor, switch to vscode's version of typescript
-  setFiles,
   ...props
 }) => {
   const onDrop = useCallback(
@@ -28,12 +28,10 @@ export const FileInputElement: FC<Props> = ({
         })
       );
 
-      if (multiple) setFiles(prevFiles => [...prevFiles, ...filesWithPreviews]);
-      else setFiles(filesWithPreviews);
-
+      onAddImages(filesWithPreviews);
       onResetErrors(name);
     },
-    [multiple, name, setFiles, onResetErrors]
+    [name, onAddImages, onResetErrors]
   );
 
   const { getInputProps, getRootProps } = useDropzone({
@@ -42,9 +40,10 @@ export const FileInputElement: FC<Props> = ({
     onDrop
   });
 
-  const handleReset = (file: FileWithPreview): void => {
-    setFiles(prevFiles => prevFiles.filter(f => f !== file));
-    URL.revokeObjectURL(file.preview);
+  const handleReset = (file: CombinedFile): void => {
+    onRemoveImage(file);
+
+    if ("preview" in file) URL.revokeObjectURL(file.preview);
   };
 
   return (
@@ -58,9 +57,12 @@ export const FileInputElement: FC<Props> = ({
         ) : (
           <List>
             {files.map(file => (
-              <ListItem key={file.preview}>
+              <ListItem key={"preview" in file ? file.preview : file.assetId}>
                 <PreviewContainer>
-                  <Preview alt={file.name} src={file.preview} />
+                  <Preview
+                    alt={file.name}
+                    src={"preview" in file ? file.preview : file.secureUrl}
+                  />
                   <FileName>{file.name}</FileName>
                 </PreviewContainer>
                 <CloseIcon
@@ -81,19 +83,22 @@ export const FileInputElement: FC<Props> = ({
   );
 };
 
+export type CombinedFile = FileWithPreview | WebAccessibleImage;
+
+export interface FileWithPreview extends File {
+  preview: string;
+}
+
 export interface Props {
   readonly accept: string;
   readonly className?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
-  readonly files: readonly FileWithPreview[];
+  readonly files: readonly CombinedFile[];
   readonly multiple?: boolean | undefined;
   readonly name?: string | undefined;
+  readonly onAddImages?: (images: readonly FileWithPreview[]) => void;
+  readonly onRemoveImage?: (image: CombinedFile) => void;
   readonly onResetErrors?: (name?: string) => void;
-  readonly setFiles: Dispatch<SetStateAction<readonly FileWithPreview[]>>;
-}
-
-export interface FileWithPreview extends File {
-  preview: string;
 }
 
 const CloseIcon = tw(SlClose)`h-6 w-6 text-gray-500 cursor-pointer`;
