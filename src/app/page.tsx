@@ -1,6 +1,5 @@
 import { CompanyCardNew, CompanyCards, InternshipCard } from "../components";
 import {
-  ERROR,
   INTERNSHIP_POSITIONS,
   LOOKING_FOR_COFOUNDER,
   TEAMS_JOINED_QUANTITY
@@ -10,50 +9,8 @@ import type { NextPage } from "next";
 import { PageLayout } from "../layouts";
 import React from "react";
 import { api } from "../api";
-import { assertDefined } from "../utils";
+import { images } from "../images";
 import { lang } from "../langs";
-
-const mockArrayForInfoCells = [
-  { description: lang.home.subheader.teams, number: TEAMS_JOINED_QUANTITY },
-  { description: lang.home.subheader.internship, number: INTERNSHIP_POSITIONS },
-  { description: lang.home.subheader.cofounder, number: LOOKING_FOR_COFOUNDER }
-];
-const mockArrayForInternshipCards = [
-  {
-    _id: "1",
-    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
-    city: "Tel Aviv",
-    companyName: "Company Name",
-    days: "4d",
-    position: "Web Developer"
-  },
-  {
-    _id: "2",
-    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
-    city: "Netania",
-    companyName: "Company Name2",
-    days: "4d",
-    position: "Project Manager"
-  },
-  {
-    _id: "3",
-    city: "Haifa",
-    companyName: "Company Name3",
-    days: "5d",
-    position: "Java Developer"
-  },
-  {
-    _id: "4",
-    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
-    city: "Raanana",
-    companyName: "Company Name4",
-    days: "7d",
-    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
-    position: "Devops"
-  }
-];
-
-const tempNumberOfRenderInternshipCards = 3;
 
 const Page: NextPage = async () => {
   const companies = await api.getCompaniesSrv({
@@ -63,10 +20,7 @@ const Page: NextPage = async () => {
     status: CompanyStatus.founded
   });
 
-  const tempImage = assertDefined(
-    companies.docs[0]?.images[0],
-    ERROR.EXPECTING_IMAGE
-  );
+  const featuredCompany = companies.docs[0];
 
   return (
     <PageLayout size="xl">
@@ -100,24 +54,18 @@ const Page: NextPage = async () => {
         help connect the talents by providing a solid legal foundation and
         business models specifically tuned for early-stage startups
       </p>
-      {/* Not sure (optional) */}
       {/* Text block END*/}
 
       {/* Two cols */}
       <div className="flex gap-10">
         {/* Featured companies */}
-        {/* OPTIONS: (A) Use existing CompanyCard component; (B) Create big card variant after kickstarter */}
-        <div className="w-3/5">
-          <CompanyCardNew
-            company={assertDefined(
-              companies.docs[0],
-              // eslint-disable-next-line i18n-text/no-en -- Temp
-              "Expecting at least one company"
-            )}
-            isExpandable={false}
-          />
-        </div>
+        {featuredCompany && (
+          <div className="w-3/5">
+            <CompanyCardNew company={featuredCompany} isExpandable={false} />
+          </div>
+        )}
         {/* Featured companies END */}
+
         {/* Internships */}
         <div className="w-2/5 flex flex-col gap-4 justify-between">
           {mockArrayForInternshipCards
@@ -137,13 +85,14 @@ const Page: NextPage = async () => {
         {/* Internships END */}
       </div>
       {/* Two cols END */}
+
       {/* Compete Block */}
       <article className="flex gap-6 w-full">
         <div className="w-1/3">
           <img
             alt={"company name"}
             className="h-full object-cover"
-            src={tempImage.secureUrl}
+            src={images.wide.sequoiaCapital.src}
           />
         </div>
         <div className="w-2/3 flex flex-col gap-3 items-start">
@@ -174,6 +123,7 @@ const Page: NextPage = async () => {
         </div>
       </article>
       {/* Compete Block End */}
+
       {/* Join as a cofounder Block */}
       <section>
         <h2 className="text-2xl font-bold tracking-wider mb-4">
@@ -190,6 +140,7 @@ const Page: NextPage = async () => {
         </CompanyCards>
       </section>
       {/* Join as a cofounder Block END */}
+
       {/* Knowledge base block */}
       <section>
         <h2 className="text-2xl font-bold tracking-wider mb-4">
@@ -201,7 +152,7 @@ const Page: NextPage = async () => {
               <img
                 alt={"company name"}
                 className="h-full object-cover"
-                src={tempImage.secureUrl}
+                src={images.wide.businessManagement.src}
               />
             </div>
             <div className="w-3/4 flex flex-col gap-3 items-start">
@@ -249,7 +200,7 @@ const Page: NextPage = async () => {
               <img
                 alt={"company name"}
                 className="h-full object-cover"
-                src={tempImage.secureUrl}
+                src={images.wide.digitalSignature.src}
               />
             </div>
           </article>
@@ -261,3 +212,46 @@ const Page: NextPage = async () => {
 };
 
 export default Page;
+
+const mockArrayForInfoCells = [
+  { description: lang.home.subheader.teams, number: TEAMS_JOINED_QUANTITY },
+  { description: lang.home.subheader.internship, number: INTERNSHIP_POSITIONS },
+  { description: lang.home.subheader.cofounder, number: LOOKING_FOR_COFOUNDER }
+];
+
+const mockArrayForInternshipCards = [
+  {
+    _id: "1",
+    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
+    city: "Tel Aviv",
+    companyName: "Company Name",
+    days: "4d",
+    position: "Web Developer"
+  },
+  {
+    _id: "2",
+    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
+    city: "Netania",
+    companyName: "Company Name2",
+    days: "4d",
+    position: "Project Manager"
+  },
+  {
+    _id: "3",
+    city: "Haifa",
+    companyName: "Company Name3",
+    days: "5d",
+    position: "Java Developer"
+  },
+  {
+    _id: "4",
+    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
+    city: "Raanana",
+    companyName: "Company Name4",
+    days: "7d",
+    // eslint-disable-next-line spellcheck/spell-checker -- Assigned
+    position: "Devops"
+  }
+];
+
+const tempNumberOfRenderInternshipCards = 3;
