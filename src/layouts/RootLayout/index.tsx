@@ -1,28 +1,27 @@
-import { AnimatedLink, HeaderSimpleButton, TextCarousel } from "../components";
-import type { FC, ReactNode } from "react";
-import CreateCompanyButton from "../layouts/RootLayout/CreateCompanyButton";
-import Logo from "../layouts/RootLayout/Logo";
-import ProfileButton from "../layouts/RootLayout/ProfileButton";
-import React from "react";
-import SiteSearch from "../layouts/RootLayout/SiteSearch";
-import { lang } from "../langs";
-import { usePinnedCategories } from "../contexts";
+"use client";
 
-// eslint-disable-next-line no-warning-comments -- Temp
-// TODO: Move to layouts
-const RootLayout: FC<Props> = ({ children }) => {
+import {
+  AnimatedLink,
+  HeaderSimpleButton,
+  TextCarousel
+} from "../../components";
+import type { FC, ReactNode } from "react";
+import CreateCompanyButton from "./CreateCompanyButton";
+import Logo from "./Logo";
+import ProfileButton from "./ProfileButton";
+import React from "react";
+import SiteSearch from "./SiteSearch";
+import { lang } from "../../langs";
+import { usePinnedCategories } from "../../contexts";
+
+export const RootLayout: FC<Props> = ({ children }) => {
   const categories = usePinnedCategories();
 
   return (
     <div className="flex flex-col">
-      {/* eslint-disable-next-line no-warning-comments -- Assigned */}
-      {/*
-    TODO:
-    - Header on dark background
-    - Categories stay under dark background
-     */}
-      {/*    /!* Header *!/*/}
+      {/* Header /*/}
       <header>
+        {/* Dark header */}
         <div className="w-full bg-charcoal p-5 ">
           <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
             <ul className="flex gap-3 justify-start">
@@ -44,6 +43,8 @@ const RootLayout: FC<Props> = ({ children }) => {
             </div>
           </div>
         </div>
+        {/* Dark header END */}
+
         {/* Text Carousel */}
         <div className="border-b-1.5 py-4">
           <TextCarousel>
@@ -121,8 +122,6 @@ const RootLayout: FC<Props> = ({ children }) => {
     </div>
   );
 };
-
-export default RootLayout;
 
 export interface Props {
   readonly children: ReactNode;

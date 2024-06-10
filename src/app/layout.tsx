@@ -10,7 +10,7 @@ import {
 } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
 import React, { Suspense } from "react";
-import RootLayout from "../Layout";
+import { RootLayout } from "../layouts";
 import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
