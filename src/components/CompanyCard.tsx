@@ -1,17 +1,28 @@
-import type { Company } from "../schema";
-import React from "react";
-import { assertDefined } from "../utils";
+"use client";
 
-export const CompanyCard: React.FC<Props> = ({ company, ...props }) => {
-  const { height, secureUrl, width } = assertDefined(company.images[0]);
+import type { Company } from "../schema";
+import type { FC } from "react";
+import React from "react";
+import { images } from "../images";
+import { lang } from "../langs";
+import { logger } from "../services";
+
+export const CompanyCard: FC<Props> = ({ company, ...props }) => {
+  const image = company.images[0];
+
+  if (image === undefined) logger.error(lang.CompanyHasNoImages, company);
+
+  const src = image ? image.secureUrl : images.noImage.src;
+
+  const { height, width } = image ?? images.noImage;
 
   return (
     <div {...props}>
       <img
-        alt={company.name}
+        alt={company.name ?? undefined}
         className="w-full"
         height={height}
-        src={secureUrl}
+        src={src}
         width={width}
       />
       {company.name}
@@ -19,6 +30,7 @@ export const CompanyCard: React.FC<Props> = ({ company, ...props }) => {
   );
 };
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props {
+  readonly className?: string | undefined;
   readonly company: Company;
 }

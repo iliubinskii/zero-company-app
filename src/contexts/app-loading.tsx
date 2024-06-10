@@ -1,17 +1,33 @@
 "use client";
 
 import { APP_LOADING_CLASS, APP_LOADING_TIMEOUT_MS } from "../consts";
+import type { FC, ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
-import React from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef
+} from "react";
+import { lang } from "../langs";
+import { logger } from "../services";
 
-export const AppLoadingProvider: React.FC<Props> = ({ children }) => {
+export const AppLoadingProvider: FC<Props> = ({ children }) => {
   const params = useParams();
 
   const pathname = usePathname();
 
-  const timeout = React.useRef<number | undefined>();
+  const timeout = useRef<number | undefined>();
 
-  React.useEffect(() => {
+  const setLoading = useCallback(() => {
+    window.clearTimeout(timeout.current);
+    timeout.current = window.setTimeout(() => {
+      document.body.classList.add(APP_LOADING_CLASS);
+    }, APP_LOADING_TIMEOUT_MS);
+  }, []);
+
+  useEffect(() => {
     document.body.classList.remove(APP_LOADING_CLASS);
     window.clearTimeout(timeout.current);
 
@@ -22,16 +38,7 @@ export const AppLoadingProvider: React.FC<Props> = ({ children }) => {
   }, [params, pathname]);
 
   return (
-    <AppLoadingContext.Provider
-      value={{
-        setLoading: () => {
-          window.clearTimeout(timeout.current);
-          timeout.current = window.setTimeout(() => {
-            document.body.classList.add(APP_LOADING_CLASS);
-          }, APP_LOADING_TIMEOUT_MS);
-        }
-      }}
-    >
+    <AppLoadingContext.Provider value={{ setLoading }}>
       {children}
     </AppLoadingContext.Provider>
   );
@@ -42,7 +49,7 @@ export const AppLoadingProvider: React.FC<Props> = ({ children }) => {
  * @returns The current user from the JWT token or undefined if the user is not logged in
  */
 export function useAppLoading(): Context {
-  return React.useContext(AppLoadingContext);
+  return useContext(AppLoadingContext);
 }
 
 export interface Context {
@@ -50,11 +57,11 @@ export interface Context {
 }
 
 export interface Props {
-  readonly children: React.ReactNode;
+  children?: ReactNode | undefined;
 }
 
-const AppLoadingContext = React.createContext<Context>({
+const AppLoadingContext = createContext<Context>({
   setLoading: () => {
-    // Do nothing
+    logger.error(lang.AppLoadingContextNotInitialized);
   }
 });

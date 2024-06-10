@@ -13,13 +13,11 @@ body {
   cursor: wait !important;
 }
 
-.app-logo-image {
-  width: 4rem;
-  height: 4rem;
-}
+/* Badge styles */
 
-.app-logo-text {
-  font-size: 2rem;
+.badge-outlined {
+  @apply border border-gray-400 rounded
+    px-4 py-2;
 }
 
 /* Button styles */
@@ -29,7 +27,8 @@ body {
     px-4 py-2
     bg-gray-800 hover:bg-gray-700
     text-white
-    focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50;
+    focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50
+    disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 
 .primary-button {
@@ -37,7 +36,8 @@ body {
     px-4 py-2
     bg-blue-800 hover:bg-blue-700
     text-white
-    focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50;
+    focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50
+    disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 
 /* Form field styles */
@@ -61,24 +61,6 @@ body {
 
 .form-field-container {
   @apply flex flex-col gap-1;
-}
-
-/* Layout styles */
-
-.article-layout-md {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
-}
-
-.article-layout-lg {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-6;
-}
-
-.blocks-layout-md {
-  @apply mx-auto max-w-screen-md p-9 flex flex-col gap-9;
-}
-
-.blocks-layout-lg {
-  @apply mx-auto max-w-screen-lg p-9 flex flex-col gap-9;
 }
 
 /* Miscellaneous styles */

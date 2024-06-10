@@ -1,12 +1,19 @@
 /* eslint-disable @next/next/no-page-custom-font -- Ok */
 
 import "./globals.css";
-import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
-import { AppStateUpdater } from "../AppStateUpdater";
-import Layout from "../Layout";
-import React from "react";
-import { getCategories } from "../api";
+import {
+  AppLoadingProvider,
+  CategoriesProvider,
+  ReduxPersistor,
+  ReduxStoreProvider,
+  SnackbarProvider
+} from "../contexts";
+import type { ReactElement, ReactNode } from "react";
+import React, { Suspense } from "react";
+import { RootLayout } from "../layouts";
+import { api } from "../api";
 import { lang } from "../langs";
+import { logger } from "../services";
 
 /**
  * Root layout.
@@ -14,18 +21,16 @@ import { lang } from "../langs";
  * @param props.children - Children.
  * @returns The root layout.
  */
-export default async function RootLayout({
-  children
-}: Props): Promise<React.ReactElement> {
+export default async function App({ children }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await getCategories({ onlyPinned: true });
+  const categories = await api.getCategoriesSrv();
 
   const element = (
     <html lang="en">
       <head>
-        <title>{lang.app.title}</title>
-        <meta content={lang.app.description} name="description" />
+        <title>{lang.meta.title}</title>
+        <meta content={lang.meta.description} name="description" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -33,10 +38,16 @@ export default async function RootLayout({
       </head>
       <body>
         <AppLoadingProvider>
-          <ReduxStoreProvider>
-            <AppStateUpdater />
-            <Layout categories={categories}>{children}</Layout>
-          </ReduxStoreProvider>
+          <CategoriesProvider categories={categories}>
+            <ReduxStoreProvider>
+              <SnackbarProvider>
+                <Suspense>
+                  <ReduxPersistor />
+                </Suspense>
+                <RootLayout>{children}</RootLayout>
+              </SnackbarProvider>
+            </ReduxStoreProvider>
+          </CategoriesProvider>
         </AppLoadingProvider>
       </body>
     </html>
@@ -44,11 +55,12 @@ export default async function RootLayout({
 
   const t2 = performance.now();
 
-  console.info(`Render /layout in ${Math.round(t2 - t1)} ms`);
+  // eslint-disable-next-line i18n-text/no-en -- Ok
+  logger.info(`Render '/layout' in ${Math.round(t2 - t1)} ms`);
 
   return element;
 }
 
 export interface Props {
-  children?: React.ReactNode | undefined;
+  children?: ReactNode | undefined;
 }

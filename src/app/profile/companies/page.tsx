@@ -1,13 +1,16 @@
 "use client";
 
-import { ProfileLayout } from "../../../components";
+import { AuthGuard } from "../../../components";
+import type { NextPage } from "next";
+import { ProfileLayout } from "../../../layouts";
 import React from "react";
-import { createPage } from "../../../utils";
 
 // eslint-disable-next-line no-warning-comments -- Postponed
 // TODO: Add companies contents
-const Page = createPage("/companies", () => (
-  <ProfileLayout>TODO: Add companies contents</ProfileLayout>
-));
+const Page: NextPage = () => (
+  <AuthGuard>
+    <ProfileLayout>TODO: Add companies contents</ProfileLayout>
+  </AuthGuard>
+);
 
 export default Page;

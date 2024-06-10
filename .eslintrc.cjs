@@ -43,13 +43,29 @@ const config = {
             "next/*",
             "next/font/*",
             "react-icons/*",
-            "redux-persist/integration/react",
-            "redux-persist/lib/storage"
+            "tailwindcss/plugin"
           ]
       }
     ],
     "n/no-unsupported-features/node-builtins": "off",
-    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
+    "node/no-unsupported-features/es-builtins": [
+      "error",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
+    "node/no-unsupported-features/node-builtins": [
+      "warn",
+      {
+        ignores: [],
+        version: ">=20.0.0"
+      }
+    ],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      { additionalHooks: "^(useGuardedLoader)$" }
+    ],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -62,12 +78,17 @@ const config = {
           [
             "2xl",
             "3xl",
+            "4xl",
+            "5xl",
+            "6xl",
             "autofix",
             "bebas",
+            "borderless",
             "builtins",
             "camelcase",
             "checkbox",
             "cjs",
+            "cofounder",
             "commonjs",
             "compat",
             "consts",
@@ -76,11 +97,15 @@ const config = {
             "defs",
             "destructure",
             "discoverable",
+            "docuseal",
             "dom",
+            "droppable",
+            "dropzone",
             "ecma",
             "enum",
             "escompat",
             "eslintrc",
+            "faq",
             "favicon",
             "filenames",
             "flowbite",
@@ -94,6 +119,8 @@ const config = {
             "jsdoc",
             "jsdom",
             "jsx",
+            "keydown",
+            "kickstarter",
             "lang",
             "langs",
             "latin",
@@ -102,6 +129,7 @@ const config = {
             "neue",
             "nextjs",
             "nonnegative",
+            "nowrap",
             "nullable",
             "openapi",
             "parens",
@@ -113,16 +141,23 @@ const config = {
             "redeclare",
             "redux",
             "req",
+            "resize",
             "roboto",
             "rofr",
+            "safelist",
             "schemas",
+            "scrollable",
+            "scrollbar",
             "semibold",
             "serializable",
             "smacss",
+            "snackbar",
             "sonarjs",
+            "srv",
             "str",
             "stylelint",
             "stylelintrc",
+            "subheader",
             "subsets",
             "svg",
             "swr",
@@ -133,9 +168,13 @@ const config = {
             "tsx",
             "unobserve",
             "uri",
+            "urls",
             "ver",
+            "vscode",
             "webhooks",
+            "webkit",
             "webp",
+            "whitespace",
             "zod"
           ],
         strings: true,
