@@ -1,16 +1,11 @@
-import type {
-  CompanyUpdate,
-  ExistingCategory,
-  ExistingCompany,
-  FieldError
-} from "../../../../schema";
-import type { FC, FormEventHandler } from "react";
 import { InputElement, SelectElement } from "../../../../components";
 import { COMPANY_TARGET_VALUE_STEP } from "../../../../consts";
+import type { FC } from "react";
+import type { ModuleProps } from "./helpers";
 import React from "react";
 import { lang } from "../../../../langs";
 
-export const Basics: FC<Props> = ({
+export const Basics: FC<ModuleProps> = ({
   categories,
   company,
   errorMessages,
@@ -85,13 +80,3 @@ export const Basics: FC<Props> = ({
     {/* Submit button END */}
   </form>
 );
-
-export interface Props {
-  readonly categories: readonly ExistingCategory[];
-  readonly company: ExistingCompany;
-  readonly errorMessages: readonly FieldError[];
-  readonly modified: boolean;
-  readonly onResetErrors: (name?: string | undefined) => void;
-  readonly onSave: FormEventHandler<HTMLFormElement>;
-  readonly setCompany: (update: CompanyUpdate) => void;
-}

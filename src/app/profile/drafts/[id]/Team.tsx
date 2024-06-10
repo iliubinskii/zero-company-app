@@ -1,19 +1,15 @@
-import type {
-  CompanyUpdate,
-  ExistingCompany,
-  FieldError,
-  Founder
-} from "../../../../schema";
-import type { FC, FormEventHandler } from "react";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import { COMPANY_SHARE_STEP } from "../../../../consts";
+import type { FC } from "react";
+import type { Founder } from "../../../../schema";
 import { IoAddSharp } from "react-icons/io5";
+import type { ModuleProps } from "./helpers";
 import React from "react";
 import { TableForm } from "../../../../components";
 import { lang } from "../../../../langs";
 import tw from "tailwind-styled-components";
 
-export const Team: FC<Props> = ({
+export const Team: FC<ModuleProps> = ({
   company,
   errorMessages,
   modified,
@@ -61,7 +57,7 @@ export const Team: FC<Props> = ({
                 <BodyCol>
                   <TableForm.InputElement
                     autoComplete="email"
-                    containerClassName="w-full"
+                    className="w-full"
                     errorMessages={errorMessages}
                     name={`founders[${index}].email`}
                     onChange={value => {
@@ -78,7 +74,7 @@ export const Team: FC<Props> = ({
                 <BodyCol>
                   <TableForm.InputElement
                     autoComplete="given-name"
-                    containerClassName="w-full"
+                    className="w-full"
                     errorMessages={errorMessages}
                     name={`founders[${index}].firstName`}
                     onChange={value => {
@@ -95,7 +91,7 @@ export const Team: FC<Props> = ({
                 <BodyCol>
                   <TableForm.InputElement
                     autoComplete="family-name"
-                    containerClassName="w-full"
+                    className="w-full"
                     errorMessages={errorMessages}
                     name={`founders[${index}].lastName`}
                     onChange={value => {
@@ -111,7 +107,7 @@ export const Team: FC<Props> = ({
                 {/* Share */}
                 <BodyCol>
                   <TableForm.InputElement
-                    containerClassName="w-full bg-transparent"
+                    className="w-full bg-transparent"
                     errorMessages={errorMessages}
                     min={COMPANY_SHARE_STEP}
                     name={`founders[${index}].share`}
@@ -162,15 +158,6 @@ export const Team: FC<Props> = ({
     </form>
   );
 };
-
-export interface Props {
-  readonly company: ExistingCompany;
-  readonly errorMessages: readonly FieldError[];
-  readonly modified: boolean;
-  readonly onResetErrors: (name?: string | undefined) => void;
-  readonly onSave: FormEventHandler<HTMLFormElement>;
-  readonly setCompany: (update: CompanyUpdate) => void;
-}
 
 const Founders = tw.div`rounded p-2 bg-gray-50 flex flex-col gap-1`;
 

@@ -1,24 +1,30 @@
 "use client";
 
-import { AccordionFlatContainer, AuthGuard } from "../../../../components";
-import type {
-  CompanyUpdate,
-  ExistingCompany,
-  FieldError
-} from "../../../../schema";
-import { assertDefined, buildFormData, callAsync } from "../../../../utils";
-import { isUndefined, omitBy } from "lodash";
+import {
+  AccordionFlatContainer,
+  AccordionJunction,
+  AuthGuard
+} from "../../../../components";
+import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
+import {
+  assertDefined,
+  buildFormData,
+  callAsync,
+  removeUndefined
+} from "../../../../utils";
 import { showSnackbar, useAppDispatch } from "../../../../store";
 import { Basics } from "./Basics";
 import { CircularAccordionItem } from "./CircularAccordionItem";
 import { ERROR } from "../../../../consts";
+import type { FieldError } from "../../../../schema";
+import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
-import { Management } from "./Management";
 import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Signing } from "./Signing";
 import { Team } from "./Team";
 import { api } from "../../../../api";
 import { lang } from "../../../../langs";
@@ -36,6 +42,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     redirectOnNotFound: "/profile/drafts"
   });
 
+  const [addImages, setAddImages] = useState<readonly FileWithPreview[]>([]);
+
   const categories = useCategories();
 
   const category = useMemo(() => {
@@ -49,31 +57,40 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     return undefined;
   }, [categories, company]);
 
-  const [companyUpdate, setCompanyUpdate] = useState<CompanyUpdate>({});
+  const [companyUpdate, setCompanyUpdate] = useState<CustomCompanyUpdate>({});
 
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
   const dispatch = useAppDispatch();
 
+  const [removeImages, setRemoveImages] = useState<readonly string[]>([]);
+
   const updatedCompany = useMemo(
-    (): ExistingCompany | undefined =>
+    (): CustomExistingCompany | undefined =>
       company
         ? {
             ...company,
-            ...omitBy(companyUpdate, isUndefined)
+            ...removeUndefined(companyUpdate)
           }
         : undefined,
     [company, companyUpdate]
   );
 
+  const modified =
+    Object.keys(companyUpdate).length > 0 ||
+    addImages.length > 0 ||
+    removeImages.length > 0;
+
   const onSave = useCallback<FormEventHandler<HTMLFormElement>>(
     e => {
       e.preventDefault();
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Postponed
-      const { images, logo, ...rest } = companyUpdate;
+      const data = buildFormData(companyUpdate);
 
-      const data = buildFormData(rest);
+      for (const image of addImages) data.append("addImages", image);
+
+      for (const assetId of removeImages)
+        data.append("removeImages[]", assetId);
 
       callAsync(async () => {
         const response = await api.putCompany(id, data);
@@ -113,10 +130,12 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
         else {
           setResource(response);
           setCompanyUpdate({});
+          setAddImages([]);
+          setRemoveImages([]);
         }
       });
     },
-    [companyUpdate, dispatch, id, setResource]
+    [addImages, companyUpdate, dispatch, id, removeImages, setResource]
   );
 
   useEffect(() => {
@@ -131,39 +150,67 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
             ? `${category.name} ${lang.projectDraft}`
             : lang.EditYourProjectDraft}
         </h2>
-        <AccordionFlatContainer>
-          {modules.map(({ Component, description, progress, title }, index) => (
+        <div>
+          <AccordionFlatContainer>
+            {modules.map(
+              ({ Component, description, progress, title }, index) => (
+                <CircularAccordionItem
+                  description={description}
+                  key={index}
+                  progress={progress}
+                  title={title}
+                >
+                  {company && updatedCompany && (
+                    <Component
+                      categories={categories}
+                      company={updatedCompany}
+                      errorMessages={errorMessages}
+                      images={[
+                        ...company.images.filter(
+                          image => !removeImages.includes(image.assetId)
+                        ),
+                        ...addImages
+                      ]}
+                      modified={modified}
+                      onAddImages={images => {
+                        setAddImages(prev => [...prev, ...images]);
+                      }}
+                      onRemoveImage={image => {
+                        if ("preview" in image)
+                          setAddImages(prev => prev.filter(x => x !== image));
+                        else setRemoveImages(prev => [...prev, image.assetId]);
+                      }}
+                      onResetErrors={(path): void => {
+                        setErrorMessages(prev =>
+                          prev.filter(error => error.path !== path)
+                        );
+                      }}
+                      onSave={onSave}
+                      setCompany={update => {
+                        setCompanyUpdate(prev => {
+                          return {
+                            ...prev,
+                            ...update
+                          };
+                        });
+                      }}
+                    />
+                  )}
+                </CircularAccordionItem>
+              )
+            )}
+          </AccordionFlatContainer>
+          <AccordionJunction />
+          <AccordionFlatContainer>
             <CircularAccordionItem
-              description={description}
-              key={index}
-              progress={progress}
-              title={title}
+              description={lang.app.profile.drafts.draft.Signing.description}
+              progress={0}
+              title={lang.app.profile.drafts.draft.Signing.title}
             >
-              {updatedCompany && (
-                <Component
-                  categories={categories}
-                  company={updatedCompany}
-                  errorMessages={errorMessages}
-                  modified={Object.keys(companyUpdate).length > 0}
-                  onResetErrors={(path): void => {
-                    setErrorMessages(prev =>
-                      prev.filter(error => error.path !== path)
-                    );
-                  }}
-                  onSave={onSave}
-                  setCompany={update => {
-                    setCompanyUpdate(prev => {
-                      return {
-                        ...prev,
-                        ...update
-                      };
-                    });
-                  }}
-                />
-              )}
+              {company && <Signing company={company} modified={modified} />}
             </CircularAccordionItem>
-          ))}
-        </AccordionFlatContainer>
+          </AccordionFlatContainer>
+        </div>
       </ProfileLayout>
     </AuthGuard>
   );
@@ -189,11 +236,5 @@ const modules = [
     description: lang.app.profile.drafts.draft.Public.description,
     progress: 12,
     title: lang.app.profile.drafts.draft.Public.title
-  },
-  {
-    Component: Management,
-    description: lang.app.profile.drafts.draft.Management.description,
-    progress: 80,
-    title: lang.app.profile.drafts.draft.Management.title
   }
 ];

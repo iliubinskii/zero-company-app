@@ -111,19 +111,16 @@ export const lang = {
             `,
             title: "Basics"
           },
-          Management: {
-            description: `
-              Choose how you will manage business processes, including making decisions,
-              distributing shares, and more.
-            `,
-            title: "Management"
-          },
           Public: {
             description: `
               Make your company visible to other people, find co-founders,
               post internship positions.
             `,
             title: "Public profile"
+          },
+          Signing: {
+            description: "Generate company founding agreement.",
+            title: "Signing"
           },
           Team: {
             description: `
