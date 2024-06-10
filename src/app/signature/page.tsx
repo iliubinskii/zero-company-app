@@ -1,45 +1,29 @@
 "use client";
 
-import { BlocksLayout, Loading, Navigate } from "../../components";
-import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
+import { selectAuthUser, useAppSelector } from "../../store";
+import { AuthGuard } from "../../components";
 import { DocusealForm } from "@docuseal/react";
+import type { NextPage } from "next";
+import { PageLayout } from "../../layouts";
 import React from "react";
-import { createPage } from "../../utils";
 
-// eslint-disable-next-line no-warning-comments -- Assigned to Daniel
-// TODO
-// Verify authUser.email (only document signatories can sign document)
-const Signature = createPage("/signature", () => {
+const Signature: NextPage = () => {
   const authUser = useAppSelector(selectAuthUser);
 
-  const loaded = useAppSelector(selectLoaded);
-
-  const [docLoaded, setDocLoaded] = React.useState(false);
-
-  if (loaded && !authUser) return <Navigate to="/" />;
-
   return (
-    <BlocksLayout size="lg">
-      {loaded && docLoaded ? undefined : (
-        <div className="min-h-80 flex justify-center items-center">
-          <Loading />
+    <AuthGuard>
+      <PageLayout size="lg">
+        <div className="min-h-80">
+          {authUser && (
+            <DocusealForm
+              email={authUser.email}
+              src="https://docuseal.co/d/jrJKKG9T8NKhGo"
+            />
+          )}
         </div>
-      )}
-      <div
-        className={loaded && docLoaded ? undefined : "w-0 h-0 overflow-hidden"}
-      >
-        {authUser && (
-          <DocusealForm
-            email={authUser.email}
-            onLoad={() => {
-              setDocLoaded(true);
-            }}
-            src="https://docuseal.co/d/jrJKKG9T8NKhGo"
-          />
-        )}
-      </div>
-    </BlocksLayout>
+      </PageLayout>
+    </AuthGuard>
   );
-});
+};
 
 export default Signature;

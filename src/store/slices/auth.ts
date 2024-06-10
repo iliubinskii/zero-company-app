@@ -3,7 +3,7 @@ import type { AppState } from "../types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: AppState["auth"] = {};
+const initialState: AppState["auth"] = { authUser: null };
 
 const authSlice = createSlice({
   initialState,
@@ -11,10 +11,9 @@ const authSlice = createSlice({
   reducers: {
     setAuthUser: (
       state,
-      action: PayloadAction<AuthUser | AuthUserEssential | undefined>
+      action: PayloadAction<AuthUser | AuthUserEssential | null>
     ) => {
-      if (action.payload) state.authUser = action.payload;
-      else delete state.authUser;
+      state.authUser = action.payload;
     }
   }
 });
@@ -30,6 +29,6 @@ export const { setAuthUser } = authSlice.actions;
  */
 export const selectAuthUser = (
   state: AppState
-): AuthUser | AuthUserEssential | undefined => state.auth.authUser;
+): AuthUser | AuthUserEssential | null => state.auth.authUser;
 
 export type AuthActions = ReturnType<typeof setAuthUser>;

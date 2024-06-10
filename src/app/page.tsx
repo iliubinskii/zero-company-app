@@ -1,17 +1,16 @@
+import { CompanyCardNew, CompanyCards, InternshipCard } from "../components";
 import {
-  BlocksLayout,
-  CompanyCardNew,
-  CompanyCards,
-  InternshipCard
-} from "../components";
-import {
+  ERROR,
   INTERNSHIP_POSITIONS,
   LOOKING_FOR_COFOUNDER,
   TEAMS_JOINED_QUANTITY
 } from "../consts";
-import { assertDefined, createAsyncPage } from "../utils";
+import { CompanyStatus } from "../schema";
+import type { NextPage } from "next";
+import { PageLayout } from "../layouts";
 import React from "react";
-import { getCompanies } from "../api";
+import { api } from "../api";
+import { assertDefined } from "../utils";
 import { lang } from "../langs";
 
 const mockArrayForInfoCells = [
@@ -56,17 +55,21 @@ const mockArrayForInternshipCards = [
 
 const tempNumberOfRenderInternshipCards = 3;
 
-const Page = createAsyncPage("/", async () => {
-  const companies = await getCompanies({
+const Page: NextPage = async () => {
+  const companies = await api.getCompaniesSrv({
     limit: 3,
     sortBy: "foundedAt",
-    sortOrder: "desc"
+    sortOrder: "desc",
+    status: CompanyStatus.founded
   });
 
-  const tempImage = assertDefined(companies.docs[0]?.images[0]);
+  const tempImage = assertDefined(
+    companies.docs[0]?.images[0],
+    ERROR.EXPECTING_IMAGE
+  );
 
   return (
-    <BlocksLayout size="xl">
+    <PageLayout size="xl">
       <div className="header2 text-center">{lang.home.teaser}</div>
       {/* Slogan */}
       {/* Slogan END */}
@@ -106,7 +109,11 @@ const Page = createAsyncPage("/", async () => {
         {/* OPTIONS: (A) Use existing CompanyCard component; (B) Create big card variant after kickstarter */}
         <div className="w-3/5">
           <CompanyCardNew
-            company={assertDefined(companies.docs[0])}
+            company={assertDefined(
+              companies.docs[0],
+              // eslint-disable-next-line i18n-text/no-en -- Temp
+              "Expecting at least one company"
+            )}
             isExpandable={false}
           />
         </div>
@@ -249,8 +256,8 @@ const Page = createAsyncPage("/", async () => {
         </div>
       </section>
       {/* Knowledge base block END */}
-    </BlocksLayout>
+    </PageLayout>
   );
-});
+};
 
 export default Page;

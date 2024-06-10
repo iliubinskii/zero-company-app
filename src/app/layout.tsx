@@ -1,13 +1,17 @@
 /* eslint-disable @next/next/no-page-custom-font -- Ok */
 
 import "./globals.css";
-import { AppLoadingProvider, ReduxStoreProvider } from "../contexts";
+import {
+  AppLoadingProvider,
+  CategoriesProvider,
+  ReduxPersistor,
+  ReduxStoreProvider,
+  SnackbarProvider
+} from "../contexts";
 import type { ReactElement, ReactNode } from "react";
-import { AppGlobalActions } from "../app-global-actions";
-import Layout from "../Layout";
 import React, { Suspense } from "react";
-import { ReduxPersistorProvider } from "../contexts/redux-persistor";
-import { getCategories } from "../api";
+import RootLayout from "../Layout";
+import { api } from "../api";
 import { lang } from "../langs";
 import { logger } from "../services";
 
@@ -17,18 +21,16 @@ import { logger } from "../services";
  * @param props.children - Children.
  * @returns The root layout.
  */
-export default async function RootLayout({
-  children
-}: Props): Promise<ReactElement> {
+export default async function App({ children }: Props): Promise<ReactElement> {
   const t1 = performance.now();
 
-  const categories = await getCategories({ onlyPinned: true });
+  const categories = await api.getCategoriesSrv();
 
   const element = (
     <html lang="en">
       <head>
-        <title>{lang.app.title}</title>
-        <meta content={lang.app.description} name="description" />
+        <title>{lang.meta.title}</title>
+        <meta content={lang.meta.description} name="description" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -36,14 +38,16 @@ export default async function RootLayout({
       </head>
       <body>
         <AppLoadingProvider>
-          <ReduxStoreProvider>
-            <ReduxPersistorProvider>
-              <Suspense fallback={null}>
-                <AppGlobalActions />
-              </Suspense>
-              <Layout categories={categories}>{children}</Layout>
-            </ReduxPersistorProvider>
-          </ReduxStoreProvider>
+          <CategoriesProvider categories={categories}>
+            <ReduxStoreProvider>
+              <SnackbarProvider>
+                <Suspense>
+                  <ReduxPersistor />
+                </Suspense>
+                <RootLayout>{children}</RootLayout>
+              </SnackbarProvider>
+            </ReduxStoreProvider>
+          </CategoriesProvider>
         </AppLoadingProvider>
       </body>
     </html>

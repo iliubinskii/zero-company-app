@@ -1,19 +1,22 @@
 "use client";
 
-import { BlocksLayout, CompanyCard, CompanyCards } from "../../../components";
+import { CompanyCard, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { callAsync, filterUndefinedProperties } from "../../../utils";
+import { showSnackbar, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
+import { PageLayout } from "../../../layouts";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { getCompaniesByCategory } from "../../../api";
+import { api } from "../../../api";
+import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
+import { logger } from "../../../services";
 
 export const ClientPage: FC<Props> = ({
   category,
@@ -22,6 +25,8 @@ export const ClientPage: FC<Props> = ({
   const [autoMode, setAutoMode] = useState(false);
 
   const [companies, setCompanies] = useState(initialCompanies);
+
+  const dispatch = useAppDispatch();
 
   const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -35,25 +40,31 @@ export const ClientPage: FC<Props> = ({
       setLoading(true);
 
       try {
-        const response = await getCompaniesByCategory(
-          category._id,
-          filterUndefinedProperties({
-            cursor: nextCursor,
-            limit: COMPANY_LIMIT,
-            sortBy: "foundedAt",
-            sortOrder: "desc"
-          })
-        );
+        const response = await api.getCompaniesByCategory(category._id, {
+          cursor: nextCursor ?? undefined,
+          limit: COMPANY_LIMIT,
+          sortBy: "foundedAt",
+          sortOrder: "desc"
+        });
 
-        setCompanies([...companies, ...response.docs]);
-        setNextCursor(response.nextCursor);
-      } catch {
+        if ("error" in response) {
+          logger.error(`${response.error}: ${response.errorMessage}`);
+          dispatch(
+            showSnackbar({ message: response.errorMessage, variant: "error" })
+          );
+          setAutoMode(false);
+        } else {
+          setCompanies([...companies, ...response.docs]);
+          setNextCursor(response.nextCursor);
+        }
+      } catch (err) {
         setAutoMode(false);
+        throw err;
       } finally {
         setLoading(false);
       }
     });
-  }, [category, companies, nextCursor]);
+  }, [category, companies, dispatch, nextCursor]);
 
   useEffect(() => {
     setAutoMode(false);
@@ -90,10 +101,10 @@ export const ClientPage: FC<Props> = ({
   return (
     <>
       <Head>
-        <title>{`${category.name} - ${lang.app.title}`}</title>
+        <title>{`${category.name} - ${lang.meta.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <BlocksLayout size="lg">
+      <PageLayout size="lg">
         {/* Overview */}
         <div className="overview">
           <div className="header2">{category.name}</div>
@@ -134,7 +145,7 @@ export const ClientPage: FC<Props> = ({
           </div>
         )}
         {/* More button or spinner END */}
-      </BlocksLayout>
+      </PageLayout>
     </>
   );
 };

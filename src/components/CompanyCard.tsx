@@ -1,45 +1,31 @@
 "use client";
 
 import type { Company } from "../schema";
+import type { FC } from "react";
 import React from "react";
-import { assertDefined } from "../utils";
+import { images } from "../images";
+import { lang } from "../langs";
+import { logger } from "../services";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Design after kickstarter
-export const CompanyCard: React.FC<Props> = ({ className, company }) => {
-  const image = assertDefined(company.images[0]);
+export const CompanyCard: FC<Props> = ({ company, ...props }) => {
+  const image = company.images[0];
 
-  const [isHovering, setIsHovering] = React.useState(false);
+  if (image === undefined) logger.error(lang.CompanyHasNoImages, company);
+
+  const src = image ? image.secureUrl : images.noImage.src;
+
+  const { height, width } = image ?? images.noImage;
 
   return (
-    <div
-      className={`${className} ${isHovering ? "-m-6 relative z-10" : ""}`}
-      onMouseEnter={() => {
-        setIsHovering(true);
-      }}
-      onMouseLeave={() => {
-        setIsHovering(false);
-      }}
-    >
-      <div
-        className={
-          isHovering ? "px-6 pt-6 bg-white rounded-t-md shadow-lg" : ""
-        }
-      >
-        <img
-          alt={company.name}
-          className="w-full"
-          height={image.height}
-          src={image.secureUrl}
-          width={image.width}
-        />
-        {company.name}
-      </div>
-      <div
-        className={`absolute left-0 right-0 rounded-b-md px-6 pb-6 bg-white shadow-lg ${isHovering ? "" : "hidden"}`.trim()}
-      >
-        <div className="text-sm">{company.description}</div>
-      </div>
+    <div {...props}>
+      <img
+        alt={company.name ?? undefined}
+        className="w-full"
+        height={height}
+        src={src}
+        width={width}
+      />
+      {company.name}
     </div>
   );
 };

@@ -62,6 +62,10 @@ const config = {
         version: ">=20.0.0"
       }
     ],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      { additionalHooks: "^(useGuardedLoader)$" }
+    ],
     "spellcheck/spell-checker": [
       "warn",
       {
@@ -75,8 +79,11 @@ const config = {
             "2xl",
             "3xl",
             "4xl",
+            "5xl",
+            "6xl",
             "autofix",
             "bebas",
+            "borderless",
             "builtins",
             "camelcase",
             "checkbox",
@@ -145,6 +152,7 @@ const config = {
             "smacss",
             "snackbar",
             "sonarjs",
+            "srv",
             "str",
             "stylelint",
             "stylelintrc",

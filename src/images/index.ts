@@ -14,6 +14,11 @@ export const images = {
     src: "/digital-sign.webp",
     width: 1600
   },
+  noImage: {
+    height: 900,
+    src: "/no-image.webp",
+    width: 1600
+  },
   unicorn: {
     height: 900,
     src: "/unicorn.webp",

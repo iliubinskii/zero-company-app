@@ -1,12 +1,30 @@
-import { ClientPage } from "./ClientPage";
+"use client";
+
+import { resetCompanyRegistration, useAppDispatch } from "../../store";
+import { AnimatedLink } from "../../components";
+import type { NextPage } from "next";
+import { PageLayout } from "../../layouts";
 import React from "react";
-import { createAsyncPage } from "../../utils";
-import { getCategories } from "../../api";
+import { lang } from "../../langs";
 
-const Page = createAsyncPage("/create-company", async () => {
-  const categories = await getCategories();
+const Page: NextPage = () => {
+  const dispatch = useAppDispatch();
 
-  return <ClientPage categories={categories} />;
-});
+  return (
+    <PageLayout>
+      <div className="py-24 flex flex-col items-center">
+        <AnimatedLink
+          className="dark-button"
+          href="/create-company/steps"
+          onBeforeClick={() => {
+            dispatch(resetCompanyRegistration());
+          }}
+        >
+          {lang.CreateCompany}
+        </AnimatedLink>
+      </div>
+    </PageLayout>
+  );
+};
 
 export default Page;

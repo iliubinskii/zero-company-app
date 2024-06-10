@@ -3,4 +3,4 @@ export * from "./root-actions";
 export * from "./slices";
 export * from "./store";
 export * from "./thunks";
-export { CompanyReg } from "./types";
+export * from "./types";

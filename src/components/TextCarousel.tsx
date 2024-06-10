@@ -4,6 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import { CAROUSEL_SCROLL_STEP } from "../consts";
 import React, { useCallback, useMemo } from "react";
+import type { ReactNode } from "react";
 import tw from "tailwind-styled-components";
 
 export const TextCarousel: React.FC<Props> = ({ children }) => {
@@ -82,7 +83,7 @@ export const TextCarousel: React.FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  readonly children: React.ReactNode;
+  children?: ReactNode | undefined;
 }
 
 const Container = tw.div`flex justify-center items-center`;

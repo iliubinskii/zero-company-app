@@ -1,3 +1,5 @@
+/* eslint-disable i18n-text/no-en -- Temp */
+
 "use client";
 
 import { CardButton } from "./CardButton";
@@ -7,13 +9,16 @@ import { FaRegClock } from "react-icons/fa";
 import { HiOutlineHeart } from "react-icons/hi2";
 import React from "react";
 import { assertDefined } from "../utils";
+import { images } from "../images";
 
+// eslint-disable-next-line complexity -- Ok
 export const CompanyCardNew: React.FC<Props> = ({ company, isExpandable }) => {
   const [isHovering, setIsHovering] = React.useState(false);
 
-  const tempCompany = assertDefined(company);
-  const image = assertDefined(company.images[0]);
-  const logo = assertDefined(company.logo);
+  const tempCompany = assertDefined(company, "Expecting company");
+  const image = assertDefined(company.images[0], "Expecting image");
+  const logo = assertDefined(company.logo, "Expecting logo");
+
   return (
     <div
       className={isExpandable && isHovering ? "-m-6 relative z-10" : ""}
@@ -28,7 +33,7 @@ export const CompanyCardNew: React.FC<Props> = ({ company, isExpandable }) => {
         className={`w-full flex flex-col gap-4 ${isExpandable && isHovering ? "p-6 bg-white rounded-t-md shadow-lg" : ""}`}
       >
         <img
-          alt={tempCompany.name}
+          alt={tempCompany.name ?? undefined}
           className="w-full h-full object-cover rounded-t-xl aspect-video"
           src={image.secureUrl}
         />
@@ -36,7 +41,7 @@ export const CompanyCardNew: React.FC<Props> = ({ company, isExpandable }) => {
           <img
             alt={"company_logo"}
             className="w-10 h-10 object-cover rounded-full"
-            src={logo.secureUrl}
+            src={logo ? logo.secureUrl : images.noImage.src}
           />
           <div className="flex flex-col">
             <div>

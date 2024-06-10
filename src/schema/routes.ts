@@ -157,6 +157,61 @@ export interface paths {
       };
     };
   };
+  "/companies/{id}/images": {
+    /** Upload a new image for a company */
+    post: {
+      parameters: {
+        path: {
+          id: components["parameters"]["Id"];
+        };
+      };
+      responses: {
+        201: components["responses"]["Company"];
+        400: components["responses"]["InvalidData"];
+        404: components["responses"]["NotFound"];
+      };
+    };
+    parameters: {
+      path: {
+        id: components["parameters"]["Id"];
+      };
+    };
+  };
+  "/companies/{id}/images/{assetId}": {
+    /** Update an image for a company */
+    put: {
+      parameters: {
+        path: {
+          id: components["parameters"]["Id"];
+          assetId: components["parameters"]["AssetId"];
+        };
+      };
+      responses: {
+        200: components["responses"]["Company"];
+        400: components["responses"]["InvalidData"];
+        404: components["responses"]["NotFound"];
+      };
+    };
+    /** Delete an image for a company */
+    delete: {
+      parameters: {
+        path: {
+          id: components["parameters"]["Id"];
+          assetId: components["parameters"]["AssetId"];
+        };
+      };
+      responses: {
+        200: components["responses"]["Company"];
+        404: components["responses"]["NotFound"];
+      };
+    };
+    parameters: {
+      path: {
+        id: components["parameters"]["Id"];
+        assetId: components["parameters"]["AssetId"];
+      };
+    };
+  };
   "/documents": {
     /** Get all documents */
     get: {
@@ -208,6 +263,56 @@ export interface paths {
       };
       responses: {
         200: components["responses"]["Delete"];
+      };
+    };
+    parameters: {
+      path: {
+        id: components["parameters"]["Id"];
+      };
+    };
+  };
+  "/me": {
+    /** Get a user by ID */
+    get: {
+      responses: {
+        200: components["responses"]["User"];
+        404: components["responses"]["NotFound"];
+      };
+    };
+    /** Update a user by ID */
+    put: {
+      responses: {
+        200: components["responses"]["User"];
+        400: components["responses"]["InvalidData"];
+        404: components["responses"]["NotFound"];
+      };
+    };
+    /** Create a new user */
+    post: {
+      responses: {
+        201: components["responses"]["User"];
+        400: components["responses"]["InvalidData"];
+        409: components["responses"]["AlreadyExists"];
+      };
+    };
+    /** Delete a user by ID */
+    delete: {
+      responses: {
+        200: components["responses"]["Delete"];
+      };
+    };
+  };
+  "/me/companies": {
+    /** Get all companies for a user */
+    get: {
+      parameters: {
+        path: {
+          id: components["parameters"]["Id"];
+        };
+      };
+      responses: {
+        200: components["responses"]["CompanyList"];
+        400: components["responses"]["InvalidQuery"];
       };
     };
     parameters: {
@@ -372,15 +477,19 @@ export interface components {
     Company: {
       _id: string;
       categories: string[];
-      description: string;
-      foundedAt: string;
+      country: string;
+      createdAt: string;
+      description?: string;
+      foundedAt?: string;
       founders: components["schemas"]["Founder"][];
       images: components["schemas"]["WebAccessibleImage"][];
-      logo: components["schemas"]["WebAccessibleImage"];
-      name: string;
+      logo?: components["schemas"]["WebAccessibleImage"];
+      name?: string;
       privateCompany?: boolean;
       recommended?: boolean;
-      targetValue: number;
+      /** @enum {string} */
+      status: "draft" | "founded" | "signing";
+      targetValue?: number;
       website?: string;
     };
     CompanyList: {
@@ -415,11 +524,10 @@ export interface components {
       total: number;
     };
     Founder: {
-      confirmed?: boolean;
       email: string;
-      firstName: string;
-      lastName: string;
-      share: number;
+      firstName?: string;
+      lastName?: string;
+      share?: number;
     };
     Home: {
       schema: string;
@@ -612,6 +720,7 @@ export interface components {
   };
   parameters: {
     Id: string;
+    AssetId: string;
   };
   requestBodies: never;
   headers: never;
