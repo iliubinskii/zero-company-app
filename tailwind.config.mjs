@@ -42,8 +42,20 @@ const config = {
       borderWidth: {
         1.5: "1.5px"
       },
+      colors: {
+        "charcoal": "#2A2C2F",
+        "green-primary": "#379237",
+        "green-secondary": "#357C3C",
+        "light-gray-cold": "#f8f9fa",
+        "light-gray-warm": "#FAF6F0"
+      },
       fontFamily: {
         sans: ["Roboto", "sans-serif"]
+      },
+      gridTemplateColumns: {
+        "card-description-grid-container": "auto 1fr auto",
+        "header-grid-container": "1fr auto 1fr",
+        "main-grid-container": "1fr auto"
       },
       height: {
         "aspect-ratio-16/9": `${0.01 * 900}rem`

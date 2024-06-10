@@ -26,6 +26,7 @@ export const ERROR = {
   EXPECTING_API_URL_ENV: "Expecting API URL environment variable",
   EXPECTING_CATEGORY_ID_PARAM: "Expecting category ID param",
   EXPECTING_DRAFT_ID_PARAM: "Expecting draft ID param",
+  EXPECTING_IMAGE: "Expecting at least one image",
   EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
     "Expecting event target as HTMLFormElement"
@@ -44,3 +45,9 @@ export const PLACEHOLDER_EMAIL = "placeholder@email.com";
 export const REDUX_PERSIST_KEY = "app-state";
 
 export const SHOW_SNACKBAR_DURATION_MS = 3000;
+
+export const TEAMS_JOINED_QUANTITY = 31_514;
+
+export const INTERNSHIP_POSITIONS = 6054;
+
+export const LOOKING_FOR_COFOUNDER = 4711;

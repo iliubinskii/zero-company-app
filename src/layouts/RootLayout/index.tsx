@@ -1,6 +1,10 @@
 "use client";
 
-import { AnimatedLink, TextCarousel } from "../../components";
+import {
+  AnimatedLink,
+  HeaderSimpleButton,
+  TextCarousel
+} from "../../components";
 import type { FC, ReactNode } from "react";
 import CreateCompanyButton from "./CreateCompanyButton";
 import Logo from "./Logo";
@@ -15,44 +19,55 @@ export const RootLayout: FC<Props> = ({ children }) => {
 
   return (
     <div className="flex flex-col">
+      {/* Header /*/}
       <header>
-        <div className="border-b-1.5">
-          <div className="mx-auto max-w-screen-2xl p-5 flex flex-col gap-5">
-            {/* Search bar */}
-            <div className="flex items-center justify-between gap-4 lg:gap-8">
-              <Logo />
-              <SiteSearch className="hidden md:block grow" />
-              <div className="flex items-center gap-2 lg:gap-4">
-                <CreateCompanyButton />
-                <ProfileButton />
-              </div>
+        {/* Dark header */}
+        <div className="w-full bg-charcoal p-5 ">
+          <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
+            <ul className="flex gap-3 justify-start">
+              <li>
+                <HeaderSimpleButton>Teams</HeaderSimpleButton>
+              </li>
+              <li>
+                <HeaderSimpleButton>Internships</HeaderSimpleButton>
+              </li>
+              <li>
+                <HeaderSimpleButton>Join as co-founder</HeaderSimpleButton>
+              </li>
+            </ul>
+            <Logo className="text-white" />
+            <div className="flex items-center gap-4 justify-end">
+              <SiteSearch />
+              <CreateCompanyButton />
+              <ProfileButton />
             </div>
-            <SiteSearch className="md:hidden" />
-            {/* Search bar END */}
-
-            {/* Categories */}
-            <TextCarousel>
-              <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto ">
-                {categories.map(category => (
-                  <li key={category._id}>
-                    <AnimatedLink href={`/categories/${category._id}`}>
-                      {category.name}
-                    </AnimatedLink>
-                  </li>
-                ))}
-              </ul>
-            </TextCarousel>
-
-            {/* Categories END */}
           </div>
         </div>
+        {/* Dark header END */}
+
+        {/* Text Carousel */}
+        <div className="border-b-1.5 py-4">
+          <TextCarousel>
+            <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
+              {categories.map(category => (
+                <li key={category._id}>
+                  <AnimatedLink href={`/categories/${category._id}`}>
+                    {category.name}
+                  </AnimatedLink>
+                </li>
+              ))}
+            </ul>
+          </TextCarousel>
+        </div>
+        {/* Text Carousel END */}
       </header>
+      {/* Header END */}
 
       {/* Contents */}
       <main>{children}</main>
       {/* Contents END */}
 
-      <footer>
+      <footer className="bg-light-gray-cold">
         {/* Footer categories */}
         <div className="border-t-2 border-gray-400">
           <div className="mx-auto max-w-screen-2xl px-12 py-5 flex flex-col md:flex-row flex-wrap gap-x-3 gap-y-1 text-sm">
@@ -75,7 +90,7 @@ export const RootLayout: FC<Props> = ({ children }) => {
         {/* Footer link groups */}
         <div className="border-t-2 p-10">
           <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-            <Logo className="scale-75" />
+            <Logo className="scale-75 text-charcoal" />
             {footerLinkGroups.map(({ links, title }, key) => (
               <div className="flex flex-col gap-4" key={key}>
                 <h3 className="uppercase font-bold">{title}</h3>
@@ -109,50 +124,47 @@ export const RootLayout: FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  children?: ReactNode | undefined;
+  readonly children: ReactNode;
 }
 
 const footerLinkGroups = [
   {
     links: [
-      { href: "/knowledge/about", text: lang.AboutUs },
-      { href: "/knowledge/charter", text: lang.OurCharter },
-      { href: "/knowledge/team", text: lang.Team },
-      { href: "/knowledge/jobs", text: lang.Jobs }
+      { href: "/about", text: lang.AboutUs },
+      { href: "/charter", text: lang.OurCharter },
+      { href: "/team", text: lang.Team },
+      { href: "/jobs", text: lang.Jobs }
     ],
     title: lang.About
   },
   {
     links: [
-      { href: "/knowledge/how-it-works", text: lang.HowZeroCompanyWorks },
-      { href: "/knowledge/nda", text: lang.NDA },
-      { href: "/knowledge/ip", text: lang.IpAgreement },
-      { href: "/knowledge/founding", text: lang.FoundingAgreement },
-      { href: "/knowledge/buy-sell", text: lang.BuySellAgreement },
-      { href: "/knowledge/drag-along", text: lang.DragAlongRights },
-      { href: "/knowledge/tag-along", text: lang.TagAlongRights },
-      { href: "/knowledge/preemptive", text: lang.PreemptiveRights },
-      { href: "/knowledge/rofr", text: lang.ROFR }
+      { href: "/how-it-works", text: lang.HowZeroCompanyWorks },
+      { href: "/nda", text: lang.NDA },
+      { href: "/ip", text: lang.IpAgreement },
+      { href: "/shareholders", text: lang.FoundingAgreement },
+      { href: "/buy-sell", text: lang.BuySellAgreement },
+      { href: "/drag-along", text: lang.DragAlongRights },
+      { href: "/tag-along", text: lang.TagAlongRights },
+      { href: "/preemptive", text: lang.PreemptiveRights },
+      { href: "/rofr", text: lang.ROFR }
     ],
     title: lang.Legal
   },
   {
     links: [
-      { href: "/knowledge/questions", text: lang.CommonQuestions },
-      { href: "/knowledge/help", text: lang.HelpCenter },
-      { href: "/knowledge/blog", text: lang.Blog },
-      { href: "/knowledge/success", text: lang.SuccessStories }
+      { href: "/questions", text: lang.CommonQuestions },
+      { href: "/help", text: lang.HelpCenter },
+      { href: "/blog", text: lang.Blog },
+      { href: "/success", text: lang.SuccessStories }
     ],
     title: lang.Resources
   }
 ] as const;
 
 const footerLinks = [
-  { href: "/knowledge/terms", text: lang.TermsOfUse },
-  { href: "/knowledge/privacy", text: lang.PrivacyPolicy },
-  { href: "/knowledge/cookie-policy", text: lang.CookiePolicy },
-  {
-    href: "/knowledge/accessibility-statement",
-    text: lang.AccessibilityStatement
-  }
+  { href: "/terms", text: lang.TermsOfUse },
+  { href: "/privacy", text: lang.PrivacyPolicy },
+  { href: "/cookie-policy", text: lang.CookiePolicy },
+  { href: "/accessibility-statement", text: lang.AccessibilityStatement }
 ] as const;

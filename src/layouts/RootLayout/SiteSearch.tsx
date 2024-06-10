@@ -7,10 +7,13 @@ const SiteSearch: FC<HTMLAttributes<HTMLDivElement>> = ({
   className = "",
   ...props
 }) => (
-  <div className={`relative ${className}`.trim()} {...props}>
-    <IoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-700" />
+  <div
+    className={`relative ${className} w-full flex justify-end`.trim()}
+    {...props}
+  >
+    <IoSearch className="z-10 mt-3 -mr-10 w-6 h-6 text-gray-700" />
     <input
-      className="w-full border border-gray-300 rounded-lg shadow-lg pl-12 pr-3 py-3"
+      className="w-52 rounded-lg border-none pl-12 pr-3 py-3 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-transparent focus:w-full"
       placeholder={lang.layouts.RootLayout.SiteSearch.searchPlaceholder}
       type="search"
     />

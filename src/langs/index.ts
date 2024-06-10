@@ -146,6 +146,39 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
+  dragAndDropPrompt: "Drag & drop files here, or click to select files",
+  header: { searchPlaceholder: "Search..." },
+  // eslint-disable-next-line no-warning-comments -- Temp
+  // TODO: Check it
+  home: {
+    card1: {
+      description: `
+              Drop in a legal foundation into your project at a very early
+              stage.
+            `,
+      title: "Create a virtual company"
+    },
+    card2: {
+      description: `
+              With our legally backed process, you can attract contributors
+              for a share in your company.
+            `,
+      title: "Receive work contributions"
+    },
+    card3: {
+      description: `
+              We design a seamless process of asset transfer to the company,
+              where you can manage them collectively with your team.
+            `,
+      title: "Secure company assets"
+    },
+    subheader: {
+      cofounder: "looking for cofounder",
+      internship: "internship positions",
+      teams: "teams joined"
+    },
+    teaser: "We elevate crowdworking to the corporate level"
+  },
   layouts: {
     RootLayout: {
       SiteSearch: {
