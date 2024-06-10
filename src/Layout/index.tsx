@@ -1,4 +1,4 @@
-import { AnimatedLink, TextCarousel } from "../components";
+import { AnimatedLink, HeaderSimpleButton, TextCarousel } from "../components";
 import type { ExistingCategory, MultipleDocsResponse } from "../schema";
 import type { FC, ReactNode } from "react";
 import CreateCompanyButton from "./CreateCompanyButton";
@@ -16,44 +16,52 @@ const Layout: FC<Props> = ({ categories, children }) => (
     - Header on dark background
     - Categories stay under dark background
      */}
+    {/*    /!* Header *!/*/}
     <header>
-      <div className="border-b-1.5">
-        <div className="mx-auto max-w-screen-2xl p-5 flex flex-col gap-5">
-          {/* Search bar */}
-          <div className="flex items-center justify-between gap-4 lg:gap-8">
-            <Logo />
-            <SiteSearch className="hidden md:block grow" />
-            <div className="flex items-center gap-2 lg:gap-4">
-              <CreateCompanyButton />
-              <ProfileButton />
-            </div>
+      <div className="w-full bg-charcoal p-5 ">
+        <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
+          <ul className="flex gap-3 justify-start">
+            <li>
+              <HeaderSimpleButton>Teams</HeaderSimpleButton>
+            </li>
+            <li>
+              <HeaderSimpleButton>Internships</HeaderSimpleButton>
+            </li>
+            <li>
+              <HeaderSimpleButton>Join as co-founder</HeaderSimpleButton>
+            </li>
+          </ul>
+          <Logo className="text-white" />
+          <div className="flex items-center gap-4 justify-end">
+            <SiteSearch />
+            <CreateCompanyButton />
+            <ProfileButton />
           </div>
-          <SiteSearch className="md:hidden" />
-          {/* Search bar END */}
-
-          {/* Categories */}
-          <TextCarousel>
-            <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto ">
-              {categories.docs.map(category => (
-                <li key={category._id}>
-                  <AnimatedLink href={`/categories/${category._id}`}>
-                    {category.name}
-                  </AnimatedLink>
-                </li>
-              ))}
-            </ul>
-          </TextCarousel>
-
-          {/* Categories END */}
         </div>
       </div>
+      {/* Text Carousel */}
+      <div className="border-b-1.5 py-4">
+        <TextCarousel>
+          <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
+            {categories.docs.map(category => (
+              <li key={category._id}>
+                <AnimatedLink href={`/categories/${category._id}`}>
+                  {category.name}
+                </AnimatedLink>
+              </li>
+            ))}
+          </ul>
+        </TextCarousel>
+      </div>
+      {/* Text Carousel END */}
     </header>
+    {/* Header END */}
 
     {/* Contents */}
     <main>{children}</main>
     {/* Contents END */}
 
-    <footer>
+    <footer className="bg-light-gray-cold">
       {/* Footer categories */}
       <div className="border-t-2 border-gray-400">
         <div className="mx-auto max-w-screen-2xl px-12 py-5 flex flex-col md:flex-row flex-wrap gap-x-3 gap-y-1 text-sm">
@@ -76,7 +84,7 @@ const Layout: FC<Props> = ({ categories, children }) => (
       {/* Footer link groups */}
       <div className="border-t-2 p-10">
         <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-          <Logo className="scale-75" />
+          <Logo className="scale-75 text-charcoal" />
           {footerLinkGroups.map(({ links, title }, key) => (
             <div className="flex flex-col gap-4" key={key}>
               <h3 className="uppercase font-bold">{title}</h3>

@@ -28,10 +28,12 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
 
 export default ProfileButton;
 
-const Container = tw.div`w-16 flex justify-end`;
+const Container = tw.div`flex`;
 
 const Link = tw(AnimatedLink)`
   px-2 py-3
   whitespace-nowrap
-  transition-colors duration-150 hover:text-green-800
+  text-white
+  py-3 px-5 rounded-lg border hover:text-black hover:bg-white
+  transition-colors duration-150
 `;

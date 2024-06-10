@@ -13,7 +13,7 @@ body {
   cursor: wait !important;
 }
 
-/* Button styles */
+/* HeaderSimpleButton styles */
 
 .dark-button {
   @apply rounded

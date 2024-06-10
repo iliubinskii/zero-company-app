@@ -96,6 +96,11 @@ export const lang = {
             `,
       title: "Secure company assets"
     },
+    subheader: {
+      cofounder: "looking for cofounder",
+      internship: "internship positions",
+      teams: "teams joined"
+    },
     teaser: "We elevate crowdworking to the corporate level"
   }
 } as const;

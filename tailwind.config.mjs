@@ -53,6 +53,18 @@ const config = {
       },
       width: {
         "aspect-ratio-16/9": `${0.01 * 1600}rem`
+      },
+      colors: {
+        "charcoal": "#2A2C2F",
+        "green-primary": "#379237",
+        "green-secondary": "#357C3C",
+        "light-gray-cold": "#f8f9fa",
+        "light-gray-warm": "#FAF6F0",
+      },
+      gridTemplateColumns: {
+        "header-grid-container": "1fr auto 1fr",
+        "main-grid-container": "1fr auto",
+        "card-description-grid-container": "auto 1fr auto"
       }
     }
   }
