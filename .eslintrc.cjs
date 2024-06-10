@@ -103,6 +103,7 @@ const config = {
             "enum",
             "escompat",
             "eslintrc",
+            "faq",
             "favicon",
             "filenames",
             "flowbite",
