@@ -9,6 +9,7 @@ export { CompanyCardNew } from "./CompanyCardNew";
 export { CompanyCards } from "./CompanyCards";
 export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
+export { FAQ } from "./FAQ";
 export { HeaderSimpleButton } from "./HeaderSimpleButton";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
