@@ -23,6 +23,8 @@ export const CREATE_COMPANY_STEP = {
 export const CREATE_COMPANY_TOTAL_STEPS = 3;
 
 export const ERROR = {
+  COMPANY_HAS_NO_IMAGE: "Company has no image",
+  COMPANY_HAS_NO_LOGO: "Company has no logo",
   EXPECTING_API_URL_ENV: "Expecting API URL environment variable",
   EXPECTING_CATEGORY_ID_PARAM: "Expecting category ID param",
   EXPECTING_DRAFT_ID_PARAM: "Expecting draft ID param",

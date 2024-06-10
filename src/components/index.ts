@@ -2,7 +2,6 @@ export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
 export { CardButton } from "./CardButton";
 export { CircularProgress } from "./CircularProgress";
-export { CompanyCard } from "./CompanyCard";
 export { CompanyCardNew } from "./CompanyCardNew";
 export { CompanyCards } from "./CompanyCards";
 export { DraftCard } from "./DraftCard";

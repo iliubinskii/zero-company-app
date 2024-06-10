@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyCard, CompanyCards } from "../../../components";
+import { CompanyCardNew, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
@@ -104,7 +104,7 @@ export const ClientPage: FC<Props> = ({
         <title>{`${category.name} - ${lang.meta.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <PageLayout size="lg">
+      <PageLayout size="xl">
         {/* Overview */}
         <div className="overview">
           <div className="header2">{category.name}</div>
@@ -117,7 +117,11 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards */}
         <CompanyCards>
           {companies.map(company => (
-            <CompanyCard company={company} key={company._id} />
+            <CompanyCardNew
+              company={company}
+              isExpandable={true}
+              key={company._id}
+            />
           ))}
         </CompanyCards>
         {/* Company cards END */}
