@@ -4,18 +4,12 @@ import type { FC, ReactNode } from "react";
 import React, { useState } from "react";
 import tw from "tailwind-styled-components";
 
-export const AccordionItem: FC<Props> = ({
-  children,
-  className,
-  header,
-  headerClassName
-}) => {
+export const AccordionItem: FC<Props> = ({ children, className, header }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <Container className={className}>
       <Header
-        className={headerClassName}
         onClick={() => {
           setIsExpanded(!isExpanded);
         }}
@@ -31,7 +25,6 @@ export interface Props {
   readonly children?: ReactNode | undefined;
   readonly className?: string;
   readonly header?: ReactNode | undefined;
-  readonly headerClassName?: string;
 }
 
 const Container = tw.div`p-6 flex flex-col gap-6`;
