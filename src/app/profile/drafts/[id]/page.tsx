@@ -15,7 +15,6 @@ import { ERROR } from "../../../../consts";
 import type { FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
-import { Management } from "./Management";
 import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
@@ -217,11 +216,5 @@ const modules = [
     description: lang.app.profile.drafts.draft.Public.description,
     progress: 12,
     title: lang.app.profile.drafts.draft.Public.title
-  },
-  {
-    Component: Management,
-    description: lang.app.profile.drafts.draft.Management.description,
-    progress: 80,
-    title: lang.app.profile.drafts.draft.Management.title
   }
 ];
