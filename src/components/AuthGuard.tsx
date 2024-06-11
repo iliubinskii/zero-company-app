@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export const AuthGuard: FC<Props> = ({
   children,
-  customLoaded = true
+  customLoading = false
 }): ReactElement => {
   const authUser = useAppSelector(selectAuthUser);
 
@@ -24,7 +24,7 @@ export const AuthGuard: FC<Props> = ({
   return (
     <Container>
       {children}
-      {(loaded && customLoaded) || (
+      {(loaded && !customLoading) || (
         <Overlay>
           <Loading />
         </Overlay>
@@ -35,7 +35,7 @@ export const AuthGuard: FC<Props> = ({
 
 export interface Props {
   children?: ReactNode | undefined;
-  readonly customLoaded?: boolean;
+  readonly customLoading?: boolean;
 }
 
 const Container = tw.div`relative`;

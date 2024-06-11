@@ -2,9 +2,9 @@
 
 import { AuthGuard, DraftCard, DraftCards } from "../../../components";
 import {
-  requireDrafts,
+  refreshDrafts,
   selectDrafts,
-  selectDraftsLoaded,
+  selectDraftsLoading,
   useAppDispatch,
   useAppSelector
 } from "../../../store";
@@ -18,16 +18,16 @@ const Page: NextPage = () => {
 
   const drafts = useAppSelector(selectDrafts);
 
-  const draftsLoaded = useAppSelector(selectDraftsLoaded);
+  const draftsLoading = useAppSelector(selectDraftsLoading);
 
   useEffect(() => {
     callAsync(async () => {
-      await dispatch(requireDrafts());
+      await dispatch(refreshDrafts());
     });
   }, [dispatch]);
 
   return (
-    <AuthGuard customLoaded={draftsLoaded}>
+    <AuthGuard customLoading={draftsLoading}>
       <ProfileLayout>
         <DraftCards>
           {drafts.map(company => (

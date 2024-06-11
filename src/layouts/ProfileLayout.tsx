@@ -9,7 +9,7 @@ import {
   PLACEHOLDER_EMAIL
 } from "../consts";
 import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
-import { selectAuthUser, useAppSelector } from "../store";
+import { selectAuthUser, selectUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
 import { AnimatedLink } from "../components";
 import { BsBookmarks } from "react-icons/bs";
@@ -30,6 +30,8 @@ import { usePathname } from "next/navigation";
  */
 export const ProfileLayout: FC<Props> = ({ children }) => {
   const authUser = useAppSelector(selectAuthUser);
+
+  const user = useAppSelector(selectUser);
 
   const pathname = usePathname();
 
@@ -55,9 +57,7 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
           />
           <UserInfo>
             <UserName>
-              {authUser && authUser.user
-                ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                : lang.NoName}
+              {user ? `${user.firstName} ${user.lastName}` : lang.NoName}
             </UserName>
             <UserEmail>
               {authUser ? authUser.email : PLACEHOLDER_EMAIL}

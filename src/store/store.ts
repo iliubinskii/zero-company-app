@@ -5,18 +5,20 @@ import {
   companyRegistrationReducer,
   draftsReducer,
   loadedReducer,
-  snackbarReducer
+  snackbarReducer,
+  userReducer
 } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { clearDraftsOnAuthUserChange } from "./middleware";
 import { thunk } from "redux-thunk";
+import { updateOnAuthUserChange } from "./middleware";
 
 const slicesReducer = combineReducers({
   auth: authReducer,
   companyRegistration: companyRegistrationReducer,
   drafts: draftsReducer,
   loaded: loadedReducer,
-  snackbar: snackbarReducer
+  snackbar: snackbarReducer,
+  user: userReducer
 });
 
 const rootReducer = (
@@ -35,7 +37,7 @@ export const store = configureStore({
     });
 
     // eslint-disable-next-line unicorn/prefer-spread -- Ok
-    return defaultMiddleware.concat(thunk, clearDraftsOnAuthUserChange);
+    return defaultMiddleware.concat(thunk, updateOnAuthUserChange);
   },
   reducer: rootReducer
 });

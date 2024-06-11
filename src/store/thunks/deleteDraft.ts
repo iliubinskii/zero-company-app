@@ -1,7 +1,6 @@
-import { deleteDraftFromSlice, showSnackbar } from "../slices";
+import { deleteDraftFromSlice, logError } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
-import { logger } from "../../services";
 
 /**
  * Deletes a draft.
@@ -12,14 +11,10 @@ export function deleteDraft(id: string): AppThunk {
   return async dispatch => {
     const response = await api.deleteCompany(id);
 
-    if ("error" in response) {
-      logger.error(`${response.error}: ${response.errorMessage}`);
+    if ("error" in response)
       dispatch(
-        showSnackbar({
-          message: response.errorMessage,
-          variant: "error"
-        })
+        logError({ error: response.error, message: response.errorMessage })
       );
-    } else dispatch(deleteDraftFromSlice(id));
+    else dispatch(deleteDraftFromSlice(id));
   };
 }

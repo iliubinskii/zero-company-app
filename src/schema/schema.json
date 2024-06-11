@@ -855,9 +855,6 @@
           },
           "email": {
             "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -1392,8 +1389,7 @@
         "required": [
           "_id",
           "email",
-          "firstName",
-          "lastName"
+          "favoriteCompanies"
         ],
         "properties": {
           "_id": {
@@ -1401,6 +1397,12 @@
           },
           "email": {
             "type": "string"
+          },
+          "favoriteCompanies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "firstName": {
             "type": "string"

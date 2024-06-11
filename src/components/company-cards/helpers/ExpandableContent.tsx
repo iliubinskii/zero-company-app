@@ -2,7 +2,7 @@
 
 import { BadgeButton } from "../../buttons/BadgeButton";
 import type { ExistingCompany } from "../../../schema";
-import { FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa6";
 import React from "react";
 
 export const ExpandableContent: React.FC<Props> = ({ company }) => (

@@ -2,13 +2,15 @@
 
 import {
   isAppState,
+  refreshAuthUser,
+  refreshDrafts,
+  refreshUser,
   setAppState,
   setLoaded,
   store,
-  updateAuthUser,
   useAppDispatch
 } from "../store";
-import { AuthUserEssentialValidationSchema } from "../schema";
+import { AuthUserValidationSchema } from "../schema";
 import type { FC } from "react";
 import { REDUX_PERSIST_KEY } from "../consts";
 import React, { useEffect } from "react";
@@ -41,9 +43,7 @@ export const ReduxPersistorProvider: FC = () => {
       const user = params.get("user");
 
       if (action === "login" && typeof user === "string") {
-        const authUser = AuthUserEssentialValidationSchema.safeParse(
-          JSON.parse(user)
-        );
+        const authUser = AuthUserValidationSchema.safeParse(JSON.parse(user));
 
         if (authUser.success) {
           appState = { ...appState, auth: { authUser: authUser.data } };
@@ -64,9 +64,12 @@ export const ReduxPersistorProvider: FC = () => {
 
     dispatch(setAppState(appState));
     dispatch(setLoaded(true));
-
     callAsync(async () => {
-      await dispatch(updateAuthUser());
+      await Promise.allSettled([
+        dispatch(refreshAuthUser()),
+        dispatch(refreshUser()),
+        dispatch(refreshDrafts())
+      ]);
     });
 
     return store.subscribe(() => {
