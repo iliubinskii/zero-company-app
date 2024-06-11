@@ -105,7 +105,7 @@ export const lang = {
         `,
         title: "Secure company assets"
       },
-      teaser: "We elevate crowdworking to the corporate level"
+      teaser: "Empower Your Startup with Proven Corporate Strategies"
     },
     profile: {
       drafts: {
