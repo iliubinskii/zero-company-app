@@ -4,12 +4,8 @@ import {
   CompanyCards,
   InternshipCard
 } from "../components";
-import {
-  INTERNSHIP_POSITIONS,
-  LOOKING_FOR_COFOUNDER,
-  TEAMS_JOINED_QUANTITY
-} from "../consts";
 import { CompanyStatus } from "../schema";
+import { MOCK_STATS } from "../consts";
 import type { NextPage } from "next";
 import { PageLayout } from "../layouts";
 import React from "react";
@@ -29,7 +25,7 @@ const Page: NextPage = async () => {
 
   return (
     <PageLayout size="xl">
-      <div className="header2 text-center">{lang.home.teaser}</div>
+      <div className="header2 text-center">{lang.app.home.teaser}</div>
       {/* Slogan */}
       {/* Slogan END */}
 
@@ -215,9 +211,18 @@ const Page: NextPage = async () => {
 export default Page;
 
 const mockArrayForInfoCells = [
-  { description: lang.home.subheader.teams, number: TEAMS_JOINED_QUANTITY },
-  { description: lang.home.subheader.internship, number: INTERNSHIP_POSITIONS },
-  { description: lang.home.subheader.cofounder, number: LOOKING_FOR_COFOUNDER }
+  {
+    description: lang.teamsJoined,
+    number: MOCK_STATS.TEAMS_JOINED
+  },
+  {
+    description: lang.internshipPositions,
+    number: MOCK_STATS.INTERNSHIP_POSITIONS
+  },
+  {
+    description: lang.lookingForCofounder,
+    number: MOCK_STATS.LOOKING_FOR_COFOUNDER
+  }
 ];
 
 const mockArrayForInternshipCards = [

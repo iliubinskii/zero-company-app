@@ -10,7 +10,6 @@ export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
 export { InternshipCard } from "./InternshipCard";
 export { Loading } from "./Loading";
-export { MotionDiv } from "./MotionDiv";
 export { Navigate } from "./Navigate";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";

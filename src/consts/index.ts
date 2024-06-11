@@ -42,14 +42,19 @@ export const GRAVATAR_RATING = "pg";
 
 export const GRAVATAR_SIZE = "200";
 
+export const MOCK_STATS = {
+  INTERNSHIP_POSITIONS: 6054,
+  LOOKING_FOR_COFOUNDER: 4711,
+  TEAMS_JOINED: 31_514
+} as const;
+
+export const MOTION = {
+  ANIMATE: { opacity: 1, scale: 1 },
+  EXIT: { opacity: 0, scale: 0.9 }
+} as const;
+
 export const PLACEHOLDER_EMAIL = "placeholder@email.com";
 
 export const REDUX_PERSIST_KEY = "app-state";
 
 export const SHOW_SNACKBAR_DURATION_MS = 3000;
-
-export const TEAMS_JOINED_QUANTITY = 31_514;
-
-export const INTERNSHIP_POSITIONS = 6054;
-
-export const LOOKING_FOR_COFOUNDER = 4711;

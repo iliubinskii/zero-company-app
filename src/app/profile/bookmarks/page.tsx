@@ -1,17 +1,13 @@
 "use client";
 
-import {
-  AuthGuard,
-  CompanyCard,
-  CompanyCards,
-  MotionDiv
-} from "../../../components";
+import { AnimatePresence, motion } from "framer-motion";
+import { AuthGuard, CompanyCard, CompanyCards } from "../../../components";
 import {
   selectFavoriteCompanies,
   selectFavoriteCompaniesLoading,
   useAppSelector
 } from "../../../store";
-import { AnimatePresence } from "framer-motion";
+import { MOTION } from "../../../consts";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
@@ -29,9 +25,15 @@ const Page: NextPage = () => {
         <CompanyCards>
           <AnimatePresence>
             {favoriteCompanies.map(company => (
-              <MotionDiv key={company._id}>
+              <motion.div
+                animate={MOTION.ANIMATE}
+                exit={MOTION.EXIT}
+                initial={false}
+                key={company._id}
+                layout
+              >
                 <CompanyCard company={company} />
-              </MotionDiv>
+              </motion.div>
             ))}
           </AnimatePresence>
         </CompanyCards>
