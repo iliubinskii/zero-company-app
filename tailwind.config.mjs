@@ -53,7 +53,6 @@ const config = {
         sans: ["Roboto", "sans-serif"]
       },
       gridTemplateColumns: {
-        "card-description-grid-container": "auto 1fr auto",
         "header-grid-container": "1fr auto 1fr",
         "main-grid-container": "1fr auto"
       },
