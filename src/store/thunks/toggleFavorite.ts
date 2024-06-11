@@ -1,5 +1,10 @@
 import type { ExistingCompany, ExistingUser } from "../../schema";
-import { logError, setUser } from "../slices";
+import {
+  addFavoriteCompany,
+  logError,
+  removeFavoriteCompany,
+  setUser
+} from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
 
@@ -14,20 +19,38 @@ export function toggleFavorite(
   user: ExistingUser
 ): AppThunk {
   return async dispatch => {
-    const updatedUser = await api.putMe(
-      user._id,
-      user.favoriteCompanies.includes(company._id)
-        ? { removeFavoriteCompanies: [company._id] }
-        : { addFavoriteCompanies: [company._id] }
-    );
+    if (user.favoriteCompanies.includes(company._id)) {
+      const updatedUser = await api.putMe(user._id, {
+        removeFavoriteCompanies: [company._id]
+      });
 
-    if ("error" in updatedUser)
-      dispatch(
-        logError({
-          error: updatedUser,
-          message: updatedUser.errorMessage
-        })
-      );
-    else dispatch(setUser(updatedUser));
+      if ("error" in updatedUser)
+        dispatch(
+          logError({
+            error: updatedUser,
+            message: updatedUser.errorMessage
+          })
+        );
+      else {
+        dispatch(setUser(updatedUser));
+        dispatch(removeFavoriteCompany(company));
+      }
+    } else {
+      const updatedUser = await api.putMe(user._id, {
+        addFavoriteCompanies: [company._id]
+      });
+
+      if ("error" in updatedUser)
+        dispatch(
+          logError({
+            error: updatedUser,
+            message: updatedUser.errorMessage
+          })
+        );
+      else {
+        dispatch(setUser(updatedUser));
+        dispatch(addFavoriteCompany(company));
+      }
+    }
   };
 }
