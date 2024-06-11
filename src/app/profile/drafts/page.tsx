@@ -2,29 +2,18 @@
 
 import { AuthGuard, DraftCard, DraftCards } from "../../../components";
 import {
-  refreshDrafts,
   selectDrafts,
   selectDraftsLoading,
-  useAppDispatch,
   useAppSelector
 } from "../../../store";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
-import React, { useEffect } from "react";
-import { callAsync } from "../../../utils";
+import React from "react";
 
 const Page: NextPage = () => {
-  const dispatch = useAppDispatch();
-
   const drafts = useAppSelector(selectDrafts);
 
   const draftsLoading = useAppSelector(selectDraftsLoading);
-
-  useEffect(() => {
-    callAsync(async () => {
-      await dispatch(refreshDrafts());
-    });
-  }, [dispatch]);
 
   return (
     <AuthGuard customLoading={draftsLoading}>

@@ -2,6 +2,8 @@ import type {
   AuthActions,
   CompanyRegistrationActions,
   DraftsActions,
+  FavoriteCompaniesActions,
+  LoadedActions,
   SnackbarActions,
   UserActions
 } from "../slices";
@@ -22,6 +24,8 @@ export type AppAction =
   | AuthActions
   | CompanyRegistrationActions
   | DraftsActions
+  | FavoriteCompaniesActions
+  | LoadedActions
   | SnackbarActions
   | UserActions;
 
@@ -40,6 +44,11 @@ export interface AppState {
     readonly drafts: readonly ExistingCompany[];
     readonly draftsError: boolean;
     readonly draftsLoading: boolean;
+  };
+  readonly favoriteCompanies: {
+    readonly favoriteCompanies: readonly ExistingCompany[];
+    readonly favoriteCompaniesError: boolean;
+    readonly favoriteCompaniesLoading: boolean;
   };
   readonly loaded: boolean;
   readonly snackbar: {

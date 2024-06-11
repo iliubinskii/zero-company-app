@@ -4,6 +4,7 @@ import {
   authReducer,
   companyRegistrationReducer,
   draftsReducer,
+  favoriteCompaniesReducer,
   loadedReducer,
   snackbarReducer,
   userReducer
@@ -16,6 +17,7 @@ const slicesReducer = combineReducers({
   auth: authReducer,
   companyRegistration: companyRegistrationReducer,
   drafts: draftsReducer,
+  favoriteCompanies: favoriteCompaniesReducer,
   loaded: loadedReducer,
   snackbar: snackbarReducer,
   user: userReducer

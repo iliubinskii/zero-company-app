@@ -4,11 +4,10 @@ import "./globals.css";
 import {
   AppLoadingProvider,
   CategoriesProvider,
-  ReduxPersistor,
-  ReduxStoreProvider,
   SnackbarProvider
 } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
+import { ReduxPersistor, ReduxStoreProvider } from "../store";
 import React, { Suspense } from "react";
 import { RootLayout } from "../layouts";
 import { api } from "../api";

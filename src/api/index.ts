@@ -179,6 +179,21 @@ export const api = {
 
     return "error" in company ? company : restoreCompany(company);
   },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getFavoriteCompaniesByMe: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
+    const companies = await getReq<Routes["/me/favorite-companies"]["get"]>(
+      "me/favorite-companies",
+      { ...options }
+    );
+
+    return "error" in companies ? companies : restoreCompanies(companies);
+  },
   getMe: async (): Promise<ExistingUser | ErrorResponse<ErrorCode>> => {
     const user = await getReq<Routes["/me"]["get"]>("me");
 
