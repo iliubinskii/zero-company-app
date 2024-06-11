@@ -120,6 +120,7 @@ const config = {
             "jsdoc",
             "jsdom",
             "jsx",
+            "kaffeesatz",
             "keydown",
             "kickstarter",
             "lang",
@@ -176,6 +177,7 @@ const config = {
             "webkit",
             "webp",
             "whitespace",
+            "yanone",
             "zod"
           ],
         strings: true,

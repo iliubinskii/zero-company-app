@@ -20,8 +20,8 @@ const CreateCompanyButton: FC<
       }}
       {...props}
     >
-      {lang.CreateCompany2[0]}
-      <span className="hidden sm:inline">{lang.CreateCompany2[1]}</span>
+      {lang.StartCompany2[0]}
+      <span className="hidden sm:inline">{lang.StartCompany2[1]}</span>
     </Link>
   );
 };
