@@ -81,6 +81,7 @@ export const lang = {
   Unauthorized: "Log in to access this page!",
   Unknown: "Unknown",
   Website: "Website",
+  WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
   app: {

@@ -31,24 +31,29 @@ const Page: NextPage = async () => {
       </div>
       {/* Teaser END */}
 
-      {/* Elevated block with number */}
-      <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
-        {mockArrayForInfoCells.map((el, index) => (
-          <div
-            className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
-            key={index}
-          >
-            <p className="text-3xl text-green-secondary">
-              {el.number.toLocaleString()}
-            </p>
-            <p className="text-gray-500 tracking-wider">{el.description}</p>
-          </div>
-        ))}
+      {/* Stats */}
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center text-gray-500 uppercase">
+          {lang.WithZeroCompany}:
+        </div>
+        <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
+          {mockArrayForInfoCells.map((el, index) => (
+            <div
+              className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
+              key={index}
+            >
+              <p className="text-3xl text-green-secondary">
+                {el.number.toLocaleString()}
+              </p>
+              <p className="text-gray-500 tracking-wider">{el.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      {/* Elevated block with number END */}
+      {/* Stats END */}
 
       {/* Text block */}
-      <p className="px-10 w-4/5 mx-auto text-center">
+      <p className="px-10 w-4/5 mx-auto text-center text-gray-600">
         The startup world is a vibrant community of talented people where
         thousands of cutting-edge technologies are being born, and where
         everyone has unique skills and expertise. We created this platform to
