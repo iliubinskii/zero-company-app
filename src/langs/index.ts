@@ -30,6 +30,7 @@ export const lang = {
   Email: "E-mail",
   Explore: "Explore",
   FirstName: "First name",
+  Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
   GoToHomepage: "Go to Homepage",
@@ -53,7 +54,6 @@ export const lang = {
   NDA: "NDA",
   Name: "Name",
   Next: "Next",
-  NoName: "No name",
   NotFound: "Not Found",
   OurCharter: "Our Charter",
   PageDoesNotExist: "The page you are looking for does not exist.",
@@ -147,37 +147,7 @@ export const lang = {
   },
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
-  // eslint-disable-next-line no-warning-comments -- Temp
-  // TODO: Check it
-  home: {
-    card1: {
-      description: `
-              Drop in a legal foundation into your project at a very early
-              stage.
-            `,
-      title: "Create a virtual company"
-    },
-    card2: {
-      description: `
-              With our legally backed process, you can attract contributors
-              for a share in your company.
-            `,
-      title: "Receive work contributions"
-    },
-    card3: {
-      description: `
-              We design a seamless process of asset transfer to the company,
-              where you can manage them collectively with your team.
-            `,
-      title: "Secure company assets"
-    },
-    subheader: {
-      cofounder: "looking for cofounder",
-      internship: "internship positions",
-      teams: "teams joined"
-    },
-    teaser: "We elevate crowdworking to the corporate level"
-  },
+  internshipPositions: "internship positions",
   layouts: {
     RootLayout: {
       SiteSearch: {
@@ -185,6 +155,7 @@ export const lang = {
       }
     }
   },
+  lookingForCofounder: "looking for cofounder",
   meta: {
     description: `
       Create a virtual company at zero cost and grow it into your first unicorn!
@@ -192,5 +163,6 @@ export const lang = {
     title: "Zero Company"
   },
   of: "of",
-  projectDraft: "project draft"
+  projectDraft: "project draft",
+  teamsJoined: "teams joined"
 } as const;

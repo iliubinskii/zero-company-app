@@ -160,7 +160,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
   }, [company]);
 
   return (
-    <AuthGuard customLoaded={!isLoading}>
+    <AuthGuard customLoading={isLoading}>
       <ProfileLayout>
         <h2 className="text-2xl text-gray-700 font-bold">
           {category

@@ -59,7 +59,7 @@ export const ClientPage: FC<Props> = ({
         }
       } catch (err) {
         setAutoMode(false);
-        throw err;
+        logger.error(err);
       } finally {
         setLoading(false);
       }

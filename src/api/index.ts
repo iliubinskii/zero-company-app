@@ -1,6 +1,7 @@
 import type {
   AuthUser,
   CompanyCreate,
+  CompanyUpdate,
   DeleteResponse,
   ErrorCode,
   ErrorResponse,
@@ -9,15 +10,17 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
-  Routes
+  Routes,
+  UserUpdate
 } from "../schema";
 import {
   deleteReq,
   getReq,
-  postJsonReq,
-  putFormDataReq,
+  postReq,
+  putReq,
   restoreCategories,
   restoreCompanies,
   restoreCompany
@@ -177,18 +180,38 @@ export const api = {
     return "error" in company ? company : restoreCompany(company);
   },
   /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getFavoriteCompaniesByMe: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
+    const companies = await getReq<Routes["/me/favorite-companies"]["get"]>(
+      "me/favorite-companies",
+      { ...options }
+    );
+
+    return "error" in companies ? companies : restoreCompanies(companies);
+  },
+  getMe: async (): Promise<ExistingUser | ErrorResponse<ErrorCode>> => {
+    const user = await getReq<Routes["/me"]["get"]>("me");
+
+    return user;
+  },
+  /**
    * Sends a company to the API.
    * @param body - The company.
    * @returns The response.
    */
   postCompany: async (
-    body: CompanyCreate
+    body: FormData | CompanyCreate
   ): Promise<
     | ExistingCompany
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
-    const company = await postJsonReq<Routes["/companies"]["post"]>(
+    const company = await postReq<Routes["/companies"]["post"]>(
       "companies",
       body
     );
@@ -197,16 +220,28 @@ export const api = {
   },
   putCompany: async (
     id: string,
-    body: FormData
+    body: FormData | CompanyUpdate
   ): Promise<
     | ExistingCompany
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
-    const company = await putFormDataReq<Routes["/companies/{id}"]["put"]>(
+    const company = await putReq<Routes["/companies/{id}"]["put"]>(
       `companies/${id}`,
       body
     );
     return "error" in company ? company : restoreCompany(company);
+  },
+  putMe: async (
+    id: string,
+    body: FormData | UserUpdate
+  ): Promise<
+    ExistingUser | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
+  > => {
+    const user = await putReq<Routes["/users/{id}"]["put"]>(
+      `users/${id}`,
+      body
+    );
+    return user;
   }
 };

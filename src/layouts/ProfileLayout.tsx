@@ -21,6 +21,7 @@ import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 import { usePathname } from "next/navigation";
+import { useUserName } from "../hooks";
 
 /**
  * Profile layout.
@@ -30,6 +31,8 @@ import { usePathname } from "next/navigation";
  */
 export const ProfileLayout: FC<Props> = ({ children }) => {
   const authUser = useAppSelector(selectAuthUser);
+
+  const name = useUserName();
 
   const pathname = usePathname();
 
@@ -54,11 +57,7 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
             }
           />
           <UserInfo>
-            <UserName>
-              {authUser && authUser.user
-                ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                : lang.NoName}
-            </UserName>
+            <UserName>{name}</UserName>
             <UserEmail>
               {authUser ? authUser.email : PLACEHOLDER_EMAIL}
             </UserEmail>

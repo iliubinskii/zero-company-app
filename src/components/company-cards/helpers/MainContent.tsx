@@ -1,17 +1,33 @@
 "use client";
 
-import { getSafeImage, getSafeLogo } from "../../../utils";
+import { FaBookmark, FaRegBookmark, FaRegClock } from "react-icons/fa6";
+import { callAsync, getSafeImage, getSafeLogo } from "../../../utils";
+import {
+  selectUser,
+  toggleFavorite,
+  useAppDispatch,
+  useAppSelector
+} from "../../../store";
 import type { ExistingCompany } from "../../../schema";
 import type { FC } from "react";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FaRegClock } from "react-icons/fa";
 import { HeartIcon } from "../../icons";
 import React from "react";
 
 export const MainContent: FC<Props> = ({ company }) => {
+  const dispatch = useAppDispatch();
+
   const image = getSafeImage(company);
 
   const logo = getSafeLogo(company);
+
+  const user = useAppSelector(selectUser);
+
+  const toggleFavoriteClickHandler = (): void => {
+    if (user)
+      callAsync(async () => {
+        await dispatch(toggleFavorite(company, user));
+      });
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -37,7 +53,16 @@ export const MainContent: FC<Props> = ({ company }) => {
             <p className="text-gray-500 text-sm">10 days before presentation</p>
           </div>
         </div>
-        <FaRegBookmark className="text-lg" />
+        <a
+          className={user ? "cursor-pointer" : undefined}
+          onClick={toggleFavoriteClickHandler}
+        >
+          {user && user.favoriteCompanies.includes(company._id) ? (
+            <FaBookmark className="text-lg" />
+          ) : (
+            <FaRegBookmark className="text-lg" />
+          )}
+        </a>
       </div>
     </div>
   );

@@ -1,16 +1,45 @@
 "use client";
 
-import { AuthGuard } from "../../../components";
+import { AnimatePresence, motion } from "framer-motion";
+import { AuthGuard, CompanyCard, CompanyCards } from "../../../components";
+import {
+  selectFavoriteCompanies,
+  selectFavoriteCompaniesLoading,
+  useAppSelector
+} from "../../../store";
+import { MOTION } from "../../../consts";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 
-// eslint-disable-next-line no-warning-comments -- Postponed
-// TODO: Add bookmarks contents
-const Page: NextPage = () => (
-  <AuthGuard>
-    <ProfileLayout>TODO: Add bookmarks contents</ProfileLayout>
-  </AuthGuard>
-);
+const Page: NextPage = () => {
+  const favoriteCompanies = useAppSelector(selectFavoriteCompanies);
+
+  const favoriteCompaniesLoading = useAppSelector(
+    selectFavoriteCompaniesLoading
+  );
+
+  return (
+    <AuthGuard customLoading={favoriteCompaniesLoading}>
+      <ProfileLayout>
+        <CompanyCards>
+          <AnimatePresence>
+            {favoriteCompanies.map(company => (
+              <motion.div
+                animate={MOTION.ANIMATE}
+                exit={MOTION.EXIT}
+                initial={false}
+                key={company._id}
+                layout
+              >
+                <CompanyCard company={company} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </CompanyCards>
+      </ProfileLayout>
+    </AuthGuard>
+  );
+};
 
 export default Page;

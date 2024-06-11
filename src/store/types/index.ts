@@ -2,17 +2,21 @@ import type {
   AuthActions,
   CompanyRegistrationActions,
   DraftsActions,
-  SnackbarActions
+  FavoriteCompaniesActions,
+  LoadedActions,
+  SnackbarActions,
+  UserActions
 } from "../slices";
 import type {
   AuthUser,
-  AuthUserEssential,
   ExistingCategory,
-  ExistingCompany
+  ExistingCompany,
+  ExistingUser
 } from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import type { CREATE_COMPANY_STEP } from "../../consts";
 import type { SetStateAction } from "../root-actions";
+import type { ThunkAction } from "redux-thunk";
 import type { store } from "../store";
 
 export type AppAction =
@@ -20,13 +24,16 @@ export type AppAction =
   | AuthActions
   | CompanyRegistrationActions
   | DraftsActions
-  | SnackbarActions;
+  | FavoriteCompaniesActions
+  | LoadedActions
+  | SnackbarActions
+  | UserActions;
 
 export type AppDispatch = AppStore["dispatch"];
 
 export interface AppState {
   readonly auth: {
-    readonly authUser: AuthUser | AuthUserEssential | null;
+    readonly authUser: AuthUser | null;
   };
   readonly companyRegistration: {
     readonly category?: ExistingCategory | undefined;
@@ -35,7 +42,13 @@ export interface AppState {
   };
   readonly drafts: {
     readonly drafts: readonly ExistingCompany[];
-    readonly draftsLoaded: boolean;
+    readonly draftsError: boolean;
+    readonly draftsLoading: boolean;
+  };
+  readonly favoriteCompanies: {
+    readonly favoriteCompanies: readonly ExistingCompany[];
+    readonly favoriteCompaniesError: boolean;
+    readonly favoriteCompaniesLoading: boolean;
   };
   readonly loaded: boolean;
   readonly snackbar: {
@@ -43,13 +56,19 @@ export interface AppState {
     readonly message: string;
     readonly variant: SnackbarVariant;
   };
+  readonly user: {
+    readonly user?: ExistingUser | undefined;
+  };
 }
 
 export type AppStore = typeof store;
 
-export interface AppThunk<T = void> {
-  (dispatch: AppDispatch): Promise<T>;
-}
+export type AppThunk<T = void> = ThunkAction<
+  Promise<T>,
+  AppState,
+  unknown,
+  AppAction
+>;
 
 export type SnackbarVariant = "error" | "info" | "success";
 

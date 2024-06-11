@@ -1,6 +1,7 @@
 import type { AppState, SnackbarVariant } from "../types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { logger } from "../../services";
 
 const initialState: AppState["snackbar"] = {
   isOpen: false,
@@ -15,6 +16,18 @@ const snackbarSlice = createSlice({
     hideSnackbar: state => {
       // Do not reset the message and variant to let snackbar fade out
       state.isOpen = false;
+    },
+    logError(
+      state,
+      action: PayloadAction<{
+        readonly error: unknown;
+        readonly message: string;
+      }>
+    ) {
+      logger.error(action.payload.error);
+      state.isOpen = true;
+      state.message = action.payload.message;
+      state.variant = "error";
     },
     showSnackbar: (
       state,
@@ -34,7 +47,7 @@ const snackbarSlice = createSlice({
 
 export const snackbarReducer = snackbarSlice.reducer;
 
-export const { hideSnackbar, showSnackbar } = snackbarSlice.actions;
+export const { hideSnackbar, logError, showSnackbar } = snackbarSlice.actions;
 
 /**
  * Select the snackbar active state.
@@ -62,4 +75,5 @@ export const selectSnackbarVariant = (state: AppState): SnackbarVariant =>
 
 export type SnackbarActions =
   | ReturnType<typeof hideSnackbar>
+  | ReturnType<typeof logError>
   | ReturnType<typeof showSnackbar>;

@@ -1,1 +1,1 @@
-export { clearDraftsOnAuthUserChange } from "./clearDraftsOnAuthUserChange";
+export { updateOnAuthUserChange } from "./updateOnAuthUserChange";
