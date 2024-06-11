@@ -29,13 +29,8 @@ const CreateCompanyButton: FC<
 export default CreateCompanyButton;
 
 const Link = tw(AnimatedLink)`
-  px-4 py-3
-  bg-green-primary
-  rounded-lg
-  text-white
-  whitespace-nowrap
-  transition duration-150 ease-in-out
+  rounded-lg px-4 py-3 bg-green-primary
+  whitespace-nowrap text-white
   hover:bg-green-secondary
-  transition-colors duration-150
-  focus:border-black;
+  transition;
 `;

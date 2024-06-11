@@ -6,17 +6,14 @@ import { noop } from "lodash";
 import tw from "tailwind-styled-components";
 
 export const InputElement: FC<Props> = ({
-  containerClassName,
   errorMessages = [],
-  inputClassName,
   name,
   onChange,
   onResetErrors = noop,
   ...props
 }) => (
-  <Container className={containerClassName}>
+  <Container>
     <Input
-      className={inputClassName}
       name={name}
       onChange={e => {
         onChange(e.target.value);
@@ -35,9 +32,7 @@ export interface Props
     InputHTMLAttributes<HTMLInputElement>,
     "className" | "onChange"
   > {
-  readonly containerClassName?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
-  readonly inputClassName?: string | undefined;
   readonly onChange: (value: string) => void;
   readonly onResetErrors?: ((name?: string) => void) | undefined;
 }

@@ -1,4 +1,9 @@
-import { CompanyCardNew, CompanyCards, InternshipCard } from "../components";
+import {
+  BigCompanyCard,
+  CompanyCard,
+  CompanyCards,
+  InternshipCard
+} from "../components";
 import {
   INTERNSHIP_POSITIONS,
   LOOKING_FOR_COFOUNDER,
@@ -61,7 +66,7 @@ const Page: NextPage = async () => {
         {/* Featured companies */}
         {featuredCompany && (
           <div className="w-3/5">
-            <CompanyCardNew company={featuredCompany} isExpandable={false} />
+            <BigCompanyCard company={featuredCompany} />
           </div>
         )}
         {/* Featured companies END */}
@@ -131,11 +136,7 @@ const Page: NextPage = async () => {
         </h2>
         <CompanyCards>
           {companies.docs.map(company => (
-            <CompanyCardNew
-              company={company}
-              isExpandable={true}
-              key={company._id}
-            />
+            <CompanyCard company={company} key={company._id} />
           ))}
         </CompanyCards>
       </section>

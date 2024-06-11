@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyCardNew, CompanyCards } from "../../../components";
+import { CompanyCard, CompanyCards } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
@@ -117,11 +117,7 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards */}
         <CompanyCards>
           {companies.map(company => (
-            <CompanyCardNew
-              company={company}
-              isExpandable={true}
-              key={company._id}
-            />
+            <CompanyCard company={company} key={company._id} />
           ))}
         </CompanyCards>
         {/* Company cards END */}

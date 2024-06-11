@@ -112,6 +112,7 @@ const config = {
             "foreach",
             "globals",
             "gravatar",
+            "hoverable",
             "href",
             "ico",
             "instanceof",

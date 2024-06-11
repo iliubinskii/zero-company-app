@@ -6,14 +6,13 @@ import { noop } from "lodash";
 
 export const TextareaElement: FC<Props> = ({
   className = "",
-  containerClassName = "",
   errorMessages = [],
   name,
   onChange,
   onResetErrors = noop,
   ...props
 }) => (
-  <div className={`relative ${containerClassName}`.trim()}>
+  <div className="relative">
     <textarea
       className={`form-field w-full ${className}`.trim()}
       name={name}
@@ -31,7 +30,6 @@ export const TextareaElement: FC<Props> = ({
 
 export interface Props
   extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
-  readonly containerClassName?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
   readonly onChange: (value: string) => void;
   readonly onResetErrors?: ((name?: string) => void) | undefined;

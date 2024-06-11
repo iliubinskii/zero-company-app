@@ -100,24 +100,41 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
             setErrorMessages([
               ...(function* prepareErrors(): Generator<FieldError> {
                 for (const error of response.data)
-                  if (error.path === "founders") {
-                    yield {
-                      message: error.message,
-                      path: "founders[0].email"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].firstName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].lastName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].share"
-                    };
-                  } else yield error;
+                  switch (error.path) {
+                    case "categories": {
+                      yield {
+                        message: error.message,
+                        path: "categories[0]"
+                      };
+
+                      break;
+                    }
+
+                    case "founders": {
+                      yield {
+                        message: error.message,
+                        path: "founders[0].email"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].firstName"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].lastName"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].share"
+                      };
+
+                      break;
+                    }
+
+                    default: {
+                      yield error;
+                    }
+                  }
               })()
             ]);
           else
