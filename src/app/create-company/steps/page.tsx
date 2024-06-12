@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  CREATE_COMPANY_STEP,
-  CREATE_COMPANY_TOTAL_STEPS
-} from "../../../consts";
+import { CREATE_COMPANY_STEP, CREATE_COMPANY_STEPS } from "../../../consts";
 import { selectCompanyRegistrationStep, useAppSelector } from "../../../store";
 import type { NextPage } from "next";
 import { PageLayout } from "../../../layouts";
@@ -35,7 +32,7 @@ const Page: NextPage = () => {
   return (
     <PageLayout>
       <div className="py-8 flex flex-col gap-12">
-        <Stepper step={step} totalSteps={CREATE_COMPANY_TOTAL_STEPS} />
+        <Stepper step={step} steps={CREATE_COMPANY_STEPS} />
         <Component />
       </div>
     </PageLayout>

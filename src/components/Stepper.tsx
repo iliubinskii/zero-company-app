@@ -1,9 +1,20 @@
-import type { FC } from "react";
 import React from "react";
+import type { ReactNode } from "react";
 import { lang } from "../langs";
 
-export const Stepper: FC<Props> = ({ step, totalSteps }) => {
-  const progressPercentage = (step / totalSteps) * 100;
+/**
+ * A stepper component that shows the current step and the total steps.
+ * @param props - The props for the stepper component.
+ * @param props.step - The current step.
+ * @param props.steps - The total steps.
+ * @returns The stepper component.
+ */
+export function Stepper<T>({ step, steps }: Props<T>): ReactNode {
+  const totalSteps = steps.length;
+
+  const stepNumber = Math.max(steps.indexOf(step), 0) + 1;
+
+  const progressPercentage = (stepNumber / totalSteps) * 100;
 
   return (
     <div>
@@ -14,13 +25,13 @@ export const Stepper: FC<Props> = ({ step, totalSteps }) => {
         />
       </div>
       <div className="text-gray-700">
-        {step} {lang.of} {totalSteps}
+        {stepNumber} {lang.of} {totalSteps}
       </div>
     </div>
   );
-};
+}
 
-export interface Props {
-  readonly step: number;
-  readonly totalSteps: number;
+export interface Props<T> {
+  readonly step: T;
+  readonly steps: readonly T[];
 }

@@ -2,6 +2,7 @@
 
 import { AuthGuard, Loading } from "../../../components";
 import {
+  SNACKBAR_VARIANT,
   selectAuthUser,
   selectCompanyCategory,
   selectCompanyCountry,
@@ -44,7 +45,7 @@ const Page: NextPage = () => {
             dispatch(
               showSnackbar({
                 message: company.errorMessage,
-                variant: "error"
+                variant: SNACKBAR_VARIANT.error
               })
             );
           else router.push(`/profile/drafts/${company._id}`);

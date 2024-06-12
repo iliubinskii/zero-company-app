@@ -1,6 +1,6 @@
-import type { AppState } from "../types";
-import { REDUX_PERSIST_KEY } from "../../consts";
-import { isAppState } from "../root-actions";
+import { type AppState, AppStateValidationSchema } from "../types";
+import { ERROR, REDUX_PERSIST_KEY } from "../../consts";
+import { logger } from "../../services";
 
 /**
  * Restore the app state from local storage.
@@ -13,7 +13,14 @@ export function useRestoreFromLocalStorage(): (state: AppState) => AppState {
     if (typeof stored === "string") {
       const json = JSON.parse(stored) as unknown;
 
-      if (isAppState(json)) state = json;
+      const storedState = AppStateValidationSchema.safeParse(json);
+
+      if (storedState.data) state = storedState.data;
+      else
+        logger.error(
+          ERROR.FAILED_TO_RESTORE_APP_STATE,
+          storedState.error.errors
+        );
     }
 
     return state;
