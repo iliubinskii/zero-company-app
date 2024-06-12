@@ -4,7 +4,8 @@ import {
   AccordionFlatContainer,
   AuthGuard,
   IconAccordionItem,
-  InputElement
+  InputElement,
+  MarketOverview
 } from "../../../components";
 import type { FieldError, UserUpdate } from "../../../schema";
 import { FaPencilAlt } from "react-icons/fa";
@@ -32,7 +33,7 @@ const Page: NextPage = () => {
 
   return (
     <AuthGuard>
-      <ProfileLayout>
+      <ProfileLayout info={<MarketOverview />}>
         <AccordionFlatContainer>
           <IconAccordionItem
             Icon={FaPencilAlt}

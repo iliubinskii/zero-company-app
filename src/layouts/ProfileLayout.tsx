@@ -27,9 +27,10 @@ import { useUserName } from "../hooks";
  * Profile layout.
  * @param props - The properties.
  * @param props.children - The children.
+ * @param props.info  - The info.
  * @returns The element.
  */
-export const ProfileLayout: FC<Props> = ({ children }) => {
+export const ProfileLayout: FC<Props> = ({ children, info }) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const name = useUserName();
@@ -83,18 +84,22 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
           })}
         </Links>
       </SideMenu>
-      <Contents>{children}</Contents>
+      <Main>
+        <Contents>{children}</Contents>
+        {info}
+      </Main>
     </Container>
   );
 };
 
 export interface Props {
   children?: ReactNode | undefined;
+  info?: ReactNode | undefined;
 }
 
-const Container = tw.div`p-3 flex gap-5`;
+const Container = tw.div`p-6 flex gap-8`;
 
-const SideMenu = tw.div`p-3 flex flex-col gap-5`;
+const SideMenu = tw.div`flex flex-col gap-5`;
 
 const User = tw.div`h-16 w-64 flex items-center gap-3`;
 
@@ -115,7 +120,9 @@ const Link = tw(AnimatedLink)`
   text-slate-700
 `;
 
-const Contents = tw.div`flex-grow p-9 flex flex-col gap-9`;
+const Main = tw.div`grow p-4 flex gap-9`;
+
+const Contents = tw.div`grow flex flex-col gap-9`;
 
 const links = [
   {
