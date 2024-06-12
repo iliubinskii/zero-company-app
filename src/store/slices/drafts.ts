@@ -14,12 +14,18 @@ const draftsSlice = createSlice({
   initialState,
   name: "drafts",
   reducers: {
+    addDraft: (state, action: PayloadAction<ExistingCompany>) => {
+      state.drafts = [
+        ...state.drafts.filter(draft => draft._id !== action.payload._id),
+        dangerouslyAssumeWritable(action.payload)
+      ];
+    },
     clearDrafts: state => {
       state.drafts = [];
       state.draftsError = false;
       state.draftsLoading = true;
     },
-    deleteDraftFromSlice: (state, action: PayloadAction<string>) => {
+    removeDraft: (state, action: PayloadAction<string>) => {
       state.drafts = state.drafts.filter(draft => draft._id !== action.payload);
     },
     setDrafts: (state, action: PayloadAction<readonly ExistingCompany[]>) => {
@@ -37,7 +43,7 @@ const draftsSlice = createSlice({
 
 export const draftsReducer = draftsSlice.reducer;
 
-export const { clearDrafts, deleteDraftFromSlice, setDrafts, setDraftsError } =
+export const { addDraft, clearDrafts, removeDraft, setDrafts, setDraftsError } =
   draftsSlice.actions;
 
 /**
@@ -57,7 +63,8 @@ export const selectDraftsLoading = (state: AppState): boolean =>
   state.drafts.draftsLoading;
 
 export type DraftsActions =
+  | ReturnType<typeof addDraft>
   | ReturnType<typeof clearDrafts>
-  | ReturnType<typeof deleteDraftFromSlice>
+  | ReturnType<typeof removeDraft>
   | ReturnType<typeof setDrafts>
   | ReturnType<typeof setDraftsError>;

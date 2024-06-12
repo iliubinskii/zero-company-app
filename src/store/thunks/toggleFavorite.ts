@@ -20,7 +20,7 @@ export function toggleFavorite(
 ): AppThunk {
   return async dispatch => {
     if (user.favoriteCompanies.includes(company._id)) {
-      const updatedUser = await api.putMe(user._id, {
+      const updatedUser = await api.putMe({
         removeFavoriteCompanies: [company._id]
       });
 
@@ -36,7 +36,7 @@ export function toggleFavorite(
         dispatch(removeFavoriteCompany(company));
       }
     } else {
-      const updatedUser = await api.putMe(user._id, {
+      const updatedUser = await api.putMe({
         addFavoriteCompanies: [company._id]
       });
 

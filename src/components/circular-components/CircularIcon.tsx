@@ -27,7 +27,7 @@ export const CircularIcon: FC<Props> = ({
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center text-gray-600">
-        <Icon />
+        <Icon className="text-2xl" />
       </div>
     </div>
   );

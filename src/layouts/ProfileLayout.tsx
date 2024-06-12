@@ -8,13 +8,17 @@ import {
   GRAVATAR_SIZE,
   PLACEHOLDER_EMAIL
 } from "../consts";
-import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import {
+  LuBookmark,
+  LuFiles,
+  LuHeartHandshake,
+  LuLayoutDashboard,
+  LuLogOut,
+  LuSettings2
+} from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
 import { AnimatedLink } from "../components";
-import { BsBookmarks } from "react-icons/bs";
-import { GoSignOut } from "react-icons/go";
-import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
@@ -141,22 +145,22 @@ const links = [
     text: lang.MyDrafts
   },
   {
-    Icon: IoDocumentsOutline,
+    Icon: LuFiles,
     href: "/profile/documents",
     text: lang.Documents
   },
   {
-    Icon: LuUser2,
+    Icon: LuSettings2,
     href: "/profile/settings",
     text: lang.Settings
   },
   {
-    Icon: BsBookmarks,
+    Icon: LuBookmark,
     href: "/profile/bookmarks",
     text: lang.Bookmarks
   },
   {
-    Icon: GoSignOut,
+    Icon: LuLogOut,
     href: `${API_URL}auth/logout`,
     text: lang.LogOut
   }

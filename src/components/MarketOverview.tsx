@@ -70,8 +70,8 @@ export const MarketOverview: FC = () => (
         <FaChartPie className="text-purple-500" />
         Indexes
       </Header>
-      <Text>EBI 100: 33,456 (+1.41%)</Text>
-      <Text>CI 500: 12,345.67 (+0.23%)</Text>
+      <Text>Experts: 33,456 (+1.41%)</Text>
+      <Text>Community: 12,345 (+0.23%)</Text>
     </Section>
     {/* Indexes END */}
   </Container>

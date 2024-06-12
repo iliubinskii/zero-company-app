@@ -233,15 +233,12 @@ export const api = {
     return "error" in company ? company : restoreCompany(company);
   },
   putMe: async (
-    id: string,
     body: FormData | UserUpdate
   ): Promise<
     ExistingUser | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
   > => {
-    const user = await putReq<Routes["/users/{id}"]["put"]>(
-      `users/${id}`,
-      body
-    );
+    const user = await putReq<Routes["/me"]["put"]>("me", body);
+
     return user;
   }
 };

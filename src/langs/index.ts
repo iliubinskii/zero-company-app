@@ -25,7 +25,7 @@ export const lang = {
   Description: "Description",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
-  EditYourProjectDraft: "Edit your project draft",
+  EditProjectDraft: "Edit project draft",
   Email: "E-mail",
   Explore: "Explore",
   FirstName: "First name",
@@ -134,6 +134,12 @@ export const lang = {
             `,
             title: "Team"
           }
+        }
+      },
+      settings: {
+        EditProfile: {
+          description: "Tell other users a bit about yourself",
+          title: "Edit Profile"
         }
       }
     }

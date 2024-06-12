@@ -6,15 +6,15 @@ import {
   AuthGuard,
   ProgressAccordionItem
 } from "../../../../components";
-import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
+import { addDraft, showSnackbar, useAppDispatch } from "../../../../store";
 import {
   assertDefined,
   buildFormData,
   callAsync,
   removeUndefined
 } from "../../../../utils";
-import { showSnackbar, useAppDispatch } from "../../../../store";
 import { Basics } from "./Basics";
+import type { CustomCompanyUpdate } from "./helpers";
 import { ERROR } from "../../../../consts";
 import type { FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
@@ -37,7 +37,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
   const {
     isLoading,
     resource: company,
-    setResource
+    setResource: setCompany
   } = useAuthGuardedLoader(() => api.getCompany(id), [], {
     redirectOnNotFound: "/profile/drafts"
   });
@@ -57,27 +57,20 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     return undefined;
   }, [categories, company]);
 
-  const [companyUpdate, setCompanyUpdate] = useState<CustomCompanyUpdate>({});
-
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
   const dispatch = useAppDispatch();
 
   const [removeImages, setRemoveImages] = useState<readonly string[]>([]);
 
-  const updatedCompany = useMemo(
-    (): CustomExistingCompany | undefined =>
-      company
-        ? {
-            ...company,
-            ...removeUndefined(companyUpdate)
-          }
-        : undefined,
-    [company, companyUpdate]
-  );
+  const [update, setUpdate] = useState<CustomCompanyUpdate>({});
+
+  const updatedCompany = company
+    ? { ...company, ...removeUndefined(update) }
+    : undefined;
 
   const modified =
-    Object.keys(companyUpdate).length > 0 ||
+    Object.keys(update).length > 0 ||
     addImages.length > 0 ||
     removeImages.length > 0;
 
@@ -85,7 +78,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     e => {
       e.preventDefault();
 
-      const data = buildFormData(companyUpdate);
+      const data = buildFormData(update);
 
       for (const image of addImages) data.append("addImages", image);
 
@@ -145,19 +138,22 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
               })
             );
         else {
-          setResource(response);
-          setCompanyUpdate({});
+          dispatch(addDraft(response));
+          setCompany(response);
+          setUpdate({});
           setAddImages([]);
           setRemoveImages([]);
         }
       });
     },
-    [addImages, companyUpdate, dispatch, id, removeImages, setResource]
+    [addImages, update, dispatch, id, removeImages, setCompany]
   );
 
   useEffect(() => {
-    setCompanyUpdate({});
-  }, [company]);
+    setUpdate({});
+    setAddImages([]);
+    setRemoveImages([]);
+  }, [id]);
 
   return (
     <AuthGuard customLoading={isLoading}>
@@ -165,7 +161,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
         <h2 className="text-2xl text-gray-700 font-bold">
           {category
             ? `${category.name} ${lang.projectDraft}`
-            : lang.EditYourProjectDraft}
+            : lang.EditProjectDraft}
         </h2>
         <div>
           <AccordionFlatContainer>
@@ -203,12 +199,9 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         );
                       }}
                       onSave={onSave}
-                      setCompany={update => {
-                        setCompanyUpdate(prev => {
-                          return {
-                            ...prev,
-                            ...update
-                          };
+                      setCompany={nextUpdate => {
+                        setUpdate(prev => {
+                          return { ...prev, ...nextUpdate };
                         });
                       }}
                     />
