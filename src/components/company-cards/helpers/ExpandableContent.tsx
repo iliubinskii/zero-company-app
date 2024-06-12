@@ -2,10 +2,11 @@
 
 import { BadgeButton } from "../../buttons/BadgeButton";
 import type { ExistingCompany } from "../../../schema";
+import type { FC } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 import React from "react";
 
-export const ExpandableContent: React.FC<Props> = ({ company }) => (
+export const ExpandableContent: FC<Props> = ({ company }) => (
   <>
     <div className="px-2 flex gap-4">
       <div className="w-10 min-w-10" />

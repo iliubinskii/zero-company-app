@@ -25,30 +25,35 @@ const Page: NextPage = async () => {
 
   return (
     <PageLayout size="xl">
-      <div className="header2 text-center">{lang.app.home.teaser}</div>
-      {/* Slogan */}
-      {/* Slogan END */}
-
-      {/* Elevated block with number */}
-      <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
-        {mockArrayForInfoCells.map((el, index) => (
-          <div
-            className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
-            key={index}
-          >
-            <p className="text-4xl text-green-secondary font-thin">
-              {el.number}
-            </p>
-            <p className="text-xl text-gray-500 tracking-wider">
-              {el.description}
-            </p>
-          </div>
-        ))}
+      {/* Teaser */}
+      <div className="text-3xl text-gray-900 text-center">
+        {lang.app.home.teaser}
       </div>
-      {/* Elevated block with number END */}
+      {/* Teaser END */}
+
+      {/* Stats */}
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center text-gray-500 uppercase">
+          {lang.WithZeroCompany}:
+        </div>
+        <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
+          {mockArrayForInfoCells.map((el, index) => (
+            <div
+              className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
+              key={index}
+            >
+              <p className="text-3xl text-green-secondary">
+                {el.number.toLocaleString()}
+              </p>
+              <p className="text-gray-500 tracking-wider">{el.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Stats END */}
 
       {/* Text block */}
-      <p className="px-10 w-4/5 mx-auto text-center">
+      <p className="px-10 w-4/5 mx-auto text-center text-gray-600">
         The startup world is a vibrant community of talented people where
         thousands of cutting-edge technologies are being born, and where
         everyone has unique skills and expertise. We created this platform to
@@ -125,7 +130,7 @@ const Page: NextPage = async () => {
       </article>
       {/* Compete Block End */}
 
-      {/* Join as a cofounder Block */}
+      {/* Join as a co-founder Block */}
       <section>
         <h2 className="text-2xl font-bold tracking-wider mb-4">
           Join as a co-founder
@@ -136,7 +141,7 @@ const Page: NextPage = async () => {
           ))}
         </CompanyCards>
       </section>
-      {/* Join as a cofounder Block END */}
+      {/* Join as a co-founder Block END */}
 
       {/* Knowledge base block */}
       <section>
@@ -220,7 +225,7 @@ const mockArrayForInfoCells = [
     number: MOCK_STATS.INTERNSHIP_POSITIONS
   },
   {
-    description: lang.lookingForCofounder,
+    description: lang.lookingForCoFounder,
     number: MOCK_STATS.LOOKING_FOR_COFOUNDER
   }
 ];

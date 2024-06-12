@@ -12,6 +12,7 @@ export const lang = {
   Bookmarks: "Bookmarks",
   BuySellAgreement: "Buy-Sell Agreement",
   Category: "Category",
+  CoFounders: "Co-founders",
   CommonQuestions: "Common Questions",
   Company: "Company",
   CompanyImages: "Add company images",
@@ -19,24 +20,22 @@ export const lang = {
   Continue: "Continue",
   CookiePolicy: "Cookie Policy",
   Country: "Country",
-  CreateCompany: "Create a company",
-  CreateCompany2: ["Create", " a company"],
   CreateDraft: "Create a draft",
   Dashboard: "Dashboard",
   Description: "Description",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
-  EditYourProjectDraft: "Edit your project draft",
+  EditProjectDraft: "Edit project draft",
   Email: "E-mail",
   Explore: "Explore",
   FirstName: "First name",
-  Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
   GoToHomepage: "Go to Homepage",
   HelpCenter: "Help Center",
   HowZeroCompanyWorks: "How Zero Company Works",
   Image: "Image",
+  Internships: "Internships",
   IpAgreement: "IP Agreement",
   Jobs: "Jobs",
   LastName: "Last name",
@@ -69,17 +68,22 @@ export const lang = {
   Settings: "Settings",
   Share: "Share",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
+  StartCompany: "Start a company",
+  StartCompany2: ["Start", " a company"],
   Submit: "Submit",
   SuccessStories: "Success Stories",
   TagAlongRights: "Tag-Along Rights",
   TargetValue: "Target value",
   Team: "Team",
+  Teams: "Teams",
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
   Unknown: "Unknown",
   Website: "Website",
+  WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
+  ZeroMember: "Zero member",
   app: {
     home: {
       card1: {
@@ -102,7 +106,7 @@ export const lang = {
         `,
         title: "Secure company assets"
       },
-      teaser: "We elevate crowdworking to the corporate level"
+      teaser: "Empower Your Startup with Proven Corporate Strategies"
     },
     profile: {
       drafts: {
@@ -131,6 +135,12 @@ export const lang = {
             title: "Team"
           }
         }
+      },
+      settings: {
+        EditProfile: {
+          description: "Tell other users a bit about yourself",
+          title: "Edit Profile"
+        }
       }
     }
   },
@@ -155,7 +165,7 @@ export const lang = {
       }
     }
   },
-  lookingForCofounder: "looking for cofounder",
+  lookingForCoFounder: "looking for co-founder",
   meta: {
     description: `
       Create a virtual company at zero cost and grow it into your first unicorn!

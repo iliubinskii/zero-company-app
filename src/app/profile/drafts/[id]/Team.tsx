@@ -148,13 +148,13 @@ export const Team: FC<ModuleProps> = ({
         </AddButton>
       </Founders>
 
-      {/* Submit button */}
+      {/* Save button */}
       <div className="flex justify-end">
         <button className="primary-button" disabled={!modified} type="submit">
           {lang.Save}
         </button>
       </div>
-      {/* Submit button END */}
+      {/* Save button END */}
     </form>
   );
 };

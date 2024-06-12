@@ -4,9 +4,9 @@ export const APP_LOADING_TIMEOUT_MS = 200;
 
 export const CAROUSEL_SCROLL_STEP = 200;
 
-export const CIRCULAR_PROGRESS_SIZE = 50;
+export const CIRCULAR_SIZE = 50;
 
-export const CIRCULAR_PROGRESS_STROKE_WIDTH = 4;
+export const CIRCULAR_STROKE_WIDTH = 4;
 
 export const COMPANY_LIMIT = 9;
 

@@ -1,8 +1,9 @@
 import { BiBell } from "react-icons/bi";
+import type { FC } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 import React from "react";
 
-export const InternshipCard: React.FC<Props> = ({
+export const InternshipCard: FC<Props> = ({
   city,
   companyName,
   days,

@@ -88,7 +88,6 @@ const config = {
             "camelcase",
             "checkbox",
             "cjs",
-            "cofounder",
             "commonjs",
             "compat",
             "consts",
@@ -120,6 +119,7 @@ const config = {
             "jsdoc",
             "jsdom",
             "jsx",
+            "kaffeesatz",
             "keydown",
             "kickstarter",
             "lang",
@@ -176,6 +176,7 @@ const config = {
             "webkit",
             "webp",
             "whitespace",
+            "yanone",
             "zod"
           ],
         strings: true,

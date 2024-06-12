@@ -15,7 +15,7 @@ export const AnimatedLink: FC<Props> = ({
 
   const { setLoading } = useAppLoading();
 
-  const handleClick: MouseEventHandler<HTMLAnchorElement> = e => {
+  const onClick: MouseEventHandler<HTMLAnchorElement> = e => {
     e.preventDefault();
     onBeforeClick();
     setLoading();
@@ -26,7 +26,7 @@ export const AnimatedLink: FC<Props> = ({
     <a
       className="relative inline-block"
       href={href}
-      onClick={handleClick}
+      onClick={onClick}
       {...props}
     />
   );

@@ -5,13 +5,13 @@ import { lang } from "../../../../langs";
 
 export const Signing: FC<Props> = () => (
   <form className="flex flex-col gap-11">
-    {/* Submit button */}
+    {/* Save button */}
     <div className="flex justify-end">
       <button className="primary-button" type="submit">
         {lang.Save}
       </button>
     </div>
-    {/* Submit button END */}
+    {/* Save button END */}
   </form>
 );
 

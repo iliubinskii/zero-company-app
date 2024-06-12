@@ -1,4 +1,4 @@
-import { deleteDraftFromSlice, logError } from "../slices";
+import { logError, removeDraft } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
 
@@ -15,6 +15,6 @@ export function deleteDraft(id: string): AppThunk {
       dispatch(
         logError({ error: response.error, message: response.errorMessage })
       );
-    else dispatch(deleteDraftFromSlice(id));
+    else dispatch(removeDraft(id));
   };
 }

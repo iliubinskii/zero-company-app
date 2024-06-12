@@ -2,7 +2,7 @@
 
 import { MdCheckCircle, MdClose, MdError, MdInfo } from "react-icons/md";
 import type { FC } from "react";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
 import type { SnackbarVariant } from "../store";
 import { noop } from "lodash";
@@ -15,7 +15,7 @@ export const Snackbar: FC<Props> = ({
   onClose = noop,
   variant = "info"
 }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const Surface = useMemo(() => {
     switch (variant) {

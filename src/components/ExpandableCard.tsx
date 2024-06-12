@@ -1,15 +1,15 @@
 "use client";
 
+import type { FC, ReactNode } from "react";
 import React, { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
 import tw from "tailwind-styled-components";
 
-export const ExpandableCard: React.FC<Props> = ({ children, expandable }) => {
+export const ExpandableCard: FC<Props> = ({ children, expandable }) => {
   const [contentsHeight, setContentsHeight] = useState(0);
 
   const contentsRef = useRef<HTMLDivElement>(null);
 
-  const [isHovering, setIsHovering] = React.useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     if (contentsRef.current)

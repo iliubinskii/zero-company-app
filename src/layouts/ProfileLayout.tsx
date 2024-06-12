@@ -8,13 +8,17 @@ import {
   GRAVATAR_SIZE,
   PLACEHOLDER_EMAIL
 } from "../consts";
-import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import {
+  LuBookmark,
+  LuFiles,
+  LuHeartHandshake,
+  LuLayoutDashboard,
+  LuLogOut,
+  LuSettings2
+} from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
 import { AnimatedLink } from "../components";
-import { BsBookmarks } from "react-icons/bs";
-import { GoSignOut } from "react-icons/go";
-import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
@@ -27,9 +31,10 @@ import { useUserName } from "../hooks";
  * Profile layout.
  * @param props - The properties.
  * @param props.children - The children.
+ * @param props.info  - The info.
  * @returns The element.
  */
-export const ProfileLayout: FC<Props> = ({ children }) => {
+export const ProfileLayout: FC<Props> = ({ children, info }) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const name = useUserName();
@@ -83,18 +88,22 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
           })}
         </Links>
       </SideMenu>
-      <Contents>{children}</Contents>
+      <Main>
+        <Contents>{children}</Contents>
+        {info}
+      </Main>
     </Container>
   );
 };
 
 export interface Props {
   children?: ReactNode | undefined;
+  info?: ReactNode | undefined;
 }
 
-const Container = tw.div`p-3 flex gap-5`;
+const Container = tw.div`p-6 flex gap-8`;
 
-const SideMenu = tw.div`p-3 flex flex-col gap-5`;
+const SideMenu = tw.div`flex flex-col gap-5`;
 
 const User = tw.div`h-16 w-64 flex items-center gap-3`;
 
@@ -115,7 +124,9 @@ const Link = tw(AnimatedLink)`
   text-slate-700
 `;
 
-const Contents = tw.div`flex-grow p-9 flex flex-col gap-9`;
+const Main = tw.div`grow p-4 flex gap-9`;
+
+const Contents = tw.div`grow flex flex-col gap-9`;
 
 const links = [
   {
@@ -134,22 +145,22 @@ const links = [
     text: lang.MyDrafts
   },
   {
-    Icon: IoDocumentsOutline,
+    Icon: LuFiles,
     href: "/profile/documents",
     text: lang.Documents
   },
   {
-    Icon: LuUser2,
+    Icon: LuSettings2,
     href: "/profile/settings",
     text: lang.Settings
   },
   {
-    Icon: BsBookmarks,
+    Icon: LuBookmark,
     href: "/profile/bookmarks",
     text: lang.Bookmarks
   },
   {
-    Icon: GoSignOut,
+    Icon: LuLogOut,
     href: `${API_URL}auth/logout`,
     text: lang.LogOut
   }
