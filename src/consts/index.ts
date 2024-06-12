@@ -15,12 +15,16 @@ export const COMPANY_SHARE_STEP = 100;
 export const COMPANY_TARGET_VALUE_STEP = 1000;
 
 export const CREATE_COMPANY_STEP = {
-  REVIEW: 3,
-  SELECT_CATEGORY: 1,
-  SELECT_COUNTRY: 2
+  REVIEW: "REVIEW",
+  SELECT_CATEGORY: "SELECT_CATEGORY",
+  SELECT_COUNTRY: "SELECT_COUNTRY"
 } as const;
 
-export const CREATE_COMPANY_TOTAL_STEPS = 3;
+export const CREATE_COMPANY_STEPS = [
+  CREATE_COMPANY_STEP.SELECT_CATEGORY,
+  CREATE_COMPANY_STEP.SELECT_COUNTRY,
+  CREATE_COMPANY_STEP.REVIEW
+];
 
 export const ERROR = {
   COMPANY_HAS_NO_IMAGE: "Company has no image",
@@ -31,7 +35,8 @@ export const ERROR = {
   EXPECTING_IMAGE: "Expecting at least one image",
   EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
-    "Expecting event target as HTMLFormElement"
+    "Expecting event target as HTMLFormElement",
+  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state"
 } as const;
 
 export const GRAVATAR_DEFAULT = "retro";
@@ -58,3 +63,8 @@ export const PLACEHOLDER_EMAIL = "placeholder@email.com";
 export const REDUX_PERSIST_KEY = "app-state";
 
 export const SHOW_SNACKBAR_DURATION_MS = 3000;
+
+export type CREATE_COMPANY_STEP =
+  (typeof CREATE_COMPANY_STEP)[keyof typeof CREATE_COMPANY_STEP];
+
+export type ERROR = (typeof ERROR)[keyof typeof ERROR];

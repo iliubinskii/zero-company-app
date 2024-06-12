@@ -1,4 +1,5 @@
 import {
+  SNACKBAR_VARIANT,
   selectAuthUser,
   selectLoaded,
   showSnackbar,
@@ -65,7 +66,7 @@ export function useAuthGuardedLoader<T extends object>(
             dispatch(
               showSnackbar({
                 message: resource.errorMessage,
-                variant: "error"
+                variant: SNACKBAR_VARIANT.error
               })
             );
             setState({

@@ -1,7 +1,7 @@
 import { omit } from "lodash";
 import zod from "zod";
 
-export const DigitalDocumentValidationSchema = zod.strictObject({
+export const DigitalDocumentValidationSchema = zod.object({
   assetId: zod.string(),
   secureUrl: zod.string().url(),
   signatures: zod.array(zod.string()),
@@ -9,7 +9,7 @@ export const DigitalDocumentValidationSchema = zod.strictObject({
 });
 
 export const founder = zod
-  .strictObject({
+  .object({
     _id: zod.any().optional(),
     email: preprocessEmail(zod.string().email()),
     firstName: zod.string().min(1).nullable().optional(),
@@ -22,7 +22,7 @@ export const IdValidationSchema = zod
   .string()
   .refine(value => /^[\da-f]{24}$/u.test(value));
 
-export const ImageValidationSchema = zod.strictObject({
+export const ImageValidationSchema = zod.object({
   assetId: zod.string().min(1),
   height: preprocessNumber(zod.number().int().positive()),
   name: zod.string().min(1),
@@ -31,7 +31,7 @@ export const ImageValidationSchema = zod.strictObject({
   width: preprocessNumber(zod.number().int().positive())
 });
 
-export const SignatoryValidationSchema = zod.strictObject({
+export const SignatoryValidationSchema = zod.object({
   email: zod.string().email(),
   firstName: zod.string().nullable().optional(),
   lastName: zod.string().nullable().optional()
@@ -63,6 +63,20 @@ export function preprocessBoolean<T extends zod.ZodTypeAny>(
 
     return value;
   }, schema);
+}
+
+/**
+ * Preprocesses a schema to convert string values to dates.
+ * @param schema - The schema to preprocess.
+ * @returns The preprocessed schema.
+ */
+export function preprocessDate<T extends zod.ZodTypeAny>(
+  schema: T
+): zod.ZodEffects<T> {
+  return zod.preprocess(
+    value => (typeof value === "string" ? new Date(value) : value),
+    schema
+  );
 }
 
 /**

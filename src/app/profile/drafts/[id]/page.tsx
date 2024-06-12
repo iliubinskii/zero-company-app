@@ -6,7 +6,12 @@ import {
   AuthGuard,
   ProgressAccordionItem
 } from "../../../../components";
-import { addDraft, showSnackbar, useAppDispatch } from "../../../../store";
+import {
+  SNACKBAR_VARIANT,
+  addDraft,
+  showSnackbar,
+  useAppDispatch
+} from "../../../../store";
 import {
   assertDefined,
   buildFormData,
@@ -134,7 +139,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
             dispatch(
               showSnackbar({
                 message: response.errorMessage,
-                variant: "error"
+                variant: SNACKBAR_VARIANT.error
               })
             );
         else {
