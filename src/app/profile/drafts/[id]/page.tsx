@@ -3,7 +3,8 @@
 import {
   AccordionFlatContainer,
   AccordionJunction,
-  AuthGuard
+  AuthGuard,
+  ProgressAccordionItem
 } from "../../../../components";
 import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
 import {
@@ -14,7 +15,6 @@ import {
 } from "../../../../utils";
 import { showSnackbar, useAppDispatch } from "../../../../store";
 import { Basics } from "./Basics";
-import { CircularAccordionItem } from "./CircularAccordionItem";
 import { ERROR } from "../../../../consts";
 import type { FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
@@ -171,7 +171,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
           <AccordionFlatContainer>
             {modules.map(
               ({ Component, description, progress, title }, index) => (
-                <CircularAccordionItem
+                <ProgressAccordionItem
                   description={description}
                   key={index}
                   progress={progress}
@@ -213,19 +213,19 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                       }}
                     />
                   )}
-                </CircularAccordionItem>
+                </ProgressAccordionItem>
               )
             )}
           </AccordionFlatContainer>
           <AccordionJunction />
           <AccordionFlatContainer>
-            <CircularAccordionItem
+            <ProgressAccordionItem
               description={lang.app.profile.drafts.draft.Signing.description}
               progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
               {company && <Signing company={company} modified={modified} />}
-            </CircularAccordionItem>
+            </ProgressAccordionItem>
           </AccordionFlatContainer>
         </div>
       </ProfileLayout>

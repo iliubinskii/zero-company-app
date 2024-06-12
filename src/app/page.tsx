@@ -26,7 +26,7 @@ const Page: NextPage = async () => {
   return (
     <PageLayout size="xl">
       {/* Teaser */}
-      <div className="text-3xl text-gray-700 text-center">
+      <div className="text-3xl text-gray-900 text-center">
         {lang.app.home.teaser}
       </div>
       {/* Teaser END */}
@@ -130,7 +130,7 @@ const Page: NextPage = async () => {
       </article>
       {/* Compete Block End */}
 
-      {/* Join as a cofounder Block */}
+      {/* Join as a co-founder Block */}
       <section>
         <h2 className="text-2xl font-bold tracking-wider mb-4">
           Join as a co-founder
@@ -141,7 +141,7 @@ const Page: NextPage = async () => {
           ))}
         </CompanyCards>
       </section>
-      {/* Join as a cofounder Block END */}
+      {/* Join as a co-founder Block END */}
 
       {/* Knowledge base block */}
       <section>
@@ -225,7 +225,7 @@ const mockArrayForInfoCells = [
     number: MOCK_STATS.INTERNSHIP_POSITIONS
   },
   {
-    description: lang.lookingForCofounder,
+    description: lang.lookingForCoFounder,
     number: MOCK_STATS.LOOKING_FOR_COFOUNDER
   }
 ];

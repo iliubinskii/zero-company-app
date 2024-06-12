@@ -29,7 +29,6 @@ export const lang = {
   Email: "E-mail",
   Explore: "Explore",
   FirstName: "First name",
-  Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
   GoToHomepage: "Go to Homepage",
@@ -84,6 +83,7 @@ export const lang = {
   WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
+  ZeroMember: "Zero member",
   app: {
     home: {
       card1: {
@@ -159,7 +159,7 @@ export const lang = {
       }
     }
   },
-  lookingForCofounder: "looking for cofounder",
+  lookingForCoFounder: "looking for co-founder",
   meta: {
     description: `
       Create a virtual company at zero cost and grow it into your first unicorn!

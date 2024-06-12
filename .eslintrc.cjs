@@ -88,7 +88,6 @@ const config = {
             "camelcase",
             "checkbox",
             "cjs",
-            "cofounder",
             "commonjs",
             "compat",
             "consts",

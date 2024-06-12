@@ -17,5 +17,5 @@ export function useUserName(): string {
     if (typeof user.lastName === "string") return user.lastName;
   }
 
-  return lang.Founder;
+  return lang.ZeroMember;
 }

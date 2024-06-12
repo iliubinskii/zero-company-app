@@ -1,16 +1,11 @@
-// components/CircularProgress.js
-
-import {
-  CIRCULAR_PROGRESS_SIZE,
-  CIRCULAR_PROGRESS_STROKE_WIDTH
-} from "../consts";
+import { CIRCULAR_SIZE, CIRCULAR_STROKE_WIDTH } from "../../consts";
 import type { FC } from "react";
 import React from "react";
 
 export const CircularProgress: FC<Props> = ({
   progress,
-  size = CIRCULAR_PROGRESS_SIZE,
-  strokeWidth = CIRCULAR_PROGRESS_STROKE_WIDTH
+  size = CIRCULAR_SIZE,
+  strokeWidth = CIRCULAR_STROKE_WIDTH
 }) => {
   const radius = 0.5 * (size - strokeWidth);
 
@@ -19,8 +14,11 @@ export const CircularProgress: FC<Props> = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="flex items-center justify-center">
-      <svg className="rotate-[-90deg]" height={size} width={size}>
+    <div
+      className="flex items-center justify-center"
+      style={{ height: size, width: size }}
+    >
+      <svg className="absolute rotate-[-90deg]" height={size} width={size}>
         <circle
           className="text-gray-300"
           cx={size / 2}

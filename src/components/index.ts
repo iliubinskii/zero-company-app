@@ -1,6 +1,5 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
-export { CircularProgress } from "./CircularProgress";
 export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
 export { ExpandableCard } from "./ExpandableCard";
@@ -13,9 +12,9 @@ export { Loading } from "./Loading";
 export { Navigate } from "./Navigate";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
-export { Unauthorized } from "./Unauthorized";
 export * from "./accordion";
 export * from "./buttons";
+export * from "./circular-components";
 export * from "./company-cards";
 export * from "./form";
 export * from "./icons";
