@@ -1,9 +1,10 @@
 "use client";
 
+import type { FC } from "react";
 import React, { useState } from "react";
 import { images } from "../images";
 
-export const FAQ: React.FC = () => {
+export const FAQ: FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAnswer = (index: number): void => {

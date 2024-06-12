@@ -8,6 +8,7 @@ import {
 } from "../../../components";
 import type { FieldError, UserUpdate } from "../../../schema";
 import { FaPencilAlt } from "react-icons/fa";
+import type { FormEvent } from "react";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React, { useState } from "react";
@@ -22,7 +23,7 @@ const Page: NextPage = () => {
     setErrorMessages(prev => prev.filter(error => error.path !== path));
   };
 
-  const saveHandler = (event: React.FormEvent<HTMLFormElement>): void => {
+  const saveHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     // eslint-disable-next-line no-console -- Postponed
