@@ -1,20 +1,25 @@
 import type {
   AuthActions,
   CompanyRegistrationActions,
-  DraftsActions,
   FavoriteCompaniesActions,
   LoadedActions,
   SnackbarActions,
-  UserActions
+  UserActions,
+  UserDocumentsActions,
+  UserDraftsActions
 } from "../slices";
+import type {
+  AuthUser,
+  ExistingCategory,
+  ExistingCompany,
+  ExistingDocument,
+  ExistingUser
+} from "../../schema";
 import {
-  type AuthUser,
   AuthUserValidationSchema,
-  type ExistingCategory,
   ExistingCategoryValidationSchema,
-  type ExistingCompany,
   ExistingCompanyValidationSchema,
-  type ExistingUser,
+  ExistingDocumentValidationSchema,
   ExistingUserValidationSchema
 } from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
@@ -43,11 +48,6 @@ export const AppStateValidationSchema = zod.object({
       CREATE_COMPANY_STEP.SELECT_COUNTRY
     ])
   }),
-  drafts: zod.object({
-    drafts: zod.array(ExistingCompanyValidationSchema),
-    draftsError: zod.boolean(),
-    draftsLoading: zod.boolean()
-  }),
   favoriteCompanies: zod.object({
     favoriteCompanies: zod.array(ExistingCompanyValidationSchema),
     favoriteCompaniesError: zod.boolean(),
@@ -65,6 +65,16 @@ export const AppStateValidationSchema = zod.object({
   }),
   user: zod.object({
     user: ExistingUserValidationSchema.optional()
+  }),
+  userDocuments: zod.object({
+    documents: zod.array(ExistingDocumentValidationSchema),
+    documentsError: zod.boolean(),
+    documentsLoading: zod.boolean()
+  }),
+  userDrafts: zod.object({
+    drafts: zod.array(ExistingCompanyValidationSchema),
+    draftsError: zod.boolean(),
+    draftsLoading: zod.boolean()
   })
 });
 
@@ -72,11 +82,12 @@ export type AppAction =
   | SetStateAction
   | AuthActions
   | CompanyRegistrationActions
-  | DraftsActions
   | FavoriteCompaniesActions
   | LoadedActions
   | SnackbarActions
-  | UserActions;
+  | UserActions
+  | UserDraftsActions
+  | UserDocumentsActions;
 
 export type AppDispatch = AppStore["dispatch"];
 
@@ -88,11 +99,6 @@ export interface AppState {
     readonly category?: ExistingCategory | undefined;
     readonly country?: string | undefined;
     readonly step: CREATE_COMPANY_STEP;
-  };
-  readonly drafts: {
-    readonly drafts: readonly ExistingCompany[];
-    readonly draftsError: boolean;
-    readonly draftsLoading: boolean;
   };
   readonly favoriteCompanies: {
     readonly favoriteCompanies: readonly ExistingCompany[];
@@ -107,6 +113,16 @@ export interface AppState {
   };
   readonly user: {
     readonly user?: ExistingUser | undefined;
+  };
+  readonly userDocuments: {
+    readonly documents: readonly ExistingDocument[];
+    readonly documentsError: boolean;
+    readonly documentsLoading: boolean;
+  };
+  readonly userDrafts: {
+    readonly drafts: readonly ExistingCompany[];
+    readonly draftsError: boolean;
+    readonly draftsLoading: boolean;
   };
 }
 

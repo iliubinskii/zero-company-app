@@ -1,6 +1,11 @@
 "use client";
 
-import { AuthGuard, DraftCard, DraftCards } from "../../../components";
+import {
+  AuthGuard,
+  DraftCard,
+  DraftCards,
+  MarketOverview
+} from "../../../components";
 import {
   selectDrafts,
   selectDraftsLoading,
@@ -17,7 +22,7 @@ const Page: NextPage = () => {
 
   return (
     <AuthGuard customLoading={draftsLoading}>
-      <ProfileLayout>
+      <ProfileLayout info={<MarketOverview />}>
         <DraftCards>
           {drafts.map(company => (
             <DraftCard company={company} key={company._id} />

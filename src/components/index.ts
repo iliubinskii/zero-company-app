@@ -1,5 +1,7 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
+export { DocumentCard } from "./DocumentCard";
+export { DocumentCards } from "./DocumentCards";
 export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
 export { ExpandableCard } from "./ExpandableCard";

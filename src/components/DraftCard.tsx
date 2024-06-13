@@ -3,6 +3,7 @@
 import { FaDraftingCompass, FaPlus } from "react-icons/fa";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { deleteDraft, useAppDispatch } from "../store";
+import { AnimatedLink } from "./AnimatedLink";
 import type { ExistingCompany } from "../schema";
 import type { FC } from "react";
 import React from "react";
@@ -25,6 +26,9 @@ export const DraftCard: FC<Props> = ({ company }) => {
       <button onClick={deleteButtonClickHandler}>X</button>
       <Title>{company.name ?? "Edit title"}</Title>
       <Header>
+        <AnimatedLink href={`/profile/drafts/${company._id}`}>
+          Open
+        </AnimatedLink>
         <AvatarContainer>
           {company.founders.map(({ email, name }, index) => (
             <Avatar
