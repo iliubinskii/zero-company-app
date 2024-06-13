@@ -10,6 +10,7 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingDocument,
   ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
@@ -23,7 +24,8 @@ import {
   putReq,
   restoreCategories,
   restoreCompanies,
-  restoreCompany
+  restoreCompany,
+  restoreDocument
 } from "./helpers";
 
 export const api = {
@@ -40,6 +42,20 @@ export const api = {
     );
 
     return result;
+  },
+  generateFoundingAgreement: async (
+    id: string
+  ): Promise<
+    | ExistingDocument
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const document = await postReq<Routes["/companies/{id}/found"]["post"]>(
+      `companies/${id}/found`,
+      {}
+    );
+
+    return "error" in document ? document : restoreDocument(document);
   },
   /**
    * Retrieves the authenticated user from the API.

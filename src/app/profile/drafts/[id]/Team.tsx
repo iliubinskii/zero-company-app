@@ -76,33 +76,16 @@ export const Team: FC<ModuleProps> = ({
                     autoComplete="given-name"
                     className="w-full"
                     errorMessages={errorMessages}
-                    name={`founders[${index}].firstName`}
+                    name={`founders[${index}].name`}
                     onChange={value => {
-                      editFounder(index, { firstName: value });
+                      editFounder(index, { name: value });
                     }}
                     onResetErrors={onResetErrors}
                     type="text"
-                    value={founder.firstName ?? ""}
+                    value={founder.name ?? ""}
                   />
                 </BodyCol>
                 {/* First name END */}
-
-                {/* Last name */}
-                <BodyCol>
-                  <TableForm.InputElement
-                    autoComplete="family-name"
-                    className="w-full"
-                    errorMessages={errorMessages}
-                    name={`founders[${index}].lastName`}
-                    onChange={value => {
-                      editFounder(index, { lastName: value });
-                    }}
-                    onResetErrors={onResetErrors}
-                    type="text"
-                    value={founder.lastName ?? ""}
-                  />
-                </BodyCol>
-                {/* Last name END */}
 
                 {/* Share */}
                 <BodyCol>

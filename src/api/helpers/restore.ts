@@ -3,6 +3,7 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingDocument,
   JsonTransform,
   MultipleDocsResponse
 } from "../../schema";
@@ -64,6 +65,39 @@ export function restoreCategories(
 
   return {
     docs: docs.map(restoreCategory),
+    nextCursor: restoreCursor(nextCursor),
+    ...rest
+  };
+}
+
+/**
+ * Restores the document dates.
+ * @param document - The document.
+ * @returns The restored document.
+ */
+export function restoreDocument(
+  document: JsonTransform<ExistingDocument>
+): ExistingDocument {
+  const { createdAt, ...rest } = document;
+
+  return {
+    createdAt: new Date(createdAt),
+    ...rest
+  };
+}
+
+/**
+ * Restores the document dates.
+ * @param response - The response.
+ * @returns The restored response.
+ */
+export function restoreDocuments(
+  response: RawMultipleDocsResponse<JsonTransform<ExistingDocument>>
+): MultipleDocsResponse<ExistingDocument> {
+  const { docs, nextCursor, ...rest } = response;
+
+  return {
+    docs: docs.map(restoreDocument),
     nextCursor: restoreCursor(nextCursor),
     ...rest
   };

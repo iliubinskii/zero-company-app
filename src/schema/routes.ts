@@ -159,9 +159,9 @@ export interface paths {
   };
   "/companies/{id}/found": {
     /** Create founding agreement for a company */
-    put: {
+    post: {
       responses: {
-        200: components["responses"]["Company"];
+        200: components["responses"]["Document"];
         404: components["responses"]["NotFound"];
         409: components["responses"]["Conflict"];
       };
@@ -550,10 +550,9 @@ export interface components {
       affectedRows: number;
     };
     DigitalDocument: {
-      assetId: string;
-      secureUrl: string;
+      embedSrc: string;
       signatures: string[];
-      url: string;
+      submissionId: number;
     };
     Document: {
       _id: string;
@@ -573,8 +572,7 @@ export interface components {
     };
     Founder: {
       email: string;
-      firstName?: string;
-      lastName?: string;
+      name?: string;
       share?: number;
     };
     Home: {
@@ -622,8 +620,8 @@ export interface components {
     };
     Signatory: {
       email: string;
-      firstName?: string;
-      lastName?: string;
+      name?: string;
+      role: string;
     };
     Unauthorized: {
       /** @enum {string} */

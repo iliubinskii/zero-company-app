@@ -8,6 +8,7 @@ import type { FC } from "react";
 import React from "react";
 import { callAsync } from "../utils";
 import gravatar from "gravatar";
+import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 
 export const DraftCard: FC<Props> = ({ company }) => {
@@ -25,11 +26,11 @@ export const DraftCard: FC<Props> = ({ company }) => {
       <Title>{company.name ?? "Edit title"}</Title>
       <Header>
         <AvatarContainer>
-          {company.founders.map(founder => (
+          {company.founders.map(({ email, name }, index) => (
             <Avatar
-              alt={`${founder.firstName} ${founder.lastName}`}
-              key={founder.email}
-              src={gravatar.url(founder.email, {
+              alt={name ?? `${lang.Founder} ${index + 1}`}
+              key={email}
+              src={gravatar.url(email, {
                 d: GRAVATAR_DEFAULT,
                 r: GRAVATAR_RATING,
                 s: GRAVATAR_SIZE
