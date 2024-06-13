@@ -17,16 +17,13 @@ export const MarketOverview: FC = () => (
         Zero Coins
       </Header>
       <Text>
-        Transactions: <ZeroCoin />
-        1023
+        Transactions: <ZeroCoin amount={1023} />
       </Text>
       <Text>
-        Market Cap: <ZeroCoin />
-        123,456,789
+        Market Cap: <ZeroCoin amount={123_456_789} />
       </Text>
       <Text>
-        24h Volume: <ZeroCoin />
-        12,345,678
+        24h Volume: <ZeroCoin amount={12_345_678} />
       </Text>
     </Section>
     {/* Zero Coins END */}
@@ -39,12 +36,16 @@ export const MarketOverview: FC = () => (
       </Header>
       <Text>Total Stocks: 50</Text>
       <Text>
-        Today&apos;s Change: <ZeroCoin />
-        +3.45 (1.23%)
+        Today&apos;s Change:{" "}
+        <ZeroCoin
+          amount={
+            // eslint-disable-next-line no-magic-numbers -- Ok
+            `+${(3.45).toLocaleString()} (${(1.23).toLocaleString()}%)`
+          }
+        />
       </Text>
       <Text>
-        Market Value: <ZeroCoin />
-        5,678,910
+        Market Value: <ZeroCoin amount={5_678_910} />
       </Text>
     </Section>
     {/* Stocks END */}
@@ -58,8 +59,7 @@ export const MarketOverview: FC = () => (
       <Text>Upcoming IPOs: 5</Text>
       <Text>Recent IPOs: 3</Text>
       <Text>
-        IPO Market Value: <ZeroCoin />
-        1,234,567
+        IPO Market Value: <ZeroCoin amount={1_234_567} />
       </Text>
     </Section>
     {/* IPOs END */}

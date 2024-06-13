@@ -93,11 +93,11 @@ export const RootLayout: FC<Props> = ({ children }) => {
         {/* Footer link groups */}
         <div className="border-t-1.5 p-10">
           <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-            <div className="pt-4 flex flex-col items-center">
-              <div className="w-[60px] h-[60px]">
+            <div className="pt-4 flex flex-col items-center scale-75">
+              <div className="w-[100px] h-[100px]">
                 <img className="w-full h-full" src="/logo.png" />
               </div>
-              <Logo className="scale-75 text-charcoal" />
+              <Logo className="text-charcoal" />
             </div>
             {footerLinkGroups.map(({ links, title }, key) => (
               <div className="flex flex-col gap-4" key={key}>
