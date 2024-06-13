@@ -7,6 +7,7 @@ import {
   MarketOverview
 } from "../../../components";
 import {
+  refreshDrafts,
   selectDrafts,
   selectDraftsLoading,
   useAppSelector
@@ -21,7 +22,7 @@ const Page: NextPage = () => {
   const draftsLoading = useAppSelector(selectDraftsLoading);
 
   return (
-    <AuthGuard customLoading={draftsLoading}>
+    <AuthGuard customLoading={draftsLoading} customRefreshThunk={refreshDrafts}>
       <ProfileLayout info={<MarketOverview />}>
         <DraftCards>
           {drafts.map(company => (

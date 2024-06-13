@@ -7,6 +7,7 @@ import {
   MarketOverview
 } from "../../../components";
 import {
+  refreshDocuments,
   selectDocuments,
   selectDocumentsLoading,
   useAppSelector
@@ -21,7 +22,10 @@ const Page: NextPage = () => {
   const documentsLoading = useAppSelector(selectDocumentsLoading);
 
   return (
-    <AuthGuard customLoading={documentsLoading}>
+    <AuthGuard
+      customLoading={documentsLoading}
+      customRefreshThunk={refreshDocuments}
+    >
       <ProfileLayout info={<MarketOverview />}>
         <DocumentCards>
           {documents.map(document => (

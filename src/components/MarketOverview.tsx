@@ -70,7 +70,7 @@ export const MarketOverview: FC = () => (
         <FaChartPie className="text-purple-500" />
         Indexes
       </Header>
-      <Text>Experts: 33,456 (+1.41%)</Text>
+      <Text>Expert: 33,456 (+1.41%)</Text>
       <Text>Community: 12,345 (+0.23%)</Text>
     </Section>
     {/* Indexes END */}

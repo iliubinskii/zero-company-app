@@ -6,6 +6,7 @@ import {
 } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
+import { lang } from "../../langs";
 
 /**
  * Requires the documents.
@@ -13,20 +14,25 @@ import { api } from "../../api";
  */
 export function refreshDocuments(): AppThunk {
   return async (dispatch, getState) => {
-    const { authUser } = getState().auth;
+    try {
+      const { authUser } = getState().auth;
 
-    if (authUser) {
-      const documents = await api.getDocumentsByMe({
-        sortBy: "createdAt",
-        sortOrder: "desc"
-      });
+      if (authUser) {
+        const documents = await api.getDocumentsByMe({
+          sortBy: "createdAt",
+          sortOrder: "desc"
+        });
 
-      if ("error" in documents) {
-        dispatch(
-          logError({ error: documents, message: documents.errorMessage })
-        );
-        dispatch(setDocumentsError());
-      } else dispatch(setDocuments(documents.docs));
-    } else dispatch(clearDocuments());
+        if ("error" in documents) {
+          dispatch(setDocumentsError());
+          dispatch(
+            logError({ error: documents, message: documents.errorMessage })
+          );
+        } else dispatch(setDocuments(documents.docs));
+      } else dispatch(clearDocuments());
+    } catch (err) {
+      dispatch(logError({ error: err, message: lang.ErrorLoadingDocuments }));
+      dispatch(setDocumentsError());
+    }
   };
 }

@@ -1,25 +1,41 @@
 "use client";
 
 import type { FC, ReactElement, ReactNode } from "react";
-import { selectAuthUser, selectLoaded, useAppSelector } from "../store";
+import {
+  selectAuthUser,
+  selectLoaded,
+  useAppDispatch,
+  useAppSelector
+} from "../store";
+import type { AppThunk } from "../store";
 import { Loading } from "./Loading";
 import React, { useEffect } from "react";
+import { callAsync } from "../utils";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 
 export const AuthGuard: FC<Props> = ({
   children,
-  customLoading = false
+  customLoading = false,
+  customRefreshThunk
 }): ReactElement => {
   const authUser = useAppSelector(selectAuthUser);
+
+  const dispatch = useAppDispatch();
 
   const loaded = useAppSelector(selectLoaded);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (loaded && !authUser) router.push("/");
-  }, [authUser, loaded, router]);
+    if (loaded)
+      if (authUser) {
+        if (customRefreshThunk)
+          callAsync(async () => {
+            await dispatch(customRefreshThunk());
+          });
+      } else router.push("/");
+  }, [authUser, customRefreshThunk, dispatch, loaded, router]);
 
   return (
     <Container>
@@ -35,7 +51,8 @@ export const AuthGuard: FC<Props> = ({
 
 export interface Props {
   children?: ReactNode | undefined;
-  readonly customLoading?: boolean;
+  readonly customLoading?: boolean | undefined;
+  readonly customRefreshThunk?: (() => AppThunk) | undefined;
 }
 
 const Container = tw.div`relative`;

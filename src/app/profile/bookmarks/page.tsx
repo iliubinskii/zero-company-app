@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AuthGuard, CompanyCard, CompanyCards } from "../../../components";
 import {
+  refreshFavoriteCompanies,
   selectFavoriteCompanies,
   selectFavoriteCompaniesLoading,
   useAppSelector
@@ -20,7 +21,10 @@ const Page: NextPage = () => {
   );
 
   return (
-    <AuthGuard customLoading={favoriteCompaniesLoading}>
+    <AuthGuard
+      customLoading={favoriteCompaniesLoading}
+      customRefreshThunk={refreshFavoriteCompanies}
+    >
       <ProfileLayout>
         <CompanyCards>
           <AnimatePresence>
