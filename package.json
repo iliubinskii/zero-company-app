@@ -25,9 +25,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "contributors": "npm run contributors-json && npm run contributors-md",
-    "contributors-json": "python -m gitfame --bytype --excl \"\\.(ico|json|svg)$\" --format json ./src >./src/contributors/app.json",
-    "contributors-md": "python -m gitfame --bytype --excl \"\\.(ico|json|svg)$\" ./src >./CONTRIBUTORS.md",
+    "contributors": "python -m gitfame --bytype --excl \"\\.(ico|json|svg)$\" ./src >./CONTRIBUTORS.md",
     "deploy-preview": "vercel",
     "deploy-prod": "vercel --prod",
     "dev": "next dev -p 3100",
