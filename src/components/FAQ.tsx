@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import React, { useState } from "react";
+import { images } from "../images";
 
 export const FAQ: FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -39,7 +40,11 @@ export const FAQ: FC = () => {
           {FAQs.map((faq, index) => (
             <li className="mb-4" key={index}>
               <div className="flex items-start">
-                <img alt="Icon" className="w-6 h-6 mr-2 mt-1" src="/logo.png" />
+                <img
+                  alt="Icon"
+                  className="w-6 h-6 mr-2 mt-1"
+                  src={images.appLogo.src}
+                />
                 <div className="w-full">
                   <h3
                     className="md:text-2xl xl:text-4xl font-semibold cursor-pointer text-left"
