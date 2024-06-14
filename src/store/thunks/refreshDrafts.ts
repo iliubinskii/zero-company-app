@@ -2,6 +2,7 @@ import { clearDrafts, logError, setDrafts, setDraftsError } from "../slices";
 import type { AppThunk } from "../types";
 import { CompanyStatus } from "../../schema";
 import { api } from "../../api";
+import { lang } from "../../langs";
 
 /**
  * Requires the drafts.
@@ -9,19 +10,24 @@ import { api } from "../../api";
  */
 export function refreshDrafts(): AppThunk {
   return async (dispatch, getState) => {
-    const { authUser } = getState().auth;
+    try {
+      const { authUser } = getState().auth;
 
-    if (authUser) {
-      const drafts = await api.getCompaniesByMe({
-        sortBy: "createdAt",
-        sortOrder: "desc",
-        status: CompanyStatus.draft
-      });
+      if (authUser) {
+        const drafts = await api.getCompaniesByMe({
+          sortBy: "createdAt",
+          sortOrder: "desc",
+          status: CompanyStatus.draft
+        });
 
-      if ("error" in drafts) {
-        dispatch(logError({ error: drafts, message: drafts.errorMessage }));
-        dispatch(setDraftsError());
-      } else dispatch(setDrafts(drafts.docs));
-    } else dispatch(clearDrafts());
+        if ("error" in drafts) {
+          dispatch(setDraftsError());
+          dispatch(logError({ error: drafts, message: drafts.errorMessage }));
+        } else dispatch(setDrafts(drafts.docs));
+      } else dispatch(clearDrafts());
+    } catch (err) {
+      dispatch(logError({ error: err, message: lang.ErrorLoadingDrafts }));
+      dispatch(setDraftsError());
+    }
   };
 }

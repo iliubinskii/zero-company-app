@@ -1,6 +1,7 @@
 import { logError, setAuthUser } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
+import { lang } from "../../langs";
 
 /**
  * Updates the authenticated user.
@@ -8,12 +9,17 @@ import { api } from "../../api";
  */
 export function refreshAuthUser(): AppThunk {
   return async dispatch => {
-    const user = await api.getAuthUser();
+    try {
+      const user = await api.getAuthUser();
 
-    if (user === null) dispatch(setAuthUser(null));
-    else if ("error" in user) {
-      dispatch(logError({ error: user, message: user.errorMessage }));
+      if (user === null) dispatch(setAuthUser(null));
+      else if ("error" in user) {
+        dispatch(setAuthUser(null));
+        dispatch(logError({ error: user, message: user.errorMessage }));
+      } else dispatch(setAuthUser(user));
+    } catch (err) {
+      dispatch(logError({ error: err, message: lang.ErrorLoadingAuthUser }));
       dispatch(setAuthUser(null));
-    } else dispatch(setAuthUser(user));
+    }
   };
 }

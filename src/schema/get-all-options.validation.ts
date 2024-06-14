@@ -2,7 +2,7 @@ import {
   CompanyStatus,
   IdValidationSchema,
   preprocessBoolean,
-  preprocessNumber
+  preprocessInt
 } from "./common";
 import type {
   GetCategoriesOptions,
@@ -17,11 +17,11 @@ const cursor = zod.tuple([zod.string().min(1), IdValidationSchema]).optional();
 
 const includePrivateCompanies = preprocessBoolean(zod.boolean()).optional();
 
-const limit = preprocessNumber(
+const limit = preprocessInt(
   zod.number().int().positive().max(MAX_LIMIT)
 ).optional();
 
-const offset = preprocessNumber(zod.number().int().nonnegative()).optional();
+const offset = preprocessInt(zod.number().int().nonnegative()).optional();
 
 const onlyPinned = preprocessBoolean(zod.boolean()).optional();
 
@@ -34,12 +34,13 @@ const sortBy = {
       zod.literal("foundedAt"),
       zod.literal("name")
     ])
-    .optional()
+    .optional(),
+  documents: zod.literal("createdAt").optional()
 } as const;
 
-const sortOrder = {
-  companies: zod.union([zod.literal("asc"), zod.literal("desc")]).optional()
-} as const;
+const sortOrder = zod
+  .union([zod.literal("asc"), zod.literal("desc")])
+  .optional();
 
 const status = zod
   .enum([CompanyStatus.draft, CompanyStatus.founded])
@@ -58,13 +59,15 @@ export const GetCompaniesOptionsValidationSchema = zod.object({
   offset,
   onlyRecommended,
   sortBy: sortBy.companies,
-  sortOrder: sortOrder.companies,
+  sortOrder,
   status
 });
 
 export const GetDocumentsOptionsValidationSchema = zod.object({
   limit,
-  offset
+  offset,
+  sortBy: sortBy.documents,
+  sortOrder
 });
 
 export const GetUsersOptionsValidationSchema = zod.object({

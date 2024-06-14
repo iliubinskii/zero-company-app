@@ -18,6 +18,7 @@ import {
   callAsync,
   removeUndefined
 } from "../../../../utils";
+import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
 import type { CustomCompanyUpdate } from "./helpers";
 import { ERROR } from "../../../../consts";
@@ -28,12 +29,11 @@ import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Signing } from "./Signing";
 import { Team } from "./Team";
 import { api } from "../../../../api";
 import { lang } from "../../../../langs";
-import { useAuthGuardedLoader } from "../../../../hooks";
 import { useCategories } from "../../../../contexts";
 
 const Page: NextPage<NextPageProps> = ({ params = {} }) => {
@@ -51,16 +51,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 
   const categories = useCategories();
 
-  const category = useMemo(() => {
-    if (company) {
-      const categoryId = company.categories[0];
-
-      if (typeof categoryId === "string")
-        return categories.find(({ _id }) => _id === categoryId);
-    }
-
-    return undefined;
-  }, [categories, company]);
+  const category = useCompanyCategory(company);
 
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 

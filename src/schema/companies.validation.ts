@@ -6,12 +6,12 @@ import {
 } from "./companies";
 import {
   CompanyStatus,
+  FounderValidationSchema,
   IdValidationSchema,
   ImageValidationSchema,
-  founder,
   preprocessBoolean,
   preprocessDate,
-  preprocessNumber
+  preprocessInt
 } from "./common";
 import zod from "zod";
 
@@ -31,7 +31,7 @@ const foundedAt = preprocessDate(zod.date()).nullable().optional();
 
 const foundingAgreement = zod.string().min(1).nullable().optional();
 
-const founders = zod.array(founder);
+const founders = zod.array(FounderValidationSchema);
 
 const images = zod.array(ImageValidationSchema);
 
@@ -47,7 +47,7 @@ const removeImages = zod.array(zod.string().min(1));
 
 const status = zod.enum([CompanyStatus.draft, CompanyStatus.founded]);
 
-const targetValue = preprocessNumber(zod.number().int().positive())
+const targetValue = preprocessInt(zod.number().int().positive())
   .nullable()
   .optional();
 

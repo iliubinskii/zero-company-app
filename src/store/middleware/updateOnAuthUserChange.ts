@@ -6,12 +6,14 @@ import type {
   UnknownAction
 } from "@reduxjs/toolkit";
 import {
+  clearDocuments,
   clearDrafts,
   clearFavoriteCompanies,
   clearUser,
   setAuthUser
 } from "../slices";
 import {
+  refreshDocuments,
   refreshDrafts,
   refreshFavoriteCompanies,
   refreshUser
@@ -38,12 +40,14 @@ export const updateOnAuthUserChange: Middleware<
     } else if (authUser === null && previousAuthUser === null) {
       // Same no user, do nothing
     } else {
+      store.dispatch(clearDocuments());
       store.dispatch(clearDrafts());
       store.dispatch(clearFavoriteCompanies());
       store.dispatch(clearUser());
 
       callAsync(async () => {
         await Promise.allSettled([
+          store.dispatch(refreshDocuments()),
           store.dispatch(refreshDrafts()),
           store.dispatch(refreshFavoriteCompanies()),
           store.dispatch(refreshUser())

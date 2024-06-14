@@ -3,10 +3,11 @@ import { SET_STATE, setAppStateReducer } from "./root-actions";
 import {
   authReducer,
   companyRegistrationReducer,
-  draftsReducer,
   favoriteCompaniesReducer,
   loadedReducer,
   snackbarReducer,
+  useDraftsReducer,
+  userDocumentsReducer,
   userReducer
 } from "./slices";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -16,11 +17,12 @@ import { updateOnAuthUserChange } from "./middleware";
 const slicesReducer = combineReducers({
   auth: authReducer,
   companyRegistration: companyRegistrationReducer,
-  drafts: draftsReducer,
   favoriteCompanies: favoriteCompaniesReducer,
   loaded: loadedReducer,
   snackbar: snackbarReducer,
-  user: userReducer
+  user: userReducer,
+  userDocuments: userDocumentsReducer,
+  userDrafts: useDraftsReducer
 });
 
 const rootReducer = (

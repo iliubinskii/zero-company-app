@@ -7,6 +7,7 @@ import {
 import type { AppThunk } from "../types";
 import { CompanyStatus } from "../../schema";
 import { api } from "../../api";
+import { lang } from "../../langs";
 
 /**
  * Refreshes the list of favorite companies.
@@ -14,24 +15,34 @@ import { api } from "../../api";
  */
 export function refreshFavoriteCompanies(): AppThunk {
   return async (dispatch, getState) => {
-    const { authUser } = getState().auth;
+    try {
+      const { authUser } = getState().auth;
 
-    if (authUser) {
-      const favoriteCompanies = await api.getFavoriteCompaniesByMe({
-        sortBy: "createdAt",
-        sortOrder: "desc",
-        status: CompanyStatus.founded
-      });
+      if (authUser) {
+        const favoriteCompanies = await api.getFavoriteCompaniesByMe({
+          sortBy: "createdAt",
+          sortOrder: "desc",
+          status: CompanyStatus.founded
+        });
 
-      if ("error" in favoriteCompanies) {
-        dispatch(
-          logError({
-            error: favoriteCompanies,
-            message: favoriteCompanies.errorMessage
-          })
-        );
-        dispatch(setFavoriteCompaniesError());
-      } else dispatch(setFavoriteCompanies(favoriteCompanies.docs));
-    } else dispatch(clearFavoriteCompanies());
+        if ("error" in favoriteCompanies) {
+          dispatch(setFavoriteCompaniesError());
+          dispatch(
+            logError({
+              error: favoriteCompanies,
+              message: favoriteCompanies.errorMessage
+            })
+          );
+        } else dispatch(setFavoriteCompanies(favoriteCompanies.docs));
+      } else dispatch(clearFavoriteCompanies());
+    } catch (err) {
+      dispatch(
+        logError({
+          error: err,
+          message: lang.ErrorLoadingFavoriteCompanies
+        })
+      );
+      dispatch(setFavoriteCompaniesError());
+    }
   };
 }

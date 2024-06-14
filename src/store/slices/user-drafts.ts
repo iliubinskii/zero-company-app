@@ -4,13 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { dangerouslyAssumeWritable } from "../../utils";
 
-const initialState: AppState["drafts"] = {
+const initialState: AppState["userDrafts"] = {
   drafts: [],
   draftsError: false,
   draftsLoading: true
 };
 
-const draftsSlice = createSlice({
+const userDraftsSlice = createSlice({
   initialState,
   name: "drafts",
   reducers: {
@@ -41,10 +41,10 @@ const draftsSlice = createSlice({
   }
 });
 
-export const draftsReducer = draftsSlice.reducer;
+export const useDraftsReducer = userDraftsSlice.reducer;
 
 export const { addDraft, clearDrafts, removeDraft, setDrafts, setDraftsError } =
-  draftsSlice.actions;
+  userDraftsSlice.actions;
 
 /**
  * Selects the drafts from the state.
@@ -52,7 +52,7 @@ export const { addDraft, clearDrafts, removeDraft, setDrafts, setDraftsError } =
  * @returns The drafts.
  */
 export const selectDrafts = (state: AppState): readonly ExistingCompany[] =>
-  state.drafts.drafts;
+  state.userDrafts.drafts;
 
 /**
  * Selects whether the drafts have been loaded.
@@ -60,9 +60,9 @@ export const selectDrafts = (state: AppState): readonly ExistingCompany[] =>
  * @returns Whether the drafts have been loaded.
  */
 export const selectDraftsLoading = (state: AppState): boolean =>
-  state.drafts.draftsLoading;
+  state.userDrafts.draftsLoading;
 
-export type DraftsActions =
+export type UserDraftsActions =
   | ReturnType<typeof addDraft>
   | ReturnType<typeof clearDrafts>
   | ReturnType<typeof removeDraft>

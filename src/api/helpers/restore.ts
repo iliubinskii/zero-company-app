@@ -3,8 +3,10 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingDocument,
   JsonTransform,
-  MultipleDocsResponse
+  MultipleDocsResponse,
+  PopulatedDocument
 } from "../../schema";
 
 /**
@@ -69,11 +71,6 @@ export function restoreCategories(
   };
 }
 
-export interface RawMultipleDocsResponse<T>
-  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
-  readonly nextCursor?: readonly string[] | null | undefined;
-}
-
 /**
  * Restores the cursor.
  * @param cursor - The cursor.
@@ -84,4 +81,76 @@ function restoreCursor(
 ): readonly [string, string] | null | undefined {
   // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
   return cursor as readonly [string, string] | null | undefined;
+}
+
+/**
+ * Restores the document dates.
+ * @param document - The document.
+ * @returns The restored document.
+ */
+export function restoreDocument(
+  document: JsonTransform<ExistingDocument>
+): ExistingDocument {
+  const { createdAt, ...rest } = document;
+
+  return {
+    createdAt: new Date(createdAt),
+    ...rest
+  };
+}
+
+/**
+ * Restores the document dates.
+ * @param response - The response.
+ * @returns The restored response.
+ */
+export function restoreDocuments(
+  response: RawMultipleDocsResponse<JsonTransform<ExistingDocument>>
+): MultipleDocsResponse<ExistingDocument> {
+  const { docs, nextCursor, ...rest } = response;
+
+  return {
+    docs: docs.map(restoreDocument),
+    nextCursor: restoreCursor(nextCursor),
+    ...rest
+  };
+}
+
+/**
+ * Restores the document dates.
+ * @param document - The document.
+ * @returns The restored document.
+ */
+export function restorePopulatedDocument(
+  document: JsonTransform<PopulatedDocument>
+): PopulatedDocument {
+  const { company, createdAt, ...rest } = document;
+
+  return {
+    company: restoreCompany(company),
+    createdAt: new Date(createdAt),
+    ...rest
+  };
+}
+
+/**
+ * Restores the document dates.
+ * @param response - The response.
+ * @returns The restored response.
+ */
+export function restorePopulatedDocuments(
+  response: RawMultipleDocsResponse<JsonTransform<PopulatedDocument>>
+): MultipleDocsResponse<PopulatedDocument> {
+  const { docs, nextCursor, ...rest } = response;
+
+  return {
+    docs: docs.map(restorePopulatedDocument),
+    nextCursor: restoreCursor(nextCursor),
+    ...rest
+  };
+}
+
+export interface RawMultipleDocsResponse<T>
+  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
+  readonly nextCursor?: readonly string[] | null | undefined;
 }

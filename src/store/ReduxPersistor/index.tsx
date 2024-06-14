@@ -2,6 +2,7 @@
 
 import {
   refreshAuthUser,
+  refreshDocuments,
   refreshDrafts,
   refreshFavoriteCompanies,
   refreshUser
@@ -40,6 +41,7 @@ export const ReduxPersistor: FC = () => {
       callAsync(async () => {
         await Promise.allSettled([
           dispatch(refreshAuthUser()),
+          dispatch(refreshDocuments()),
           dispatch(refreshDrafts()),
           dispatch(refreshFavoriteCompanies()),
           dispatch(refreshUser())

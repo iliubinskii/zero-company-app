@@ -27,10 +27,17 @@ export const lang = {
   DragAlongRights: "Drag-Along Rights",
   EditProjectDraft: "Edit project draft",
   Email: "E-mail",
+  ErrorLoadingAuthUser: "Error loading authenticated user",
+  ErrorLoadingData: "Error loading data",
+  ErrorLoadingDocuments: "Error loading documents",
+  ErrorLoadingDrafts: "Error loading drafts",
+  ErrorLoadingFavoriteCompanies: "Error loading favorite companies",
   Explore: "Explore",
   FirstName: "First name",
+  Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
+  GeneratedFoundingAgreement: "Generated Founding Agreement",
   GoToHomepage: "Go to Homepage",
   HelpCenter: "Help Center",
   HowZeroCompanyWorks: "How Zero Company Works",
@@ -53,7 +60,9 @@ export const lang = {
   NDA: "NDA",
   Name: "Name",
   Next: "Next",
+  NoCategory: "No category",
   NotFound: "Not Found",
+  NotSigned: "Not signed",
   OurCharter: "Our Charter",
   PageDoesNotExist: "The page you are looking for does not exist.",
   PreemptiveRights: "Preemptive Rights",
@@ -67,6 +76,9 @@ export const lang = {
   SelectCountry: "Select a country",
   Settings: "Settings",
   Share: "Share",
+  Sign: "Sign",
+  Signatory: "Signatory",
+  Signed: "Signed",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
   StartCompany: "Start a company",
   StartCompany2: ["Start", " a company"],
@@ -144,6 +156,7 @@ export const lang = {
       }
     }
   },
+  company: "company",
   components: {
     form: {
       FileInputElement: {

@@ -10,9 +10,12 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingDocument,
   ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
+  GetDocumentsOptions,
+  PopulatedDocuments,
   Routes,
   UserUpdate
 } from "../schema";
@@ -23,7 +26,9 @@ import {
   putReq,
   restoreCategories,
   restoreCompanies,
-  restoreCompany
+  restoreCompany,
+  restoreDocument,
+  restorePopulatedDocuments
 } from "./helpers";
 
 export const api = {
@@ -40,6 +45,20 @@ export const api = {
     );
 
     return result;
+  },
+  generateFoundingAgreement: async (
+    id: string
+  ): Promise<
+    | ExistingDocument
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const document = await postReq<Routes["/companies/{id}/found"]["post"]>(
+      `companies/${id}/found`,
+      {}
+    );
+
+    return "error" in document ? document : restoreDocument(document);
   },
   /**
    * Retrieves the authenticated user from the API.
@@ -178,6 +197,23 @@ export const api = {
     );
 
     return "error" in company ? company : restoreCompany(company);
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getDocumentsByMe: async (
+    options: GetDocumentsOptions = {}
+  ): Promise<PopulatedDocuments | ErrorResponse<ErrorCode>> => {
+    const documents = await getReq<Routes["/me/documents"]["get"]>(
+      "me/documents",
+      { ...options }
+    );
+
+    return "error" in documents
+      ? documents
+      : restorePopulatedDocuments(documents);
   },
   /**
    * Retrieves the companies from the API.
