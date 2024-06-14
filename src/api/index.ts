@@ -10,11 +10,11 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
-  ExistingDocument,
   ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
   GetDocumentsOptions,
+  PopulatedDocument,
   PopulatedDocuments,
   Routes,
   UserUpdate
@@ -27,7 +27,7 @@ import {
   restoreCategories,
   restoreCompanies,
   restoreCompany,
-  restoreDocument,
+  restorePopulatedDocument,
   restorePopulatedDocuments
 } from "./helpers";
 
@@ -49,7 +49,7 @@ export const api = {
   generateFoundingAgreement: async (
     id: string
   ): Promise<
-    | ExistingDocument
+    | PopulatedDocument
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
@@ -58,7 +58,7 @@ export const api = {
       {}
     );
 
-    return "error" in document ? document : restoreDocument(document);
+    return "error" in document ? document : restorePopulatedDocument(document);
   },
   /**
    * Retrieves the authenticated user from the API.
@@ -267,6 +267,20 @@ export const api = {
       body
     );
     return "error" in company ? company : restoreCompany(company);
+  },
+  putDocument: async (
+    id: string
+  ): Promise<
+    | PopulatedDocument
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const document = await putReq<Routes["/documents/{id}"]["put"]>(
+      `documents/${id}`,
+      {}
+    );
+
+    return "error" in document ? document : restorePopulatedDocument(document);
   },
   putMe: async (
     body: FormData | UserUpdate

@@ -1,5 +1,6 @@
 export { deleteDraft } from "./deleteDraft";
 export { refreshAuthUser } from "./refreshAuthUser";
+export { refreshDocument } from "./refreshDocument";
 export { refreshDocuments } from "./refreshDocuments";
 export { refreshDrafts } from "./refreshDrafts";
 export { refreshFavoriteCompanies } from "./refreshFavoriteCompanies";

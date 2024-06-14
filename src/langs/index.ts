@@ -70,6 +70,7 @@ export const lang = {
   PrivateCompany: "Private company",
   Profile: "Profile",
   ROFR: "ROFR",
+  Refresh: "Refresh",
   Resources: "Resources",
   Save: "Save",
   SelectCategory: "Select a category",
