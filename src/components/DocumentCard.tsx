@@ -25,10 +25,10 @@ export const DocumentCard: FC<Props> = ({ document }) => {
   return (
     <Container>
       <GridContainer>
-        <DocumentInfo>
+        <DocumentSection>
           <Title>{documentTitle}</Title>
           <CompanyName>{companyName}</CompanyName>
-        </DocumentInfo>
+        </DocumentSection>
         <SignatorySection>
           <AvatarContainer>
             {document.signatories.map((signatory, index) => (
@@ -83,7 +83,7 @@ const Container = tw.div`p-6 flex items-center gap-6`;
 
 const GridContainer = tw.div`grow grid grid-cols-3 gap-3`;
 
-const DocumentInfo = tw.div`flex flex-col justify-center items-center`;
+const DocumentSection = tw.div`flex flex-col justify-center items-center`;
 
 const Title = tw.h4`uppercase font-semibold`;
 

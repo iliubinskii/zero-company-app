@@ -60,6 +60,7 @@ export const lang = {
   NDA: "NDA",
   Name: "Name",
   Next: "Next",
+  NoCategory: "No category",
   NotFound: "Not Found",
   NotSigned: "Not signed",
   OurCharter: "Our Charter",
