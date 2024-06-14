@@ -1,5 +1,3 @@
-"use client";
-
 import { BadgeButton } from "../../buttons/BadgeButton";
 import type { ExistingCompany } from "../../../schema";
 import type { FC } from "react";

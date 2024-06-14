@@ -1,5 +1,3 @@
-"use client";
-
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { DocType } from "../schema";
 import type { FC } from "react";

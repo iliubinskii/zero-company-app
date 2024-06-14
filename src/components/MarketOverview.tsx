@@ -1,5 +1,3 @@
-"use client";
-
 import { FaBuilding, FaChartLine, FaChartPie, FaCoins } from "react-icons/fa";
 import type { FC } from "react";
 import React from "react";

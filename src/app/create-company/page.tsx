@@ -25,7 +25,7 @@ const Page: NextPage = () => {
           <AnimatedLink
             className="dark-button"
             href="/create-company/steps"
-            onBeforeClick={() => {
+            onClick={() => {
               dispatch(resetCompanyRegistration());
             }}
           >
