@@ -133,41 +133,44 @@ export interface Props {
 const footerLinkGroups = [
   {
     links: [
-      { href: "/about", text: lang.AboutUs },
-      { href: "/charter", text: lang.OurCharter },
-      { href: "/team", text: lang.Team },
-      { href: "/jobs", text: lang.Jobs }
+      { href: "/knowledge/about", text: lang.AboutUs },
+      { href: "/knowledge/charter", text: lang.OurCharter },
+      { href: "/knowledge/team", text: lang.Team },
+      { href: "/knowledge/jobs", text: lang.Jobs }
     ],
     title: lang.About
   },
   {
     links: [
-      { href: "/how-it-works", text: lang.HowZeroCompanyWorks },
-      { href: "/nda", text: lang.NDA },
-      { href: "/ip", text: lang.IpAgreement },
-      { href: "/shareholders", text: lang.FoundingAgreement },
-      { href: "/buy-sell", text: lang.BuySellAgreement },
-      { href: "/drag-along", text: lang.DragAlongRights },
-      { href: "/tag-along", text: lang.TagAlongRights },
-      { href: "/preemptive", text: lang.PreemptiveRights },
-      { href: "/rofr", text: lang.ROFR }
+      { href: "/knowledge/how-it-works", text: lang.HowZeroCompanyWorks },
+      { href: "/knowledge/nda", text: lang.NDA },
+      { href: "/knowledge/ip", text: lang.IpAgreement },
+      { href: "/knowledge/shareholders", text: lang.FoundingAgreement },
+      { href: "/knowledge/buy-sell", text: lang.BuySellAgreement },
+      { href: "/knowledge/drag-along", text: lang.DragAlongRights },
+      { href: "/knowledge/tag-along", text: lang.TagAlongRights },
+      { href: "/knowledge/preemptive", text: lang.PreemptiveRights },
+      { href: "/knowledge/rofr", text: lang.ROFR }
     ],
     title: lang.Legal
   },
   {
     links: [
-      { href: "/questions", text: lang.CommonQuestions },
-      { href: "/help", text: lang.HelpCenter },
-      { href: "/blog", text: lang.Blog },
-      { href: "/success", text: lang.SuccessStories }
+      { href: "/knowledge/questions", text: lang.CommonQuestions },
+      { href: "/knowledge/help", text: lang.HelpCenter },
+      { href: "/knowledge/blog", text: lang.Blog },
+      { href: "/knowledge/success", text: lang.SuccessStories }
     ],
     title: lang.Resources
   }
 ] as const;
 
 const footerLinks = [
-  { href: "/terms", text: lang.TermsOfUse },
-  { href: "/privacy", text: lang.PrivacyPolicy },
-  { href: "/cookie-policy", text: lang.CookiePolicy },
-  { href: "/accessibility-statement", text: lang.AccessibilityStatement }
+  { href: "/knowledge/terms", text: lang.TermsOfUse },
+  { href: "/knowledge/privacy", text: lang.PrivacyPolicy },
+  { href: "/knowledge/cookie-policy", text: lang.CookiePolicy },
+  {
+    href: "/knowledge/accessibility-statement",
+    text: lang.AccessibilityStatement
+  }
 ] as const;
