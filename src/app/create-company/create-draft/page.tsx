@@ -2,18 +2,18 @@
 
 import { AuthGuard, Loading } from "../../../components";
 import {
-  SNACKBAR_VARIANT,
+  logError,
+  resetCompanyRegistration,
   selectAuthUser,
   selectCompanyCategory,
   selectCompanyCountry,
   selectLoaded,
-  showSnackbar,
   useAppDispatch,
   useAppSelector
 } from "../../../store";
 import type { NextPage } from "next";
 import { PageLayout } from "../../../layouts";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { api } from "../../../api";
 import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
@@ -30,28 +30,40 @@ const Page: NextPage = () => {
 
   const loaded = useAppSelector(selectLoaded);
 
+  const posted = useRef(false);
+
   const router = useRouter();
 
   useEffect(() => {
     if (loaded && authUser)
       if (category && typeof country === "string")
-        callAsync(async () => {
-          const company = await api.postCompany({
-            categories: [category._id],
-            country
-          });
+        if (posted.current) {
+          // Already posted, do nothing
+        } else {
+          posted.current = true;
+          dispatch(resetCompanyRegistration());
+          callAsync(async () => {
+            const company = await api.postCompany({
+              categories: [category._id],
+              country
+            });
 
-          if ("error" in company)
-            dispatch(
-              showSnackbar({
-                message: company.errorMessage,
-                variant: SNACKBAR_VARIANT.error
-              })
-            );
-          else router.push(`/profile/drafts/${company._id}`);
-        });
+            if ("error" in company)
+              dispatch(
+                logError({
+                  error: company,
+                  message: company.errorMessage
+                })
+              );
+            else router.push(`/profile/drafts/${company._id}`);
+          });
+        }
       else router.push("/create-company");
   }, [authUser, category, country, dispatch, loaded, router]);
+
+  useEffect(() => {
+    posted.current = false;
+  }, [category, country]);
 
   return (
     <AuthGuard>
