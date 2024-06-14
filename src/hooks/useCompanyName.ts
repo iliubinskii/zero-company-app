@@ -7,7 +7,9 @@ import { useCompanyCategory } from "./useCompanyCategory";
  * @param company - The company to get the name from.
  * @returns The name of the company.
  */
-export function useCompanyName(company: ExistingCompany | undefined): string {
+export function useCompanyName(
+  company: ExistingCompany | null | undefined
+): string {
   const category = useCompanyCategory(company);
 
   if (company) {
