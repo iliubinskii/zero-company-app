@@ -4,7 +4,7 @@ import React from "react";
 export const ZeroCoin: FC<Props> = ({ amount, ...props }) => (
   <span {...props}>
     <svg
-      className="inline-block transform -translate-y-[0.1em]"
+      className="inline-block transform -translate-y-[0.12em]"
       fill="currentColor"
       height="0.9em"
       preserveAspectRatio="xMidYMid meet"

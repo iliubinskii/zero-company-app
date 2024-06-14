@@ -121,6 +121,16 @@ export const lang = {
       teaser: "Empower Your Startup with Proven Corporate Strategies"
     },
     profile: {
+      bookmarks: {
+        NoBookmarks: {
+          button: "Explore Companies",
+          text: `
+            You haven't bookmarked any companies yet. Start exploring and bookmark
+            your favorite companies to see them here.
+          `,
+          title: "No Bookmarked Companies"
+        }
+      },
       drafts: {
         draft: {
           Basics: {
