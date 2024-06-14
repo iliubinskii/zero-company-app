@@ -46,44 +46,44 @@ export const DocumentCard: FC<Props> = ({ authUser, document }) => {
           <CompanyName>{companyName}</CompanyName>
         </DocumentSection>
         <SignatorySection>
-          {notSigned.length > 0 ? (
-            <AvatarContainer>
-              {notSigned.map((signatory, index) => (
-                <Avatar
-                  alt={signatory.name ?? `${lang.Signatory} ${index + 1}`}
-                  key={signatory.email}
-                  src={gravatar.url(signatory.email, {
-                    d: GRAVATAR_DEFAULT,
-                    r: GRAVATAR_RATING,
-                    s: GRAVATAR_SIZE
-                  })}
-                />
-              ))}
-            </AvatarContainer>
-          ) : (
-            <Dash>—</Dash>
+          {notSigned.length > 0 && (
+            <>
+              <AvatarContainer>
+                {notSigned.map((signatory, index) => (
+                  <Avatar
+                    alt={signatory.name ?? `${lang.Signatory} ${index + 1}`}
+                    key={signatory.email}
+                    src={gravatar.url(signatory.email, {
+                      d: GRAVATAR_DEFAULT,
+                      r: GRAVATAR_RATING,
+                      s: GRAVATAR_SIZE
+                    })}
+                  />
+                ))}
+              </AvatarContainer>
+              <NotSignedStatus>{lang.NotSigned}</NotSignedStatus>
+            </>
           )}
-          <NotSignedStatus>{lang.NotSigned}</NotSignedStatus>
         </SignatorySection>
         <SignatorySection>
-          {signed.length > 0 ? (
-            <AvatarContainer>
-              {signed.map((signatory, index) => (
-                <Avatar
-                  alt={signatory.name ?? `${lang.Signatory} ${index + 1}`}
-                  key={signatory.email}
-                  src={gravatar.url(signatory.email, {
-                    d: GRAVATAR_DEFAULT,
-                    r: GRAVATAR_RATING,
-                    s: GRAVATAR_SIZE
-                  })}
-                />
-              ))}
-            </AvatarContainer>
-          ) : (
-            <Dash>—</Dash>
+          {signed.length > 0 && (
+            <>
+              <AvatarContainer>
+                {signed.map((signatory, index) => (
+                  <Avatar
+                    alt={signatory.name ?? `${lang.Signatory} ${index + 1}`}
+                    key={signatory.email}
+                    src={gravatar.url(signatory.email, {
+                      d: GRAVATAR_DEFAULT,
+                      r: GRAVATAR_RATING,
+                      s: GRAVATAR_SIZE
+                    })}
+                  />
+                ))}
+              </AvatarContainer>
+              <SignedStatus>{lang.Signed}</SignedStatus>
+            </>
           )}
-          <SignedStatus>{lang.Signed}</SignedStatus>
         </SignatorySection>
       </GridContainer>
       <Buttons>
@@ -138,8 +138,6 @@ const SignedStatus = tw.div`text-green-secondary font-bold`;
 const AvatarContainer = tw.div`h-10 flex -space-x-5`;
 
 const Avatar = tw.img`w-10 h-10 rounded-full border-2 border-white`;
-
-const Dash = tw.div`h-10 text-3xl text-gray-700 font-thin flex items-center`;
 
 const Buttons = tw.div``;
 
