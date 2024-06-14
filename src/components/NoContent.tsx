@@ -1,9 +1,9 @@
+import { AnimatedLink } from "./AnimatedLink";
 import type { FC } from "react";
 import React from "react";
-import { lang } from "../../../langs";
 import tw from "tailwind-styled-components";
 
-export const NoBookmarkedCompanies: FC = () => (
+export const NoContent: FC<Props> = ({ buttonText, href, text, title }) => (
   <Container>
     <Icon>
       <svg
@@ -20,16 +20,20 @@ export const NoBookmarkedCompanies: FC = () => (
         />
       </svg>
     </Icon>
-    <Title>{lang.app.profile.bookmarks.NoBookmarks.title}</Title>
-    <Text>{lang.app.profile.bookmarks.NoBookmarks.text}</Text>
-    <Button>{lang.app.profile.bookmarks.NoBookmarks.button}</Button>
+    <Title>{title}</Title>
+    <Text>{text}</Text>
+    <Link href={href}>{buttonText}</Link>
   </Container>
 );
 
-const Container = tw.div`
-  h-full rounded-lg bg-gray-100 shadow-md p-6
-  flex flex-col justify-center items-center
-`;
+export interface Props {
+  readonly buttonText: string;
+  readonly href: string;
+  readonly text: string;
+  readonly title: string;
+}
+
+const Container = tw.div`h-full rounded-lg bg-gray-100 shadow-md p-6 flex flex-col justify-center items-center`;
 
 const Icon = tw.div`w-16 h-16 mb-4 text-gray-400`;
 
@@ -37,4 +41,4 @@ const Title = tw.h2`mb-2 text-xl font-semibold text-gray-700`;
 
 const Text = tw.p`mb-4 text-gray-500`;
 
-const Button = tw.button`px-4 py-2 primary-button`;
+const Link = tw(AnimatedLink)`px-4 py-2 primary-button`;

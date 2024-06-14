@@ -32,9 +32,14 @@ import { useUserName } from "../hooks";
  * @param props - The properties.
  * @param props.children - The children.
  * @param props.info  - The info.
+ * @param props.loading - The loading.
  * @returns The element.
  */
-export const ProfileLayout: FC<Props> = ({ children, info }) => {
+export const ProfileLayout: FC<Props> = ({
+  children,
+  info,
+  loading = false
+}) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const name = useUserName();
@@ -89,7 +94,7 @@ export const ProfileLayout: FC<Props> = ({ children, info }) => {
         </Links>
       </SideMenu>
       <Main>
-        <Contents>{children}</Contents>
+        <Contents>{loading || children}</Contents>
         {info}
       </Main>
     </Container>
@@ -97,8 +102,9 @@ export const ProfileLayout: FC<Props> = ({ children, info }) => {
 };
 
 export interface Props {
-  children?: ReactNode | undefined;
-  info?: ReactNode | undefined;
+  readonly children?: ReactNode | undefined;
+  readonly info?: ReactNode | undefined;
+  readonly loading?: boolean | undefined;
 }
 
 const Container = tw.div`p-6 flex gap-8`;

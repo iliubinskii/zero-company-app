@@ -1,7 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { AuthGuard, CompanyCard, CompanyCards } from "../../../components";
+import {
+  AuthGuard,
+  CompanyCard,
+  CompanyCards,
+  NoContent
+} from "../../../components";
 import {
   refreshFavoriteCompanies,
   selectFavoriteCompanies,
@@ -10,9 +15,9 @@ import {
 } from "../../../store";
 import { MOTION } from "../../../consts";
 import type { NextPage } from "next";
-import { NoBookmarkedCompanies } from "./NoBookmarks";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
+import { lang } from "../../../langs";
 
 const Page: NextPage = () => {
   const favoriteCompanies = useAppSelector(selectFavoriteCompanies);
@@ -26,7 +31,7 @@ const Page: NextPage = () => {
       customLoading={favoriteCompaniesLoading}
       customRefreshThunk={refreshFavoriteCompanies}
     >
-      <ProfileLayout>
+      <ProfileLayout loading={favoriteCompaniesLoading}>
         {favoriteCompanies.length > 0 ? (
           <CompanyCards>
             <AnimatePresence>
@@ -44,7 +49,12 @@ const Page: NextPage = () => {
             </AnimatePresence>
           </CompanyCards>
         ) : (
-          <NoBookmarkedCompanies />
+          <NoContent
+            buttonText={lang.app.profile.bookmarks.NoContent.buttonText}
+            href="/"
+            text={lang.app.profile.bookmarks.NoContent.text}
+            title={lang.app.profile.bookmarks.NoContent.title}
+          />
         )}
       </ProfileLayout>
     </AuthGuard>

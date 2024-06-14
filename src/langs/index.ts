@@ -122,8 +122,8 @@ export const lang = {
     },
     profile: {
       bookmarks: {
-        NoBookmarks: {
-          button: "Explore Companies",
+        NoContent: {
+          buttonText: "Explore Companies",
           text: `
             You haven't bookmarked any companies yet. Start exploring and bookmark
             your favorite companies to see them here.
@@ -131,7 +131,33 @@ export const lang = {
           title: "No Bookmarked Companies"
         }
       },
+      companies: {
+        NoContent: {
+          buttonText: "Create a Company",
+          text: `
+            You don't have any companies yet. Create your first company to start
+            using our platform.
+          `,
+          title: "No Companies Yet"
+        }
+      },
+      documents: {
+        NoContent: {
+          buttonText: "Create a Company",
+          text: `
+            You don't have any documents yet. Create a company to use our legal templates.
+          `,
+          title: "No Documents Yet"
+        }
+      },
       drafts: {
+        NoContent: {
+          buttonText: "Create a Company",
+          text: `
+            You don't have any drafts yet. Create a company and to start using our platform.
+          `,
+          title: "No Drafts Yet"
+        },
         draft: {
           Basics: {
             description: `

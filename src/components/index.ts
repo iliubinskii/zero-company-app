@@ -13,6 +13,7 @@ export { InternshipCard } from "./InternshipCard";
 export { Loading } from "./Loading";
 export { MarketOverview } from "./MarketOverview";
 export { Navigate } from "./Navigate";
+export { NoContent } from "./NoContent";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { ZeroCoin } from "./ZeroCoin";
