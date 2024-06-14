@@ -5,7 +5,8 @@ import type {
   ExistingCompany,
   ExistingDocument,
   JsonTransform,
-  MultipleDocsResponse
+  MultipleDocsResponse,
+  PopulatedDocument
 } from "../../schema";
 
 /**
@@ -71,6 +72,18 @@ export function restoreCategories(
 }
 
 /**
+ * Restores the cursor.
+ * @param cursor - The cursor.
+ * @returns The restored cursor.
+ */
+function restoreCursor(
+  cursor: readonly string[] | null | undefined
+): readonly [string, string] | null | undefined {
+  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
+  return cursor as readonly [string, string] | null | undefined;
+}
+
+/**
  * Restores the document dates.
  * @param document - The document.
  * @returns The restored document.
@@ -103,19 +116,41 @@ export function restoreDocuments(
   };
 }
 
-export interface RawMultipleDocsResponse<T>
-  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
-  readonly nextCursor?: readonly string[] | null | undefined;
+/**
+ * Restores the document dates.
+ * @param document - The document.
+ * @returns The restored document.
+ */
+export function restorePopulatedDocument(
+  document: JsonTransform<PopulatedDocument>
+): PopulatedDocument {
+  const { company, createdAt, ...rest } = document;
+
+  return {
+    company: restoreCompany(company),
+    createdAt: new Date(createdAt),
+    ...rest
+  };
 }
 
 /**
- * Restores the cursor.
- * @param cursor - The cursor.
- * @returns The restored cursor.
+ * Restores the document dates.
+ * @param response - The response.
+ * @returns The restored response.
  */
-function restoreCursor(
-  cursor: readonly string[] | null | undefined
-): readonly [string, string] | null | undefined {
-  // eslint-disable-next-line no-type-assertion/no-type-assertion -- Ok
-  return cursor as readonly [string, string] | null | undefined;
+export function restorePopulatedDocuments(
+  response: RawMultipleDocsResponse<JsonTransform<PopulatedDocument>>
+): MultipleDocsResponse<PopulatedDocument> {
+  const { docs, nextCursor, ...rest } = response;
+
+  return {
+    docs: docs.map(restorePopulatedDocument),
+    nextCursor: restoreCursor(nextCursor),
+    ...rest
+  };
+}
+
+export interface RawMultipleDocsResponse<T>
+  extends Omit<MultipleDocsResponse<T>, "nextCursor"> {
+  readonly nextCursor?: readonly string[] | null | undefined;
 }

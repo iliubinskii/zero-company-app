@@ -18,7 +18,6 @@ export { TextCarousel } from "./TextCarousel";
 export { ZeroCoin } from "./ZeroCoin";
 export * from "./accordion";
 export * from "./buttons";
-export * from "./circular-components";
 export * from "./company-cards";
 export * from "./form";
 export * from "./icons";

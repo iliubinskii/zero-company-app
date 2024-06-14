@@ -61,6 +61,7 @@ export const lang = {
   Name: "Name",
   Next: "Next",
   NotFound: "Not Found",
+  NotSigned: "Not signed",
   OurCharter: "Our Charter",
   PageDoesNotExist: "The page you are looking for does not exist.",
   PreemptiveRights: "Preemptive Rights",
@@ -74,6 +75,9 @@ export const lang = {
   SelectCountry: "Select a country",
   Settings: "Settings",
   Share: "Share",
+  Sign: "Sign",
+  Signatory: "Signatory",
+  Signed: "Signed",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
   StartCompany: "Start a company",
   StartCompany2: ["Start", " a company"],
@@ -151,6 +155,7 @@ export const lang = {
       }
     }
   },
+  company: "company",
   components: {
     form: {
       FileInputElement: {

@@ -12,15 +12,15 @@ import type {
   AuthUser,
   ExistingCategory,
   ExistingCompany,
-  ExistingDocument,
-  ExistingUser
+  ExistingUser,
+  PopulatedDocument
 } from "../../schema";
 import {
   AuthUserValidationSchema,
   ExistingCategoryValidationSchema,
   ExistingCompanyValidationSchema,
-  ExistingDocumentValidationSchema,
-  ExistingUserValidationSchema
+  ExistingUserValidationSchema,
+  PopulatedDocumentValidationSchema
 } from "../../schema";
 import type { TypedUseSelectorHook, useDispatch } from "react-redux";
 import { CREATE_COMPANY_STEP } from "../../consts";
@@ -67,7 +67,7 @@ export const AppStateValidationSchema = zod.object({
     user: ExistingUserValidationSchema.optional()
   }),
   userDocuments: zod.object({
-    documents: zod.array(ExistingDocumentValidationSchema),
+    documents: zod.array(PopulatedDocumentValidationSchema),
     documentsError: zod.boolean(),
     documentsLoading: zod.boolean()
   }),
@@ -115,7 +115,7 @@ export interface AppState {
     readonly user?: ExistingUser | undefined;
   };
   readonly userDocuments: {
-    readonly documents: readonly ExistingDocument[];
+    readonly documents: readonly PopulatedDocument[];
     readonly documentsError: boolean;
     readonly documentsLoading: boolean;
   };

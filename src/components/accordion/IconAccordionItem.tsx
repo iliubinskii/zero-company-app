@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import { AccordionItem } from "./AccordionItem";
-import { CircularIcon } from "../circular-components";
+import { CircularIcon } from "./CircularIcon";
 import type { IconType } from "react-icons";
 import React from "react";
 

@@ -130,6 +130,7 @@ const config = {
             "neue",
             "nextjs",
             "nonnegative",
+            "noreferrer",
             "nowrap",
             "nullable",
             "openapi",

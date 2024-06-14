@@ -1,3 +1,3 @@
 import tw from "tailwind-styled-components";
 
-export const DocumentCards = tw.div`grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4`;
+export const DocumentCards = tw.div`border border-gray-300 divide-y divide-gray-300 flex flex-col`;

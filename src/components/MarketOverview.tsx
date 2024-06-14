@@ -77,7 +77,7 @@ export const MarketOverview: FC = () => (
   </Container>
 );
 
-const Container = tw.div`w-72 border border-gray-300 rounded-sm py-2 px-6 divide-y divide-gray-300`;
+const Container = tw.div`w-72 min-w-72 border border-gray-300 rounded-sm py-2 px-6 divide-y divide-gray-300`;
 
 const Title = tw.div`py-4 text-xl font-bold`;
 

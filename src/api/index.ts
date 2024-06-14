@@ -11,11 +11,11 @@ import type {
   ExistingCompanies,
   ExistingCompany,
   ExistingDocument,
-  ExistingDocuments,
   ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
   GetDocumentsOptions,
+  PopulatedDocuments,
   Routes,
   UserUpdate
 } from "../schema";
@@ -28,7 +28,7 @@ import {
   restoreCompanies,
   restoreCompany,
   restoreDocument,
-  restoreDocuments
+  restorePopulatedDocuments
 } from "./helpers";
 
 export const api = {
@@ -205,13 +205,15 @@ export const api = {
    */
   getDocumentsByMe: async (
     options: GetDocumentsOptions = {}
-  ): Promise<ExistingDocuments | ErrorResponse<ErrorCode>> => {
+  ): Promise<PopulatedDocuments | ErrorResponse<ErrorCode>> => {
     const documents = await getReq<Routes["/me/documents"]["get"]>(
       "me/documents",
       { ...options }
     );
 
-    return "error" in documents ? documents : restoreDocuments(documents);
+    return "error" in documents
+      ? documents
+      : restorePopulatedDocuments(documents);
   },
   /**
    * Retrieves the companies from the API.

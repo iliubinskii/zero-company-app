@@ -1,6 +1,6 @@
 import type { AppState } from "../types";
-import type { ExistingDocument } from "../../schema";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PopulatedDocument } from "../../schema";
 import { createSlice } from "@reduxjs/toolkit";
 import { dangerouslyAssumeWritable } from "../../utils";
 
@@ -14,7 +14,7 @@ const useDocumentsSlice = createSlice({
   initialState,
   name: "documents",
   reducers: {
-    addDocument: (state, action: PayloadAction<ExistingDocument>) => {
+    addDocument: (state, action: PayloadAction<PopulatedDocument>) => {
       state.documents = [
         ...state.documents.filter(
           document => document._id !== action.payload._id
@@ -34,7 +34,7 @@ const useDocumentsSlice = createSlice({
     },
     setDocuments: (
       state,
-      action: PayloadAction<readonly ExistingDocument[]>
+      action: PayloadAction<readonly PopulatedDocument[]>
     ) => {
       state.documents = dangerouslyAssumeWritable(action.payload);
       state.documentsError = false;
@@ -63,8 +63,9 @@ export const {
  * @param state - The state of the app.
  * @returns The documents.
  */
-export const selectDocuments = (state: AppState): readonly ExistingDocument[] =>
-  state.userDocuments.documents;
+export const selectDocuments = (
+  state: AppState
+): readonly PopulatedDocument[] => state.userDocuments.documents;
 
 /**
  * Selects whether the documents have been loaded.

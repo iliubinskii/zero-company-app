@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import { AccordionItem } from "./AccordionItem";
-import { CircularProgress } from "../circular-components";
+import { CircularProgress } from "./CircularProgress";
 import React from "react";
 
 export const ProgressAccordionItem: FC<Props> = ({
