@@ -81,14 +81,18 @@ export const ProfileLayout: FC<Props> = ({
                 : pathname.startsWith(href);
 
             return (
-              <Link
-                className={active ? "bg-slate-200" : undefined}
+              <AnimatedLink
+                className={
+                  active
+                    ? "rounded px-5 py-3 flex items-center gap-4 text-slate-700 bg-slate-200"
+                    : "rounded px-5 py-3 flex items-center gap-4 text-slate-700"
+                }
                 href={href}
                 key={href}
               >
                 <Icon className="text-2xl" />
                 {text}
-              </Link>
+              </AnimatedLink>
             );
           })}
         </Links>
@@ -122,13 +126,6 @@ const UserName = tw.div`text-gray-700 font-semibold overflow-hidden overflow-ell
 const UserEmail = tw.div`text-sm text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap`;
 
 const Links = tw.div`w-64 flex flex-col gap-1`;
-
-const Link = tw(AnimatedLink)`
-  rounded
-  px-5 py-3
-  flex items-center gap-4
-  text-slate-700
-`;
 
 const Main = tw.div`grow p-4 flex gap-9`;
 

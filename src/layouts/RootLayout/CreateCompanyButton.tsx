@@ -3,15 +3,20 @@ import { resetCompanyRegistration, useAppDispatch } from "../../store";
 import { AnimatedLink } from "../../components";
 import React from "react";
 import { lang } from "../../langs";
-import tw from "tailwind-styled-components";
 
 const CreateCompanyButton: FC<
-  Omit<ComponentProps<typeof Link>, "href">
+  Omit<ComponentProps<typeof AnimatedLink>, "className" | "href" | "onClick">
 > = props => {
   const dispatch = useAppDispatch();
 
   return (
-    <Link
+    <AnimatedLink
+      className={`
+        rounded-lg px-4 py-3 bg-green-primary
+        whitespace-nowrap text-white
+        hover:bg-green-secondary
+        transition
+      `}
       href="/create-company"
       onClick={() => {
         dispatch(resetCompanyRegistration());
@@ -20,15 +25,8 @@ const CreateCompanyButton: FC<
     >
       {lang.StartCompany2[0]}
       <span className="hidden sm:inline">{lang.StartCompany2[1]}</span>
-    </Link>
+    </AnimatedLink>
   );
 };
 
 export default CreateCompanyButton;
-
-const Link = tw(AnimatedLink)`
-  rounded-lg px-4 py-3 bg-green-primary
-  whitespace-nowrap text-white
-  hover:bg-green-secondary
-  transition;
-`;

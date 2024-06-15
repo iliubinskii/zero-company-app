@@ -8,7 +8,9 @@ import React from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
+const ProfileButton: FC<
+  Omit<HTMLAttributes<HTMLDivElement>, "className">
+> = props => {
   const authUser = useAppSelector(selectAuthUser);
 
   const loaded = useAppSelector(selectLoaded);
@@ -16,9 +18,17 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
   const text = authUser ? lang.Profile : lang.LogIn;
 
   return (
-    <Container {...props}>
-      <Link
-        className={loaded ? "" : "opacity-50 pointer-events-none"}
+    <Container
+      className={loaded ? undefined : "opacity-50 pointer-events-none"}
+      {...props}
+    >
+      <AnimatedLink
+        className={`
+          rounded-lg border px-5 py-3
+          whitespace-nowrap text-white
+          hover:bg-white hover:text-black
+          transition
+        `}
         href={
           authUser
             ? "/profile"
@@ -30,7 +40,7 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
           <div>{lang.Profile}</div>
           <div>{lang.LogIn}</div>
         </div>
-      </Link>
+      </AnimatedLink>
     </Container>
   );
 };
@@ -38,10 +48,3 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
 export default ProfileButton;
 
 const Container = tw.div`flex`;
-
-const Link = tw(AnimatedLink)`
-  rounded-lg border px-5 py-3
-  whitespace-nowrap text-white
-  hover:bg-white hover:text-black
-  transition
-`;

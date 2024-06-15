@@ -38,7 +38,9 @@ export const RootLayout: FC<Props> = ({ children }) => {
                 <HeaderSimpleButton>{lang.CoFounders}</HeaderSimpleButton>
               </li>
             </ul>
-            <Logo className="text-white" />
+            <div className="text-white">
+              <Logo />
+            </div>
             <div className="flex justify-end items-center gap-4">
               <SiteSearch />
               <CreateCompanyButton />
@@ -93,7 +95,9 @@ export const RootLayout: FC<Props> = ({ children }) => {
         {/* Footer link groups */}
         <div className="border-t-1.5 p-10">
           <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-            <Logo className="scale-75 text-charcoal" />
+            <div className="scale-75 text-charcoal">
+              <Logo />
+            </div>
             {footerLinkGroups.map(({ links, title }, key) => (
               <div className="flex flex-col gap-4" key={key}>
                 <h3 className="uppercase font-bold">{title}</h3>
