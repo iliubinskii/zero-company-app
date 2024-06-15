@@ -14,8 +14,8 @@ export function refreshUser(): AppThunk {
       const user = await api.getMe();
 
       if ("error" in user) {
-        dispatch(logError({ error: user, message: user.errorMessage }));
         dispatch(clearUser());
+        dispatch(logError({ error: user, message: user.errorMessage }));
       } else dispatch(setUser(user));
     } else dispatch(clearUser());
   };

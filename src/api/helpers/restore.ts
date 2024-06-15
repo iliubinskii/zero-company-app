@@ -127,7 +127,7 @@ export function restorePopulatedDocument(
   const { company, createdAt, ...rest } = document;
 
   return {
-    company: restoreCompany(company),
+    company: company ? restoreCompany(company) : company,
     createdAt: new Date(createdAt),
     ...rest
   };

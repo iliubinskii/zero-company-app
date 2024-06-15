@@ -5,8 +5,8 @@ import type {
   LoadedActions,
   SnackbarActions,
   UserActions,
-  UserDocumentsActions,
-  UserDraftsActions
+  UserCompaniesActions,
+  UserDocumentsActions
 } from "../slices";
 import type {
   AuthUser,
@@ -66,15 +66,15 @@ export const AppStateValidationSchema = zod.object({
   user: zod.object({
     user: ExistingUserValidationSchema.optional()
   }),
+  userCompanies: zod.object({
+    companies: zod.array(ExistingCompanyValidationSchema),
+    companiesError: zod.boolean(),
+    companiesLoading: zod.boolean()
+  }),
   userDocuments: zod.object({
     documents: zod.array(PopulatedDocumentValidationSchema),
     documentsError: zod.boolean(),
     documentsLoading: zod.boolean()
-  }),
-  userDrafts: zod.object({
-    drafts: zod.array(ExistingCompanyValidationSchema),
-    draftsError: zod.boolean(),
-    draftsLoading: zod.boolean()
   })
 });
 
@@ -86,7 +86,7 @@ export type AppAction =
   | LoadedActions
   | SnackbarActions
   | UserActions
-  | UserDraftsActions
+  | UserCompaniesActions
   | UserDocumentsActions;
 
 export type AppDispatch = AppStore["dispatch"];
@@ -114,15 +114,15 @@ export interface AppState {
   readonly user: {
     readonly user?: ExistingUser | undefined;
   };
+  readonly userCompanies: {
+    readonly companies: readonly ExistingCompany[];
+    readonly companiesError: boolean;
+    readonly companiesLoading: boolean;
+  };
   readonly userDocuments: {
     readonly documents: readonly PopulatedDocument[];
     readonly documentsError: boolean;
     readonly documentsLoading: boolean;
-  };
-  readonly userDrafts: {
-    readonly drafts: readonly ExistingCompany[];
-    readonly draftsError: boolean;
-    readonly draftsLoading: boolean;
   };
 }
 

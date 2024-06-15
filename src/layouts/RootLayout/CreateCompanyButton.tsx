@@ -1,5 +1,3 @@
-"use client";
-
 import type { ComponentProps, FC } from "react";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
 import { AnimatedLink } from "../../components";
@@ -15,7 +13,7 @@ const CreateCompanyButton: FC<
   return (
     <Link
       href="/create-company"
-      onBeforeClick={() => {
+      onClick={() => {
         dispatch(resetCompanyRegistration());
       }}
       {...props}

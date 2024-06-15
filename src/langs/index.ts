@@ -28,6 +28,7 @@ export const lang = {
   EditProjectDraft: "Edit project draft",
   Email: "E-mail",
   ErrorLoadingAuthUser: "Error loading authenticated user",
+  ErrorLoadingCompanies: "Error loading companies",
   ErrorLoadingData: "Error loading data",
   ErrorLoadingDocuments: "Error loading documents",
   ErrorLoadingDrafts: "Error loading drafts",
@@ -70,6 +71,7 @@ export const lang = {
   PrivateCompany: "Private company",
   Profile: "Profile",
   ROFR: "ROFR",
+  Refresh: "Refresh",
   Resources: "Resources",
   Save: "Save",
   SelectCategory: "Select a category",
@@ -121,7 +123,43 @@ export const lang = {
       teaser: "Empower Your Startup with Proven Corporate Strategies"
     },
     profile: {
+      bookmarks: {
+        NoContent: {
+          buttonText: "Explore Companies",
+          text: `
+            You haven't bookmarked any companies yet. Start exploring and bookmark
+            your favorite companies to see them here.
+          `,
+          title: "No Bookmarked Companies"
+        }
+      },
+      companies: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any companies yet. Create your first company to start
+            using our platform.
+          `,
+          title: "No Companies Yet"
+        }
+      },
+      documents: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any documents yet. Create a company to use our legal templates.
+          `,
+          title: "No Documents Yet"
+        }
+      },
       drafts: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any drafts yet. Create a company and to start using our platform.
+          `,
+          title: "No Drafts Yet"
+        },
         draft: {
           Basics: {
             description: `

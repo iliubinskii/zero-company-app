@@ -8,7 +8,7 @@ import { useCategories } from "../contexts";
  * @returns The category of the company.
  */
 export function useCompanyCategory(
-  company: ExistingCompany | undefined,
+  company: ExistingCompany | null | undefined,
   index = 0
 ): ExistingCategory | undefined {
   const categories = useCategories();

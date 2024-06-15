@@ -4,8 +4,7 @@ import {
   AccordionFlatContainer,
   AuthGuard,
   IconAccordionItem,
-  InputElement,
-  MarketOverview
+  InputElement
 } from "../../../components";
 import type { FieldError, UserUpdate } from "../../../schema";
 import {
@@ -68,7 +67,7 @@ const Page: NextPage = () => {
 
   return (
     <AuthGuard>
-      <ProfileLayout info={<MarketOverview />}>
+      <ProfileLayout>
         <AccordionFlatContainer>
           <IconAccordionItem
             Icon={LuUser2}

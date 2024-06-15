@@ -1,6 +1,6 @@
 "use client";
 
-import type { FC, ReactElement, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import {
   selectAuthUser,
   selectLoaded,
@@ -18,7 +18,7 @@ export const AuthGuard: FC<Props> = ({
   children,
   customLoading = false,
   customRefreshThunk
-}): ReactElement => {
+}) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const dispatch = useAppDispatch();

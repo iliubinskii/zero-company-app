@@ -8,7 +8,7 @@ import {
 } from "../../../../components";
 import {
   SNACKBAR_VARIANT,
-  addDraft,
+  addCompany,
   showSnackbar,
   useAppDispatch
 } from "../../../../store";
@@ -43,7 +43,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     isLoading,
     resource: company,
     setResource: setCompany
-  } = useAuthGuardedLoader(() => api.getCompany(id), [], {
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [], {
     redirectOnNotFound: "/profile/drafts"
   });
 
@@ -134,7 +134,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
               })
             );
         else {
-          dispatch(addDraft(response));
+          dispatch(addCompany(response));
           setCompany(response);
           setUpdate({});
           setAddImages([]);

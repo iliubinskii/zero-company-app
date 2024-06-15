@@ -53,7 +53,7 @@ export const MainContent: FC<Props> = ({ company }) => {
             <p className="text-gray-500 text-sm">10 days before presentation</p>
           </div>
         </div>
-        <a
+        <div
           className={user ? "cursor-pointer" : undefined}
           onClick={toggleFavoriteClickHandler}
         >
@@ -62,7 +62,7 @@ export const MainContent: FC<Props> = ({ company }) => {
           ) : (
             <FaRegBookmark className="text-lg" />
           )}
-        </a>
+        </div>
       </div>
     </div>
   );

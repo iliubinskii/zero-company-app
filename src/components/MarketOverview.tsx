@@ -1,9 +1,7 @@
-"use client";
-
 import { FaBuilding, FaChartLine, FaChartPie, FaCoins } from "react-icons/fa";
 import type { FC } from "react";
 import React from "react";
-import { ZeroCoin } from ".";
+import { ZeroCoin } from "./ZeroCoin";
 import tw from "tailwind-styled-components";
 
 export const MarketOverview: FC = () => (

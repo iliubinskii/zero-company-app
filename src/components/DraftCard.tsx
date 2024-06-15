@@ -1,5 +1,3 @@
-"use client";
-
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { useCompanyCategory, useCompanyName } from "../hooks";
 import type { ExistingCompany } from "../schema";

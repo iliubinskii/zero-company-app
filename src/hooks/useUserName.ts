@@ -1,3 +1,5 @@
+"use client";
+
 import { selectUser, useAppSelector } from "../store";
 import { lang } from "../langs";
 

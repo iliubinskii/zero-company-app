@@ -6,7 +6,7 @@ import {
   favoriteCompaniesReducer,
   loadedReducer,
   snackbarReducer,
-  useDraftsReducer,
+  userCompaniesReducer,
   userDocumentsReducer,
   userReducer
 } from "./slices";
@@ -21,8 +21,8 @@ const slicesReducer = combineReducers({
   loaded: loadedReducer,
   snackbar: snackbarReducer,
   user: userReducer,
-  userDocuments: userDocumentsReducer,
-  userDrafts: useDraftsReducer
+  userCompanies: userCompaniesReducer,
+  userDocuments: userDocumentsReducer
 });
 
 const rootReducer = (
