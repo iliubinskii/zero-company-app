@@ -64,9 +64,15 @@ export const {
  * @returns The founded companies.
  */
 export const selectCompanies = (state: AppState): readonly ExistingCompany[] =>
-  state.userCompanies.companies.filter(
-    company => company.status === CompanyStatus.founded
-  );
+  state.userCompanies.companies
+    .filter(company => company.status === CompanyStatus.founded)
+    .sort((c1, c2) => {
+      if (c1.createdAt > c2.createdAt) return -1;
+
+      if (c1.createdAt < c2.createdAt) return 1;
+
+      return 0;
+    });
 
 /**
  * Selects the drafts from the state.
@@ -74,9 +80,15 @@ export const selectCompanies = (state: AppState): readonly ExistingCompany[] =>
  * @returns The drafts.
  */
 export const selectDrafts = (state: AppState): readonly ExistingCompany[] =>
-  state.userCompanies.companies.filter(
-    company => company.status === CompanyStatus.draft
-  );
+  state.userCompanies.companies
+    .filter(company => company.status === CompanyStatus.draft)
+    .sort((c1, c2) => {
+      if (c1.createdAt > c2.createdAt) return -1;
+
+      if (c1.createdAt < c2.createdAt) return 1;
+
+      return 0;
+    });
 
 /**
  * Selects whether the companies have been loaded.

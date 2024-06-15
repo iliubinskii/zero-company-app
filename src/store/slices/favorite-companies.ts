@@ -65,7 +65,14 @@ export const {
  */
 export const selectFavoriteCompanies = (
   state: AppState
-): readonly ExistingCompany[] => state.favoriteCompanies.favoriteCompanies;
+): readonly ExistingCompany[] =>
+  [...state.favoriteCompanies.favoriteCompanies].sort((c1, c2) => {
+    if (c1.createdAt > c2.createdAt) return -1;
+
+    if (c1.createdAt < c2.createdAt) return 1;
+
+    return 0;
+  });
 
 /**
  * Selects whether the favoriteCompanies have been loaded.

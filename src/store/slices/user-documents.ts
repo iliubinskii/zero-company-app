@@ -65,7 +65,14 @@ export const {
  */
 export const selectDocuments = (
   state: AppState
-): readonly PopulatedDocument[] => state.userDocuments.documents;
+): readonly PopulatedDocument[] =>
+  [...state.userDocuments.documents].sort((d1, d2) => {
+    if (d1.createdAt > d2.createdAt) return -1;
+
+    if (d1.createdAt < d2.createdAt) return 1;
+
+    return 0;
+  });
 
 /**
  * Selects whether the documents have been loaded.
