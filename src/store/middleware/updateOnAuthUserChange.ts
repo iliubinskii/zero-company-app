@@ -8,7 +8,6 @@ import type {
 import {
   clearCompanies,
   clearDocuments,
-  clearDrafts,
   clearFavoriteCompanies,
   clearUser,
   setAuthUser
@@ -16,7 +15,6 @@ import {
 import {
   refreshCompanies,
   refreshDocuments,
-  refreshDrafts,
   refreshFavoriteCompanies,
   refreshUser
 } from "../thunks";
@@ -44,7 +42,6 @@ export const updateOnAuthUserChange: Middleware<
     } else {
       store.dispatch(clearCompanies());
       store.dispatch(clearDocuments());
-      store.dispatch(clearDrafts());
       store.dispatch(clearFavoriteCompanies());
       store.dispatch(clearUser());
 
@@ -52,7 +49,6 @@ export const updateOnAuthUserChange: Middleware<
         await Promise.allSettled([
           store.dispatch(refreshCompanies()),
           store.dispatch(refreshDocuments()),
-          store.dispatch(refreshDrafts()),
           store.dispatch(refreshFavoriteCompanies()),
           store.dispatch(refreshUser())
         ]);

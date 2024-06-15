@@ -18,10 +18,7 @@ export function refreshDocuments(): AppThunk {
       const { authUser } = getState().auth;
 
       if (authUser) {
-        const documents = await api.getDocumentsByMe({
-          sortBy: "createdAt",
-          sortOrder: "desc"
-        });
+        const documents = await api.getDocumentsByMe();
 
         if ("error" in documents) {
           dispatch(setDocumentsError());

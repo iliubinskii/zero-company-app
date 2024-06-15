@@ -6,8 +6,7 @@ import type {
   SnackbarActions,
   UserActions,
   UserCompaniesActions,
-  UserDocumentsActions,
-  UserDraftsActions
+  UserDocumentsActions
 } from "../slices";
 import type {
   AuthUser,
@@ -76,11 +75,6 @@ export const AppStateValidationSchema = zod.object({
     documents: zod.array(PopulatedDocumentValidationSchema),
     documentsError: zod.boolean(),
     documentsLoading: zod.boolean()
-  }),
-  userDrafts: zod.object({
-    drafts: zod.array(ExistingCompanyValidationSchema),
-    draftsError: zod.boolean(),
-    draftsLoading: zod.boolean()
   })
 });
 
@@ -93,7 +87,6 @@ export type AppAction =
   | SnackbarActions
   | UserActions
   | UserCompaniesActions
-  | UserDraftsActions
   | UserDocumentsActions;
 
 export type AppDispatch = AppStore["dispatch"];
@@ -130,11 +123,6 @@ export interface AppState {
     readonly documents: readonly PopulatedDocument[];
     readonly documentsError: boolean;
     readonly documentsLoading: boolean;
-  };
-  readonly userDrafts: {
-    readonly drafts: readonly ExistingCompany[];
-    readonly draftsError: boolean;
-    readonly draftsLoading: boolean;
   };
 }
 

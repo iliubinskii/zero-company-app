@@ -5,7 +5,6 @@ import {
   setFavoriteCompaniesError
 } from "../slices";
 import type { AppThunk } from "../types";
-import { CompanyStatus } from "../../schema";
 import { api } from "../../api";
 import { lang } from "../../langs";
 
@@ -19,11 +18,7 @@ export function refreshFavoriteCompanies(): AppThunk {
       const { authUser } = getState().auth;
 
       if (authUser) {
-        const favoriteCompanies = await api.getFavoriteCompaniesByMe({
-          sortBy: "createdAt",
-          sortOrder: "desc",
-          status: CompanyStatus.founded
-        });
+        const favoriteCompanies = await api.getFavoriteCompaniesByMe();
 
         if ("error" in favoriteCompanies) {
           dispatch(setFavoriteCompaniesError());

@@ -8,7 +8,7 @@ import {
 } from "../../../../components";
 import {
   SNACKBAR_VARIANT,
-  addDraft,
+  addCompany,
   showSnackbar,
   useAppDispatch
 } from "../../../../store";
@@ -134,7 +134,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
               })
             );
         else {
-          dispatch(addDraft(response));
+          dispatch(addCompany(response));
           setCompany(response);
           setUpdate({});
           setAddImages([]);

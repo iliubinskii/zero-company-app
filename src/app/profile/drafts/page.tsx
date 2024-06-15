@@ -7,9 +7,9 @@ import {
   NoContent
 } from "../../../components";
 import {
-  refreshDrafts,
+  refreshCompanies,
+  selectCompaniesLoading,
   selectDrafts,
-  selectDraftsLoading,
   useAppSelector
 } from "../../../store";
 import type { NextPage } from "next";
@@ -18,16 +18,19 @@ import React from "react";
 import { lang } from "../../../langs";
 
 const Page: NextPage = () => {
-  const drafts = useAppSelector(selectDrafts);
+  const companies = useAppSelector(selectDrafts);
 
-  const draftsLoading = useAppSelector(selectDraftsLoading);
+  const companiesLoading = useAppSelector(selectCompaniesLoading);
 
   return (
-    <AuthGuard customLoading={draftsLoading} customRefreshThunk={refreshDrafts}>
-      <ProfileLayout loading={draftsLoading}>
-        {drafts.length > 0 ? (
+    <AuthGuard
+      customLoading={companiesLoading}
+      customRefreshThunk={refreshCompanies}
+    >
+      <ProfileLayout loading={companiesLoading}>
+        {companies.length > 0 ? (
           <DraftCards>
-            {drafts.map(company => (
+            {companies.map(company => (
               <DraftCard company={company} key={company._id} />
             ))}
           </DraftCards>

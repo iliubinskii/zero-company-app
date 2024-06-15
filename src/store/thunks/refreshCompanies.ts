@@ -5,7 +5,6 @@ import {
   setCompaniesError
 } from "../slices";
 import type { AppThunk } from "../types";
-import { CompanyStatus } from "../../schema";
 import { api } from "../../api";
 import { lang } from "../../langs";
 
@@ -19,11 +18,7 @@ export function refreshCompanies(): AppThunk {
       const { authUser } = getState().auth;
 
       if (authUser) {
-        const companies = await api.getCompaniesByMe({
-          sortBy: "createdAt",
-          sortOrder: "desc",
-          status: CompanyStatus.founded
-        });
+        const companies = await api.getCompaniesByMe();
 
         if ("error" in companies) {
           dispatch(setCompaniesError());

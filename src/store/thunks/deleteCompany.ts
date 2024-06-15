@@ -1,4 +1,4 @@
-import { logError, removeDraft } from "../slices";
+import { logError, removeCompany } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
 
@@ -7,7 +7,7 @@ import { api } from "../../api";
  * @param id - The ID of the draft to delete.
  * @returns A thunk that deletes the draft and updates the state.
  */
-export function deleteDraft(id: string): AppThunk {
+export function deleteCompany(id: string): AppThunk {
   return async dispatch => {
     const response = await api.deleteCompany(id);
 
@@ -15,6 +15,6 @@ export function deleteDraft(id: string): AppThunk {
       dispatch(
         logError({ error: response.error, message: response.errorMessage })
       );
-    else dispatch(removeDraft(id));
+    else dispatch(removeCompany(id));
   };
 }

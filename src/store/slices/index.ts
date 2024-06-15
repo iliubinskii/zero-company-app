@@ -6,4 +6,3 @@ export * from "./snackbar";
 export * from "./user";
 export * from "./user-companies";
 export * from "./user-documents";
-export * from "./user-drafts";
