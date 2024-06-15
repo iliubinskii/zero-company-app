@@ -30,7 +30,9 @@ export const AccordionItem: FC<Props> = ({
           <Chevron isUp={isExpanded} />
         </Header>
       )}
-      {open && <Contents>{children}</Contents>}
+      <Contents className={open ? "max-h-screen" : "max-h-0"}>
+        {children}
+      </Contents>
     </Container>
   );
 };
@@ -48,4 +50,4 @@ const Header = tw.div`text-gray-700 select-none flex items-center gap-3`;
 
 const HeaderContents = tw.div`grow flex items-center`;
 
-const Contents = tw.div`px-2`;
+const Contents = tw.div`overflow-hidden transition-max-height duration-300 ease-in-out`;
