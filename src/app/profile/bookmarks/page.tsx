@@ -9,7 +9,6 @@ import {
 } from "../../../components";
 import {
   refreshFavoriteCompanies,
-  selectFavoriteCompanies,
   selectFavoriteCompaniesLoading,
   useAppSelector
 } from "../../../store";
@@ -18,9 +17,10 @@ import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { lang } from "../../../langs";
+import { useSortedFavoriteCompanies } from "../../../hooks";
 
 const Page: NextPage = () => {
-  const favoriteCompanies = useAppSelector(selectFavoriteCompanies);
+  const favoriteCompanies = useSortedFavoriteCompanies();
 
   const favoriteCompaniesLoading = useAppSelector(
     selectFavoriteCompaniesLoading

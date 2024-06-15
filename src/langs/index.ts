@@ -95,6 +95,7 @@ export const lang = {
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
   Unknown: "Unknown",
+  ViewAgreement: "View agreement",
   Website: "Website",
   WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
@@ -178,11 +179,15 @@ export const lang = {
             title: "Public profile"
           },
           Signing: {
-            alert: `
+            description: "Generate company founding agreement.",
+            errorAlert: `
               Editing the company information will not be possible
               after initiating signing process.
             `,
-            description: "Generate company founding agreement.",
+            infoAlert: `
+              Founding agreement is generated
+              and awaiting the signatures.
+            `,
             title: "Signing"
           },
           Team: {

@@ -8,7 +8,6 @@ import {
 } from "../../../components";
 import {
   refreshCompanies,
-  selectCompanies,
   selectCompaniesLoading,
   useAppSelector
 } from "../../../store";
@@ -16,9 +15,10 @@ import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { lang } from "../../../langs";
+import { useSortedCompanies } from "../../../hooks";
 
 const Page: NextPage = () => {
-  const companies = useAppSelector(selectCompanies);
+  const companies = useSortedCompanies();
 
   const companiesLoading = useAppSelector(selectCompaniesLoading);
 

@@ -9,16 +9,16 @@ import {
 import {
   refreshCompanies,
   selectCompaniesLoading,
-  selectDrafts,
   useAppSelector
 } from "../../../store";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { lang } from "../../../langs";
+import { useSortedDrafts } from "../../../hooks";
 
 const Page: NextPage = () => {
-  const companies = useAppSelector(selectDrafts);
+  const companies = useSortedDrafts();
 
   const companiesLoading = useAppSelector(selectCompaniesLoading);
 

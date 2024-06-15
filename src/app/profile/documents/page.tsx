@@ -9,7 +9,6 @@ import {
 import {
   refreshDocuments,
   selectAuthUser,
-  selectDocuments,
   selectDocumentsLoading,
   useAppSelector
 } from "../../../store";
@@ -17,11 +16,12 @@ import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { lang } from "../../../langs";
+import { useSortedDocuments } from "../../../hooks";
 
 const Page: NextPage = () => {
   const authUser = useAppSelector(selectAuthUser);
 
-  const documents = useAppSelector(selectDocuments);
+  const documents = useSortedDocuments();
 
   const documentsLoading = useAppSelector(selectDocumentsLoading);
 
