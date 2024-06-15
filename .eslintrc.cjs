@@ -86,6 +86,7 @@ const config = {
             "borderless",
             "builtins",
             "camelcase",
+            "ccw",
             "checkbox",
             "cjs",
             "commonjs",

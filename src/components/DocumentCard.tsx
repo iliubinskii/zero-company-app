@@ -1,8 +1,11 @@
 import type { AuthUser, PopulatedDocument } from "../schema";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { refreshDocument, useAppDispatch } from "../store";
+import { DarkIconButton } from "./buttons";
 import { DocType } from "../schema";
 import type { FC } from "react";
+import { LuRefreshCcw } from "react-icons/lu";
+import { PiSignatureBold } from "react-icons/pi";
 import React, { useMemo } from "react";
 import { callAsync } from "../utils";
 import gravatar from "gravatar";
@@ -90,25 +93,21 @@ export const DocumentCard: FC<Props> = ({ authUser, document }) => {
         {document.doc.signatures
           .filter(signature => signature.email === authUser.email)
           .map(signature => (
-            <SignButton
-              href={signature.embedSrc}
+            <DarkIconButton
+              Icon={PiSignatureBold}
+              href={`/profile/documents/${document._id}`}
               key={signature.embedSrc}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {lang.Sign}
-            </SignButton>
+            />
           ))}
-        <SignButton
+        <DarkIconButton
+          Icon={LuRefreshCcw}
           className="cursor-pointer"
           onClick={() => {
             callAsync(async () => {
               await dispatch(refreshDocument(document._id));
             });
           }}
-        >
-          {lang.Refresh}
-        </SignButton>
+        />
       </Buttons>
     </Container>
   );
@@ -139,6 +138,4 @@ const AvatarContainer = tw.div`h-10 flex -space-x-5`;
 
 const Avatar = tw.img`w-10 h-10 rounded-full border-2 border-white`;
 
-const Buttons = tw.div``;
-
-const SignButton = tw.a`primary-button`;
+const Buttons = tw.div`flex gap-2`;

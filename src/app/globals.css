@@ -31,6 +31,13 @@ body {
     disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 
+.dark-icon-button {
+  @apply border border-gray-500 rounded-lg p-2.5
+    text-sm text-gray-500 text-center font-medium
+    inline-flex items-center
+    hover:bg-gray-700 hover:text-white;
+}
+
 .primary-button {
   @apply rounded
     px-4 py-2
