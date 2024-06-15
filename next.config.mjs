@@ -11,7 +11,7 @@ const nextConfig = {
       }
     ]
   },
-  productionBrowserSourceMaps: true
+  productionBrowserSourceMaps: false
 };
 
 export default nextConfig;

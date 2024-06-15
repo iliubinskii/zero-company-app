@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentProps, FC, MouseEventHandler } from "react";
 import Link from "next/link";
 import React from "react";
