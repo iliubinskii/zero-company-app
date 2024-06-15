@@ -184,6 +184,20 @@ export const api = {
     return "error" in company ? company : restoreCompany(company);
   },
   /**
+   * Retrieves the document from the API.
+   * @param id - The document id.
+   * @returns The document.
+   */
+  getDocument: async (
+    id: string
+  ): Promise<PopulatedDocument | ErrorResponse<ErrorCode>> => {
+    const document = await getReq<Routes["/documents/{id}"]["get"]>(
+      `documents/${id}`
+    );
+
+    return "error" in document ? document : restorePopulatedDocument(document);
+  },
+  /**
    * Retrieves the companies from the API.
    * @param options - Request options.
    * @returns The companies.

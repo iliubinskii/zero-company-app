@@ -18,20 +18,20 @@ import { lang } from "../../../langs";
 import { useSortedDrafts } from "../../../hooks";
 
 const Page: NextPage = () => {
-  const companies = useSortedDrafts();
+  const drafts = useSortedDrafts();
 
-  const companiesLoading = useAppSelector(selectCompaniesLoading);
+  const draftsLoading = useAppSelector(selectCompaniesLoading);
 
   return (
     <AuthGuard
-      customLoading={companiesLoading}
+      customLoading={draftsLoading}
       customRefreshThunk={refreshCompanies}
     >
-      <ProfileLayout loading={companiesLoading}>
-        {companies.length > 0 ? (
+      <ProfileLayout loading={draftsLoading}>
+        {drafts.length > 0 ? (
           <DraftCards>
-            {companies.map(company => (
-              <DraftCard company={company} key={company._id} />
+            {drafts.map(draft => (
+              <DraftCard draft={draft} key={draft._id} />
             ))}
           </DraftCards>
         ) : (

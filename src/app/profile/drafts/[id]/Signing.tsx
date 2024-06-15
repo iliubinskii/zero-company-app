@@ -1,3 +1,4 @@
+import { AnimatedLink, ErrorAlert, InfoAlert } from "../../../../components";
 import type { FC, FormEventHandler } from "react";
 import {
   SNACKBAR_VARIANT,
@@ -5,7 +6,6 @@ import {
   showSnackbar,
   useAppDispatch
 } from "../../../../store";
-import { ErrorAlert } from "../../../../components";
 import type { ExistingCompany } from "../../../../schema";
 import React from "react";
 import { api } from "../../../../api";
@@ -33,19 +33,28 @@ export const Signing: FC<Props> = ({ company }) => {
     });
   };
 
-  return (
+  return company.foundingAgreement ? (
+    <div className="flex flex-col gap-11">
+      <InfoAlert>{lang.app.profile.drafts.draft.Signing.infoAlert}</InfoAlert>
+      <div className="flex justify-end">
+        <AnimatedLink
+          className="primary-button"
+          href={`/profile/documents/${company.foundingAgreement}`}
+        >
+          {lang.ViewAgreement}
+        </AnimatedLink>
+      </div>
+    </div>
+  ) : (
     <form className="flex flex-col gap-11" onSubmit={onSubmit}>
-      {/* Alert */}
-      <ErrorAlert>{lang.app.profile.drafts.draft.Signing.alert}</ErrorAlert>
-      {/* Alert END */}
-
-      {/* Save button */}
+      <ErrorAlert>
+        {lang.app.profile.drafts.draft.Signing.errorAlert}
+      </ErrorAlert>
       <div className="flex justify-end">
         <button className="primary-button" type="submit">
           {lang.Generate}
         </button>
       </div>
-      {/* Save button END */}
     </form>
   );
 };

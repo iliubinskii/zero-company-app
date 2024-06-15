@@ -10,10 +10,10 @@ import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 
-export const DraftCard: FC<Props> = ({ company }) => {
-  const companyName = useCompanyName(company);
+export const DraftCard: FC<Props> = ({ draft }) => {
+  const companyName = useCompanyName(draft);
 
-  const category = useCompanyCategory(company);
+  const category = useCompanyCategory(draft);
 
   return (
     <Container>
@@ -26,7 +26,7 @@ export const DraftCard: FC<Props> = ({ company }) => {
         </CompanySection>
         <FoundersSection>
           <AvatarContainer>
-            {company.founders.map((founder, index) => (
+            {draft.founders.map((founder, index) => (
               <Avatar
                 alt={founder.name ?? `${lang.Signatory} ${index + 1}`}
                 key={founder.email}
@@ -49,7 +49,7 @@ export const DraftCard: FC<Props> = ({ company }) => {
       <Buttons>
         <DarkIconButton
           Icon={RiDraftFill}
-          href={`/profile/drafts/${company._id}`}
+          href={`/profile/drafts/${draft._id}`}
         />
       </Buttons>
     </Container>
@@ -57,7 +57,7 @@ export const DraftCard: FC<Props> = ({ company }) => {
 };
 
 export interface Props {
-  readonly company: ExistingCompany;
+  readonly draft: ExistingCompany;
 }
 
 const Container = tw.div`p-6 flex items-center gap-6`;
