@@ -7,7 +7,6 @@ import { noop } from "lodash";
 import { useAppLoading } from "../contexts";
 
 export const AnimatedLink: FC<ComponentProps<typeof Link>> = ({
-  href,
   onClick = noop,
   ...props
 }) => {
@@ -19,11 +18,6 @@ export const AnimatedLink: FC<ComponentProps<typeof Link>> = ({
   };
 
   return (
-    <Link
-      className="relative inline-block"
-      href={href}
-      onClick={clickHandler}
-      {...props}
-    />
+    <Link className="relative inline-block" onClick={clickHandler} {...props} />
   );
 };

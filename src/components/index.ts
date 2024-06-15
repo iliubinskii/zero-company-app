@@ -14,6 +14,7 @@ export { Loading } from "./Loading";
 export { MarketOverview } from "./MarketOverview";
 export { Navigate } from "./Navigate";
 export { NoContent } from "./NoContent";
+export { ProgressBar } from "./ProgressBar";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { ZeroCoin } from "./ZeroCoin";
