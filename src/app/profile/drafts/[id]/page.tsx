@@ -43,7 +43,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     isLoading,
     resource: company,
     setResource: setCompany
-  } = useAuthGuardedLoader(() => api.getCompany(id), [], {
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [], {
     redirectOnNotFound: "/profile/drafts"
   });
 

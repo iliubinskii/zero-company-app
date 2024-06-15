@@ -33,11 +33,8 @@ export async function deleteReq<T extends SchemaItem = never>(
     method: "DELETE"
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const json = await response.json();
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Ok
-  return json;
+  return response.json();
 }
 
 /**
@@ -65,11 +62,8 @@ export async function getReq<T extends SchemaItem = never>(
 
   const response = await fetch(url, { credentials: "include" });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const json = await response.json();
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Ok
-  return json;
+  return response.json();
 }
 
 /**
@@ -109,11 +103,8 @@ export async function postReq<T extends SchemaItem = never>(
 
   const response = await fetch(url, init);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const json = await response.json();
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Ok
-  return json;
+  return response.json();
 }
 
 /**
@@ -149,11 +140,8 @@ export async function putReq<T extends SchemaItem = never>(
 
   const response = await fetch(url, init);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ok
-  const json = await response.json();
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Ok
-  return json;
+  return response.json();
 }
 
 export interface Options {
