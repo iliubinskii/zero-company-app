@@ -1,5 +1,3 @@
-"use client";
-
 import type { ComponentProps, FC } from "react";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
 import { AnimatedLink } from "../../components";
@@ -15,13 +13,13 @@ const CreateCompanyButton: FC<
   return (
     <Link
       href="/create-company"
-      onBeforeClick={() => {
+      onClick={() => {
         dispatch(resetCompanyRegistration());
       }}
       {...props}
     >
-      {lang.CreateCompany2[0]}
-      <span className="hidden sm:inline">{lang.CreateCompany2[1]}</span>
+      {lang.StartCompany2[0]}
+      <span className="hidden sm:inline">{lang.StartCompany2[1]}</span>
     </Link>
   );
 };
@@ -29,13 +27,8 @@ const CreateCompanyButton: FC<
 export default CreateCompanyButton;
 
 const Link = tw(AnimatedLink)`
-  px-4 py-3
-  bg-green-primary
-  rounded-lg
-  text-white
-  whitespace-nowrap
-  transition duration-150 ease-in-out
+  rounded-lg px-4 py-3 bg-green-primary
+  whitespace-nowrap text-white
   hover:bg-green-secondary
-  transition-colors duration-150
-  focus:border-black;
+  transition;
 `;

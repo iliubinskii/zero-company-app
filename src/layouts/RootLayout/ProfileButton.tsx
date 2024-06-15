@@ -17,17 +17,20 @@ const ProfileButton: FC<HTMLAttributes<HTMLDivElement>> = ({ ...props }) => {
 
   return (
     <Container {...props}>
-      {loaded && (
-        <Link
-          href={
-            authUser
-              ? "/profile"
-              : `${API_URL}auth/login?successReturnUrl=/profile`
-          }
-        >
-          {text}
-        </Link>
-      )}
+      <Link
+        className={loaded ? "" : "opacity-50 pointer-events-none"}
+        href={
+          authUser
+            ? "/profile"
+            : `${API_URL}auth/login?successReturnUrl=/profile`
+        }
+      >
+        <div>{text}</div>
+        <div className="h-0 overflow-hidden">
+          <div>{lang.Profile}</div>
+          <div>{lang.LogIn}</div>
+        </div>
+      </Link>
     </Container>
   );
 };
@@ -37,9 +40,8 @@ export default ProfileButton;
 const Container = tw.div`flex`;
 
 const Link = tw(AnimatedLink)`
-  px-2 py-3
-  whitespace-nowrap
-  text-white
-  py-3 px-5 rounded-lg border hover:text-black hover:bg-white
-  transition-colors duration-150
+  rounded-lg border px-5 py-3
+  whitespace-nowrap text-white
+  hover:bg-white hover:text-black
+  transition
 `;

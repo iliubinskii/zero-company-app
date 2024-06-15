@@ -6,7 +6,7 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { showSnackbar, useAppDispatch } from "../../../store";
+import { SNACKBAR_VARIANT, showSnackbar, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
@@ -50,7 +50,10 @@ export const ClientPage: FC<Props> = ({
         if ("error" in response) {
           logger.error(`${response.error}: ${response.errorMessage}`);
           dispatch(
-            showSnackbar({ message: response.errorMessage, variant: "error" })
+            showSnackbar({
+              message: response.errorMessage,
+              variant: SNACKBAR_VARIANT.error
+            })
           );
           setAutoMode(false);
         } else {
@@ -59,7 +62,7 @@ export const ClientPage: FC<Props> = ({
         }
       } catch (err) {
         setAutoMode(false);
-        throw err;
+        logger.error(err);
       } finally {
         setLoading(false);
       }
@@ -104,7 +107,7 @@ export const ClientPage: FC<Props> = ({
         <title>{`${category.name} - ${lang.meta.title}`}</title>
         <meta content={category.tagline} name="description" />
       </Head>
-      <PageLayout size="lg">
+      <PageLayout size="xl">
         {/* Overview */}
         <div className="overview">
           <div className="header2">{category.name}</div>

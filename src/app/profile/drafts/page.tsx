@@ -1,39 +1,47 @@
 "use client";
 
-import { AuthGuard, DraftCard, DraftCards } from "../../../components";
 import {
-  requireDrafts,
+  AuthGuard,
+  DraftCard,
+  DraftCards,
+  NoContent
+} from "../../../components";
+import {
+  refreshCompanies,
+  selectCompaniesLoading,
   selectDrafts,
-  selectDraftsLoaded,
-  useAppDispatch,
   useAppSelector
 } from "../../../store";
 import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
-import React, { useEffect } from "react";
-import { callAsync } from "../../../utils";
+import React from "react";
+import { lang } from "../../../langs";
 
 const Page: NextPage = () => {
-  const dispatch = useAppDispatch();
+  const companies = useAppSelector(selectDrafts);
 
-  const drafts = useAppSelector(selectDrafts);
-
-  const draftsLoaded = useAppSelector(selectDraftsLoaded);
-
-  useEffect(() => {
-    callAsync(async () => {
-      await dispatch(requireDrafts());
-    });
-  }, [dispatch]);
+  const companiesLoading = useAppSelector(selectCompaniesLoading);
 
   return (
-    <AuthGuard customLoaded={draftsLoaded}>
-      <ProfileLayout>
-        <DraftCards>
-          {drafts.map(company => (
-            <DraftCard company={company} key={company._id} />
-          ))}
-        </DraftCards>
+    <AuthGuard
+      customLoading={companiesLoading}
+      customRefreshThunk={refreshCompanies}
+    >
+      <ProfileLayout loading={companiesLoading}>
+        {companies.length > 0 ? (
+          <DraftCards>
+            {companies.map(company => (
+              <DraftCard company={company} key={company._id} />
+            ))}
+          </DraftCards>
+        ) : (
+          <NoContent
+            buttonText={lang.app.profile.drafts.NoContent.buttonText}
+            href="/create-company"
+            text={lang.app.profile.drafts.NoContent.text}
+            title={lang.app.profile.drafts.NoContent.title}
+          />
+        )}
       </ProfileLayout>
     </AuthGuard>
   );

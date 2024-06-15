@@ -6,7 +6,6 @@ import { noop } from "lodash";
 
 export const SelectElement: FC<Props> = ({
   className = "",
-  containerClassName = "",
   errorMessages = [],
   name,
   onChange,
@@ -15,7 +14,7 @@ export const SelectElement: FC<Props> = ({
   placeholder,
   ...props
 }) => (
-  <div className={`relative ${containerClassName}`.trim()}>
+  <div className="relative">
     <select
       className={`form-field w-full ${className}`.trim()}
       name={name}
@@ -40,7 +39,6 @@ export const SelectElement: FC<Props> = ({
 
 export interface Props
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
-  readonly containerClassName?: string | undefined;
   readonly errorMessages?: readonly FieldError[] | undefined;
   readonly onChange: (value: string) => void;
   readonly onResetErrors?: ((name?: string) => void) | undefined;

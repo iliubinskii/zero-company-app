@@ -20,11 +20,12 @@ export const Basics: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="categories[0]"
       onChange={value => {
-        const companyCategories = [...company.categories];
-
-        companyCategories[0] = value;
-
-        setCompany({ categories: companyCategories });
+        setCompany({
+          categories:
+            value.length > 0
+              ? [value, ...company.categories.slice(1)]
+              : company.categories.slice(1)
+        });
       }}
       onResetErrors={onResetErrors}
       options={categories.map(({ _id: value, name: label }) => {
@@ -71,12 +72,12 @@ export const Basics: FC<ModuleProps> = ({
     />
     {/* Target value END */}
 
-    {/* Submit button */}
+    {/* Save button */}
     <div className="flex justify-end">
       <button className="primary-button" disabled={!modified} type="submit">
         {lang.Save}
       </button>
     </div>
-    {/* Submit button END */}
+    {/* Save button END */}
   </form>
 );

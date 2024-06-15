@@ -3,18 +3,24 @@
 import {
   AccordionFlatContainer,
   AccordionJunction,
-  AuthGuard
+  AuthGuard,
+  ProgressAccordionItem
 } from "../../../../components";
-import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
+import {
+  SNACKBAR_VARIANT,
+  addCompany,
+  showSnackbar,
+  useAppDispatch
+} from "../../../../store";
 import {
   assertDefined,
   buildFormData,
   callAsync,
   removeUndefined
 } from "../../../../utils";
-import { showSnackbar, useAppDispatch } from "../../../../store";
+import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
-import { CircularAccordionItem } from "./CircularAccordionItem";
+import type { CustomCompanyUpdate } from "./helpers";
 import { ERROR } from "../../../../consts";
 import type { FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
@@ -23,12 +29,11 @@ import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Signing } from "./Signing";
 import { Team } from "./Team";
 import { api } from "../../../../api";
 import { lang } from "../../../../langs";
-import { useAuthGuardedLoader } from "../../../../hooks";
 import { useCategories } from "../../../../contexts";
 
 const Page: NextPage<NextPageProps> = ({ params = {} }) => {
@@ -37,8 +42,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
   const {
     isLoading,
     resource: company,
-    setResource
-  } = useAuthGuardedLoader(() => api.getCompany(id), [], {
+    setResource: setCompany
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [], {
     redirectOnNotFound: "/profile/drafts"
   });
 
@@ -46,18 +51,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 
   const categories = useCategories();
 
-  const category = useMemo(() => {
-    if (company) {
-      const categoryId = company.categories[0];
-
-      if (typeof categoryId === "string")
-        return categories.find(({ _id }) => _id === categoryId);
-    }
-
-    return undefined;
-  }, [categories, company]);
-
-  const [companyUpdate, setCompanyUpdate] = useState<CustomCompanyUpdate>({});
+  const category = useCompanyCategory(company);
 
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
@@ -65,19 +59,14 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 
   const [removeImages, setRemoveImages] = useState<readonly string[]>([]);
 
-  const updatedCompany = useMemo(
-    (): CustomExistingCompany | undefined =>
-      company
-        ? {
-            ...company,
-            ...removeUndefined(companyUpdate)
-          }
-        : undefined,
-    [company, companyUpdate]
-  );
+  const [update, setUpdate] = useState<CustomCompanyUpdate>({});
+
+  const updatedCompany = company
+    ? { ...company, ...removeUndefined(update) }
+    : undefined;
 
   const modified =
-    Object.keys(companyUpdate).length > 0 ||
+    Object.keys(update).length > 0 ||
     addImages.length > 0 ||
     removeImages.length > 0;
 
@@ -85,7 +74,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     e => {
       e.preventDefault();
 
-      const data = buildFormData(companyUpdate);
+      const data = buildFormData(update);
 
       for (const image of addImages) data.append("addImages", image);
 
@@ -100,61 +89,81 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
             setErrorMessages([
               ...(function* prepareErrors(): Generator<FieldError> {
                 for (const error of response.data)
-                  if (error.path === "founders") {
-                    yield {
-                      message: error.message,
-                      path: "founders[0].email"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].firstName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].lastName"
-                    };
-                    yield {
-                      message: error.message,
-                      path: "founders[0].share"
-                    };
-                  } else yield error;
+                  switch (error.path) {
+                    case "categories": {
+                      yield {
+                        message: error.message,
+                        path: "categories[0]"
+                      };
+
+                      break;
+                    }
+
+                    case "founders": {
+                      yield {
+                        message: error.message,
+                        path: "founders[0].email"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].firstName"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].lastName"
+                      };
+                      yield {
+                        message: error.message,
+                        path: "founders[0].share"
+                      };
+
+                      break;
+                    }
+
+                    default: {
+                      yield error;
+                    }
+                  }
               })()
             ]);
           else
             dispatch(
               showSnackbar({
                 message: response.errorMessage,
-                variant: "error"
+                variant: SNACKBAR_VARIANT.error
               })
             );
         else {
-          setResource(response);
-          setCompanyUpdate({});
+          dispatch(addCompany(response));
+          setCompany(response);
+          setUpdate({});
           setAddImages([]);
           setRemoveImages([]);
         }
       });
     },
-    [addImages, companyUpdate, dispatch, id, removeImages, setResource]
+    [addImages, update, dispatch, id, removeImages, setCompany]
   );
 
   useEffect(() => {
-    setCompanyUpdate({});
-  }, [company]);
+    setUpdate({});
+    setAddImages([]);
+    setRemoveImages([]);
+  }, [id]);
 
   return (
-    <AuthGuard customLoaded={!isLoading}>
+    <AuthGuard customLoading={isLoading}>
       <ProfileLayout>
         <h2 className="text-2xl text-gray-700 font-bold">
           {category
             ? `${category.name} ${lang.projectDraft}`
-            : lang.EditYourProjectDraft}
+            : lang.EditProjectDraft}
         </h2>
         <div>
           <AccordionFlatContainer>
             {modules.map(
               ({ Component, description, progress, title }, index) => (
-                <CircularAccordionItem
+                <ProgressAccordionItem
                   description={description}
                   key={index}
                   progress={progress}
@@ -186,29 +195,26 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         );
                       }}
                       onSave={onSave}
-                      setCompany={update => {
-                        setCompanyUpdate(prev => {
-                          return {
-                            ...prev,
-                            ...update
-                          };
+                      setCompany={nextUpdate => {
+                        setUpdate(prev => {
+                          return { ...prev, ...nextUpdate };
                         });
                       }}
                     />
                   )}
-                </CircularAccordionItem>
+                </ProgressAccordionItem>
               )
             )}
           </AccordionFlatContainer>
           <AccordionJunction />
           <AccordionFlatContainer>
-            <CircularAccordionItem
+            <ProgressAccordionItem
               description={lang.app.profile.drafts.draft.Signing.description}
               progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
               {company && <Signing company={company} modified={modified} />}
-            </CircularAccordionItem>
+            </ProgressAccordionItem>
           </AccordionFlatContainer>
         </div>
       </ProfileLayout>
