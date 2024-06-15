@@ -32,7 +32,8 @@ import zod from "zod";
 export const SNACKBAR_VARIANT = {
   error: "error",
   info: "info",
-  success: "success"
+  success: "success",
+  warning: "warning"
 } as const;
 
 export const AppStateValidationSchema = zod.object({

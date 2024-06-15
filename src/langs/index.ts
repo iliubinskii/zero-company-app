@@ -38,6 +38,7 @@ export const lang = {
   Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
+  Generate: "Generate",
   GeneratedFoundingAgreement: "Generated Founding Agreement",
   GoToHomepage: "Go to Homepage",
   HelpCenter: "Help Center",
@@ -82,6 +83,7 @@ export const lang = {
   Signatory: "Signatory",
   Signed: "Signed",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
+  Start: "Start",
   StartCompany: "Start a company",
   StartCompany2: ["Start", " a company"],
   Submit: "Submit",
@@ -156,7 +158,8 @@ export const lang = {
         NoContent: {
           buttonText: "Start a Company",
           text: `
-            You don't have any drafts yet. Create a company and to start using our platform.
+            You don't have any drafts yet.
+            Create a company and to start using our platform.
           `,
           title: "No Drafts Yet"
         },
@@ -175,6 +178,10 @@ export const lang = {
             title: "Public profile"
           },
           Signing: {
+            alert: `
+              Editing the company information will not be possible
+              after initiating signing process.
+            `,
             description: "Generate company founding agreement.",
             title: "Signing"
           },

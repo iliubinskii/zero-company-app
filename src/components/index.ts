@@ -1,5 +1,6 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
+export { Chevron } from "./Chevron";
 export { DocumentCard } from "./DocumentCard";
 export { DocumentCards } from "./DocumentCards";
 export { DraftCard } from "./DraftCard";
@@ -19,6 +20,7 @@ export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { ZeroCoin } from "./ZeroCoin";
 export * from "./accordion";
+export * from "./alerts";
 export * from "./buttons";
 export * from "./company-cards";
 export * from "./form";

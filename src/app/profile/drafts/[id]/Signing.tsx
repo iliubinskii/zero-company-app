@@ -5,6 +5,7 @@ import {
   showSnackbar,
   useAppDispatch
 } from "../../../../store";
+import { ErrorAlert } from "../../../../components";
 import type { ExistingCompany } from "../../../../schema";
 import React from "react";
 import { api } from "../../../../api";
@@ -34,10 +35,14 @@ export const Signing: FC<Props> = ({ company }) => {
 
   return (
     <form className="flex flex-col gap-11" onSubmit={onSubmit}>
+      {/* Alert */}
+      <ErrorAlert>{lang.app.profile.drafts.draft.Signing.alert}</ErrorAlert>
+      {/* Alert END */}
+
       {/* Save button */}
       <div className="flex justify-end">
         <button className="primary-button" type="submit">
-          {lang.Save}
+          {lang.Generate}
         </button>
       </div>
       {/* Save button END */}

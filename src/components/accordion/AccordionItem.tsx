@@ -1,6 +1,7 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
+import { Chevron } from "../Chevron";
 import React, { useState } from "react";
 import tw from "tailwind-styled-components";
 
@@ -25,10 +26,10 @@ export const AccordionItem: FC<Props> = ({
             setIsExpanded(!isExpanded);
           }}
         >
-          {header}
+          <HeaderContents>{header}</HeaderContents>
+          <Chevron isUp={isExpanded} />
         </Header>
       )}
-
       {open && <Contents>{children}</Contents>}
     </Container>
   );
@@ -43,6 +44,8 @@ export interface Props {
 
 const Container = tw.div`p-6 flex flex-col gap-6`;
 
-const Header = tw.div`text-gray-700 select-none`;
+const Header = tw.div`text-gray-700 select-none flex items-center gap-3`;
+
+const HeaderContents = tw.div`grow flex items-center`;
 
 const Contents = tw.div`px-2`;

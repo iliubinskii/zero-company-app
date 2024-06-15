@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedLink, MarketOverview } from "../components";
 import type { FC, ReactNode } from "react";
 import {
   GRAVATAR_DEFAULT,
@@ -18,7 +19,6 @@ import {
 } from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
-import { AnimatedLink } from "../components";
 import React from "react";
 import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
@@ -31,15 +31,10 @@ import { useUserName } from "../hooks";
  * Profile layout.
  * @param props - The properties.
  * @param props.children - The children.
- * @param props.info  - The info.
  * @param props.loading - The loading.
  * @returns The element.
  */
-export const ProfileLayout: FC<Props> = ({
-  children,
-  info,
-  loading = false
-}) => {
+export const ProfileLayout: FC<Props> = ({ children, loading = false }) => {
   const authUser = useAppSelector(selectAuthUser);
 
   const name = useUserName();
@@ -99,7 +94,7 @@ export const ProfileLayout: FC<Props> = ({
       </SideMenu>
       <Main>
         <Contents>{loading || children}</Contents>
-        {info}
+        <MarketOverview />
       </Main>
     </Container>
   );
@@ -107,7 +102,6 @@ export const ProfileLayout: FC<Props> = ({
 
 export interface Props {
   readonly children?: ReactNode | undefined;
-  readonly info?: ReactNode | undefined;
   readonly loading?: boolean | undefined;
 }
 
