@@ -32,6 +32,7 @@ export interface DeleteResponse {
 
 export interface DigitalDocument {
   readonly signatures: readonly Signature[];
+  readonly status?: string | null | undefined;
   readonly submissionId: number;
 }
 

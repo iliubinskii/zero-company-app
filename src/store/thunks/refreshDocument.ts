@@ -1,4 +1,4 @@
-import { addDocument, clearDrafts, logError } from "../slices";
+import { addDocument, clearDocuments, logError } from "../slices";
 import type { AppThunk } from "../types";
 import { api } from "../../api";
 import { lang } from "../../langs";
@@ -21,7 +21,7 @@ export function refreshDocument(id: string): AppThunk {
             logError({ error: document, message: document.errorMessage })
           );
         else dispatch(addDocument(document));
-      } else dispatch(clearDrafts());
+      } else dispatch(clearDocuments());
     } catch (err) {
       dispatch(logError({ error: err, message: lang.ErrorLoadingDrafts }));
     }

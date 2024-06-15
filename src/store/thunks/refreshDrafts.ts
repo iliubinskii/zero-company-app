@@ -26,8 +26,8 @@ export function refreshDrafts(): AppThunk {
         } else dispatch(setDrafts(drafts.docs));
       } else dispatch(clearDrafts());
     } catch (err) {
-      dispatch(logError({ error: err, message: lang.ErrorLoadingDrafts }));
       dispatch(setDraftsError());
+      dispatch(logError({ error: err, message: lang.ErrorLoadingDrafts }));
     }
   };
 }

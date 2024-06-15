@@ -28,6 +28,7 @@ export const lang = {
   EditProjectDraft: "Edit project draft",
   Email: "E-mail",
   ErrorLoadingAuthUser: "Error loading authenticated user",
+  ErrorLoadingCompanies: "Error loading companies",
   ErrorLoadingData: "Error loading data",
   ErrorLoadingDocuments: "Error loading documents",
   ErrorLoadingDrafts: "Error loading drafts",

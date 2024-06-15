@@ -31,8 +31,8 @@ export function refreshDocuments(): AppThunk {
         } else dispatch(setDocuments(documents.docs));
       } else dispatch(clearDocuments());
     } catch (err) {
-      dispatch(logError({ error: err, message: lang.ErrorLoadingDocuments }));
       dispatch(setDocumentsError());
+      dispatch(logError({ error: err, message: lang.ErrorLoadingDocuments }));
     }
   };
 }

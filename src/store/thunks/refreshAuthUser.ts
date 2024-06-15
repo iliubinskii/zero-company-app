@@ -18,8 +18,8 @@ export function refreshAuthUser(): AppThunk {
         dispatch(logError({ error: user, message: user.errorMessage }));
       } else dispatch(setAuthUser(user));
     } catch (err) {
-      dispatch(logError({ error: err, message: lang.ErrorLoadingAuthUser }));
       dispatch(setAuthUser(null));
+      dispatch(logError({ error: err, message: lang.ErrorLoadingAuthUser }));
     }
   };
 }

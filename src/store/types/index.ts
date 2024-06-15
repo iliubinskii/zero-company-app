@@ -5,6 +5,7 @@ import type {
   LoadedActions,
   SnackbarActions,
   UserActions,
+  UserCompaniesActions,
   UserDocumentsActions,
   UserDraftsActions
 } from "../slices";
@@ -66,6 +67,11 @@ export const AppStateValidationSchema = zod.object({
   user: zod.object({
     user: ExistingUserValidationSchema.optional()
   }),
+  userCompanies: zod.object({
+    companies: zod.array(ExistingCompanyValidationSchema),
+    companiesError: zod.boolean(),
+    companiesLoading: zod.boolean()
+  }),
   userDocuments: zod.object({
     documents: zod.array(PopulatedDocumentValidationSchema),
     documentsError: zod.boolean(),
@@ -86,6 +92,7 @@ export type AppAction =
   | LoadedActions
   | SnackbarActions
   | UserActions
+  | UserCompaniesActions
   | UserDraftsActions
   | UserDocumentsActions;
 
@@ -113,6 +120,11 @@ export interface AppState {
   };
   readonly user: {
     readonly user?: ExistingUser | undefined;
+  };
+  readonly userCompanies: {
+    readonly companies: readonly ExistingCompany[];
+    readonly companiesError: boolean;
+    readonly companiesLoading: boolean;
   };
   readonly userDocuments: {
     readonly documents: readonly PopulatedDocument[];

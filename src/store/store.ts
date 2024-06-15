@@ -7,6 +7,7 @@ import {
   loadedReducer,
   snackbarReducer,
   useDraftsReducer,
+  userCompaniesReducer,
   userDocumentsReducer,
   userReducer
 } from "./slices";
@@ -21,6 +22,7 @@ const slicesReducer = combineReducers({
   loaded: loadedReducer,
   snackbar: snackbarReducer,
   user: userReducer,
+  userCompanies: userCompaniesReducer,
   userDocuments: userDocumentsReducer,
   userDrafts: useDraftsReducer
 });
