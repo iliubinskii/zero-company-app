@@ -1,16 +1,14 @@
 "use client";
 
-import type { FC, HTMLAttributes } from "react";
 import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
 import { API_URL } from "../../config";
 import { AnimatedLink } from "../../components";
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const ProfileButton: FC<
-  Omit<HTMLAttributes<HTMLDivElement>, "className">
-> = props => {
+const ProfileButton: FC = () => {
   const authUser = useAppSelector(selectAuthUser);
 
   const loaded = useAppSelector(selectLoaded);
@@ -20,15 +18,14 @@ const ProfileButton: FC<
   return (
     <Container
       className={loaded ? undefined : "opacity-50 pointer-events-none"}
-      {...props}
     >
       <AnimatedLink
-        className={`
+        className="
           rounded-lg border px-5 py-3
           whitespace-nowrap text-white
           hover:bg-white hover:text-black
           transition
-        `}
+        "
         href={
           authUser
             ? "/profile"

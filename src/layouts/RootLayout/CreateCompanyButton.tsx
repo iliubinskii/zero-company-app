@@ -1,12 +1,10 @@
-import type { ComponentProps, FC } from "react";
 import { resetCompanyRegistration, useAppDispatch } from "../../store";
 import { AnimatedLink } from "../../components";
+import type { FC } from "react";
 import React from "react";
 import { lang } from "../../langs";
 
-const CreateCompanyButton: FC<
-  Omit<ComponentProps<typeof AnimatedLink>, "className" | "href" | "onClick">
-> = props => {
+const CreateCompanyButton: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -21,7 +19,6 @@ const CreateCompanyButton: FC<
       onClick={() => {
         dispatch(resetCompanyRegistration());
       }}
-      {...props}
     >
       {lang.StartCompany2[0]}
       <span className="hidden sm:inline">{lang.StartCompany2[1]}</span>
