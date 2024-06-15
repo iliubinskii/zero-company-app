@@ -94,7 +94,9 @@ export const ProfileLayout: FC<Props> = ({ children, loading = false }) => {
       </SideMenu>
       <Main>
         <Contents>{loading || children}</Contents>
-        <MarketOverview />
+        <Info>
+          <MarketOverview />
+        </Info>
       </Main>
     </Container>
   );
@@ -124,6 +126,8 @@ const Links = tw.div`w-64 flex flex-col gap-1`;
 const Main = tw.div`grow p-4 flex gap-9`;
 
 const Contents = tw.div`grow flex flex-col gap-9`;
+
+const Info = tw.div`hidden xl:block`;
 
 const links = [
   {
