@@ -35,6 +35,7 @@ export const lang = {
   ErrorLoadingDrafts: "Error loading drafts",
   ErrorLoadingFavoriteCompanies: "Error loading favorite companies",
   Explore: "Explore",
+  FailedToLoadImage: "Failed to load image",
   FirstName: "First name",
   Founder: "Founder",
   Founders: "Founders",

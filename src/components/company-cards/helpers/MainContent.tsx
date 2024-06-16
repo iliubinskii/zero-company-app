@@ -1,7 +1,7 @@
 "use client";
 
 import { FaBookmark, FaRegBookmark, FaRegClock } from "react-icons/fa6";
-import { callAsync, getSafeImage, getSafeLogo } from "../../../utils";
+import { callAsync, getCompanyImage, getCompanyLogo } from "../../../utils";
 import {
   selectUser,
   toggleFavorite,
@@ -12,13 +12,14 @@ import type { ExistingCompany } from "../../../schema";
 import type { FC } from "react";
 import { HeartIcon } from "../../icons";
 import React from "react";
+import { SafeImage } from "../../SafeImage";
 
 export const MainContent: FC<Props> = ({ company }) => {
   const dispatch = useAppDispatch();
 
-  const image = getSafeImage(company);
+  const image = getCompanyImage(company);
 
-  const logo = getSafeLogo(company);
+  const logo = getCompanyLogo(company);
 
   const user = useAppSelector(selectUser);
 
@@ -31,13 +32,13 @@ export const MainContent: FC<Props> = ({ company }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <img
+      <SafeImage
         alt={company.name ?? undefined}
         className="w-full h-full object-cover rounded-md aspect-video"
         src={image.secureUrl}
       />
       <div className="px-2 flex gap-4">
-        <img
+        <SafeImage
           alt={company.name ?? undefined}
           className="w-10 h-10 object-cover rounded-full"
           src={logo.secureUrl}
