@@ -26,9 +26,7 @@ export const RootLayout: FC<Props> = ({ children }) => {
           <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
             <ul className="flex gap-3 justify-start">
               <li>
-                <AnimatedLink href="/knowledge/team">
-                  <HeaderSimpleButton>{lang.Team}</HeaderSimpleButton>
-                </AnimatedLink>
+                <HeaderSimpleButton>{lang.Teams}</HeaderSimpleButton>
               </li>
               <li>
                 <HeaderSimpleButton>{lang.Resources}</HeaderSimpleButton>
