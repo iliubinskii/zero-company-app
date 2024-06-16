@@ -4,6 +4,7 @@ import {
   AccordionFlatContainer,
   AccordionJunction,
   AuthGuard,
+  IconAccordionItem,
   ProgressAccordionItem
 } from "../../../../components";
 import {
@@ -27,6 +28,7 @@ import type { FileWithPreview } from "../../../../components/form/FileInputEleme
 import type { FormEventHandler } from "react";
 import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
+import { PiSignatureBold } from "react-icons/pi";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
 import React, { useCallback, useEffect, useState } from "react";
@@ -209,9 +211,9 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
           </AccordionFlatContainer>
           <AccordionJunction />
           <AccordionFlatContainer>
-            <ProgressAccordionItem
+            <IconAccordionItem
+              Icon={PiSignatureBold}
               description={lang.app.profile.drafts.draft.Signing.description}
-              progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
               {company && (
@@ -221,7 +223,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                   setCompany={setCompany}
                 />
               )}
-            </ProgressAccordionItem>
+            </IconAccordionItem>
           </AccordionFlatContainer>
         </div>
       </ProfileLayout>
