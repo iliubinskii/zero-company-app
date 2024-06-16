@@ -6,14 +6,17 @@ import type { FC } from "react";
 import { ProgressBar } from "./ProgressBar";
 import React from "react";
 import { RiDraftFill } from "react-icons/ri";
+import { draftProgress } from "../utils";
 import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 
 export const DraftCard: FC<Props> = ({ categories, draft }) => {
+  const category = useCompanyCategory(draft, categories);
+
   const companyName = useCompanyName(draft, categories);
 
-  const category = useCompanyCategory(draft, categories);
+  const { totalProgress } = draftProgress(draft);
 
   return (
     <Container>
@@ -41,8 +44,13 @@ export const DraftCard: FC<Props> = ({ categories, draft }) => {
         </FoundersSection>
         <ProgressSection>
           <ProgressContainer>
-            <ProgressBar className="w-1/2" progress={32} />
-            <ProgressText>32% done</ProgressText>
+            <ProgressBar
+              className="w-1/2"
+              progress={Math.round(100 * totalProgress)}
+            />
+            <ProgressText>
+              {Math.round(100 * totalProgress)}% {lang.done}
+            </ProgressText>
           </ProgressContainer>
         </ProgressSection>
       </GridContainer>

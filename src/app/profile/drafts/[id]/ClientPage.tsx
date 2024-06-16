@@ -7,13 +7,18 @@ import {
   IconAccordionItem,
   ProgressAccordionItem
 } from "../../../../components";
-import { type CustomCompanyUpdate, draftProgress } from "./helpers";
 import type { ExistingCategory, FieldError } from "../../../../schema";
 import type { FC, FormEventHandler } from "react";
 import { addCompany, logError, useAppDispatch } from "../../../../store";
-import { buildFormData, callAsync, removeUndefined } from "../../../../utils";
+import {
+  buildFormData,
+  callAsync,
+  draftProgress,
+  removeUndefined
+} from "../../../../utils";
 import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
+import { type CustomCompanyUpdate } from "./helpers";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import { PiSignatureBold } from "react-icons/pi";
 import { ProfileLayout } from "../../../../layouts";

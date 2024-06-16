@@ -220,6 +220,7 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
+  done: "done",
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
   internshipPositions: "internship positions",
