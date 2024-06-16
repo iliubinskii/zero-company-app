@@ -6,7 +6,7 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { SNACKBAR_VARIANT, showSnackbar, useAppDispatch } from "../../../store";
+import { SnackbarVariant, showSnackbar, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
@@ -52,7 +52,7 @@ export const ClientPage: FC<Props> = ({
           dispatch(
             showSnackbar({
               message: response.errorMessage,
-              variant: SNACKBAR_VARIANT.error
+              variant: SnackbarVariant.error
             })
           );
           setAutoMode(false);

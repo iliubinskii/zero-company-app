@@ -7,7 +7,7 @@ import {
   ProgressAccordionItem
 } from "../../../../components";
 import {
-  SNACKBAR_VARIANT,
+  SnackbarVariant,
   addCompany,
   showSnackbar,
   useAppDispatch
@@ -43,7 +43,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     isLoading,
     resource: company,
     setResource: setCompany
-  } = useAuthGuardedLoader(async () => api.getCompany(id), [], {
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [id], {
     redirectOnNotFound: "/profile/drafts"
   });
 
@@ -130,7 +130,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
             dispatch(
               showSnackbar({
                 message: response.errorMessage,
-                variant: SNACKBAR_VARIANT.error
+                variant: SnackbarVariant.error
               })
             );
         else {

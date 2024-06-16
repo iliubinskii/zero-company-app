@@ -29,7 +29,7 @@ import type { ThunkAction } from "redux-thunk";
 import type { store } from "../store";
 import zod from "zod";
 
-export const SNACKBAR_VARIANT = {
+export const SnackbarVariant = {
   error: "error",
   info: "info",
   success: "success",
@@ -59,9 +59,9 @@ export const AppStateValidationSchema = zod.object({
     isOpen: zod.boolean(),
     message: zod.string(),
     variant: zod.enum([
-      SNACKBAR_VARIANT.error,
-      SNACKBAR_VARIANT.info,
-      SNACKBAR_VARIANT.success
+      SnackbarVariant.error,
+      SnackbarVariant.info,
+      SnackbarVariant.success
     ])
   }),
   user: zod.object({
@@ -110,7 +110,7 @@ export interface AppState {
   readonly snackbar: {
     readonly isOpen: boolean;
     readonly message: string;
-    readonly variant: SNACKBAR_VARIANT;
+    readonly variant: SnackbarVariant;
   };
   readonly user: {
     readonly user?: ExistingUser | undefined;
@@ -136,8 +136,8 @@ export type AppThunk<T = void> = ThunkAction<
   AppAction
 >;
 
-export type SNACKBAR_VARIANT =
-  (typeof SNACKBAR_VARIANT)[keyof typeof SNACKBAR_VARIANT];
+export type SnackbarVariant =
+  (typeof SnackbarVariant)[keyof typeof SnackbarVariant];
 
 export type UseAppDispatch = typeof useDispatch<AppDispatch>;
 

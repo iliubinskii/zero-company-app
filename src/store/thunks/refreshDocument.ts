@@ -1,5 +1,6 @@
 import { addDocument, clearDocuments, logError } from "../slices";
 import type { AppThunk } from "../types";
+import type { PopulatedDocument } from "../../schema";
 import { api } from "../../api";
 import { lang } from "../../langs";
 
@@ -8,7 +9,9 @@ import { lang } from "../../langs";
  * @param id - The document id.
  * @returns The document.
  */
-export function refreshDocument(id: string): AppThunk {
+export function refreshDocument(
+  id: string
+): AppThunk<PopulatedDocument | undefined> {
   return async (dispatch, getState) => {
     try {
       const { authUser } = getState().auth;
@@ -20,10 +23,16 @@ export function refreshDocument(id: string): AppThunk {
           dispatch(
             logError({ error: document, message: document.errorMessage })
           );
-        else dispatch(addDocument(document));
+        else {
+          dispatch(addDocument(document));
+
+          return document;
+        }
       } else dispatch(clearDocuments());
     } catch (err) {
       dispatch(logError({ error: err, message: lang.ErrorLoadingDrafts }));
     }
+
+    return undefined;
   };
 }

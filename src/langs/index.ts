@@ -23,6 +23,7 @@ export const lang = {
   CreateDraft: "Create a draft",
   Dashboard: "Dashboard",
   Description: "Description",
+  DocumentSignedByAllParties: "Document signed by all parties",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
   EditProjectDraft: "Edit project draft",
