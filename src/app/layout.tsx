@@ -4,16 +4,14 @@ import "./globals.css";
 import {
   AppLoadingProvider,
   CategoriesProvider,
-  ReduxPersistor,
-  ReduxStoreProvider,
   SnackbarProvider
 } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
+import { ReduxPersistor, ReduxStoreProvider } from "../store";
 import React, { Suspense } from "react";
 import { RootLayout } from "../layouts";
 import { api } from "../api";
 import { lang } from "../langs";
-import { logger } from "../services";
 
 /**
  * Root layout.
@@ -22,11 +20,9 @@ import { logger } from "../services";
  * @returns The root layout.
  */
 export default async function App({ children }: Props): Promise<ReactElement> {
-  const t1 = performance.now();
-
   const categories = await api.getCategoriesSrv();
 
-  const element = (
+  return (
     <html lang="en">
       <head>
         <title>{lang.meta.title}</title>
@@ -52,13 +48,6 @@ export default async function App({ children }: Props): Promise<ReactElement> {
       </body>
     </html>
   );
-
-  const t2 = performance.now();
-
-  // eslint-disable-next-line i18n-text/no-en -- Ok
-  logger.info(`Render '/layout' in ${Math.round(t2 - t1)} ms`);
-
-  return element;
 }
 
 export interface Props {

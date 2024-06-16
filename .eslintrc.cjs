@@ -64,7 +64,7 @@ const config = {
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
-      { additionalHooks: "^(useGuardedLoader)$" }
+      { additionalHooks: "^(useAuthGuardedLoader)$" }
     ],
     "spellcheck/spell-checker": [
       "warn",
@@ -83,12 +83,13 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bool",
             "borderless",
             "builtins",
             "camelcase",
+            "ccw",
             "checkbox",
             "cjs",
-            "cofounder",
             "commonjs",
             "compat",
             "consts",
@@ -120,6 +121,7 @@ const config = {
             "jsdoc",
             "jsdom",
             "jsx",
+            "kaffeesatz",
             "keydown",
             "kickstarter",
             "lang",
@@ -130,6 +132,7 @@ const config = {
             "neue",
             "nextjs",
             "nonnegative",
+            "noreferrer",
             "nowrap",
             "nullable",
             "openapi",
@@ -176,6 +179,7 @@ const config = {
             "webkit",
             "webp",
             "whitespace",
+            "yanone",
             "zod"
           ],
         strings: true,

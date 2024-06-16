@@ -6,12 +6,8 @@ import {
   InfoBlock,
   InternshipCard
 } from "../components";
-import {
-  INTERNSHIP_POSITIONS,
-  LOOKING_FOR_COFOUNDER,
-  TEAMS_JOINED_QUANTITY
-} from "../consts";
 import { CompanyStatus } from "../schema";
+import { MOCK_STATS } from "../consts";
 import type { NextPage } from "next";
 import React from "react";
 import { api } from "../api";
@@ -30,7 +26,7 @@ const Page: NextPage = async () => {
 
   return (
     <div className="flex flex-col gap-20 py-9">
-      <div className="header2 text-center">{lang.home.teaser}</div>
+      <div className="header2 text-center">{lang.app.home.teaser}</div>
       {/* Slogan */}
       {/* Slogan END */}
 
@@ -50,7 +46,28 @@ const Page: NextPage = async () => {
           </div>
         ))}
       </div>
-      {/* Elevated block with number END */}
+      {/* Teaser END */}
+
+      {/* Stats */}
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center text-gray-500 uppercase">
+          {lang.WithZeroCompany}:
+        </div>
+        <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
+          {mockArrayForInfoCells.map((el, index) => (
+            <div
+              className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
+              key={index}
+            >
+              <p className="text-3xl text-green-secondary">
+                {el.number.toLocaleString()}
+              </p>
+              <p className="text-gray-500 tracking-wider">{el.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Stats END */}
 
       {/* Text block */}
       <p className="mx-auto max-w-screen-2xl px-10 w-4/5 text-center">
@@ -103,7 +120,7 @@ const Page: NextPage = async () => {
       </section>
       {/* Compete Block End */}
 
-      {/* Join as a cofounder Block */}
+      {/* Join as a co-founder Block */}
       <section className="border-b-[1px] border-gray-300 pb-24">
         <div className="mx-auto max-w-screen-2xl">
           <h2 className="text-sm text-gray-500 font-bold mb-4">
@@ -116,7 +133,7 @@ const Page: NextPage = async () => {
           </CompanyCards>
         </div>
       </section>
-      {/* Join as a cofounder Block END */}
+      {/* Join as a co-founder Block END */}
 
       {/* Knowledge base block */}
       <section className="border-b-[1px] border-gray-300 pb-24">
@@ -147,9 +164,18 @@ export default Page;
 /* eslint-disable spellcheck/spell-checker -- Ok */
 
 const mockArrayForInfoCells = [
-  { description: lang.home.subheader.teams, number: TEAMS_JOINED_QUANTITY },
-  { description: lang.home.subheader.internship, number: INTERNSHIP_POSITIONS },
-  { description: lang.home.subheader.cofounder, number: LOOKING_FOR_COFOUNDER }
+  {
+    description: lang.teamsJoined,
+    number: MOCK_STATS.TEAMS_JOINED
+  },
+  {
+    description: lang.internshipPositions,
+    number: MOCK_STATS.INTERNSHIP_POSITIONS
+  },
+  {
+    description: lang.lookingForCoFounder,
+    number: MOCK_STATS.LOOKING_FOR_COFOUNDER
+  }
 ];
 
 const mockArrayForInternshipCards = [

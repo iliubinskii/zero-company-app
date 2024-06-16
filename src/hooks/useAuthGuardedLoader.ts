@@ -1,7 +1,9 @@
+"use client";
+
 import {
+  logError,
   selectAuthUser,
   selectLoaded,
-  showSnackbar,
   useAppDispatch,
   useAppSelector
 } from "../store";
@@ -10,7 +12,7 @@ import type { DependencyList } from "react";
 import { ErrorCode } from "../schema";
 import type { ErrorResponse } from "../schema";
 import { callAsync } from "../utils";
-import { logger } from "../services";
+import { lang } from "../langs";
 import { useRouter } from "next/navigation";
 
 /**
@@ -55,30 +57,42 @@ export function useAuthGuardedLoader<T extends object>(
   useEffect(() => {
     if (loaded && authUser)
       callAsync(async () => {
-        const resource = await memorizedLoader();
+        try {
+          const resource = await memorizedLoader();
 
-        if ("error" in resource)
-          if (resource.error === ErrorCode.NotFound)
-            router.push(redirectOnNotFound ?? "/not-found");
-          else {
-            logger.error(`${resource.error}: ${resource.errorMessage}`);
-            dispatch(
-              showSnackbar({
-                message: resource.errorMessage,
-                variant: "error"
-              })
-            );
+          if ("error" in resource)
+            if (resource.error === ErrorCode.NotFound)
+              router.push(redirectOnNotFound ?? "/not-found");
+            else {
+              setState({
+                isError: true,
+                isLoading: false
+              });
+              dispatch(
+                logError({
+                  error: resource,
+                  message: resource.errorMessage
+                })
+              );
+            }
+          else
             setState({
-              isError: true,
-              isLoading: false
+              isError: false,
+              isLoading: false,
+              resource
             });
-          }
-        else
+        } catch (err) {
           setState({
-            isError: false,
-            isLoading: false,
-            resource
+            isError: true,
+            isLoading: false
           });
+          dispatch(
+            logError({
+              error: err,
+              message: lang.ErrorLoadingData
+            })
+          );
+        }
       });
   }, [authUser, dispatch, loaded, memorizedLoader, redirectOnNotFound, router]);
 

@@ -1,15 +1,15 @@
 "use client";
 
+import type { FC, ReactNode } from "react";
 import React, { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
 import tw from "tailwind-styled-components";
 
-export const ExpandableCard: React.FC<Props> = ({ children, expandable }) => {
+export const ExpandableCard: FC<Props> = ({ children, expandable }) => {
   const [contentsHeight, setContentsHeight] = useState(0);
 
   const contentsRef = useRef<HTMLDivElement>(null);
 
-  const [isHovering, setIsHovering] = React.useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     if (contentsRef.current)
@@ -49,7 +49,7 @@ const Hoverable = tw.div`
   z-10 absolute -left-4 -right-4 -top-4
   px-4 pt-4 pb-6
   opacity-0 pointer-events-none
-  transition duration-150
+  transition-all duration-150
 `;
 
 const Background = tw.div`
@@ -57,5 +57,5 @@ const Background = tw.div`
   rounded-xl border border-gray-300 shadow-lg
   bg-white
   transform scale-95
-  transition duration-300
+  transition-all duration-300
 `;

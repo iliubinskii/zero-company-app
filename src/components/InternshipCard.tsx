@@ -1,9 +1,9 @@
-// import { BiBell } from "react-icons/bi";
+import type { FC } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 import React from "react";
 import { images } from "../images";
 
-export const InternshipCard: React.FC<Props> = ({
+export const InternshipCard: FC<Props> = ({
   city,
   companyName,
   country,
@@ -14,7 +14,7 @@ export const InternshipCard: React.FC<Props> = ({
     <div className="flex justify-between items-center">
       <div className="flex gap-2 items-center justify-start">
         <div className="w-6 h-6 flex justify-center items-center rounded-full bg-white shadow">
-          <img alt="company logo" src={images.appLogo.src} />
+          <img alt="company logo" src={images.IPO.src} />
         </div>
         <p>{companyName}</p>
       </div>

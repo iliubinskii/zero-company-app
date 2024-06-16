@@ -3,32 +3,34 @@
 import {
   AccordionFlatContainer,
   AccordionJunction,
-  AuthGuard
+  AuthGuard,
+  IconAccordionItem,
+  ProgressAccordionItem
 } from "../../../../components";
-import type { CustomCompanyUpdate, CustomExistingCompany } from "./helpers";
+import { type CustomCompanyUpdate, draftProgress } from "./helpers";
+import { addCompany, logError, useAppDispatch } from "../../../../store";
 import {
   assertDefined,
   buildFormData,
   callAsync,
   removeUndefined
 } from "../../../../utils";
-import { showSnackbar, useAppDispatch } from "../../../../store";
+import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
-import { CircularAccordionItem } from "./CircularAccordionItem";
 import { ERROR } from "../../../../consts";
-import type { FieldError } from "../../../../schema";
+import { type FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
 import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
+import { PiSignatureBold } from "react-icons/pi";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Signing } from "./Signing";
 import { Team } from "./Team";
 import { api } from "../../../../api";
 import { lang } from "../../../../langs";
-import { useAuthGuardedLoader } from "../../../../hooks";
 import { useCategories } from "../../../../contexts";
 
 const Page: NextPage<NextPageProps> = ({ params = {} }) => {
@@ -37,8 +39,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
   const {
     isLoading,
     resource: company,
-    setResource
-  } = useAuthGuardedLoader(() => api.getCompany(id), [], {
+    setResource: setCompany
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [id], {
     redirectOnNotFound: "/profile/drafts"
   });
 
@@ -46,18 +48,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 
   const categories = useCategories();
 
-  const category = useMemo(() => {
-    if (company) {
-      const categoryId = company.categories[0];
-
-      if (typeof categoryId === "string")
-        return categories.find(({ _id }) => _id === categoryId);
-    }
-
-    return undefined;
-  }, [categories, company]);
-
-  const [companyUpdate, setCompanyUpdate] = useState<CustomCompanyUpdate>({});
+  const category = useCompanyCategory(company);
 
   const [errorMessages, setErrorMessages] = useState<readonly FieldError[]>([]);
 
@@ -65,27 +56,46 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 
   const [removeImages, setRemoveImages] = useState<readonly string[]>([]);
 
-  const updatedCompany = useMemo(
-    (): CustomExistingCompany | undefined =>
-      company
-        ? {
-            ...company,
-            ...removeUndefined(companyUpdate)
-          }
-        : undefined,
-    [company, companyUpdate]
-  );
+  const [update, setUpdate] = useState<CustomCompanyUpdate>({});
+
+  const updatedCompany = company
+    ? { ...company, ...removeUndefined(update) }
+    : undefined;
+
+  const { basicProgress, publicProgress, teamProgress } =
+    draftProgress(company);
 
   const modified =
-    Object.keys(companyUpdate).length > 0 ||
+    Object.keys(update).length > 0 ||
     addImages.length > 0 ||
     removeImages.length > 0;
+
+  const modules = [
+    {
+      Component: Basics,
+      description: lang.app.profile.drafts.draft.Basics.description,
+      progress: basicProgress,
+      title: lang.app.profile.drafts.draft.Basics.title
+    },
+    {
+      Component: Team,
+      description: lang.app.profile.drafts.draft.Team.description,
+      progress: teamProgress,
+      title: lang.app.profile.drafts.draft.Team.title
+    },
+    {
+      Component: Public,
+      description: lang.app.profile.drafts.draft.Public.description,
+      progress: publicProgress,
+      title: lang.app.profile.drafts.draft.Public.title
+    }
+  ];
 
   const onSave = useCallback<FormEventHandler<HTMLFormElement>>(
     e => {
       e.preventDefault();
 
-      const data = buildFormData(companyUpdate);
+      const data = buildFormData(update);
 
       for (const image of addImages) data.append("addImages", image);
 
@@ -137,44 +147,41 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                   }
               })()
             ]);
-          else
-            dispatch(
-              showSnackbar({
-                message: response.errorMessage,
-                variant: "error"
-              })
-            );
+          else logError({ error: response, message: response.errorMessage });
         else {
-          setResource(response);
-          setCompanyUpdate({});
+          dispatch(addCompany(response));
+          setCompany(response);
+          setUpdate({});
           setAddImages([]);
           setRemoveImages([]);
         }
       });
     },
-    [addImages, companyUpdate, dispatch, id, removeImages, setResource]
+    [addImages, update, dispatch, id, removeImages, setCompany]
   );
 
   useEffect(() => {
-    setCompanyUpdate({});
-  }, [company]);
+    setUpdate({});
+    setAddImages([]);
+    setRemoveImages([]);
+  }, [id]);
 
   return (
-    <AuthGuard customLoaded={!isLoading}>
+    <AuthGuard customLoading={isLoading}>
       <ProfileLayout>
         <h2 className="text-2xl text-gray-700 font-bold">
           {category
             ? `${category.name} ${lang.projectDraft}`
-            : lang.EditYourProjectDraft}
+            : lang.EditProjectDraft}
         </h2>
         <div>
           <AccordionFlatContainer>
             {modules.map(
               ({ Component, description, progress, title }, index) => (
-                <CircularAccordionItem
+                <ProgressAccordionItem
                   description={description}
                   key={index}
-                  progress={progress}
+                  progress={Math.round(100 * progress)}
                   title={title}
                 >
                   {company && updatedCompany && (
@@ -203,29 +210,33 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         );
                       }}
                       onSave={onSave}
-                      setCompany={update => {
-                        setCompanyUpdate(prev => {
-                          return {
-                            ...prev,
-                            ...update
-                          };
+                      setCompany={setCompany}
+                      setUpdate={nextUpdate => {
+                        setUpdate(prev => {
+                          return { ...prev, ...nextUpdate };
                         });
                       }}
                     />
                   )}
-                </CircularAccordionItem>
+                </ProgressAccordionItem>
               )
             )}
           </AccordionFlatContainer>
           <AccordionJunction />
           <AccordionFlatContainer>
-            <CircularAccordionItem
+            <IconAccordionItem
+              Icon={PiSignatureBold}
               description={lang.app.profile.drafts.draft.Signing.description}
-              progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
-              {company && <Signing company={company} modified={modified} />}
-            </CircularAccordionItem>
+              {company && (
+                <Signing
+                  company={company}
+                  modified={modified}
+                  setCompany={setCompany}
+                />
+              )}
+            </IconAccordionItem>
           </AccordionFlatContainer>
         </div>
       </ProfileLayout>
@@ -234,24 +245,3 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 };
 
 export default Page;
-
-const modules = [
-  {
-    Component: Basics,
-    description: lang.app.profile.drafts.draft.Basics.description,
-    progress: 34,
-    title: lang.app.profile.drafts.draft.Basics.title
-  },
-  {
-    Component: Team,
-    description: lang.app.profile.drafts.draft.Team.description,
-    progress: 59,
-    title: lang.app.profile.drafts.draft.Team.title
-  },
-  {
-    Component: Public,
-    description: lang.app.profile.drafts.draft.Public.description,
-    progress: 12,
-    title: lang.app.profile.drafts.draft.Public.title
-  }
-];

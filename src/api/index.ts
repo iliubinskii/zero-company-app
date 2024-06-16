@@ -1,6 +1,7 @@
 import type {
   AuthUser,
   CompanyCreate,
+  CompanyUpdate,
   DeleteResponse,
   ErrorCode,
   ErrorResponse,
@@ -9,18 +10,25 @@ import type {
   ExistingCategory,
   ExistingCompanies,
   ExistingCompany,
+  ExistingUser,
   GetCategoriesOptions,
   GetCompaniesOptions,
-  Routes
+  GetDocumentsOptions,
+  PopulatedDocument,
+  PopulatedDocuments,
+  Routes,
+  UserUpdate
 } from "../schema";
 import {
   deleteReq,
   getReq,
-  postJsonReq,
-  putFormDataReq,
+  postReq,
+  putReq,
   restoreCategories,
   restoreCompanies,
-  restoreCompany
+  restoreCompany,
+  restorePopulatedDocument,
+  restorePopulatedDocuments
 } from "./helpers";
 
 export const api = {
@@ -31,24 +39,28 @@ export const api = {
    */
   deleteCompany: async (
     id: string
-  ): Promise<DeleteResponse | ErrorResponse<ErrorCode>> => {
-    const result = await deleteReq<Routes["/companies/{id}"]["delete"]>(
-      `companies/${id}`
+  ): Promise<DeleteResponse | ErrorResponse<ErrorCode>> =>
+    deleteReq<Routes["/companies/{id}"]["delete"]>(`companies/${id}`),
+  generateFoundingAgreement: async (
+    id: string
+  ): Promise<
+    | ExistingCompany
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const company = await postReq<Routes["/companies/{id}/found"]["post"]>(
+      `companies/${id}/found`,
+      {}
     );
 
-    return result;
+    return "error" in company ? company : restoreCompany(company);
   },
   /**
    * Retrieves the authenticated user from the API.
    * @returns The authenticated user.
    */
-  getAuthUser: async (): Promise<
-    AuthUser | null | ErrorResponse<ErrorCode>
-  > => {
-    const user = await getReq("auth/me");
-
-    return user;
-  },
+  getAuthUser: async (): Promise<AuthUser | null | ErrorResponse<ErrorCode>> =>
+    getReq("auth/me"),
   /**
    * Retrieves the categories from the API.
    * @param options - Request options.
@@ -90,13 +102,8 @@ export const api = {
    */
   getCategory: async (
     id: string
-  ): Promise<ExistingCategory | ErrorResponse<ErrorCode>> => {
-    const category = await getReq<Routes["/categories/{id}"]["get"]>(
-      `categories/${id}`
-    );
-
-    return category;
-  },
+  ): Promise<ExistingCategory | ErrorResponse<ErrorCode>> =>
+    getReq<Routes["/categories/{id}"]["get"]>(`categories/${id}`),
   /**
    * Retrieves the companies from the API.
    * @param options - Request options.
@@ -177,18 +184,66 @@ export const api = {
     return "error" in company ? company : restoreCompany(company);
   },
   /**
+   * Retrieves the document from the API.
+   * @param id - The document id.
+   * @returns The document.
+   */
+  getDocument: async (
+    id: string
+  ): Promise<PopulatedDocument | ErrorResponse<ErrorCode>> => {
+    const document = await getReq<Routes["/documents/{id}"]["get"]>(
+      `documents/${id}`
+    );
+
+    return "error" in document ? document : restorePopulatedDocument(document);
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getDocumentsByMe: async (
+    options: GetDocumentsOptions = {}
+  ): Promise<PopulatedDocuments | ErrorResponse<ErrorCode>> => {
+    const documents = await getReq<Routes["/me/documents"]["get"]>(
+      "me/documents",
+      { ...options }
+    );
+
+    return "error" in documents
+      ? documents
+      : restorePopulatedDocuments(documents);
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getFavoriteCompaniesByMe: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
+    const companies = await getReq<Routes["/me/favorite-companies"]["get"]>(
+      "me/favorite-companies",
+      { ...options }
+    );
+
+    return "error" in companies ? companies : restoreCompanies(companies);
+  },
+  getMe: async (): Promise<ExistingUser | ErrorResponse<ErrorCode>> =>
+    getReq<Routes["/me"]["get"]>("me"),
+  /**
    * Sends a company to the API.
    * @param body - The company.
    * @returns The response.
    */
   postCompany: async (
-    body: CompanyCreate
+    body: FormData | CompanyCreate
   ): Promise<
     | ExistingCompany
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
-    const company = await postJsonReq<Routes["/companies"]["post"]>(
+    const company = await postReq<Routes["/companies"]["post"]>(
       "companies",
       body
     );
@@ -197,16 +252,35 @@ export const api = {
   },
   putCompany: async (
     id: string,
-    body: FormData
+    body: FormData | CompanyUpdate
   ): Promise<
     | ExistingCompany
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
-    const company = await putFormDataReq<Routes["/companies/{id}"]["put"]>(
+    const company = await putReq<Routes["/companies/{id}"]["put"]>(
       `companies/${id}`,
       body
     );
     return "error" in company ? company : restoreCompany(company);
-  }
+  },
+  putDocument: async (
+    id: string
+  ): Promise<
+    | PopulatedDocument
+    | ErrorResponse<ErrorCode>
+    | ErrorResponseWithData<ErrorCode>
+  > => {
+    const document = await putReq<Routes["/documents/{id}"]["put"]>(
+      `documents/${id}`,
+      {}
+    );
+
+    return "error" in document ? document : restorePopulatedDocument(document);
+  },
+  putMe: async (
+    body: FormData | UserUpdate
+  ): Promise<
+    ExistingUser | ErrorResponse<ErrorCode> | ErrorResponseWithData<ErrorCode>
+  > => putReq<Routes["/me"]["put"]>("me", body)
 };

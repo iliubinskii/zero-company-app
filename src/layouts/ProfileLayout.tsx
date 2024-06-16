@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedLink, MarketOverview } from "../components";
 import type { FC, ReactNode } from "react";
 import {
   GRAVATAR_DEFAULT,
@@ -8,28 +9,35 @@ import {
   GRAVATAR_SIZE,
   PLACEHOLDER_EMAIL
 } from "../consts";
-import { LuHeartHandshake, LuLayoutDashboard, LuUser2 } from "react-icons/lu";
+import {
+  LuBookmark,
+  LuFiles,
+  LuHeartHandshake,
+  LuLayoutDashboard,
+  LuLogOut,
+  LuSettings2,
+  LuSprout
+} from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
-import { AnimatedLink } from "../components";
-import { BsBookmarks } from "react-icons/bs";
-import { GoSignOut } from "react-icons/go";
-import { IoDocumentsOutline } from "react-icons/io5";
 import React from "react";
-import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 import { usePathname } from "next/navigation";
+import { useUserName } from "../hooks";
 
 /**
  * Profile layout.
  * @param props - The properties.
  * @param props.children - The children.
+ * @param props.loading - The loading.
  * @returns The element.
  */
-export const ProfileLayout: FC<Props> = ({ children }) => {
+export const ProfileLayout: FC<Props> = ({ children, loading = false }) => {
   const authUser = useAppSelector(selectAuthUser);
+
+  const name = useUserName();
 
   const pathname = usePathname();
 
@@ -54,11 +62,7 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
             }
           />
           <UserInfo>
-            <UserName>
-              {authUser && authUser.user
-                ? `${authUser.user.firstName} ${authUser.user.lastName}`
-                : lang.NoName}
-            </UserName>
+            <UserName>{name}</UserName>
             <UserEmail>
               {authUser ? authUser.email : PLACEHOLDER_EMAIL}
             </UserEmail>
@@ -72,30 +76,40 @@ export const ProfileLayout: FC<Props> = ({ children }) => {
                 : pathname.startsWith(href);
 
             return (
-              <Link
-                className={active ? "bg-slate-200" : undefined}
+              <AnimatedLink
+                className={
+                  active
+                    ? "rounded px-5 py-3 flex items-center gap-4 text-slate-700 bg-slate-200"
+                    : "rounded px-5 py-3 flex items-center gap-4 text-slate-700"
+                }
                 href={href}
                 key={href}
               >
                 <Icon className="text-2xl" />
                 {text}
-              </Link>
+              </AnimatedLink>
             );
           })}
         </Links>
       </SideMenu>
-      <Contents>{children}</Contents>
+      <Main>
+        <Contents>{loading || children}</Contents>
+        <Info>
+          <MarketOverview />
+        </Info>
+      </Main>
     </Container>
   );
 };
 
 export interface Props {
-  children?: ReactNode | undefined;
+  readonly children?: ReactNode | undefined;
+  readonly loading?: boolean | undefined;
 }
 
-const Container = tw.div`p-3 flex gap-5`;
+const Container = tw.div`p-6 flex gap-8`;
 
-const SideMenu = tw.div`p-3 flex flex-col gap-5`;
+const SideMenu = tw.div`flex flex-col gap-5`;
 
 const User = tw.div`h-16 w-64 flex items-center gap-3`;
 
@@ -109,14 +123,11 @@ const UserEmail = tw.div`text-sm text-gray-500 overflow-hidden overflow-ellipsis
 
 const Links = tw.div`w-64 flex flex-col gap-1`;
 
-const Link = tw(AnimatedLink)`
-  rounded
-  px-5 py-3
-  flex items-center gap-4
-  text-slate-700
-`;
+const Main = tw.div`grow p-4 flex gap-9`;
 
-const Contents = tw.div`flex-grow p-9 flex flex-col gap-9`;
+const Contents = tw.div`grow flex flex-col gap-9`;
+
+const Info = tw.div`hidden xl:block`;
 
 const links = [
   {
@@ -125,7 +136,7 @@ const links = [
     text: lang.Dashboard
   },
   {
-    Icon: RxRocket,
+    Icon: LuSprout,
     href: "/profile/companies",
     text: lang.MyCompanies
   },
@@ -135,22 +146,22 @@ const links = [
     text: lang.MyDrafts
   },
   {
-    Icon: IoDocumentsOutline,
+    Icon: LuFiles,
     href: "/profile/documents",
     text: lang.Documents
   },
   {
-    Icon: LuUser2,
+    Icon: LuSettings2,
     href: "/profile/settings",
     text: lang.Settings
   },
   {
-    Icon: BsBookmarks,
+    Icon: LuBookmark,
     href: "/profile/bookmarks",
     text: lang.Bookmarks
   },
   {
-    Icon: GoSignOut,
+    Icon: LuLogOut,
     href: `${API_URL}auth/logout`,
     text: lang.LogOut
   }

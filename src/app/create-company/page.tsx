@@ -17,15 +17,14 @@ const Page: NextPage = () => {
           <h1 className="text-3xl font-bold mb-4 text-blue-700">
             Do you have a great idea for a startup?{" "}
           </h1>
-          <h2 className="text-2xl font-semi mb-4">
+          <h2 className="text-2xl font-semi mb-4 text-center">
             Start your journey to success now! Create your virtual company and
             gather a team of like-minded individuals.
           </h2>
-
           <AnimatedLink
             className="dark-button"
             href="/create-company/steps"
-            onBeforeClick={() => {
+            onClick={() => {
               dispatch(resetCompanyRegistration());
             }}
           >
@@ -57,7 +56,6 @@ const Page: NextPage = () => {
         <div className="w-full">
           <FAQ />
         </div>
-
         <div className="w-full flex flex-col items-center relative">
           <img
             alt="background image"

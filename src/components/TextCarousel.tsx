@@ -1,18 +1,23 @@
 "use client";
 
+import type { FC, ReactNode } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
 import { CAROUSEL_SCROLL_STEP } from "../consts";
-import React, { useCallback, useMemo } from "react";
-import type { ReactNode } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import tw from "tailwind-styled-components";
 
-export const TextCarousel: React.FC<Props> = ({ children }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+export const TextCarousel: FC<Props> = ({ children }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const [leftButtonVisible, setLeftButtonVisible] = React.useState<boolean>();
+  const [leftButtonVisible, setLeftButtonVisible] = useState<boolean>();
 
-  const [rightButtonVisible, setRightButtonVisible] = React.useState<boolean>();
+  const [rightButtonVisible, setRightButtonVisible] = useState<boolean>();
 
   const leftButtonClassName = useMemo(() => {
     if (leftButtonVisible === undefined) return "invisible";
@@ -55,7 +60,7 @@ export const TextCarousel: React.FC<Props> = ({ children }) => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateState();
 
     const container = containerRef.current;

@@ -4,5 +4,6 @@
 .vercel
 certificates
 coverage
+docker
 dist
 node_modules

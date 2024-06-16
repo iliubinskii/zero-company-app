@@ -12,6 +12,7 @@ export const lang = {
   Bookmarks: "Bookmarks",
   BuySellAgreement: "Buy-Sell Agreement",
   Category: "Category",
+  CoFounders: "Co-founders",
   CommonQuestions: "Common Questions",
   Company: "Company",
   CompanyImages: "Add company images",
@@ -19,23 +20,33 @@ export const lang = {
   Continue: "Continue",
   CookiePolicy: "Cookie Policy",
   Country: "Country",
-  CreateCompany: "Create a company",
-  CreateCompany2: ["Create", " a company"],
   CreateDraft: "Create a draft",
   Dashboard: "Dashboard",
   Description: "Description",
+  DocumentSignedByAllParties: "Document signed by all parties",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
-  EditYourProjectDraft: "Edit your project draft",
+  EditProjectDraft: "Edit project draft",
   Email: "E-mail",
+  ErrorLoadingAuthUser: "Error loading authenticated user",
+  ErrorLoadingCompanies: "Error loading companies",
+  ErrorLoadingData: "Error loading data",
+  ErrorLoadingDocuments: "Error loading documents",
+  ErrorLoadingDrafts: "Error loading drafts",
+  ErrorLoadingFavoriteCompanies: "Error loading favorite companies",
   Explore: "Explore",
+  FailedToLoadImage: "Failed to load image",
   FirstName: "First name",
+  Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
+  Generate: "Generate",
+  GeneratedFoundingAgreement: "Generated Founding Agreement",
   GoToHomepage: "Go to Homepage",
   HelpCenter: "Help Center",
   HowZeroCompanyWorks: "How Zero Company Works",
   Image: "Image",
+  Internships: "Internships",
   IpAgreement: "IP Agreement",
   Jobs: "Jobs",
   LastName: "Last name",
@@ -53,8 +64,9 @@ export const lang = {
   NDA: "NDA",
   Name: "Name",
   Next: "Next",
-  NoName: "No name",
+  NoCategory: "No category",
   NotFound: "Not Found",
+  NotSigned: "Not signed",
   OurCharter: "Our Charter",
   PageDoesNotExist: "The page you are looking for does not exist.",
   PreemptiveRights: "Preemptive Rights",
@@ -62,24 +74,35 @@ export const lang = {
   PrivateCompany: "Private company",
   Profile: "Profile",
   ROFR: "ROFR",
+  Refresh: "Refresh",
   Resources: "Resources",
   Save: "Save",
   SelectCategory: "Select a category",
   SelectCountry: "Select a country",
   Settings: "Settings",
   Share: "Share",
+  Sign: "Sign",
+  Signatory: "Signatory",
+  Signed: "Signed",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
+  Start: "Start",
+  StartCompany: "Start a company",
+  StartCompany2: ["Start", " a company"],
   Submit: "Submit",
   SuccessStories: "Success Stories",
   TagAlongRights: "Tag-Along Rights",
   TargetValue: "Target value",
   Team: "Team",
+  Teams: "Teams",
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
   Unknown: "Unknown",
+  ViewAgreement: "View agreement",
   Website: "Website",
+  WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
   ZeroCompany: "Zero Company",
+  ZeroMember: "Zero member",
   app: {
     home: {
       card1: {
@@ -102,10 +125,47 @@ export const lang = {
         `,
         title: "Secure company assets"
       },
-      teaser: "We elevate crowdworking to the corporate level"
+      teaser: "Empower Your Startup with Proven Corporate Strategies"
     },
     profile: {
+      bookmarks: {
+        NoContent: {
+          buttonText: "Explore Companies",
+          text: `
+            You haven't bookmarked any companies yet. Start exploring and bookmark
+            your favorite companies to see them here.
+          `,
+          title: "No Bookmarked Companies"
+        }
+      },
+      companies: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any companies yet. Create your first company to start
+            using our platform.
+          `,
+          title: "No Companies Yet"
+        }
+      },
+      documents: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any documents yet. Create a company to use our legal templates.
+          `,
+          title: "No Documents Yet"
+        }
+      },
       drafts: {
+        NoContent: {
+          buttonText: "Start a Company",
+          text: `
+            You don't have any drafts yet.
+            Create a company and to start using our platform.
+          `,
+          title: "No Drafts Yet"
+        },
         draft: {
           Basics: {
             description: `
@@ -122,6 +182,14 @@ export const lang = {
           },
           Signing: {
             description: "Generate company founding agreement.",
+            errorAlert: `
+              Editing the company information will not be possible
+              after initiating signing process.
+            `,
+            infoAlert: `
+              Founding agreement is generated
+              and awaiting the signatures.
+            `,
             title: "Signing"
           },
           Team: {
@@ -131,9 +199,16 @@ export const lang = {
             title: "Team"
           }
         }
+      },
+      settings: {
+        EditProfile: {
+          description: "Tell other users a bit about yourself",
+          title: "Edit Profile"
+        }
       }
     }
   },
+  company: "company",
   components: {
     form: {
       FileInputElement: {
@@ -147,37 +222,7 @@ export const lang = {
   },
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
-  // eslint-disable-next-line no-warning-comments -- Temp
-  // TODO: Check it
-  home: {
-    card1: {
-      description: `
-              Drop in a legal foundation into your project at a very early
-              stage.
-            `,
-      title: "Create a virtual company"
-    },
-    card2: {
-      description: `
-              With our legally backed process, you can attract contributors
-              for a share in your company.
-            `,
-      title: "Receive work contributions"
-    },
-    card3: {
-      description: `
-              We design a seamless process of asset transfer to the company,
-              where you can manage them collectively with your team.
-            `,
-      title: "Secure company assets"
-    },
-    subheader: {
-      cofounder: "looking for cofounder",
-      internship: "internship positions",
-      teams: "teams joined"
-    },
-    teaser: "We elevate crowdworking to the corporate level"
-  },
+  internshipPositions: "internship positions",
   layouts: {
     RootLayout: {
       SiteSearch: {
@@ -185,6 +230,7 @@ export const lang = {
       }
     }
   },
+  lookingForCoFounder: "looking for co-founder",
   meta: {
     description: `
       Create a virtual company at zero cost and grow it into your first unicorn!
@@ -192,5 +238,6 @@ export const lang = {
     title: "Zero Company"
   },
   of: "of",
-  projectDraft: "project draft"
+  projectDraft: "project draft",
+  teamsJoined: "teams joined"
 } as const;

@@ -1,8 +1,14 @@
 "use client";
 
-import { MdCheckCircle, MdClose, MdError, MdInfo } from "react-icons/md";
+import {
+  MdCheckCircle,
+  MdClose,
+  MdError,
+  MdInfo,
+  MdWarning
+} from "react-icons/md";
 import type { FC } from "react";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SHOW_SNACKBAR_DURATION_MS } from "../consts";
 import type { SnackbarVariant } from "../store";
 import { noop } from "lodash";
@@ -15,18 +21,24 @@ export const Snackbar: FC<Props> = ({
   onClose = noop,
   variant = "info"
 }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const Surface = useMemo(() => {
     switch (variant) {
       case "error": {
         return SurfaceError;
       }
+
       case "info": {
         return SurfaceInfo;
       }
+
       case "success": {
         return SurfaceSuccess;
+      }
+
+      case "warning": {
+        return SurfaceWarning;
       }
     }
   }, [variant]);
@@ -44,6 +56,10 @@ export const Snackbar: FC<Props> = ({
       case "success": {
         return IconSuccess;
       }
+
+      case "warning": {
+        return IconWarning;
+      }
     }
   }, [variant]);
 
@@ -52,11 +68,17 @@ export const Snackbar: FC<Props> = ({
       case "error": {
         return CloseIconError;
       }
+
       case "info": {
         return CloseIconInfo;
       }
+
       case "success": {
         return CloseIconSuccess;
+      }
+
+      case "warning": {
+        return CloseIconWarning;
       }
     }
   }, [variant]);
@@ -121,11 +143,15 @@ const SurfaceInfo = tw(SurfaceBase)`bg-gray-800 text-gray-50`;
 
 const SurfaceSuccess = tw(SurfaceBase)`bg-success text-green-50`;
 
+const SurfaceWarning = tw(SurfaceBase)`bg-yellow-500 text-yellow-50`;
+
 const IconError = tw(MdError)`text-red-100 text-2xl`;
 
 const IconInfo = tw(MdInfo)`text-gray-500 text-2xl`;
 
 const IconSuccess = tw(MdCheckCircle)`text-green-100 text-2xl`;
+
+const IconWarning = tw(MdWarning)`text-yellow-100 text-2xl`;
 
 const CloseIconBase = tw(MdClose)`
   absolute top-0.5 right-0.5
@@ -139,3 +165,5 @@ const CloseIconError = tw(CloseIconBase)`text-red-100 hover:text-white`;
 const CloseIconInfo = tw(CloseIconBase)`text-gray-500 hover:text-gray-100`;
 
 const CloseIconSuccess = tw(CloseIconBase)`text-green-100 hover:text-white`;
+
+const CloseIconWarning = tw(CloseIconBase)`text-yellow-100 hover:text-white`;

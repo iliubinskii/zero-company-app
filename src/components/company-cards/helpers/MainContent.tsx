@@ -1,27 +1,44 @@
 "use client";
 
-import { getSafeImage, getSafeLogo } from "../../../utils";
+import { FaBookmark, FaRegBookmark, FaRegClock } from "react-icons/fa6";
+import { callAsync, getCompanyImage, getCompanyLogo } from "../../../utils";
+import {
+  selectUser,
+  toggleFavorite,
+  useAppDispatch,
+  useAppSelector
+} from "../../../store";
 import type { ExistingCompany } from "../../../schema";
 import type { FC } from "react";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FaRegClock } from "react-icons/fa";
 import { HeartIcon } from "../../icons";
 import React from "react";
+import { SafeImage } from "../../SafeImage";
 
 export const MainContent: FC<Props> = ({ company }) => {
-  const image = getSafeImage(company);
+  const dispatch = useAppDispatch();
 
-  const logo = getSafeLogo(company);
+  const image = getCompanyImage(company);
+
+  const logo = getCompanyLogo(company);
+
+  const user = useAppSelector(selectUser);
+
+  const toggleFavoriteClickHandler = (): void => {
+    if (user)
+      callAsync(async () => {
+        await dispatch(toggleFavorite(company, user));
+      });
+  };
 
   return (
     <div className="flex flex-col gap-3">
-      <img
+      <SafeImage
         alt={company.name ?? undefined}
         className="w-full h-full object-cover rounded-md aspect-video"
         src={image.secureUrl}
       />
       <div className="px-2 flex gap-4">
-        <img
+        <SafeImage
           alt={company.name ?? undefined}
           className="w-10 h-10 object-cover rounded-full"
           src={logo.secureUrl}
@@ -37,7 +54,16 @@ export const MainContent: FC<Props> = ({ company }) => {
             <p className="text-gray-500 text-sm">10 days before presentation</p>
           </div>
         </div>
-        <FaRegBookmark className="text-lg" />
+        <div
+          className={user ? "cursor-pointer" : undefined}
+          onClick={toggleFavoriteClickHandler}
+        >
+          {user && user.favoriteCompanies.includes(company._id) ? (
+            <FaBookmark className="text-lg" />
+          ) : (
+            <FaRegBookmark className="text-lg" />
+          )}
+        </div>
       </div>
     </div>
   );

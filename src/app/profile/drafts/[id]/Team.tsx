@@ -15,16 +15,16 @@ export const Team: FC<ModuleProps> = ({
   modified,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => {
   const addFounder = (): void => {
-    setCompany({
+    setUpdate({
       founders: [...company.founders, { email: "" }]
     });
   };
 
   const editFounder = (index: number, update: Partial<Founder>): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.map((founder, i) =>
         i === index ? { ...founder, ...update } : founder
       )
@@ -32,7 +32,7 @@ export const Team: FC<ModuleProps> = ({
   };
 
   const deleteFounder = (index: number): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.filter((_, i) => i !== index)
     });
   };
@@ -44,8 +44,7 @@ export const Team: FC<ModuleProps> = ({
           <Row>
             <Grid>
               <HeadCol>{lang.Email}</HeadCol>
-              <HeadCol>{lang.FirstName}</HeadCol>
-              <HeadCol>{lang.LastName}</HeadCol>
+              <HeadCol>{lang.Name}</HeadCol>
               <HeadCol>{lang.Share}</HeadCol>
             </Grid>
             <ButtonsCol />
@@ -76,33 +75,16 @@ export const Team: FC<ModuleProps> = ({
                     autoComplete="given-name"
                     className="w-full"
                     errorMessages={errorMessages}
-                    name={`founders[${index}].firstName`}
+                    name={`founders[${index}].name`}
                     onChange={value => {
-                      editFounder(index, { firstName: value });
+                      editFounder(index, { name: value });
                     }}
                     onResetErrors={onResetErrors}
                     type="text"
-                    value={founder.firstName ?? ""}
+                    value={founder.name ?? ""}
                   />
                 </BodyCol>
                 {/* First name END */}
-
-                {/* Last name */}
-                <BodyCol>
-                  <TableForm.InputElement
-                    autoComplete="family-name"
-                    className="w-full"
-                    errorMessages={errorMessages}
-                    name={`founders[${index}].lastName`}
-                    onChange={value => {
-                      editFounder(index, { lastName: value });
-                    }}
-                    onResetErrors={onResetErrors}
-                    type="text"
-                    value={founder.lastName ?? ""}
-                  />
-                </BodyCol>
-                {/* Last name END */}
 
                 {/* Share */}
                 <BodyCol>
@@ -148,13 +130,13 @@ export const Team: FC<ModuleProps> = ({
         </AddButton>
       </Founders>
 
-      {/* Submit button */}
+      {/* Save button */}
       <div className="flex justify-end">
         <button className="primary-button" disabled={!modified} type="submit">
           {lang.Save}
         </button>
       </div>
-      {/* Submit button END */}
+      {/* Save button END */}
     </form>
   );
 };
@@ -170,7 +152,7 @@ const Row = tw.div`
   focus-within:bg-gray-100
 `;
 
-const Grid = tw.div`w-full grid grid-cols-4 gap-2`;
+const Grid = tw.div`w-full grid grid-cols-3 gap-2`;
 
 const HeadCol = tw.div`h-10 flex justify-center items-center font-semibold`;
 

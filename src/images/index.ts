@@ -9,11 +9,6 @@ export const images = {
     src: "/company-create-page-images/angelInvest.webp",
     width: 1600
   },
-  appLogo: {
-    height: 858,
-    src: "/app-logo.png",
-    width: 820
-  },
   backImageCreateCompany: {
     src: "/background/7.webp"
   },
