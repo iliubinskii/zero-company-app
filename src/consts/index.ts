@@ -39,7 +39,8 @@ export const ERROR = {
     "Expecting valid log error snackbar environment variable",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
     "Expecting event target as HTMLFormElement",
-  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state"
+  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state",
+  REDUX_STORE_DESYNCRONIZATION: "Redux store desynchronization"
 } as const;
 
 export const GRAVATAR_DEFAULT = "retro";

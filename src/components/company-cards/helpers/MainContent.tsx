@@ -1,20 +1,28 @@
 "use client";
 
 import { FaBookmark, FaRegBookmark, FaRegClock } from "react-icons/fa6";
-import { callAsync, getCompanyImage, getCompanyLogo } from "../../../utils";
 import {
+  SnackbarVariant,
+  logError,
+  selectAuthUser,
   selectUser,
+  showSnackbar,
   toggleFavorite,
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import { callAsync, getCompanyImage, getCompanyLogo } from "../../../utils";
+import { ERROR } from "../../../consts";
 import type { ExistingCompany } from "../../../schema";
 import type { FC } from "react";
 import { HeartIcon } from "../../icons";
 import React from "react";
 import { SafeImage } from "../../SafeImage";
+import { lang } from "../../../langs";
 
 export const MainContent: FC<Props> = ({ company }) => {
+  const authUser = useAppSelector(selectAuthUser);
+
   const dispatch = useAppDispatch();
 
   const image = getCompanyImage(company);
@@ -28,6 +36,20 @@ export const MainContent: FC<Props> = ({ company }) => {
       callAsync(async () => {
         await dispatch(toggleFavorite(company, user));
       });
+    else if (authUser)
+      dispatch(
+        logError({
+          error: ERROR.REDUX_STORE_DESYNCRONIZATION,
+          message: lang.ReduxStoreDesynchronization
+        })
+      );
+    else
+      dispatch(
+        showSnackbar({
+          message: lang.LogInToBookmarkCompany,
+          variant: SnackbarVariant.warning
+        })
+      );
   };
 
   return (
@@ -54,10 +76,7 @@ export const MainContent: FC<Props> = ({ company }) => {
             <p className="text-gray-500 text-sm">10 days before presentation</p>
           </div>
         </div>
-        <div
-          className={user ? "cursor-pointer" : undefined}
-          onClick={toggleFavoriteClickHandler}
-        >
+        <div className="cursor-pointer" onClick={toggleFavoriteClickHandler}>
           {user && user.favoriteCompanies.includes(company._id) ? (
             <FaBookmark className="text-lg" />
           ) : (

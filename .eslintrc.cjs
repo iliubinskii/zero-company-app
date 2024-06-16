@@ -97,6 +97,7 @@ const config = {
             "daisyui",
             "defs",
             "destructure",
+            "desynchronization",
             "discoverable",
             "docuseal",
             "dom",
