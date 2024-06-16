@@ -1,45 +1,32 @@
 import { ArticleLayout } from "../../../layouts";
+import { MemberCard } from "../../../components/MemberCard";
 import type { NextPage } from "next";
 import React from "react";
-import { lang } from "../../../langs";
+import { members } from "../../../members";
 
-// eslint-disable-next-line no-warning-comments -- Ok
-// TODO: Add real content
 const Page: NextPage = () => (
-  <ArticleLayout>
-    <div className="header2">{lang.Team}</div>
-    <div className="paragraphs">
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil eius
-        animi nemo eligendi fugit iure tempora dolorem cumque sint autem, ipsum
-        nam. Ad, ipsum. Sed labore iure cum voluptates quos!
-      </p>
-      <p>
-        Quia quibusdam quaerat esse amet fuga magnam ipsum nesciunt perferendis,
-        itaque necessitatibus aperiam quo in, quasi accusantium. Eaque explicabo
-        sunt expedita tempore quae maxime vero in. Beatae nesciunt adipisci
-        soluta.
-      </p>
-      <p>
-        Sed fuga animi totam autem iusto nihil iure dicta blanditiis
-        perspiciatis aut distinctio, eligendi iste nam expedita tenetur labore?
-        Tempora porro recusandae eum quidem. Voluptatibus explicabo voluptatem
-        dignissimos iure laboriosam.
-      </p>
-      <p>
-        Repellat hic quos aliquid voluptate delectus, suscipit reiciendis, non
-        exercitationem atque necessitatibus omnis numquam sapiente labore!
-        Obcaecati, quidem quaerat. Architecto voluptates esse suscipit eaque
-        omnis voluptas rerum doloribus, autem laborum.
-      </p>
-      <p>
-        Aspernatur, nam laborum eligendi sed nostrum cum? Consectetur eligendi
-        ullam rerum non eaque vitae, voluptas maxime totam et deleniti pariatur
-        itaque ut id consequuntur nesciunt aliquam tenetur ducimus, officiis
-        alias.
-      </p>
+  <div className="">
+    <ArticleLayout>
+      <div className="text-center text-4xl font-bold my-8">OUR TEAM</div>
+      <div className="text-lg leading-relaxed mb-8">
+        <p className="text-xl font-semibold italic text-justify">
+          Our team is a group of passionate and dedicated professionals who have
+          come together with a common vision: to create an innovative platform
+          that empowers startup founders to bring their projects to life. With a
+          diverse range of expertise, from full-stack development and project
+          management to quality assurance and user interface design, each member
+          contributes their unique skills to ensure the success of our product.
+        </p>
+      </div>
+    </ArticleLayout>
+    <div className="flex flex-wrap justify-center item-center px-12">
+      {members.map(member => (
+        <div className="p-4 md:w-full xl:w-1/2" key={member.id}>
+          <MemberCard member={member} />
+        </div>
+      ))}
     </div>
-  </ArticleLayout>
+  </div>
 );
 
 export default Page;
