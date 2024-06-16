@@ -31,7 +31,7 @@ const Page: NextPage = () => {
       customLoading={favoriteCompaniesLoading}
       customRefreshThunk={refreshFavoriteCompanies}
     >
-      <ProfileLayout loading={favoriteCompaniesLoading}>
+      <ProfileLayout loading={favoriteCompaniesLoading} noInfo>
         {favoriteCompanies.length > 0 ? (
           <CompanyCards>
             <AnimatePresence>
