@@ -15,12 +15,12 @@ import {
   LuHeartHandshake,
   LuLayoutDashboard,
   LuLogOut,
-  LuSettings2
+  LuSettings2,
+  LuSprout
 } from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
 import React from "react";
-import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
@@ -136,7 +136,7 @@ const links = [
     text: lang.Dashboard
   },
   {
-    Icon: RxRocket,
+    Icon: LuSprout,
     href: "/profile/companies",
     text: lang.MyCompanies
   },
