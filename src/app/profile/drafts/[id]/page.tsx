@@ -7,12 +7,7 @@ import {
   IconAccordionItem,
   ProgressAccordionItem
 } from "../../../../components";
-import {
-  SnackbarVariant,
-  addCompany,
-  showSnackbar,
-  useAppDispatch
-} from "../../../../store";
+import { addCompany, logError, useAppDispatch } from "../../../../store";
 import {
   assertDefined,
   buildFormData,
@@ -128,13 +123,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                   }
               })()
             ]);
-          else
-            dispatch(
-              showSnackbar({
-                message: response.errorMessage,
-                variant: SnackbarVariant.error
-              })
-            );
+          else logError({ error: response, message: response.errorMessage });
         else {
           dispatch(addCompany(response));
           setCompany(response);

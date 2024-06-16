@@ -83,6 +83,7 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bool",
             "borderless",
             "builtins",
             "camelcase",

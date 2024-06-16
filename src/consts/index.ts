@@ -35,6 +35,8 @@ export const ERROR = {
   EXPECTING_DRAFT_ID_PARAM: "Expecting draft ID param",
   EXPECTING_IMAGE: "Expecting at least one image",
   EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
+  EXPECTING_VALID_LOG_ERROR_SNACKBAR_ENV:
+    "Expecting valid log error snackbar environment variable",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
     "Expecting event target as HTMLFormElement",
   FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state"
