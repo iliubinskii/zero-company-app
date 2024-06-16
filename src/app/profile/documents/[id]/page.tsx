@@ -1,14 +1,12 @@
 "use client";
 
+import { assertDefined, callAsync } from "../../../../utils";
 import {
-  SnackbarVariant,
   refreshDocument,
   selectAuthUser,
-  showSnackbar,
   useAppDispatch,
   useAppSelector
 } from "../../../../store";
-import { assertDefined, callAsync } from "../../../../utils";
 import { AuthGuard } from "../../../../components";
 import { DocusealForm } from "@docuseal/react";
 import { ERROR } from "../../../../consts";
@@ -17,7 +15,6 @@ import type { NextPageProps } from "../../../../types";
 import { ProfileLayout } from "../../../../layouts";
 import React from "react";
 import { api } from "../../../../api";
-import { lang } from "../../../../langs";
 import { useAuthGuardedLoader } from "../../../../hooks";
 
 const Page: NextPage<NextPageProps> = ({ params = {} }) => {
@@ -52,17 +49,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         refreshDocument(document._id)
                       );
 
-                      if (updatedDocument) {
-                        setDocument(updatedDocument);
-
-                        if (updatedDocument.doc.status === "founded")
-                          dispatch(
-                            showSnackbar({
-                              message: lang.DocumentSignedByAllParties,
-                              variant: SnackbarVariant.success
-                            })
-                          );
-                      }
+                      if (updatedDocument) setDocument(updatedDocument);
                     });
                   }}
                   src={signature.embedSrc}
