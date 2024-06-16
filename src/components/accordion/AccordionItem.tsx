@@ -31,7 +31,7 @@ export const AccordionItem: FC<Props> = ({
         </Header>
       )}
       <Contents className={open ? "max-h-screen" : "max-h-0"}>
-        {children}
+        <div className="p-1">{children}</div>
       </Contents>
     </Container>
   );
@@ -44,7 +44,7 @@ export interface Props {
   readonly header?: ReactNode | undefined;
 }
 
-const Container = tw.div`p-6 flex flex-col gap-6`;
+const Container = tw.div`p-5 flex flex-col gap-5`;
 
 const Header = tw.div`text-gray-700 select-none flex items-center gap-3`;
 
