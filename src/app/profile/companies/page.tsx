@@ -2,13 +2,12 @@
 
 import {
   AuthGuard,
-  CompanyCard,
-  CompanyCards,
+  FoundedCompanyCard,
+  FoundedCompanyCards,
   NoContent
 } from "../../../components";
 import {
   refreshCompanies,
-  selectCompanies,
   selectCompaniesLoading,
   useAppSelector
 } from "../../../store";
@@ -16,9 +15,10 @@ import type { NextPage } from "next";
 import { ProfileLayout } from "../../../layouts";
 import React from "react";
 import { lang } from "../../../langs";
+import { useSortedCompanies } from "../../../hooks";
 
 const Page: NextPage = () => {
-  const companies = useAppSelector(selectCompanies);
+  const companies = useSortedCompanies();
 
   const companiesLoading = useAppSelector(selectCompaniesLoading);
 
@@ -29,11 +29,11 @@ const Page: NextPage = () => {
     >
       <ProfileLayout loading={companiesLoading}>
         {companies.length > 0 ? (
-          <CompanyCards>
+          <FoundedCompanyCards>
             {companies.map(company => (
-              <CompanyCard company={company} key={company._id} />
+              <FoundedCompanyCard company={company} key={company._id} />
             ))}
-          </CompanyCards>
+          </FoundedCompanyCards>
         ) : (
           <NoContent
             buttonText={lang.app.profile.companies.NoContent.buttonText}

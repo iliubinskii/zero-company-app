@@ -5,17 +5,17 @@ import { Yanone_Kaffeesatz } from "next/font/google";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const Logo: FC<Omit<ComponentProps<typeof Link>, "href">> = props => (
-  <Link href="/" {...props}>
+const Logo: FC<
+  Omit<ComponentProps<typeof AnimatedLink>, "className" | "href">
+> = props => (
+  <AnimatedLink className={"flex items-center gap-2"} href="/" {...props}>
     <Text className={`${yanone.className} `}>
       {lang.ZeroCompany.toUpperCase()}
     </Text>
-  </Link>
+  </AnimatedLink>
 );
 
 export default Logo;
-
-const Link = tw(AnimatedLink)`flex items-center gap-2`;
 
 const Text = tw.h1`text-[1.5rem] sm:text-[2rem] pt-2 whitespace-nowrap`;
 

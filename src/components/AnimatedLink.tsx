@@ -1,29 +1,28 @@
 "use client";
 
-import type { ComponentProps, FC, MouseEventHandler } from "react";
+import type { AnchorHTMLAttributes, FC, MouseEventHandler } from "react";
 import Link from "next/link";
 import React from "react";
 import { noop } from "lodash";
 import { useAppLoading } from "../contexts";
 
-export const AnimatedLink: FC<ComponentProps<typeof Link>> = ({
-  href,
-  onClick = noop,
-  ...props
-}) => {
+export const AnimatedLink: FC<
+  Pick<
+    AnchorHTMLAttributes<HTMLAnchorElement>,
+    "children" | "className" | "href" | "onClick"
+  >
+> = ({ href, onClick = noop, ...props }) => {
   const { setLoading } = useAppLoading();
 
   const clickHandler: MouseEventHandler<HTMLAnchorElement> = () => {
     onClick();
-    setLoading();
+
+    if (typeof href === "string") setLoading();
   };
 
-  return (
-    <Link
-      className="relative inline-block"
-      href={href}
-      onClick={clickHandler}
-      {...props}
-    />
+  return typeof href === "string" ? (
+    <Link href={href} onClick={clickHandler} {...props} />
+  ) : (
+    <a href={href} onClick={clickHandler} {...props} />
   );
 };

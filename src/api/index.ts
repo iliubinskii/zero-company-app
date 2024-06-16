@@ -44,16 +44,16 @@ export const api = {
   generateFoundingAgreement: async (
     id: string
   ): Promise<
-    | PopulatedDocument
+    | ExistingCompany
     | ErrorResponse<ErrorCode>
     | ErrorResponseWithData<ErrorCode>
   > => {
-    const document = await postReq<Routes["/companies/{id}/found"]["post"]>(
+    const company = await postReq<Routes["/companies/{id}/found"]["post"]>(
       `companies/${id}/found`,
       {}
     );
 
-    return "error" in document ? document : restorePopulatedDocument(document);
+    return "error" in company ? company : restoreCompany(company);
   },
   /**
    * Retrieves the authenticated user from the API.
@@ -182,6 +182,20 @@ export const api = {
     );
 
     return "error" in company ? company : restoreCompany(company);
+  },
+  /**
+   * Retrieves the document from the API.
+   * @param id - The document id.
+   * @returns The document.
+   */
+  getDocument: async (
+    id: string
+  ): Promise<PopulatedDocument | ErrorResponse<ErrorCode>> => {
+    const document = await getReq<Routes["/documents/{id}"]["get"]>(
+      `documents/${id}`
+    );
+
+    return "error" in document ? document : restorePopulatedDocument(document);
   },
   /**
    * Retrieves the companies from the API.

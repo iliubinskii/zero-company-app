@@ -4,14 +4,11 @@ import {
   AccordionFlatContainer,
   AccordionJunction,
   AuthGuard,
+  IconAccordionItem,
   ProgressAccordionItem
 } from "../../../../components";
-import {
-  SNACKBAR_VARIANT,
-  addCompany,
-  showSnackbar,
-  useAppDispatch
-} from "../../../../store";
+import { type CustomCompanyUpdate, draftProgress } from "./helpers";
+import { addCompany, logError, useAppDispatch } from "../../../../store";
 import {
   assertDefined,
   buildFormData,
@@ -20,13 +17,13 @@ import {
 } from "../../../../utils";
 import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
-import type { CustomCompanyUpdate } from "./helpers";
 import { ERROR } from "../../../../consts";
-import type { FieldError } from "../../../../schema";
+import { type FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
 import type { NextPage } from "next";
 import type { NextPageProps } from "../../../../types";
+import { PiSignatureBold } from "react-icons/pi";
 import { ProfileLayout } from "../../../../layouts";
 import { Public } from "./Public";
 import React, { useCallback, useEffect, useState } from "react";
@@ -43,7 +40,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     isLoading,
     resource: company,
     setResource: setCompany
-  } = useAuthGuardedLoader(async () => api.getCompany(id), [], {
+  } = useAuthGuardedLoader(async () => api.getCompany(id), [id], {
     redirectOnNotFound: "/profile/drafts"
   });
 
@@ -65,10 +62,34 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     ? { ...company, ...removeUndefined(update) }
     : undefined;
 
+  const { basicProgress, publicProgress, teamProgress } =
+    draftProgress(company);
+
   const modified =
     Object.keys(update).length > 0 ||
     addImages.length > 0 ||
     removeImages.length > 0;
+
+  const modules = [
+    {
+      Component: Basics,
+      description: lang.app.profile.drafts.draft.Basics.description,
+      progress: basicProgress,
+      title: lang.app.profile.drafts.draft.Basics.title
+    },
+    {
+      Component: Team,
+      description: lang.app.profile.drafts.draft.Team.description,
+      progress: teamProgress,
+      title: lang.app.profile.drafts.draft.Team.title
+    },
+    {
+      Component: Public,
+      description: lang.app.profile.drafts.draft.Public.description,
+      progress: publicProgress,
+      title: lang.app.profile.drafts.draft.Public.title
+    }
+  ];
 
   const onSave = useCallback<FormEventHandler<HTMLFormElement>>(
     e => {
@@ -126,13 +147,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                   }
               })()
             ]);
-          else
-            dispatch(
-              showSnackbar({
-                message: response.errorMessage,
-                variant: SNACKBAR_VARIANT.error
-              })
-            );
+          else logError({ error: response, message: response.errorMessage });
         else {
           dispatch(addCompany(response));
           setCompany(response);
@@ -166,7 +181,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                 <ProgressAccordionItem
                   description={description}
                   key={index}
-                  progress={progress}
+                  progress={Math.round(100 * progress)}
                   title={title}
                 >
                   {company && updatedCompany && (
@@ -195,7 +210,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         );
                       }}
                       onSave={onSave}
-                      setCompany={nextUpdate => {
+                      setCompany={setCompany}
+                      setUpdate={nextUpdate => {
                         setUpdate(prev => {
                           return { ...prev, ...nextUpdate };
                         });
@@ -208,13 +224,19 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
           </AccordionFlatContainer>
           <AccordionJunction />
           <AccordionFlatContainer>
-            <ProgressAccordionItem
+            <IconAccordionItem
+              Icon={PiSignatureBold}
               description={lang.app.profile.drafts.draft.Signing.description}
-              progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
-              {company && <Signing company={company} modified={modified} />}
-            </ProgressAccordionItem>
+              {company && (
+                <Signing
+                  company={company}
+                  modified={modified}
+                  setCompany={setCompany}
+                />
+              )}
+            </IconAccordionItem>
           </AccordionFlatContainer>
         </div>
       </ProfileLayout>
@@ -223,24 +245,3 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 };
 
 export default Page;
-
-const modules = [
-  {
-    Component: Basics,
-    description: lang.app.profile.drafts.draft.Basics.description,
-    progress: 34,
-    title: lang.app.profile.drafts.draft.Basics.title
-  },
-  {
-    Component: Team,
-    description: lang.app.profile.drafts.draft.Team.description,
-    progress: 59,
-    title: lang.app.profile.drafts.draft.Team.title
-  },
-  {
-    Component: Public,
-    description: lang.app.profile.drafts.draft.Public.description,
-    progress: 12,
-    title: lang.app.profile.drafts.draft.Public.title
-  }
-];

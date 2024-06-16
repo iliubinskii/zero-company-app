@@ -10,7 +10,10 @@ import { logger } from "../services";
  * @param index - The index of the image.
  * @returns The company image or a default image.
  */
-export function getSafeImage(company: ExistingCompany, index = 0): SafeImage {
+export function getCompanyImage(
+  company: ExistingCompany,
+  index = 0
+): SafeImage {
   const image = company.images[index];
 
   if (image) return image;
@@ -27,7 +30,7 @@ export function getSafeImage(company: ExistingCompany, index = 0): SafeImage {
  * @param company - The company.
  * @returns The company logo or a default logo.
  */
-export function getSafeLogo(company: ExistingCompany): SafeImage {
+export function getCompanyLogo(company: ExistingCompany): SafeImage {
   if (company.logo) return company.logo;
 
   logger.error(ERROR.COMPANY_HAS_NO_LOGO, company._id);

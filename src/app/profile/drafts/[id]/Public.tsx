@@ -17,7 +17,7 @@ export const Public: FC<ModuleProps> = ({
   onRemoveImage,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => (
   <form className="flex flex-col gap-11" onSubmit={onSave}>
     {/* Logo */}
@@ -29,10 +29,10 @@ export const Public: FC<ModuleProps> = ({
         files={company.logo ? [company.logo] : []}
         name="logo"
         onAddImages={files => {
-          setCompany({ logo: files[0] ?? null });
+          setUpdate({ logo: files[0] ?? null });
         }}
         onRemoveImage={() => {
-          setCompany({ logo: null });
+          setUpdate({ logo: null });
         }}
         onResetErrors={onResetErrors}
       />
@@ -64,7 +64,7 @@ export const Public: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="description"
       onChange={value => {
-        setCompany({ description: value.length > 0 ? value : null });
+        setUpdate({ description: value.length > 0 ? value : null });
       }}
       onResetErrors={onResetErrors}
       placeholder={lang.Description}
@@ -77,7 +77,7 @@ export const Public: FC<ModuleProps> = ({
       autoComplete="url"
       name="website"
       onChange={value => {
-        setCompany({ website: value.length > 0 ? value : null });
+        setUpdate({ website: value.length > 0 ? value : null });
       }}
       onResetErrors={onResetErrors}
       placeholder={lang.Website}

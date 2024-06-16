@@ -12,7 +12,7 @@ export const Basics: FC<ModuleProps> = ({
   modified,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => (
   <form className="flex flex-col gap-11" onSubmit={onSave}>
     {/* Category */}
@@ -20,7 +20,7 @@ export const Basics: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="categories[0]"
       onChange={value => {
-        setCompany({
+        setUpdate({
           categories:
             value.length > 0
               ? [value, ...company.categories.slice(1)]
@@ -41,7 +41,7 @@ export const Basics: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="name"
       onChange={value => {
-        setCompany({
+        setUpdate({
           name: value.length > 0 ? value : null
         });
       }}
@@ -60,7 +60,7 @@ export const Basics: FC<ModuleProps> = ({
       onChange={value => {
         const targetValue = value.length > 0 ? Number(value) : Number.NaN;
 
-        setCompany({
+        setUpdate({
           targetValue: Number.isNaN(targetValue) ? null : targetValue
         });
       }}

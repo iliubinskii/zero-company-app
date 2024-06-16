@@ -6,7 +6,7 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { SNACKBAR_VARIANT, showSnackbar, useAppDispatch } from "../../../store";
+import { logError, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
@@ -48,14 +48,10 @@ export const ClientPage: FC<Props> = ({
         });
 
         if ("error" in response) {
-          logger.error(`${response.error}: ${response.errorMessage}`);
-          dispatch(
-            showSnackbar({
-              message: response.errorMessage,
-              variant: SNACKBAR_VARIANT.error
-            })
-          );
           setAutoMode(false);
+          dispatch(
+            logError({ error: response, message: response.errorMessage })
+          );
         } else {
           setCompanies([...companies, ...response.docs]);
           setNextCursor(response.nextCursor);

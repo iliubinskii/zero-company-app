@@ -22,7 +22,9 @@ export const NoContent: FC<Props> = ({ buttonText, href, text, title }) => (
     </Icon>
     <Title>{title}</Title>
     <Text>{text}</Text>
-    <Link href={href}>{buttonText}</Link>
+    <AnimatedLink className="px-4 py-2 primary-button" href={href}>
+      {buttonText}
+    </AnimatedLink>
   </Container>
 );
 
@@ -40,5 +42,3 @@ const Icon = tw.div`w-16 h-16 mb-4 text-gray-400`;
 const Title = tw.h2`mb-2 text-xl font-semibold text-gray-700`;
 
 const Text = tw.p`mb-4 text-gray-500`;
-
-const Link = tw(AnimatedLink)`px-4 py-2 primary-button`;

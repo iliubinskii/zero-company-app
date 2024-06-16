@@ -21,7 +21,6 @@ const Page: NextPage = () => {
             Start your journey to success now! Create your virtual company and
             gather a team of like-minded individuals.
           </h2>
-
           <AnimatedLink
             className="dark-button"
             href="/create-company/steps"
@@ -57,7 +56,6 @@ const Page: NextPage = () => {
         <div className="w-full">
           <FAQ />
         </div>
-
         <div className="w-full flex flex-col items-center relative">
           <img
             alt="background image"

@@ -3,7 +3,6 @@
 import { AuthGuard, Loading } from "../../../components";
 import {
   logError,
-  resetCompanyRegistration,
   selectAuthUser,
   selectCompanyCategory,
   selectCompanyCountry,
@@ -41,7 +40,6 @@ const Page: NextPage = () => {
           // Already posted, do nothing
         } else {
           posted.current = true;
-          dispatch(resetCompanyRegistration());
           callAsync(async () => {
             const company = await api.postCompany({
               categories: [category._id],

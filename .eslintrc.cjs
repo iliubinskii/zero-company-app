@@ -64,7 +64,7 @@ const config = {
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
-      { additionalHooks: "^(useGuardedLoader)$" }
+      { additionalHooks: "^(useAuthGuardedLoader)$" }
     ],
     "spellcheck/spell-checker": [
       "warn",
@@ -83,9 +83,11 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bool",
             "borderless",
             "builtins",
             "camelcase",
+            "ccw",
             "checkbox",
             "cjs",
             "commonjs",
