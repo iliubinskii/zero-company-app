@@ -6,15 +6,16 @@ import type { NextPageProps } from "../../../types";
 import React from "react";
 import { api } from "../../../api";
 import { assertDefined } from "../../../utils";
+import { getPinnedCategoriesSrv } from "../../../server-cache";
 
 /**
  * Generates static parameters.
  * @returns Static parameters.
  */
 export async function generateStaticParams(): Promise<unknown[]> {
-  const categories = await api.getCategoriesSrv({ onlyPinned: true });
+  const categories = await getPinnedCategoriesSrv();
 
-  return categories.docs.map(category => {
+  return categories.map(category => {
     return { id: category._id };
   });
 }
