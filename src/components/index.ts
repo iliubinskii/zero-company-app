@@ -1,11 +1,13 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
+export { BlogCard } from "./BlogCard";
 export { CircularProgress } from "./CircularProgress";
 export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
 export { ExpandableCard } from "./ExpandableCard";
 export { FAQ } from "./FAQ";
 export { HeaderSimpleButton } from "./HeaderSimpleButton";
+export { InfoBlock } from "./InfoBlock";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
 export { InternshipCard } from "./InternshipCard";

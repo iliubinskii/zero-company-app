@@ -26,13 +26,13 @@ export const MainContent: FC<Props> = ({ company }) => {
           className="w-10 h-10 object-cover rounded-full"
           src={logo.secureUrl}
         />
-        <div className="grow flex flex-col">
+        <div className="grow flex flex-col gap-1">
           <div>
             <HeartIcon className="mr-1 float-left" />
             <h2 className="text-xl">{company.name}</h2>
           </div>
           <p className="text-gray-400 text-xs pl-1">{company.name}</p>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-1 items-center">
             <FaRegClock className="text-gray-400 text-xl" />
             <p className="text-gray-500 text-sm">10 days before presentation</p>
           </div>
