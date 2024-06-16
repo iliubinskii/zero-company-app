@@ -13,10 +13,11 @@ import React from "react";
 import { api } from "../api";
 import { images } from "../images";
 import { lang } from "../langs";
+import tw from "tailwind-styled-components";
 
 const Page: NextPage = async () => {
   const companies = await api.getCompaniesSrv({
-    limit: 3,
+    limit: 4,
     sortBy: "foundedAt",
     sortOrder: "desc",
     status: CompanyStatus.founded
@@ -25,134 +26,136 @@ const Page: NextPage = async () => {
   const featuredCompany = companies.docs[0];
 
   return (
-    <div className="flex flex-col gap-20 py-9">
-      <div className="header2 text-center">{lang.app.home.teaser}</div>
-      {/* Slogan */}
-      {/* Slogan END */}
+    <div className="w-full flex flex-col px-10 divide-y divide-gray-200">
+      <section>
+        <SectionContainerTop className="flex flex-col gap-20">
+          <div className="flex flex-col gap-10">
+            {/* Slogan */}
+            <div className="text-2xl text-gray-700 text-center scale-110">
+              {lang.app.home.teaser}
+            </div>
+            {/* Slogan END */}
 
-      {/* Elevated block with number */}
-      <div className="mx-auto max-w-screen-2xl flex justify-center items-center w-full bg-light-gray-warm/50">
-        {mockArrayForInfoCells.map((el, index) => (
-          <div
-            className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
-            key={index}
-          >
-            <p className="text-4xl text-green-secondary font-thin">
-              {el.number}
-            </p>
-            <p className="text-xl text-gray-500 tracking-wider">
-              {el.description}
-            </p>
+            {/* Stats */}
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-center text-gray-500 text-sm uppercase">
+                {lang.WithZeroCompany}:
+              </div>
+              <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
+                {mockArrayForInfoCells.map((el, index) => (
+                  <div
+                    className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
+                    key={index}
+                  >
+                    <p className="text-3xl text-green-secondary">
+                      {el.number.toLocaleString()}
+                    </p>
+                    <p className="text-gray-500 tracking-wider">
+                      {el.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Stats END */}
           </div>
-        ))}
-      </div>
-      {/* Teaser END */}
 
-      {/* Stats */}
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-center text-gray-500 uppercase">
-          {lang.WithZeroCompany}:
-        </div>
-        <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
-          {mockArrayForInfoCells.map((el, index) => (
-            <div
-              className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
-              key={index}
-            >
-              <p className="text-3xl text-green-secondary">
-                {el.number.toLocaleString()}
-              </p>
-              <p className="text-gray-500 tracking-wider">{el.description}</p>
+          {/* Two cols */}
+          <div className="flex gap-10">
+            {/* Featured companies */}
+            {featuredCompany && (
+              <div className="w-3/5">
+                <BigCompanyCard company={featuredCompany} />
+              </div>
+            )}
+            {/* Featured companies END */}
+
+            {/* Internships */}
+            <div className="w-2/5 flex flex-col">
+              <h2 className="text-sm text-gray-500 font-bold">
+                Join as a co-worker
+              </h2>
+              {mockArrayForInternshipCards
+                .slice(0, tempNumberOfRenderInternshipCards)
+                .map(el => (
+                  <InternshipCard key={el._id} {...el} />
+                ))}
+              <div className="pt-4">
+                <button
+                  className="text-xl text-green-secondary hover:underline underline-offset-4"
+                  type="button"
+                >
+                  Show more
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-      {/* Stats END */}
-
-      {/* Text block */}
-      <p className="mx-auto max-w-screen-2xl px-10 w-4/5 text-center">
-        The startup world is a vibrant community of talented people where
-        thousands of cutting-edge technologies are being born, and where
-        everyone has unique skills and expertise. We created this platform to
-        help connect the talents by providing a solid legal foundation and
-        business models specifically tuned for early-stage startups
-      </p>
-      {/* Text block END*/}
-
-      {/* Two cols */}
-      <div className="border-b-[1px] border-gray-300 pb-24">
-        <div className="mx-auto max-w-screen-2xl flex gap-10">
-          {/* Featured companies */}
-          {featuredCompany && (
-            <div className="w-3/5">
-              <BigCompanyCard company={featuredCompany} />
-            </div>
-          )}
-          {/* Featured companies END */}
-
-          {/* Internships */}
-          <div className="w-2/5 flex flex-col">
-            <h2 className="text-sm text-gray-500 font-bold">
-              Join as a co-worker
-            </h2>
-            {mockArrayForInternshipCards
-              .slice(0, tempNumberOfRenderInternshipCards)
-              .map(el => (
-                <InternshipCard key={el._id} {...el} />
-              ))}
-            <div className="pt-4">
-              <button
-                className="text-xl text-green-secondary hover:underline underline-offset-4"
-                type="button"
-              >
-                Show more
-              </button>
-            </div>
+            {/* Internships END */}
           </div>
-          {/* Internships END */}
-        </div>
-      </div>
-      {/* Two cols END */}
+          {/* Two cols END */}
+        </SectionContainerTop>
+      </section>
 
       {/* Compete Block */}
-      <section className="border-b-[1px] border-gray-300 pb-24">
-        <InfoBlock {...competeBlock} />
-      </section>
+      {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition,  sonarjs/no-redundant-boolean -- Ok
+        false && (
+          <section>
+            <SectionContainer>
+              <InfoBlock {...competeBlock} />
+            </SectionContainer>
+          </section>
+        )
+      }
       {/* Compete Block End */}
 
+      {/* Knowledge base block */}
+      <section>
+        <SectionContainer>
+          <InfoBlock {...businessProcessBlock} />
+        </SectionContainer>
+      </section>
+      {/* Knowledge base block END */}
+
       {/* Join as a co-founder Block */}
-      <section className="border-b-[1px] border-gray-300 pb-24">
-        <div className="mx-auto max-w-screen-2xl">
-          <h2 className="text-sm text-gray-500 font-bold mb-4">
-            Join as a co-founder
-          </h2>
-          <CompanyCards>
-            {companies.docs.map(company => (
-              <CompanyCard company={company} key={company._id} />
-            ))}
-          </CompanyCards>
-        </div>
+      <section>
+        <SectionContainer>
+          <div className="mx-auto max-w-screen-2xl">
+            <h2 className="text-sm text-gray-500 font-bold mb-4">
+              Join as a co-founder
+            </h2>
+            <CompanyCards>
+              {
+                // eslint-disable-next-line no-magic-numbers -- Temp
+                companies.docs.slice(1, 4).map(company => (
+                  <CompanyCard company={company} key={company._id} />
+                ))
+              }
+            </CompanyCards>
+          </div>
+        </SectionContainer>
       </section>
       {/* Join as a co-founder Block END */}
 
       {/* Knowledge base block */}
-      <section className="border-b-[1px] border-gray-300 pb-24">
-        <InfoBlock {...businessProcessBlock} />
-      </section>
-      <section className="border-b-[1px] border-gray-300 pb-24">
-        <InfoBlock {...digitalDocumentBlock} />
+      <section>
+        <SectionContainer>
+          <InfoBlock {...digitalDocumentBlock} />
+        </SectionContainer>
       </section>
       {/* Knowledge base block END */}
+
       {/* Creator's corner block */}
-      <section className="pb-24">
-        <div className="mx-auto max-w-screen-2xl">
-          <h2 className="text-sm text-gray-500 font-bold mb-4">Our blog</h2>
-          <div className="grid grid-cols-2 gap-16">
-            {mockArrayBlogBlock.map(el => (
-              <BlogCard key={el.id} {...el} />
-            ))}
+      <section>
+        <SectionContainer>
+          <div className="mx-auto max-w-screen-2xl">
+            <h2 className="text-sm text-gray-500 font-bold mb-4">Our blog</h2>
+            <div className="grid grid-cols-2 gap-16">
+              {mockArrayBlogBlock.map(el => (
+                <BlogCard key={el.id} {...el} />
+              ))}
+            </div>
           </div>
-        </div>
+        </SectionContainer>
       </section>
       {/* Knowledge base block END */}
     </div>
@@ -160,6 +163,10 @@ const Page: NextPage = async () => {
 };
 
 export default Page;
+
+const SectionContainerTop = tw.div`mx-auto w-full max-w-screen-xl pt-8 pb-20`;
+
+const SectionContainer = tw.div`mx-auto w-full max-w-screen-xl pt-20 pb-24`;
 
 /* eslint-disable spellcheck/spell-checker -- Ok */
 
