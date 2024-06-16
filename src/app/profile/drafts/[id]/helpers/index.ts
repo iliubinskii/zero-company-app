@@ -27,5 +27,6 @@ export interface ModuleProps {
   readonly onRemoveImage: (image: CombinedFile) => void;
   readonly onResetErrors: (name?: string | undefined) => void;
   readonly onSave: FormEventHandler<HTMLFormElement>;
-  readonly setCompany: (update: CustomCompanyUpdate) => void;
+  readonly setCompany: (company: ExistingCompany) => void;
+  readonly setUpdate: (update: CustomCompanyUpdate) => void;
 }

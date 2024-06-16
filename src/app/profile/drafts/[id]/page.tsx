@@ -195,7 +195,8 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                         );
                       }}
                       onSave={onSave}
-                      setCompany={nextUpdate => {
+                      setCompany={setCompany}
+                      setUpdate={nextUpdate => {
                         setUpdate(prev => {
                           return { ...prev, ...nextUpdate };
                         });
@@ -213,7 +214,13 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
               progress={0}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
-              {company && <Signing company={company} modified={modified} />}
+              {company && (
+                <Signing
+                  company={company}
+                  modified={modified}
+                  setCompany={setCompany}
+                />
+              )}
             </ProgressAccordionItem>
           </AccordionFlatContainer>
         </div>

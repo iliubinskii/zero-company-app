@@ -15,16 +15,16 @@ export const Team: FC<ModuleProps> = ({
   modified,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => {
   const addFounder = (): void => {
-    setCompany({
+    setUpdate({
       founders: [...company.founders, { email: "" }]
     });
   };
 
   const editFounder = (index: number, update: Partial<Founder>): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.map((founder, i) =>
         i === index ? { ...founder, ...update } : founder
       )
@@ -32,7 +32,7 @@ export const Team: FC<ModuleProps> = ({
   };
 
   const deleteFounder = (index: number): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.filter((_, i) => i !== index)
     });
   };

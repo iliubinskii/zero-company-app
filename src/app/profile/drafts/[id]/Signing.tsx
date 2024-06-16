@@ -1,7 +1,7 @@
 import { AnimatedLink, ErrorAlert, InfoAlert } from "../../../../components";
 import type { FC, FormEventHandler } from "react";
 import {
-  SNACKBAR_VARIANT,
+  SnackbarVariant,
   logError,
   showSnackbar,
   useAppDispatch
@@ -12,24 +12,31 @@ import { api } from "../../../../api";
 import { callAsync } from "../../../../utils";
 import { lang } from "../../../../langs";
 
-export const Signing: FC<Props> = ({ company }) => {
+export const Signing: FC<Props> = ({ company, setCompany }) => {
   const dispatch = useAppDispatch();
 
   const onSubmit: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
 
     callAsync(async () => {
-      const draft = await api.generateFoundingAgreement(company._id);
+      const updatedCompany = await api.generateFoundingAgreement(company._id);
 
-      if ("error" in draft)
-        dispatch(logError({ error: draft, message: draft.errorMessage }));
-      else
+      if ("error" in updatedCompany)
+        dispatch(
+          logError({
+            error: updatedCompany,
+            message: updatedCompany.errorMessage
+          })
+        );
+      else {
+        setCompany(updatedCompany);
         dispatch(
           showSnackbar({
             message: lang.GeneratedFoundingAgreement,
-            variant: SNACKBAR_VARIANT.success
+            variant: SnackbarVariant.success
           })
         );
+      }
     });
   };
 
@@ -62,4 +69,5 @@ export const Signing: FC<Props> = ({ company }) => {
 export interface Props {
   readonly company: ExistingCompany;
   readonly modified: boolean;
+  readonly setCompany: (company: ExistingCompany) => void;
 }
