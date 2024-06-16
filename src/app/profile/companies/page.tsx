@@ -2,8 +2,8 @@
 
 import {
   AuthGuard,
-  CompanyCard,
-  CompanyCards,
+  FoundedCompanyCard,
+  FoundedCompanyCards,
   NoContent
 } from "../../../components";
 import {
@@ -29,11 +29,11 @@ const Page: NextPage = () => {
     >
       <ProfileLayout loading={companiesLoading}>
         {companies.length > 0 ? (
-          <CompanyCards>
+          <FoundedCompanyCards>
             {companies.map(company => (
-              <CompanyCard company={company} key={company._id} />
+              <FoundedCompanyCard company={company} key={company._id} />
             ))}
-          </CompanyCards>
+          </FoundedCompanyCards>
         ) : (
           <NoContent
             buttonText={lang.app.profile.companies.NoContent.buttonText}

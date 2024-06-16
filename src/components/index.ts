@@ -7,6 +7,8 @@ export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
 export { ExpandableCard } from "./ExpandableCard";
 export { FAQ } from "./FAQ";
+export { FoundedCompanyCard } from "./FoundedCompanyCard";
+export { FoundedCompanyCards } from "./FoundedCompanyCards";
 export { HeaderSimpleButton } from "./HeaderSimpleButton";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
