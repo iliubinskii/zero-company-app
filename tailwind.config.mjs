@@ -50,7 +50,7 @@ const config = {
         "light-gray-warm": "#FAF6F0"
       },
       fontFamily: {
-        sans: ["Roboto", "sans-serif"]
+        sans: ["Inter", "sans-serif"]
       },
       gridTemplateColumns: {
         "header-grid-container": "1fr auto 1fr",

@@ -1,5 +1,6 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
+export { BlogCard } from "./BlogCard";
 export { Chevron } from "./Chevron";
 export { DocumentCard } from "./DocumentCard";
 export { DocumentCards } from "./DocumentCards";
@@ -10,6 +11,7 @@ export { FAQ } from "./FAQ";
 export { FoundedCompanyCard } from "./FoundedCompanyCard";
 export { FoundedCompanyCards } from "./FoundedCompanyCards";
 export { HeaderSimpleButton } from "./HeaderSimpleButton";
+export { InfoBlock } from "./InfoBlock";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
 export { InternshipCard } from "./InternshipCard";

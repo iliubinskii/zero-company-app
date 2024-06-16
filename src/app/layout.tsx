@@ -28,7 +28,7 @@ export default async function App({ children }: Props): Promise<ReactElement> {
         <title>{lang.meta.title}</title>
         <meta content={lang.meta.description} name="description" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
           rel="stylesheet"
         />
       </head>
