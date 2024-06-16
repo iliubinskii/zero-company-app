@@ -44,8 +44,7 @@ export const Team: FC<ModuleProps> = ({
           <Row>
             <Grid>
               <HeadCol>{lang.Email}</HeadCol>
-              <HeadCol>{lang.FirstName}</HeadCol>
-              <HeadCol>{lang.LastName}</HeadCol>
+              <HeadCol>{lang.Name}</HeadCol>
               <HeadCol>{lang.Share}</HeadCol>
             </Grid>
             <ButtonsCol />
@@ -153,7 +152,7 @@ const Row = tw.div`
   focus-within:bg-gray-100
 `;
 
-const Grid = tw.div`w-full grid grid-cols-4 gap-2`;
+const Grid = tw.div`w-full grid grid-cols-3 gap-2`;
 
 const HeadCol = tw.div`h-10 flex justify-center items-center font-semibold`;
 

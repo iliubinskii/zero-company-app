@@ -7,6 +7,7 @@ import {
   IconAccordionItem,
   ProgressAccordionItem
 } from "../../../../components";
+import { type CustomCompanyUpdate, draftProgress } from "./helpers";
 import { addCompany, logError, useAppDispatch } from "../../../../store";
 import {
   assertDefined,
@@ -16,9 +17,8 @@ import {
 } from "../../../../utils";
 import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
 import { Basics } from "./Basics";
-import type { CustomCompanyUpdate } from "./helpers";
 import { ERROR } from "../../../../consts";
-import type { FieldError } from "../../../../schema";
+import { type FieldError } from "../../../../schema";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
 import type { FormEventHandler } from "react";
 import type { NextPage } from "next";
@@ -62,10 +62,34 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
     ? { ...company, ...removeUndefined(update) }
     : undefined;
 
+  const { basicProgress, publicProgress, teamProgress } =
+    draftProgress(company);
+
   const modified =
     Object.keys(update).length > 0 ||
     addImages.length > 0 ||
     removeImages.length > 0;
+
+  const modules = [
+    {
+      Component: Basics,
+      description: lang.app.profile.drafts.draft.Basics.description,
+      progress: basicProgress,
+      title: lang.app.profile.drafts.draft.Basics.title
+    },
+    {
+      Component: Team,
+      description: lang.app.profile.drafts.draft.Team.description,
+      progress: teamProgress,
+      title: lang.app.profile.drafts.draft.Team.title
+    },
+    {
+      Component: Public,
+      description: lang.app.profile.drafts.draft.Public.description,
+      progress: publicProgress,
+      title: lang.app.profile.drafts.draft.Public.title
+    }
+  ];
 
   const onSave = useCallback<FormEventHandler<HTMLFormElement>>(
     e => {
@@ -157,7 +181,7 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
                 <ProgressAccordionItem
                   description={description}
                   key={index}
-                  progress={progress}
+                  progress={Math.round(100 * progress)}
                   title={title}
                 >
                   {company && updatedCompany && (
@@ -221,24 +245,3 @@ const Page: NextPage<NextPageProps> = ({ params = {} }) => {
 };
 
 export default Page;
-
-const modules = [
-  {
-    Component: Basics,
-    description: lang.app.profile.drafts.draft.Basics.description,
-    progress: 34,
-    title: lang.app.profile.drafts.draft.Basics.title
-  },
-  {
-    Component: Team,
-    description: lang.app.profile.drafts.draft.Team.description,
-    progress: 59,
-    title: lang.app.profile.drafts.draft.Team.title
-  },
-  {
-    Component: Public,
-    description: lang.app.profile.drafts.draft.Public.description,
-    progress: 12,
-    title: lang.app.profile.drafts.draft.Public.title
-  }
-];
