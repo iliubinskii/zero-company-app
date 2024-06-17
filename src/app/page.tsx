@@ -192,7 +192,8 @@ const mockArrayForInternshipCards = [
     companyName: "Company Name",
     country: "Israel",
     days: "4d",
-    position: "Web Developer"
+    position: "Web Developer",
+    src: "/vacancies/vacancy-1.webp"
   },
   {
     _id: "2",
@@ -200,7 +201,8 @@ const mockArrayForInternshipCards = [
     companyName: "Company Name2",
     country: "Israel",
     days: "4d",
-    position: "Project Manager"
+    position: "Project Manager",
+    src: "/vacancies/vacancy-2.webp"
   },
   {
     _id: "3",
@@ -208,7 +210,8 @@ const mockArrayForInternshipCards = [
     companyName: "Company Name3",
     country: "Israel",
     days: "5d",
-    position: "Java Developer"
+    position: "Java Developer",
+    src: "/vacancies/vacancy-3.webp"
   },
   {
     _id: "4",
@@ -216,7 +219,8 @@ const mockArrayForInternshipCards = [
     companyName: "Company Name4",
     country: "Israel",
     days: "7d",
-    position: "Devops"
+    position: "Devops",
+    src: "/vacancies/vacancy-4.webp"
   },
   {
     _id: "5",
@@ -224,7 +228,8 @@ const mockArrayForInternshipCards = [
     companyName: "Company Name5",
     country: "USA",
     days: "7d",
-    position: "Fullstack Engineer"
+    position: "Fullstack Engineer",
+    src: "/vacancies/vacancy-5.webp"
   }
 ];
 
