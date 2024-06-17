@@ -31,7 +31,7 @@ const Page: NextPage = async () => {
         <SectionContainerTop className="flex flex-col gap-20">
           <div className="flex flex-col gap-10">
             {/* Slogan */}
-            <div className="text-2xl text-gray-700 text-center scale-110">
+            <div className="text-teaser text-gray-700 text-center">
               {lang.app.home.teaser}
             </div>
             {/* Slogan END */}
