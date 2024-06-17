@@ -1,5 +1,5 @@
-import { CompanyStatus, type ExistingCompany } from "../../schema";
 import type { AppState } from "../types";
+import { type ExistingCompany } from "../../schema";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { dangerouslyAssumeWritable } from "../../utils";
@@ -59,24 +59,12 @@ export const {
 } = userCompaniesSlice.actions;
 
 /**
- * Selects the founded companies from the state.
+ * Selects the companies from the state.
  * @param state - The state of the app.
- * @returns The founded companies.
+ * @returns The companies.
  */
 export const selectCompanies = (state: AppState): readonly ExistingCompany[] =>
-  state.userCompanies.companies.filter(
-    company => company.status === CompanyStatus.founded
-  );
-
-/**
- * Selects the drafts from the state.
- * @param state - The state of the app.
- * @returns The drafts.
- */
-export const selectDrafts = (state: AppState): readonly ExistingCompany[] =>
-  state.userCompanies.companies.filter(
-    company => company.status === CompanyStatus.draft
-  );
+  state.userCompanies.companies;
 
 /**
  * Selects whether the companies have been loaded.

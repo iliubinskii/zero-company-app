@@ -15,6 +15,7 @@ export const COMPANY_SHARE_STEP = 100;
 export const COMPANY_TARGET_VALUE_STEP = 1000;
 
 export const CREATE_COMPANY_STEP = {
+  CREATE: "CREATE",
   REVIEW: "REVIEW",
   SELECT_CATEGORY: "SELECT_CATEGORY",
   SELECT_COUNTRY: "SELECT_COUNTRY"
@@ -23,7 +24,8 @@ export const CREATE_COMPANY_STEP = {
 export const CREATE_COMPANY_STEPS = [
   CREATE_COMPANY_STEP.SELECT_CATEGORY,
   CREATE_COMPANY_STEP.SELECT_COUNTRY,
-  CREATE_COMPANY_STEP.REVIEW
+  CREATE_COMPANY_STEP.REVIEW,
+  CREATE_COMPANY_STEP.CREATE
 ];
 
 export const ERROR = {
@@ -31,12 +33,16 @@ export const ERROR = {
   COMPANY_HAS_NO_LOGO: "Company has no logo",
   EXPECTING_API_URL_ENV: "Expecting API URL environment variable",
   EXPECTING_CATEGORY_ID_PARAM: "Expecting category ID param",
+  EXPECTING_DOCUMENT_ID_PARAM: "Expecting document ID param",
   EXPECTING_DRAFT_ID_PARAM: "Expecting draft ID param",
   EXPECTING_IMAGE: "Expecting at least one image",
   EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
+  EXPECTING_VALID_LOG_ERROR_SNACKBAR_ENV:
+    "Expecting valid log error snackbar environment variable",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
     "Expecting event target as HTMLFormElement",
-  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state"
+  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state",
+  REDUX_STORE_DESYNCRONIZATION: "Redux store desynchronization"
 } as const;
 
 export const GRAVATAR_DEFAULT = "retro";

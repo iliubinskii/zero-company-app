@@ -5,15 +5,13 @@ import {
   useAppDispatch,
   useAppSelector
 } from "../../../store";
+import type { ExistingCategory } from "../../../schema";
 import type { FC } from "react";
 import React, { useState } from "react";
 import { SelectElement } from "../../../components";
 import { lang } from "../../../langs";
-import { useCategories } from "../../../contexts";
 
-export const SelectCategory: FC = () => {
-  const categories = useCategories();
-
+export const SelectCategory: FC<Props> = ({ categories }) => {
   const initialCategory = useAppSelector(
     state => state.companyRegistration.category
   );
@@ -49,3 +47,7 @@ export const SelectCategory: FC = () => {
     </form>
   );
 };
+
+export interface Props {
+  readonly categories: readonly ExistingCategory[];
+}

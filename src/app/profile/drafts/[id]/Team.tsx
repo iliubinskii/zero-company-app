@@ -1,3 +1,4 @@
+import { AsyncButton, TableForm } from "../../../../components";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import { COMPANY_SHARE_STEP } from "../../../../consts";
 import type { FC } from "react";
@@ -5,26 +6,26 @@ import type { Founder } from "../../../../schema";
 import { IoAddSharp } from "react-icons/io5";
 import type { ModuleProps } from "./helpers";
 import React from "react";
-import { TableForm } from "../../../../components";
 import { lang } from "../../../../langs";
 import tw from "tailwind-styled-components";
 
 export const Team: FC<ModuleProps> = ({
   company,
   errorMessages,
+  isSubmitting,
   modified,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => {
   const addFounder = (): void => {
-    setCompany({
+    setUpdate({
       founders: [...company.founders, { email: "" }]
     });
   };
 
   const editFounder = (index: number, update: Partial<Founder>): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.map((founder, i) =>
         i === index ? { ...founder, ...update } : founder
       )
@@ -32,7 +33,7 @@ export const Team: FC<ModuleProps> = ({
   };
 
   const deleteFounder = (index: number): void => {
-    setCompany({
+    setUpdate({
       founders: company.founders.filter((_, i) => i !== index)
     });
   };
@@ -44,8 +45,7 @@ export const Team: FC<ModuleProps> = ({
           <Row>
             <Grid>
               <HeadCol>{lang.Email}</HeadCol>
-              <HeadCol>{lang.FirstName}</HeadCol>
-              <HeadCol>{lang.LastName}</HeadCol>
+              <HeadCol>{lang.Name}</HeadCol>
               <HeadCol>{lang.Share}</HeadCol>
             </Grid>
             <ButtonsCol />
@@ -133,9 +133,14 @@ export const Team: FC<ModuleProps> = ({
 
       {/* Save button */}
       <div className="flex justify-end">
-        <button className="primary-button" disabled={!modified} type="submit">
+        <AsyncButton
+          className="primary-button"
+          disabled={!modified}
+          isLoading={isSubmitting}
+          type="submit"
+        >
           {lang.Save}
-        </button>
+        </AsyncButton>
       </div>
       {/* Save button END */}
     </form>
@@ -153,7 +158,7 @@ const Row = tw.div`
   focus-within:bg-gray-100
 `;
 
-const Grid = tw.div`w-full grid grid-cols-4 gap-2`;
+const Grid = tw.div`w-full grid grid-cols-3 gap-2`;
 
 const HeadCol = tw.div`h-10 flex justify-center items-center font-semibold`;
 

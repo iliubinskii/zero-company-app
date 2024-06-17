@@ -1,4 +1,8 @@
-import { InputElement, SelectElement } from "../../../../components";
+import {
+  AsyncButton,
+  InputElement,
+  SelectElement
+} from "../../../../components";
 import { COMPANY_TARGET_VALUE_STEP } from "../../../../consts";
 import type { FC } from "react";
 import type { ModuleProps } from "./helpers";
@@ -9,10 +13,11 @@ export const Basics: FC<ModuleProps> = ({
   categories,
   company,
   errorMessages,
+  isSubmitting,
   modified,
   onResetErrors,
   onSave,
-  setCompany
+  setUpdate
 }) => (
   <form className="flex flex-col gap-11" onSubmit={onSave}>
     {/* Category */}
@@ -20,7 +25,7 @@ export const Basics: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="categories[0]"
       onChange={value => {
-        setCompany({
+        setUpdate({
           categories:
             value.length > 0
               ? [value, ...company.categories.slice(1)]
@@ -41,7 +46,7 @@ export const Basics: FC<ModuleProps> = ({
       errorMessages={errorMessages}
       name="name"
       onChange={value => {
-        setCompany({
+        setUpdate({
           name: value.length > 0 ? value : null
         });
       }}
@@ -60,7 +65,7 @@ export const Basics: FC<ModuleProps> = ({
       onChange={value => {
         const targetValue = value.length > 0 ? Number(value) : Number.NaN;
 
-        setCompany({
+        setUpdate({
           targetValue: Number.isNaN(targetValue) ? null : targetValue
         });
       }}
@@ -74,9 +79,14 @@ export const Basics: FC<ModuleProps> = ({
 
     {/* Save button */}
     <div className="flex justify-end">
-      <button className="primary-button" disabled={!modified} type="submit">
+      <AsyncButton
+        className="primary-button"
+        disabled={!modified}
+        isLoading={isSubmitting}
+        type="submit"
+      >
         {lang.Save}
-      </button>
+      </AsyncButton>
     </div>
     {/* Save button END */}
   </form>

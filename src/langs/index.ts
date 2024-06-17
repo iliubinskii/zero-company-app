@@ -23,6 +23,7 @@ export const lang = {
   CreateDraft: "Create a draft",
   Dashboard: "Dashboard",
   Description: "Description",
+  DocumentSignedByAllParties: "Document signed by all parties",
   Documents: "Documents",
   DragAlongRights: "Drag-Along Rights",
   EditProjectDraft: "Edit project draft",
@@ -34,10 +35,12 @@ export const lang = {
   ErrorLoadingDrafts: "Error loading drafts",
   ErrorLoadingFavoriteCompanies: "Error loading favorite companies",
   Explore: "Explore",
+  FailedToLoadImage: "Failed to load image",
   FirstName: "First name",
   Founder: "Founder",
   Founders: "Founders",
   FoundingAgreement: "Founding Agreement",
+  Generate: "Generate",
   GeneratedFoundingAgreement: "Generated Founding Agreement",
   GoToHomepage: "Go to Homepage",
   HelpCenter: "Help Center",
@@ -52,6 +55,7 @@ export const lang = {
   LoadMore: "Load more",
   Loading: "Loading...",
   LogIn: "Log In",
+  LogInToBookmarkCompany: "Log in first to bookmark a company.",
   LogOut: "Log Out",
   LoginToCreateDraft: "Login to create a draft",
   Logo: "Logo",
@@ -71,6 +75,7 @@ export const lang = {
   PrivateCompany: "Private company",
   Profile: "Profile",
   ROFR: "ROFR",
+  ReduxStoreDesynchronization: "Redux store desynchronization",
   Refresh: "Refresh",
   Resources: "Resources",
   Save: "Save",
@@ -82,6 +87,7 @@ export const lang = {
   Signatory: "Signatory",
   Signed: "Signed",
   SnackbarContextNotInitialized: "Snackbar context not initialized",
+  Start: "Start",
   StartCompany: "Start a company",
   StartCompany2: ["Start", " a company"],
   Submit: "Submit",
@@ -93,6 +99,7 @@ export const lang = {
   TermsOfUse: "Terms of Use",
   Unauthorized: "Log in to access this page!",
   Unknown: "Unknown",
+  ViewAgreement: "View agreement",
   Website: "Website",
   WithZeroCompany: "With Zero Company",
   ZeroAppServer: "Zero app server, schema ver",
@@ -156,7 +163,8 @@ export const lang = {
         NoContent: {
           buttonText: "Start a Company",
           text: `
-            You don't have any drafts yet. Create a company and to start using our platform.
+            You don't have any drafts yet.
+            Create a company and to start using our platform.
           `,
           title: "No Drafts Yet"
         },
@@ -176,6 +184,14 @@ export const lang = {
           },
           Signing: {
             description: "Generate company founding agreement.",
+            errorAlert: `
+              Editing the company information will not be possible
+              after initiating signing process.
+            `,
+            infoAlert: `
+              Founding agreement is generated
+              and awaiting the signatures.
+            `,
             title: "Signing"
           },
           Team: {
@@ -206,6 +222,7 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
+  done: "done",
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
   internshipPositions: "internship positions",
@@ -218,9 +235,7 @@ export const lang = {
   },
   lookingForCoFounder: "looking for co-founder",
   meta: {
-    description: `
-      Create a virtual company at zero cost and grow it into your first unicorn!
-    `,
+    description: "Empower Your Startup with Proven Corporate Strategies",
     title: "Zero Company"
   },
   of: "of",

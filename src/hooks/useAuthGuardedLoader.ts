@@ -104,7 +104,6 @@ export interface Options {
 }
 
 interface GuardedLoaderState<T extends object> {
-  readonly error?: string | undefined;
   readonly isError: boolean;
   readonly isLoading: boolean;
   readonly resource?: T | undefined;

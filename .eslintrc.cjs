@@ -49,7 +49,7 @@ const config = {
     ],
     "n/no-unsupported-features/node-builtins": "off",
     "node/no-unsupported-features/es-builtins": [
-      "error",
+      "warn",
       {
         ignores: [],
         version: ">=20.0.0"
@@ -64,7 +64,7 @@ const config = {
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
-      { additionalHooks: "^(useGuardedLoader)$" }
+      { additionalHooks: "^(useAsyncCallback|useAuthGuardedLoader)$" }
     ],
     "spellcheck/spell-checker": [
       "warn",
@@ -83,9 +83,11 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bool",
             "borderless",
             "builtins",
             "camelcase",
+            "ccw",
             "checkbox",
             "cjs",
             "commonjs",
@@ -95,6 +97,7 @@ const config = {
             "daisyui",
             "defs",
             "destructure",
+            "desynchronization",
             "discoverable",
             "docuseal",
             "dom",

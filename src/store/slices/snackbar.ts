@@ -1,12 +1,14 @@
-import type { AppState, SNACKBAR_VARIANT } from "../types";
+import type { AppState } from "../types";
+import { LOG_ERROR_SNACKBAR } from "../../config";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { SnackbarVariant } from "../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { logger } from "../../services";
 
 const initialState: AppState["snackbar"] = {
   isOpen: false,
   message: "",
-  variant: "info"
+  variant: SnackbarVariant.info
 };
 
 const snackbarSlice = createSlice({
@@ -22,18 +24,24 @@ const snackbarSlice = createSlice({
       action: PayloadAction<{
         readonly error: unknown;
         readonly message: string;
+        readonly snackbar?: "always" | undefined;
       }>
     ) {
-      logger.error(action.payload.error);
-      state.isOpen = true;
-      state.message = action.payload.message;
-      state.variant = "error";
+      const { error, message, snackbar } = action.payload;
+
+      logger.error(error);
+
+      if (snackbar === "always" || LOG_ERROR_SNACKBAR) {
+        state.isOpen = true;
+        state.message = message;
+        state.variant = "error";
+      }
     },
     showSnackbar: (
       state,
       action: PayloadAction<{
         readonly message: string;
-        readonly variant?: SNACKBAR_VARIANT;
+        readonly variant?: SnackbarVariant;
       }>
     ) => {
       const { message, variant = "info" } = action.payload;
@@ -70,7 +78,7 @@ export const selectSnackbarMessage = (state: AppState): string =>
  * @param state - The app state.
  * @returns The snackbar variant.
  */
-export const selectSnackbarVariant = (state: AppState): SNACKBAR_VARIANT =>
+export const selectSnackbarVariant = (state: AppState): SnackbarVariant =>
   state.snackbar.variant;
 
 export type SnackbarActions =

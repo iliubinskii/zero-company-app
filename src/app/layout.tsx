@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-page-custom-font -- Ok */
 
 import "./globals.css";
-import {
-  AppLoadingProvider,
-  CategoriesProvider,
-  SnackbarProvider
-} from "../contexts";
+import { AppLoadingProvider, SnackbarProvider } from "../contexts";
 import type { ReactElement, ReactNode } from "react";
 import { ReduxPersistor, ReduxStoreProvider } from "../store";
 import React, { Suspense } from "react";
 import { RootLayout } from "../layouts";
-import { api } from "../api";
+import { getCategoriesSrv } from "../server-cache";
 import { lang } from "../langs";
 
 /**
@@ -20,7 +16,7 @@ import { lang } from "../langs";
  * @returns The root layout.
  */
 export default async function App({ children }: Props): Promise<ReactElement> {
-  const categories = await api.getCategoriesSrv();
+  const categories = await getCategoriesSrv();
 
   return (
     <html lang="en">
@@ -28,22 +24,20 @@ export default async function App({ children }: Props): Promise<ReactElement> {
         <title>{lang.meta.title}</title>
         <meta content={lang.meta.description} name="description" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
           rel="stylesheet"
         />
       </head>
       <body>
         <AppLoadingProvider>
-          <CategoriesProvider categories={categories}>
-            <ReduxStoreProvider>
-              <SnackbarProvider>
-                <Suspense>
-                  <ReduxPersistor />
-                </Suspense>
-                <RootLayout>{children}</RootLayout>
-              </SnackbarProvider>
-            </ReduxStoreProvider>
-          </CategoriesProvider>
+          <ReduxStoreProvider>
+            <SnackbarProvider>
+              <Suspense>
+                <ReduxPersistor />
+              </Suspense>
+              <RootLayout categories={categories}>{children}</RootLayout>
+            </SnackbarProvider>
+          </ReduxStoreProvider>
         </AppLoadingProvider>
       </body>
     </html>

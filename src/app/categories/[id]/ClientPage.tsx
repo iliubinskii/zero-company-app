@@ -6,7 +6,7 @@ import type {
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
-import { SNACKBAR_VARIANT, showSnackbar, useAppDispatch } from "../../../store";
+import { logError, useAppDispatch } from "../../../store";
 import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
@@ -19,6 +19,7 @@ import { lang } from "../../../langs";
 import { logger } from "../../../services";
 
 export const ClientPage: FC<Props> = ({
+  categories,
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
@@ -48,14 +49,10 @@ export const ClientPage: FC<Props> = ({
         });
 
         if ("error" in response) {
-          logger.error(`${response.error}: ${response.errorMessage}`);
-          dispatch(
-            showSnackbar({
-              message: response.errorMessage,
-              variant: SNACKBAR_VARIANT.error
-            })
-          );
           setAutoMode(false);
+          dispatch(
+            logError({ error: response, message: response.errorMessage })
+          );
         } else {
           setCompanies([...companies, ...response.docs]);
           setNextCursor(response.nextCursor);
@@ -120,7 +117,11 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards */}
         <CompanyCards>
           {companies.map(company => (
-            <CompanyCard company={company} key={company._id} />
+            <CompanyCard
+              categories={categories}
+              company={company}
+              key={company._id}
+            />
           ))}
         </CompanyCards>
         {/* Company cards END */}
@@ -154,6 +155,7 @@ export const ClientPage: FC<Props> = ({
 };
 
 export interface Props {
+  readonly categories: readonly ExistingCategory[];
   readonly category: ExistingCategory;
   readonly companies: MultipleDocsResponse<ExistingCompany>;
 }

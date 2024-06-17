@@ -22,10 +22,12 @@ export interface ModuleProps {
   readonly company: CustomExistingCompany;
   readonly errorMessages: readonly FieldError[];
   readonly images: readonly CombinedFile[];
+  readonly isSubmitting: boolean;
   readonly modified: boolean;
   readonly onAddImages: (images: readonly FileWithPreview[]) => void;
   readonly onRemoveImage: (image: CombinedFile) => void;
   readonly onResetErrors: (name?: string | undefined) => void;
   readonly onSave: FormEventHandler<HTMLFormElement>;
-  readonly setCompany: (update: CustomCompanyUpdate) => void;
+  readonly setCompany: (company: ExistingCompany) => void;
+  readonly setUpdate: (update: CustomCompanyUpdate) => void;
 }

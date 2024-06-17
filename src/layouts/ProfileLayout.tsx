@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedLink, MarketOverview } from "../components";
 import type { FC, ReactNode } from "react";
 import {
   GRAVATAR_DEFAULT,
@@ -14,13 +15,12 @@ import {
   LuHeartHandshake,
   LuLayoutDashboard,
   LuLogOut,
-  LuSettings2
+  LuSettings2,
+  LuSprout
 } from "react-icons/lu";
 import { selectAuthUser, useAppSelector } from "../store";
 import { API_URL } from "../config";
-import { AnimatedLink } from "../components";
 import React from "react";
-import { RxRocket } from "react-icons/rx";
 import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
@@ -31,14 +31,14 @@ import { useUserName } from "../hooks";
  * Profile layout.
  * @param props - The properties.
  * @param props.children - The children.
- * @param props.info  - The info.
  * @param props.loading - The loading.
+ * @param props.noInfo - The no info.
  * @returns The element.
  */
 export const ProfileLayout: FC<Props> = ({
   children,
-  info,
-  loading = false
+  loading = false,
+  noInfo
 }) => {
   const authUser = useAppSelector(selectAuthUser);
 
@@ -81,21 +81,29 @@ export const ProfileLayout: FC<Props> = ({
                 : pathname.startsWith(href);
 
             return (
-              <Link
-                className={active ? "bg-slate-200" : undefined}
+              <AnimatedLink
+                className={
+                  active
+                    ? "rounded px-5 py-3 flex items-center gap-4 text-slate-700 bg-slate-200"
+                    : "rounded px-5 py-3 flex items-center gap-4 text-slate-700"
+                }
                 href={href}
                 key={href}
               >
                 <Icon className="text-2xl" />
                 {text}
-              </Link>
+              </AnimatedLink>
             );
           })}
         </Links>
       </SideMenu>
       <Main>
         <Contents>{loading || children}</Contents>
-        {info}
+        {noInfo || (
+          <Info>
+            <MarketOverview />
+          </Info>
+        )}
       </Main>
     </Container>
   );
@@ -103,8 +111,8 @@ export const ProfileLayout: FC<Props> = ({
 
 export interface Props {
   readonly children?: ReactNode | undefined;
-  readonly info?: ReactNode | undefined;
   readonly loading?: boolean | undefined;
+  readonly noInfo?: boolean | undefined;
 }
 
 const Container = tw.div`p-6 flex gap-8`;
@@ -123,16 +131,11 @@ const UserEmail = tw.div`text-sm text-gray-500 overflow-hidden overflow-ellipsis
 
 const Links = tw.div`w-64 flex flex-col gap-1`;
 
-const Link = tw(AnimatedLink)`
-  rounded
-  px-5 py-3
-  flex items-center gap-4
-  text-slate-700
-`;
-
 const Main = tw.div`grow p-4 flex gap-9`;
 
 const Contents = tw.div`grow flex flex-col gap-9`;
+
+const Info = tw.div`hidden xl:block`;
 
 const links = [
   {
@@ -141,7 +144,7 @@ const links = [
     text: lang.Dashboard
   },
   {
-    Icon: RxRocket,
+    Icon: LuSprout,
     href: "/profile/companies",
     text: lang.MyCompanies
   },
