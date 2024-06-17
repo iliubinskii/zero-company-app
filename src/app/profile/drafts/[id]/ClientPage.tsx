@@ -57,7 +57,7 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
     ? { ...company, ...removeUndefined(update) }
     : undefined;
 
-  const { basicProgress, publicProgress, teamProgress } =
+  const { basicProgress, publicProgress, teamProgress, totalProgress } =
     draftProgress(company);
 
   const { callback: submit, isLoading: isSubmitting } =
@@ -189,6 +189,7 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
             <IconAccordionItem
               Icon={PiSignatureBold}
               description={lang.app.profile.drafts.draft.Signing.description}
+              disabled={totalProgress < 1}
               title={lang.app.profile.drafts.draft.Signing.title}
             >
               {company && (

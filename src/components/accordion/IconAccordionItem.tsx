@@ -9,13 +9,15 @@ export const IconAccordionItem: FC<Props> = ({
   alwaysOpen = false,
   children,
   description,
+  disabled,
   title
 }) => (
   <AccordionItem
     alwaysOpen={alwaysOpen}
+    disabled={disabled}
     header={
       <div className="flex gap-4">
-        <CircularIcon Icon={Icon} />
+        <CircularIcon Icon={Icon} disabled={disabled} />
         <div>
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-gray-500">{description}</p>
@@ -29,8 +31,9 @@ export const IconAccordionItem: FC<Props> = ({
 
 export interface Props {
   readonly Icon: IconType;
-  readonly alwaysOpen?: boolean;
+  readonly alwaysOpen?: boolean | undefined;
   readonly children?: ReactNode | undefined;
   readonly description: string;
+  readonly disabled?: boolean | undefined;
   readonly title: string;
 }
