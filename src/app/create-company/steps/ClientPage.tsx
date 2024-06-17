@@ -24,6 +24,7 @@ export const ClientPage: FC<Props> = ({ categories }) => {
         return SelectCountry;
       }
 
+      case CREATE_COMPANY_STEP.CREATE:
       case CREATE_COMPANY_STEP.REVIEW: {
         return Review;
       }
