@@ -19,7 +19,7 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
     {/* Header /*/}
     <header>
       {/* Dark header */}
-      <div className="w-full bg-charcoal p-5 ">
+      <div className="w-full bg-charcoal p-5">
         <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
           <ul className="flex gap-3 justify-start">
             <li>
@@ -72,7 +72,12 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
     <footer className="bg-light-gray-cold">
       {/* Footer categories */}
       <div className="border-t-1.5 border-gray-300">
-        <div className="mx-auto max-w-screen-2xl px-12 py-5 flex flex-col md:flex-row flex-wrap gap-x-3 gap-y-1 text-sm">
+        <div
+          className="
+            mx-auto max-w-screen-2xl px-20 py-5 flex flex-col
+            md:flex-row flex-wrap gap-x-5 gap-y-1 text-xs
+           "
+        >
           <h3 className="uppercase font-semibold mb-3 md:hidden">
             {lang.Explore}
           </h3>
@@ -90,15 +95,15 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
       {/* Footer categories END */}
 
       {/* Footer link groups */}
-      <div className="border-t-1.5 p-10">
+      <div className="border-t-1.5 px-20 py-10">
         <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-          <div className="scale-75 text-charcoal">
+          <div className="pt-5 text-charcoal scale-75 origin-top-left">
             <Logo />
           </div>
           {footerLinkGroups.map(({ links, title }, key) => (
             <div className="flex flex-col gap-4" key={key}>
-              <h3 className="uppercase font-bold">{title}</h3>
-              <div className="flex flex-col gap-1 text-sm text-gray-700">
+              <h3 className="uppercase text-xs font-semibold">{title}</h3>
+              <div className="flex flex-col gap-1 text-xs text-gray-700">
                 {links.map(({ href, text }) => (
                   <AnimatedLink href={href} key={href}>
                     {text}
@@ -113,7 +118,7 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
 
       {/* Footer links */}
       <div className="border-t-1.5">
-        <div className="mx-auto max-w-screen-2xl p-7 flex justify-center gap-10 text-sm text-gray-700">
+        <div className="mx-auto max-w-screen-2xl px-20 py-7 flex gap-10 text-sm text-gray-700">
           {footerLinks.map(({ href, text }) => (
             <AnimatedLink href={href} key={href}>
               {text}
