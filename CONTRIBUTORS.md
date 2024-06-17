@@ -1,13 +1,13 @@
-Total .css: 78
-Total .ts: 4459
-Total .tsx: 5452
-Total commits: 389
-Total ctimes: 3169
-Total files: 207
-Total loc: 9989
+Total .css: 85
+Total .ts: 4950
+Total .tsx: 6343
+Total commits: 446
+Total ctimes: 3357
+Total files: 243
+Total loc: 11378
 | Author            |   loc |   coms |   fils |  distribution   |
 |:------------------|------:|-------:|-------:|:----------------|
-| Ilia Liubinskii   |  9461 |    374 |    186 | 94.7/96.1/89.9  |
-| shabelnikova      |   318 |      8 |     17 | 3.2/ 2.1/ 8.2   |
-| DavLiub           |   210 |      6 |      4 | 2.1/ 1.5/ 1.9   |
-| DaniilBerenshtein |     0 |      1 |      0 | 0.0/ 0.3/ 0.0   |
+| Ilia Liubinskii   | 10770 |    429 |    217 | 94.7/96.2/89.3  |
+| shabelnikova      |   323 |      9 |     19 | 2.8/ 2.0/ 7.8   |
+| DavLiub           |   285 |      7 |      7 | 2.5/ 1.6/ 2.9   |
+| DaniilBerenshtein |     0 |      1 |      0 | 0.0/ 0.2/ 0.0   |
