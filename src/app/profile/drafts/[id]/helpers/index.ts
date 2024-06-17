@@ -22,6 +22,7 @@ export interface ModuleProps {
   readonly company: CustomExistingCompany;
   readonly errorMessages: readonly FieldError[];
   readonly images: readonly CombinedFile[];
+  readonly isSubmitting: boolean;
   readonly modified: boolean;
   readonly onAddImages: (images: readonly FileWithPreview[]) => void;
   readonly onRemoveImage: (image: CombinedFile) => void;

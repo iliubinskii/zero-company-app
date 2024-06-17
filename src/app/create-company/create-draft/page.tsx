@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthGuard, Loading } from "../../../components";
+import { AuthGuard, BigSpinner } from "../../../components";
 import {
   logError,
   selectAuthUser,
@@ -67,7 +67,7 @@ const Page: NextPage = () => {
     <AuthGuard>
       <PageLayout>
         <div className="py-24 flex flex-col items-center gap-3">
-          <Loading />
+          <BigSpinner />
           <div className="text-gray-700">{lang.MakingThingsDone}</div>
         </div>
       </PageLayout>

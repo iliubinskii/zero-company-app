@@ -12,11 +12,14 @@ import type { FC, FormEventHandler } from "react";
 import { addCompany, logError, useAppDispatch } from "../../../../store";
 import {
   buildFormData,
-  callAsync,
   draftProgress,
   removeUndefined
 } from "../../../../utils";
-import { useAuthGuardedLoader, useCompanyCategory } from "../../../../hooks";
+import {
+  useAsyncCallback,
+  useAuthGuardedLoader,
+  useCompanyCategory
+} from "../../../../hooks";
 import { Basics } from "./Basics";
 import { type CustomCompanyUpdate } from "./helpers";
 import type { FileWithPreview } from "../../../../components/form/FileInputElement";
@@ -57,6 +60,33 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
   const { basicProgress, publicProgress, teamProgress } =
     draftProgress(company);
 
+  const { callback: submit, isLoading: isSubmitting } =
+    useAsyncCallback(async () => {
+      const data = buildFormData(update);
+
+      for (const image of addImages) data.append("addImages", image);
+
+      for (const assetId of removeImages)
+        data.append("removeImages[]", assetId);
+
+      const response = await api.putCompany(id, data);
+
+      if ("error" in response)
+        if (
+          "data" in response &&
+          response.data.some(error => error.path.length)
+        )
+          setErrorMessages(prepareErrors(response.data));
+        else logError({ error: response, message: response.errorMessage });
+      else {
+        dispatch(addCompany(response));
+        setCompany(response);
+        setUpdate({});
+        setAddImages([]);
+        setRemoveImages([]);
+      }
+    }, [addImages, update, dispatch, id, removeImages, setCompany]);
+
   const modified =
     Object.keys(update).length > 0 ||
     addImages.length > 0 ||
@@ -86,34 +116,9 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
   const onSave = useCallback<FormEventHandler<HTMLFormElement>>(
     e => {
       e.preventDefault();
-
-      const data = buildFormData(update);
-
-      for (const image of addImages) data.append("addImages", image);
-
-      for (const assetId of removeImages)
-        data.append("removeImages[]", assetId);
-
-      callAsync(async () => {
-        const response = await api.putCompany(id, data);
-
-        if ("error" in response)
-          if (
-            "data" in response &&
-            response.data.some(error => error.path.length)
-          )
-            setErrorMessages(prepareErrors(response.data));
-          else logError({ error: response, message: response.errorMessage });
-        else {
-          dispatch(addCompany(response));
-          setCompany(response);
-          setUpdate({});
-          setAddImages([]);
-          setRemoveImages([]);
-        }
-      });
+      submit();
     },
-    [addImages, update, dispatch, id, removeImages, setCompany]
+    [submit]
   );
 
   useEffect(() => {
@@ -151,6 +156,7 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
                         ),
                         ...addImages
                       ]}
+                      isSubmitting={isSubmitting}
                       modified={modified}
                       onAddImages={images => {
                         setAddImages(prev => [...prev, ...images]);

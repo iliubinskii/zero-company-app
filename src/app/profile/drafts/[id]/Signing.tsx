@@ -1,5 +1,9 @@
-import { AnimatedLink, ErrorAlert, InfoAlert } from "../../../../components";
-import type { FC, FormEventHandler } from "react";
+import {
+  AnimatedLink,
+  AsyncButton,
+  ErrorAlert,
+  InfoAlert
+} from "../../../../components";
 import {
   SnackbarVariant,
   logError,
@@ -7,18 +11,17 @@ import {
   useAppDispatch
 } from "../../../../store";
 import type { ExistingCompany } from "../../../../schema";
+import type { FC } from "react";
 import React from "react";
 import { api } from "../../../../api";
-import { callAsync } from "../../../../utils";
 import { lang } from "../../../../langs";
+import { useAsyncCallback } from "../../../../hooks";
 
 export const Signing: FC<Props> = ({ company, setCompany }) => {
   const dispatch = useAppDispatch();
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = e => {
-    e.preventDefault();
-
-    callAsync(async () => {
+  const { callback: submit, isLoading: isSubmitting } =
+    useAsyncCallback(async () => {
       const updatedCompany = await api.generateFoundingAgreement(company._id);
 
       if ("error" in updatedCompany)
@@ -37,8 +40,7 @@ export const Signing: FC<Props> = ({ company, setCompany }) => {
           })
         );
       }
-    });
-  };
+    }, [company._id, dispatch, setCompany]);
 
   return company.foundingAgreement ? (
     <div className="flex flex-col gap-11">
@@ -53,14 +55,24 @@ export const Signing: FC<Props> = ({ company, setCompany }) => {
       </div>
     </div>
   ) : (
-    <form className="flex flex-col gap-11" onSubmit={onSubmit}>
+    <form
+      className="flex flex-col gap-11"
+      onSubmit={e => {
+        e.preventDefault();
+        submit();
+      }}
+    >
       <ErrorAlert>
         {lang.app.profile.drafts.draft.Signing.errorAlert}
       </ErrorAlert>
       <div className="flex justify-end">
-        <button className="primary-button" type="submit">
+        <AsyncButton
+          className="primary-button"
+          isLoading={isSubmitting}
+          type="submit"
+        >
           {lang.Generate}
-        </button>
+        </AsyncButton>
       </div>
     </form>
   );
