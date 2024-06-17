@@ -141,6 +141,7 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
               ({ Component, description, progress, title }, index) => (
                 <ProgressAccordionItem
                   description={description}
+                  disabled={Boolean(company && company.foundingAgreement)}
                   key={index}
                   progress={Math.round(100 * progress)}
                   title={title}
