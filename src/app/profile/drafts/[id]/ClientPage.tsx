@@ -98,47 +98,11 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
         const response = await api.putCompany(id, data);
 
         if ("error" in response)
-          if ("data" in response && response.data.some(x => x.path.length))
-            setErrorMessages([
-              ...(function* prepareErrors(): Generator<FieldError> {
-                for (const error of response.data)
-                  switch (error.path) {
-                    case "categories": {
-                      yield {
-                        message: error.message,
-                        path: "categories[0]"
-                      };
-
-                      break;
-                    }
-
-                    case "founders": {
-                      yield {
-                        message: error.message,
-                        path: "founders[0].email"
-                      };
-                      yield {
-                        message: error.message,
-                        path: "founders[0].firstName"
-                      };
-                      yield {
-                        message: error.message,
-                        path: "founders[0].lastName"
-                      };
-                      yield {
-                        message: error.message,
-                        path: "founders[0].share"
-                      };
-
-                      break;
-                    }
-
-                    default: {
-                      yield error;
-                    }
-                  }
-              })()
-            ]);
+          if (
+            "data" in response &&
+            response.data.some(error => error.path.length)
+          )
+            setErrorMessages(prepareErrors(response.data));
           else logError({ error: response, message: response.errorMessage });
         else {
           dispatch(addCompany(response));
@@ -239,4 +203,54 @@ export const ClientPage: FC<Props> = ({ categories, id }) => {
 export interface Props {
   readonly categories: readonly ExistingCategory[];
   readonly id: string;
+}
+
+/**
+ * Prepares the errors for display.
+ * @param errors - The errors to prepare.
+ * @returns The prepared errors.
+ */
+function prepareErrors(errors: readonly FieldError[]): readonly FieldError[] {
+  const result: FieldError[] = [];
+
+  for (const error of errors)
+    switch (error.path) {
+      case "categories": {
+        result.push({
+          message: error.message,
+          path: "categories[0]"
+        });
+
+        break;
+      }
+
+      case "founders": {
+        result.push(
+          {
+            message: error.message,
+            path: "founders[0].email"
+          },
+          {
+            message: error.message,
+            path: "founders[0].firstName"
+          },
+          {
+            message: error.message,
+            path: "founders[0].lastName"
+          },
+          {
+            message: error.message,
+            path: "founders[0].share"
+          }
+        );
+
+        break;
+      }
+
+      default: {
+        result.push(error);
+      }
+    }
+
+  return result;
 }
