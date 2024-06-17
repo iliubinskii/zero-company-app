@@ -235,9 +235,7 @@ export const lang = {
   },
   lookingForCoFounder: "looking for co-founder",
   meta: {
-    description: `
-      Create a virtual company at zero cost and grow it into your first unicorn!
-    `,
+    description: "Empower Your Startup with Proven Corporate Strategies",
     title: "Zero Company"
   },
   of: "of",
