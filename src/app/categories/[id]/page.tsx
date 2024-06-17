@@ -1,4 +1,8 @@
 import { COMPANY_LIMIT, ERROR } from "../../../consts";
+import {
+  getCategoriesSrv,
+  getPinnedCategoriesSrv
+} from "../../../server-cache";
 import { ClientPage } from "./ClientPage";
 import { CompanyStatus } from "../../../schema";
 import type { NextPage } from "next";
@@ -6,7 +10,6 @@ import type { NextPageProps } from "../../../types";
 import React from "react";
 import { api } from "../../../api";
 import { assertDefined } from "../../../utils";
-import { getPinnedCategoriesSrv } from "../../../server-cache";
 
 /**
  * Generates static parameters.
@@ -22,6 +25,8 @@ export async function generateStaticParams(): Promise<unknown[]> {
 
 const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
+
+  const categories = await getCategoriesSrv();
 
   const [category, companies] = await Promise.all([
     api.getCategory(id),
@@ -39,7 +44,13 @@ const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   if ("error" in companies)
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  return <ClientPage category={category} companies={companies} />;
+  return (
+    <ClientPage
+      categories={categories}
+      category={category}
+      companies={companies}
+    />
+  );
 };
 
 export default Page;

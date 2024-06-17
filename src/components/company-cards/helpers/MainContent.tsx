@@ -18,6 +18,7 @@ import type { FC } from "react";
 import { HeartIcon } from "../../icons";
 import React from "react";
 import { SafeImage } from "../../SafeImage";
+import { format } from "date-fns";
 import { lang } from "../../../langs";
 
 export const MainContent: FC<Props> = ({ company }) => {
@@ -70,10 +71,15 @@ export const MainContent: FC<Props> = ({ company }) => {
             <HeartIcon className="mr-1 float-left" />
             <h2 className="text-xl">{company.name}</h2>
           </div>
-          <p className="text-gray-400 text-xs pl-1">{company.name}</p>
+          <p className="text-gray-400 text-xs pl-1">
+            {company.founders.length} team member(s)
+          </p>
           <div className="flex gap-1 items-center">
             <FaRegClock className="text-gray-400 text-xl" />
-            <p className="text-gray-500 text-sm">10 days before presentation</p>
+            <p className="text-gray-500 text-sm">
+              Founded on{" "}
+              {format(company.foundedAt ?? company.createdAt, "MMM d, yyyy")}
+            </p>
           </div>
         </div>
         <div className="cursor-pointer" onClick={toggleFavoriteClickHandler}>

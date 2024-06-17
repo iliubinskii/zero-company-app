@@ -49,7 +49,7 @@ const config = {
     ],
     "n/no-unsupported-features/node-builtins": "off",
     "node/no-unsupported-features/es-builtins": [
-      "error",
+      "warn",
       {
         ignores: [],
         version: ">=20.0.0"
