@@ -1,4 +1,8 @@
-import { InputElement, SelectElement } from "../../../../components";
+import {
+  AsyncButton,
+  InputElement,
+  SelectElement
+} from "../../../../components";
 import { COMPANY_TARGET_VALUE_STEP } from "../../../../consts";
 import type { FC } from "react";
 import type { ModuleProps } from "./helpers";
@@ -9,6 +13,7 @@ export const Basics: FC<ModuleProps> = ({
   categories,
   company,
   errorMessages,
+  isSubmitting,
   modified,
   onResetErrors,
   onSave,
@@ -74,9 +79,14 @@ export const Basics: FC<ModuleProps> = ({
 
     {/* Save button */}
     <div className="flex justify-end">
-      <button className="primary-button" disabled={!modified} type="submit">
+      <AsyncButton
+        className="primary-button"
+        disabled={!modified}
+        isLoading={isSubmitting}
+        type="submit"
+      >
         {lang.Save}
-      </button>
+      </AsyncButton>
     </div>
     {/* Save button END */}
   </form>

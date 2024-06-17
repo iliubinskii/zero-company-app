@@ -1,8 +1,10 @@
 import { CIRCULAR_SIZE, CIRCULAR_STROKE_WIDTH } from "../../consts";
 import type { FC } from "react";
 import React from "react";
+import tw from "tailwind-styled-components";
 
 export const CircularProgress: FC<Props> = ({
+  disabled = false,
   progress,
   size = CIRCULAR_SIZE,
   strokeWidth = CIRCULAR_STROKE_WIDTH
@@ -14,10 +16,7 @@ export const CircularProgress: FC<Props> = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div
-      className="flex items-center justify-center"
-      style={{ height: size, width: size }}
-    >
+    <Container style={{ height: size, width: size }}>
       <svg className="absolute rotate-[-90deg]" height={size} width={size}>
         <circle
           className="text-gray-300"
@@ -28,8 +27,8 @@ export const CircularProgress: FC<Props> = ({
           stroke="currentColor"
           strokeWidth={strokeWidth}
         />
-        <circle
-          className="text-blue-500 transition-all duration-300"
+        <AnimatedCircle
+          className={disabled ? "text-gray-500" : "text-blue-500"}
           cx={size / 2}
           cy={size / 2}
           fill="transparent"
@@ -40,15 +39,22 @@ export const CircularProgress: FC<Props> = ({
           strokeWidth={strokeWidth}
         />
       </svg>
-      <span className="absolute text-sm text-blue-500 font-medium">
+      <Text className={disabled ? "text-gray-500" : "text-blue-500"}>
         {progress}%
-      </span>
-    </div>
+      </Text>
+    </Container>
   );
 };
 
 export interface Props {
-  progress: number;
-  size?: number;
-  strokeWidth?: number;
+  readonly disabled?: boolean | undefined;
+  readonly progress: number;
+  readonly size?: number | undefined;
+  readonly strokeWidth?: number | undefined;
 }
+
+const Container = tw.div`flex items-center justify-center`;
+
+const AnimatedCircle = tw.circle`transition-all duration-300`;
+
+const Text = tw.span`absolute text-sm text-gray-600 font-medium`;

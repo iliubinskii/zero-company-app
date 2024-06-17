@@ -1,4 +1,4 @@
-import type { ExistingCompany, Founder } from "../../../../../schema";
+import type { ExistingCompany, Founder } from "../schema";
 
 /**
  * Calculate the draft progress of a company.
@@ -110,13 +110,15 @@ export function draftProgress(company?: ExistingCompany): DraftProgress {
         }
       }
 
+    const totalCount = basicCount + publicCount + teamCount;
+
+    const totalTotal = basicTotal + publicTotal + teamTotal;
+
     return {
       basicProgress: basicCount / basicTotal,
       publicProgress: publicCount / publicTotal,
       teamProgress: teamCount / teamTotal,
-      totalProgress:
-        (basicCount + publicCount + teamCount) /
-        (basicTotal + publicTotal + teamTotal)
+      totalProgress: totalCount / totalTotal
     };
   }
 

@@ -15,6 +15,7 @@ export const COMPANY_SHARE_STEP = 100;
 export const COMPANY_TARGET_VALUE_STEP = 1000;
 
 export const CREATE_COMPANY_STEP = {
+  CREATE: "CREATE",
   REVIEW: "REVIEW",
   SELECT_CATEGORY: "SELECT_CATEGORY",
   SELECT_COUNTRY: "SELECT_COUNTRY"
@@ -23,7 +24,8 @@ export const CREATE_COMPANY_STEP = {
 export const CREATE_COMPANY_STEPS = [
   CREATE_COMPANY_STEP.SELECT_CATEGORY,
   CREATE_COMPANY_STEP.SELECT_COUNTRY,
-  CREATE_COMPANY_STEP.REVIEW
+  CREATE_COMPANY_STEP.REVIEW,
+  CREATE_COMPANY_STEP.CREATE
 ];
 
 export const ERROR = {
@@ -39,7 +41,8 @@ export const ERROR = {
     "Expecting valid log error snackbar environment variable",
   EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
     "Expecting event target as HTMLFormElement",
-  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state"
+  FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state",
+  REDUX_STORE_DESYNCRONIZATION: "Redux store desynchronization"
 } as const;
 
 export const GRAVATAR_DEFAULT = "retro";

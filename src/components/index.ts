@@ -1,5 +1,6 @@
 export { AnimatedLink } from "./AnimatedLink";
 export { AuthGuard } from "./AuthGuard";
+export { BigSpinner } from "./BigSpinner";
 export { BlogCard } from "./BlogCard";
 export { Chevron } from "./Chevron";
 export { DocumentCard } from "./DocumentCard";
@@ -15,7 +16,6 @@ export { InfoBlock } from "./InfoBlock";
 export { InfoCard } from "./InfoCard";
 export { InfoCards } from "./InfoCards";
 export { InternshipCard } from "./InternshipCard";
-export { Loading } from "./Loading";
 export { MarketOverview } from "./MarketOverview";
 export { Navigate } from "./Navigate";
 export { NoContent } from "./NoContent";

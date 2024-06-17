@@ -1,7 +1,7 @@
+import type { ExistingCategory, ExistingCompany } from "../schema";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { useCompanyCategory, useCompanyName } from "../hooks";
 import { DarkIconButton } from "./buttons";
-import type { ExistingCompany } from "../schema";
 import type { FC } from "react";
 import { IoDocumentAttach } from "react-icons/io5";
 import React from "react";
@@ -9,10 +9,10 @@ import gravatar from "gravatar";
 import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 
-export const FoundedCompanyCard: FC<Props> = ({ company }) => {
-  const companyName = useCompanyName(company);
+export const FoundedCompanyCard: FC<Props> = ({ categories, company }) => {
+  const category = useCompanyCategory(company, categories);
 
-  const category = useCompanyCategory(company);
+  const companyName = useCompanyName(company, categories);
 
   return (
     <Container>
@@ -55,6 +55,7 @@ export const FoundedCompanyCard: FC<Props> = ({ company }) => {
 };
 
 export interface Props {
+  readonly categories: readonly ExistingCategory[];
   readonly company: ExistingCompany;
 }
 
