@@ -21,10 +21,10 @@ const ProfileButton: FC = () => {
     >
       <AnimatedLink
         className="
-          rounded-lg border px-5 py-2
+          rounded-lg border px-5 py-3
           whitespace-nowrap text-white
           hover:bg-white hover:text-black
-          transition text-sm
+          transition
         "
         href={
           authUser

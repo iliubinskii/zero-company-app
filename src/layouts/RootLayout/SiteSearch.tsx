@@ -5,10 +5,10 @@ import { lang } from "../../langs";
 
 const SiteSearch: FC = () => (
   <div className="relative w-full flex justify-end items-center">
-    <IoSearch className="relative -mr-8 w-5 h-5 text-gray-700" />
+    <IoSearch className="relative -mr-10 w-6 h-6 text-gray-700" />
     <input
       className="
-        text-sm w-52 rounded-lg border-none pl-10 pr-3 py-2
+        w-52 rounded-lg border-none pl-12 pr-3 py-3
         transition-all duration-300 outline-none
         focus:ring-transparent focus:w-full
       "

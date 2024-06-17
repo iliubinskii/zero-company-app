@@ -10,10 +10,10 @@ const CreateCompanyButton: FC = () => {
   return (
     <AnimatedLink
       className={`
-        rounded-lg px-4 py-2 bg-green-primary
+        rounded-lg px-4 py-3 bg-green-primary
         whitespace-nowrap text-white
         hover:bg-green-secondary
-        transition text-sm
+        transition
       `}
       href="/create-company"
       onClick={() => {

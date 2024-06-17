@@ -29,7 +29,7 @@ const Page: NextPage = async () => {
     <div className="w-full flex flex-col px-10 divide-y divide-gray-200">
       <section>
         <SectionContainerTop className="flex flex-col gap-20">
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-8">
             {/* Slogan */}
             <div className="text-teaser text-gray-700 text-center">
               {lang.app.home.teaser}
