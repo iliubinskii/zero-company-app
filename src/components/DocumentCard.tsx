@@ -1,4 +1,4 @@
-import type { AuthUser, PopulatedDocument } from "../schema";
+import type { AuthUser, ExistingCategory, PopulatedDocument } from "../schema";
 import { GRAVATAR_DEFAULT, GRAVATAR_RATING, GRAVATAR_SIZE } from "../consts";
 import { refreshDocument, useAppDispatch } from "../store";
 import { DarkIconButton } from "./buttons";
@@ -13,8 +13,8 @@ import { lang } from "../langs";
 import tw from "tailwind-styled-components";
 import { useCompanyName } from "../hooks";
 
-export const DocumentCard: FC<Props> = ({ authUser, document }) => {
-  const companyName = useCompanyName(document.company);
+export const DocumentCard: FC<Props> = ({ authUser, categories, document }) => {
+  const companyName = useCompanyName(document.company, categories);
 
   const completedEmails = new Set(
     document.doc.signatures
@@ -115,6 +115,7 @@ export const DocumentCard: FC<Props> = ({ authUser, document }) => {
 
 export interface Props {
   readonly authUser: AuthUser;
+  readonly categories: readonly ExistingCategory[];
   readonly document: PopulatedDocument;
 }
 

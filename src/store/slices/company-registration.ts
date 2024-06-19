@@ -14,17 +14,23 @@ const companyRegistrationSlice = createSlice({
   reducers: {
     prevCompanyRegistrationStep: state => {
       switch (state.step) {
-        case CREATE_COMPANY_STEP.REVIEW: {
-          state.step = CREATE_COMPANY_STEP.SELECT_COUNTRY;
-          break;
-        }
-
         case CREATE_COMPANY_STEP.SELECT_CATEGORY: {
           break;
         }
 
         case CREATE_COMPANY_STEP.SELECT_COUNTRY: {
           state.step = CREATE_COMPANY_STEP.SELECT_CATEGORY;
+          break;
+        }
+
+        case CREATE_COMPANY_STEP.REVIEW: {
+          state.step = CREATE_COMPANY_STEP.SELECT_COUNTRY;
+          break;
+        }
+
+        case CREATE_COMPANY_STEP.CREATE: {
+          state.step = CREATE_COMPANY_STEP.REVIEW;
+          break;
         }
       }
     },
@@ -40,6 +46,9 @@ const companyRegistrationSlice = createSlice({
     setCompanyCountry: (state, action: PayloadAction<string>) => {
       state.step = CREATE_COMPANY_STEP.REVIEW;
       state.country = action.payload;
+    },
+    setCompanyCreateStep: state => {
+      state.step = CREATE_COMPANY_STEP.CREATE;
     }
   }
 });
@@ -50,7 +59,8 @@ export const {
   prevCompanyRegistrationStep,
   resetCompanyRegistration,
   setCompanyCategory,
-  setCompanyCountry
+  setCompanyCountry,
+  setCompanyCreateStep
 } = companyRegistrationSlice.actions;
 
 /**
@@ -78,4 +88,5 @@ export type CompanyRegistrationActions =
   | ReturnType<typeof prevCompanyRegistrationStep>
   | ReturnType<typeof resetCompanyRegistration>
   | ReturnType<typeof setCompanyCategory>
-  | ReturnType<typeof setCompanyCountry>;
+  | ReturnType<typeof setCompanyCountry>
+  | ReturnType<typeof setCompanyCreateStep>;

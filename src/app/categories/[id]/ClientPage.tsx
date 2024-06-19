@@ -19,6 +19,7 @@ import { lang } from "../../../langs";
 import { logger } from "../../../services";
 
 export const ClientPage: FC<Props> = ({
+  categories,
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
@@ -116,7 +117,11 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards */}
         <CompanyCards>
           {companies.map(company => (
-            <CompanyCard company={company} key={company._id} />
+            <CompanyCard
+              categories={categories}
+              company={company}
+              key={company._id}
+            />
           ))}
         </CompanyCards>
         {/* Company cards END */}
@@ -150,6 +155,7 @@ export const ClientPage: FC<Props> = ({
 };
 
 export interface Props {
+  readonly categories: readonly ExistingCategory[];
   readonly category: ExistingCategory;
   readonly companies: MultipleDocsResponse<ExistingCompany>;
 }

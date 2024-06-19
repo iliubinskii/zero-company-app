@@ -55,6 +55,7 @@ export const lang = {
   LoadMore: "Load more",
   Loading: "Loading...",
   LogIn: "Log In",
+  LogInToBookmarkCompany: "Log in first to bookmark a company.",
   LogOut: "Log Out",
   LoginToCreateDraft: "Login to create a draft",
   Logo: "Logo",
@@ -74,6 +75,7 @@ export const lang = {
   PrivateCompany: "Private company",
   Profile: "Profile",
   ROFR: "ROFR",
+  ReduxStoreDesynchronization: "Redux store desynchronization",
   Refresh: "Refresh",
   Resources: "Resources",
   Save: "Save",
@@ -220,6 +222,7 @@ export const lang = {
     il: "Israel",
     us: "United States"
   },
+  done: "done",
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
   header: { searchPlaceholder: "Search..." },
   internshipPositions: "internship positions",
@@ -232,9 +235,7 @@ export const lang = {
   },
   lookingForCoFounder: "looking for co-founder",
   meta: {
-    description: `
-      Create a virtual company at zero cost and grow it into your first unicorn!
-    `,
+    description: "Empower Your Startup with Proven Corporate Strategies",
     title: "Zero Company"
   },
   of: "of",

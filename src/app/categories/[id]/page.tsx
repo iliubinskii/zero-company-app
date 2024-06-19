@@ -1,4 +1,8 @@
 import { COMPANY_LIMIT, ERROR } from "../../../consts";
+import {
+  getCategoriesSrv,
+  getPinnedCategoriesSrv
+} from "../../../server-cache";
 import { ClientPage } from "./ClientPage";
 import { CompanyStatus } from "../../../schema";
 import type { NextPage } from "next";
@@ -12,15 +16,17 @@ import { assertDefined } from "../../../utils";
  * @returns Static parameters.
  */
 export async function generateStaticParams(): Promise<unknown[]> {
-  const categories = await api.getCategoriesSrv({ onlyPinned: true });
+  const categories = await getPinnedCategoriesSrv();
 
-  return categories.docs.map(category => {
+  return categories.map(category => {
     return { id: category._id };
   });
 }
 
 const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
+
+  const categories = await getCategoriesSrv();
 
   const [category, companies] = await Promise.all([
     api.getCategory(id),
@@ -38,7 +44,13 @@ const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   if ("error" in companies)
     throw new Error(`${companies.error}: ${companies.errorMessage}`);
 
-  return <ClientPage category={category} companies={companies} />;
+  return (
+    <ClientPage
+      categories={categories}
+      category={category}
+      companies={companies}
+    />
+  );
 };
 
 export default Page;

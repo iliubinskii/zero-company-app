@@ -52,6 +52,9 @@ const config = {
       fontFamily: {
         sans: ["Inter", "sans-serif"]
       },
+      fontSize: {
+        teaser: "1.55rem"
+      },
       gridTemplateColumns: {
         "header-grid-container": "1fr auto 1fr",
         "header-grid-container-lg": "auto 1fr",

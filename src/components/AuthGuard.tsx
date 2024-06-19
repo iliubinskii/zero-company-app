@@ -8,7 +8,7 @@ import {
   useAppSelector
 } from "../store";
 import type { AppThunk } from "../store";
-import { Loading } from "./Loading";
+import { BigSpinner } from "./BigSpinner";
 import React, { useEffect } from "react";
 import { callAsync } from "../utils";
 import tw from "tailwind-styled-components";
@@ -42,7 +42,7 @@ export const AuthGuard: FC<Props> = ({
       {children}
       {(loaded && !customLoading) || (
         <Overlay>
-          <Loading />
+          <BigSpinner />
         </Overlay>
       )}
     </Container>

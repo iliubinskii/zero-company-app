@@ -1,4 +1,5 @@
 import {
+  AsyncButton,
   FileInputElement,
   InputElement,
   TextareaElement
@@ -12,6 +13,7 @@ export const Public: FC<ModuleProps> = ({
   company,
   errorMessages,
   images,
+  isSubmitting,
   modified,
   onAddImages,
   onRemoveImage,
@@ -88,9 +90,14 @@ export const Public: FC<ModuleProps> = ({
 
     {/* Save button */}
     <div className="flex justify-end">
-      <button className="primary-button" disabled={!modified} type="submit">
+      <AsyncButton
+        className="primary-button"
+        disabled={!modified}
+        isLoading={isSubmitting}
+        type="submit"
+      >
         {lang.Save}
-      </button>
+      </AsyncButton>
     </div>
     {/* Save button END */}
   </form>

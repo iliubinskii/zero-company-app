@@ -7,14 +7,16 @@ export const ProgressAccordionItem: FC<Props> = ({
   alwaysOpen = false,
   children,
   description,
+  disabled,
   progress,
   title
 }) => (
   <AccordionItem
     alwaysOpen={alwaysOpen}
+    disabled={disabled}
     header={
       <div className="flex gap-4">
-        <CircularProgress progress={progress} />
+        <CircularProgress disabled={disabled} progress={progress} />
         <div>
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-gray-500">{description}</p>
@@ -27,9 +29,10 @@ export const ProgressAccordionItem: FC<Props> = ({
 );
 
 export interface Props {
-  readonly alwaysOpen?: boolean;
+  readonly alwaysOpen?: boolean | undefined;
   readonly children?: ReactNode | undefined;
   readonly description: string;
+  readonly disabled?: boolean | undefined;
   readonly progress: number;
   readonly title: string;
 }
