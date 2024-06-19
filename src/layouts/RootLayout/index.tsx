@@ -1,16 +1,10 @@
 "use client";
 
-import {
-  AnimatedLink,
-  HeaderSimpleButton,
-  TextCarousel
-} from "../../components";
 import type { FC, ReactNode } from "react";
-import CreateCompanyButton from "./CreateCompanyButton";
+import { AnimatedLink } from "../../components";
+import Header from "./Header";
 import Logo from "./Logo";
-import ProfileButton from "./ProfileButton";
 import React from "react";
-import SiteSearch from "./SiteSearch";
 import { lang } from "../../langs";
 import { usePinnedCategories } from "../../contexts";
 
@@ -19,56 +13,7 @@ export const RootLayout: FC<Props> = ({ children }) => {
 
   return (
     <div className="flex flex-col">
-      {/* Header /*/}
-      <header>
-        {/* Dark header */}
-        <div className="w-full bg-charcoal p-5 ">
-          <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
-            <ul className="flex gap-3 justify-start">
-              <li>
-                <HeaderSimpleButton>{lang.Teams}</HeaderSimpleButton>
-              </li>
-              <li>
-                <HeaderSimpleButton>{lang.Resources}</HeaderSimpleButton>
-              </li>
-              <li>
-                <HeaderSimpleButton>{lang.Internships}</HeaderSimpleButton>
-              </li>
-              <li>
-                <HeaderSimpleButton>{lang.CoFounders}</HeaderSimpleButton>
-              </li>
-            </ul>
-            <div className="text-white">
-              <Logo />
-            </div>
-            <div className="flex justify-end items-center gap-4">
-              <SiteSearch />
-              <CreateCompanyButton />
-              <ProfileButton />
-            </div>
-          </div>
-        </div>
-        {/* Dark header END */}
-
-        {/* Text Carousel */}
-        <div className="border-b-1.5 py-4">
-          <TextCarousel>
-            <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
-              {categories.map(category => (
-                <li key={category._id}>
-                  <AnimatedLink href={`/categories/${category._id}`}>
-                    {category.name}
-                  </AnimatedLink>
-                </li>
-              ))}
-            </ul>
-          </TextCarousel>
-        </div>
-        {/* Text Carousel END */}
-      </header>
-      {/* Header END */}
-
-      {/* Contents */}
+      <Header categories={categories} />
       <main>{children}</main>
       {/* Contents END */}
 

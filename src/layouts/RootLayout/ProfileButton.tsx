@@ -4,6 +4,7 @@ import { selectAuthUser, selectLoaded, useAppSelector } from "../../store";
 import { API_URL } from "../../config";
 import { AnimatedLink } from "../../components";
 import type { FC } from "react";
+import { FaRegUser } from "react-icons/fa6";
 import React from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
@@ -21,10 +22,11 @@ const ProfileButton: FC = () => {
     >
       <AnimatedLink
         className="
-          rounded-lg border px-5 py-3
-          whitespace-nowrap text-white
-          hover:bg-white hover:text-black
-          transition
+          px-1 py-1 hover:text-gray-300 rounded-lg
+          whitespace-nowrap text-white transition
+          sm:px-2 sm:py-2
+          xl:border xl:px-5 xl:py-3
+          xl:hover:bg-white xl:hover:text-black
         "
         href={
           authUser
@@ -32,10 +34,13 @@ const ProfileButton: FC = () => {
             : `${API_URL}auth/login?successReturnUrl=/profile`
         }
       >
-        <div>{text}</div>
-        <div className="h-0 overflow-hidden">
-          <div>{lang.Profile}</div>
-          <div>{lang.LogIn}</div>
+        <FaRegUser className="text-xl xl:hidden" />
+        <div className="hidden xl:block">
+          <div>{text}</div>
+          <div className="h-0 overflow-hidden">
+            <div>{lang.Profile}</div>
+            <div>{lang.LogIn}</div>
+          </div>
         </div>
       </AnimatedLink>
     </Container>

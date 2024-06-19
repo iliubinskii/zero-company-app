@@ -17,6 +17,6 @@ const Logo: FC<
 
 export default Logo;
 
-const Text = tw.h1`text-[1.5rem] sm:text-[2rem] pt-2 whitespace-nowrap`;
+const Text = tw.h1`text-[1.5rem] pt-2 whitespace-nowrap xl:text-[2rem]`;
 
 const yanone = Yanone_Kaffeesatz({ subsets: ["latin"], weight: "400" });

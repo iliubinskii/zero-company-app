@@ -54,6 +54,7 @@ const config = {
       },
       gridTemplateColumns: {
         "header-grid-container": "1fr auto 1fr",
+        "header-grid-container-lg": "auto 1fr",
         "main-grid-container": "1fr auto"
       },
       height: {
@@ -64,6 +65,9 @@ const config = {
       },
       transitionProperty: {
         width: "width"
+      },
+      transitionTimingFunction: {
+        'custom-bezier': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       },
       width: {
         "aspect-ratio-16/9": `${0.01 * 1600}rem`

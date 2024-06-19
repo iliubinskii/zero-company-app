@@ -10,9 +10,10 @@ const CreateCompanyButton: FC = () => {
   return (
     <AnimatedLink
       className={`
-        rounded-lg px-4 py-3 bg-green-primary
+        px-2 py-2 rounded-lg xl:px-4 xl:py-3 
+        text-sm xl:text-base
         whitespace-nowrap text-white
-        hover:bg-green-secondary
+        hover:text-charcoal hover:bg-white
         transition
       `}
       href="/create-company"
@@ -21,7 +22,7 @@ const CreateCompanyButton: FC = () => {
       }}
     >
       {lang.StartCompany2[0]}
-      <span className="hidden sm:inline">{lang.StartCompany2[1]}</span>
+      <span className="">{lang.StartCompany2[1]}</span>
     </AnimatedLink>
   );
 };
