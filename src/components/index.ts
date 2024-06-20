@@ -21,6 +21,7 @@ export { Navigate } from "./Navigate";
 export { NoContent } from "./NoContent";
 export { ProgressBar } from "./ProgressBar";
 export { SafeImage } from "./SafeImage";
+export { ScrollView } from "./ScrollView";
 export { Snackbar } from "./Snackbar";
 export { TextCarousel } from "./TextCarousel";
 export { ZeroCoin } from "./ZeroCoin";

@@ -26,6 +26,8 @@ export async function generateStaticParams(): Promise<unknown[]> {
 const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
 
+  // eslint-disable-next-line no-warning-comments -- Assigned
+  // TODO: Move to Promise.all
   const categories = await getCategoriesSrv();
 
   const [category, companies] = await Promise.all([

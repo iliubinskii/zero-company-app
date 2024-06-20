@@ -147,6 +147,7 @@ const config = {
             "redux",
             "req",
             "resize",
+            "revalidate",
             "roboto",
             "rofr",
             "safelist",

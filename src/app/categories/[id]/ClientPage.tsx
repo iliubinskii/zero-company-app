@@ -58,7 +58,6 @@ export const ClientPage: FC<Props> = ({
           setNextCursor(response.nextCursor);
         }
       } catch (err) {
-        setAutoMode(false);
         logger.error(err);
       } finally {
         setLoading(false);
