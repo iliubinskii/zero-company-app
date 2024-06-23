@@ -18,7 +18,8 @@ const config = {
   globalTeardown: "./jest.global-teardown.ts",
   preset: "ts-jest",
   setupFilesAfterEnv: ["jest-extended/all", "./jest.setup-after-env.ts"],
-  testEnvironment: "jsdom"
+  testEnvironment: "jsdom",
+  testPathIgnorePatterns: ["/dist/", "/node_modules/", "/tests/"]
 };
 
 export default createJestConfig(config);
