@@ -2,11 +2,7 @@
  * @type {import("eslint").Linter.Config }
  */
 const config = {
-  env: {
-    browser: true,
-    es2020: true,
-    jest: true
-  },
+  env: { browser: true, es2020: true },
   extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
   globals: {},
   ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
@@ -22,6 +18,12 @@ const config = {
       rules: {
         "no-magic-numbers": "off",
         "typescript-sort-keys/interface": "off"
+      }
+    },
+    {
+      files: ["./tests/**", "./utils/**"],
+      rules: {
+        "node/no-unpublished-import": "off"
       }
     }
   ],
@@ -39,6 +41,7 @@ const config = {
         allow:
           // @sort
           [
+            "@testing-library/jest-dom/matchers",
             "flowbite/plugin",
             "next/*",
             "next/font/*",
@@ -113,6 +116,7 @@ const config = {
             "flowbite",
             "foreach",
             "globals",
+            "goto",
             "gravatar",
             "hoverable",
             "href",
@@ -128,6 +132,7 @@ const config = {
             "lang",
             "langs",
             "latin",
+            "matchers",
             "mjs",
             "nda",
             "neue",
@@ -171,6 +176,7 @@ const config = {
             "textarea",
             "tsconfig",
             "tsx",
+            "undef",
             "unobserve",
             "uri",
             "urls",
