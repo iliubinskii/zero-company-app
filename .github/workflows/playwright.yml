@@ -9,7 +9,14 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: preview
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
     steps:
+    - name: Output BASE_URL
+      run: |
+        echo "CI is $CI"
+        echo "BASE_URL is $BASE_URL"
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
