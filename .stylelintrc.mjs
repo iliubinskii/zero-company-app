@@ -16,8 +16,9 @@ const config = {
     "csstools/value-no-unknown-custom-properties": true,
     "plugin/no-unsupported-browser-features": [
       true,
-      { ignore: ["css-nesting"] }
-    ]
+      { ignore: ["css-nesting", "css-appearance", "css-overflow"] },
+    ],
+    "property-no-vendor-prefix": null,
   }
 };
 

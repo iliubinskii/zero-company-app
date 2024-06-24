@@ -6,7 +6,7 @@ export const HeaderSimpleButton: FC<HTMLAttributes<HTMLButtonElement>> = ({
   ...props
 }) => (
   <button
-    className="text-sm xl:text-base text-white hover:text-gray-300 transition-colors duration-150 py-1 px-2 rounded-lg"
+    className="text-base text-white hover:text-gray-300 transition-colors duration-150 py-1 rounded-lg"
     type="button"
     {...props}
   >

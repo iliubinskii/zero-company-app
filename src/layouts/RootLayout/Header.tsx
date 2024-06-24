@@ -2,107 +2,62 @@
 
 import {
   AnimatedLink,
+  Hamburger,
   HeaderSimpleButton,
   TextCarousel
 } from "../../components";
+import { useClickOutside, useEscapePress } from "../../hooks";
 import CreateCompanyButton from "./CreateCompanyButton";
 import type { ExistingCategory } from "../../schema";
 import type { FC } from "react";
 import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SiteSearch from "./SiteSearch";
 import { lang } from "../../langs";
-import styles from "./styles.module.css";
-
-/* eslint-disable spellcheck/spell-checker -- Ok */
+import tw from "tailwind-styled-components";
 
 const Header: FC<Props> = ({ categories }) => {
-  const [burgerClass, setBurgerClass] = useState(
-    `${styles["hamburger-bar"]} ${styles["unclicked"]}`
-  );
-  const [menuClass, setMenuClass] = useState(`${styles["menu"]} `);
-
-  const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
+  const hamburgerRef = useRef<HTMLDivElement>(null);
 
-  const updateMenu = (): void => {
-    if (isMenuClicked) {
-      setBurgerClass(`${styles["hamburger-bar"]} ${styles["unclicked"]}`);
-      setMenuClass(`${styles["menu"]} `);
-    } else {
-      setBurgerClass(`${styles["hamburger-bar"]} ${styles["clicked"]}`);
-      setMenuClass(`${styles["menu"]}  ${styles["clicked"]}`);
-    }
-    setIsMenuClicked(prevState => !prevState);
+  const closeMenu = (): void => {
+    setIsMenuOpened(false);
   };
-  const closeMenu = useCallback((): void => {
-    setBurgerClass(`${styles["hamburger-bar"]} ${styles["unclicked"]}`);
-    setMenuClass(`${styles["menu"]}`);
-    setIsMenuClicked(false);
-  }, []);
 
-  const handleClickOutside = useCallback(
-    (event: MouseEvent): void => {
-      const target = event.target;
-      if (
-        menuRef.current &&
-        target instanceof Node &&
-        !menuRef.current.contains(target)
-      )
-        closeMenu();
-    },
-    [closeMenu]
-  );
+  useClickOutside([menuRef, hamburgerRef], closeMenu);
+  useEscapePress(closeMenu);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickOutside]);
+    if (isMenuOpened) document.body.classList.add("no-scroll");
+    else document.body.classList.remove("no-scroll");
+  }, [isMenuOpened]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === "Escape") closeMenu();
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [closeMenu]);
   return (
     <header>
       {/* Dark header */}
-      <div className="w-full bg-charcoal p-4">
+      <HeaderMainLinksContainer>
         <div
           className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg gap-4 items-center relative z-30
              lg:justify-between lg:grid-cols-header-grid-container"
         >
-          <div className="flex gap-5">
-            <ul className="flex gap-2 justify-start items-center">
-              <li
-                className="h-5 w-7 flex justify-between items-start flex-col cursor-pointer lg:hidden"
-                onClick={updateMenu}
-              >
-                <div className={burgerClass} />
-                <div className={burgerClass} />
-                <div className={burgerClass} />
-              </li>
-              <li className={styles["small-screen-hidden"]}>
-                <HeaderSimpleButton>{lang.Teams}</HeaderSimpleButton>
-              </li>
-              <li className={styles["small-screen-hidden"]}>
-                <HeaderSimpleButton>{lang.Resources}</HeaderSimpleButton>
-              </li>
-              <li className={styles["small-screen-hidden"]}>
-                <HeaderSimpleButton>{lang.Internships}</HeaderSimpleButton>
-              </li>
-              <li className={styles["small-screen-hidden"]}>
-                <HeaderSimpleButton>{lang.CoFounders}</HeaderSimpleButton>
-              </li>
+          <div className="flex gap-5 items-center">
+            <div
+              onClick={() => {
+                setIsMenuOpened(!isMenuOpened);
+              }}
+              ref={hamburgerRef}
+            >
+              <Hamburger isOpened={isMenuOpened} />
+            </div>
+            <ul className="gap-3 justify-start items-center hidden lg:flex">
+              {mainLinks.map((el, ind) => (
+                <li key={ind}>
+                  <HeaderSimpleButton>{el}</HeaderSimpleButton>
+                </li>
+              ))}
             </ul>
             <div className="text-white lg:hidden">
               <Logo />
@@ -111,30 +66,31 @@ const Header: FC<Props> = ({ categories }) => {
           <div className="text-white hidden lg:block">
             <Logo />
           </div>
-          <div className="flex justify-end items-center gap-2 xl:gap-4">
+          <div className="flex justify-end items-center gap-5 sm:gap-3 xl:gap-4">
             <SiteSearch className="hidden sm:flex justify-end" />
             <CreateCompanyButton />
             <ProfileButton />
           </div>
         </div>
-      </div>
-      <ul className={menuClass} ref={menuRef}>
-        <li onClick={closeMenu}>
-          <HeaderSimpleButton>{lang.Teams}</HeaderSimpleButton>
-        </li>
-        <li onClick={closeMenu}>
-          <HeaderSimpleButton>{lang.Resources}</HeaderSimpleButton>
-        </li>
-        <li onClick={closeMenu}>
-          <HeaderSimpleButton>{lang.Internships}</HeaderSimpleButton>
-        </li>
-        <li onClick={closeMenu}>
-          <HeaderSimpleButton>{lang.CoFounders}</HeaderSimpleButton>
-        </li>
+      </HeaderMainLinksContainer>
+      <ul
+        className={`${smallMenu} ${isMenuOpened ? "left-0" : "-left-[600px]"}`}
+        ref={menuRef}
+      >
+        {mainLinks.map((el, ind) => (
+          <li
+            key={ind}
+            onClick={() => {
+              setIsMenuOpened(!isMenuOpened);
+            }}
+          >
+            <HeaderSimpleButton>{el}</HeaderSimpleButton>
+          </li>
+        ))}
       </ul>
       {/* Dark header END */}
       <div className="px-4 pt-4 sm:hidden">
-        <SiteSearch className="border rounded-lg pl-2" />
+        <SiteSearch className="pl-2" themeColor="light" />
       </div>
       {/* Text Carousel */}
       <div className="border-b-1.5 py-4 px-2">
@@ -160,3 +116,16 @@ export default Header;
 export interface Props {
   readonly categories: readonly ExistingCategory[];
 }
+
+const mainLinks: string[] = [
+  lang.Teams,
+  lang.Resources,
+  lang.Internships,
+  lang.CoFounders
+];
+const smallMenu =
+  "flex flex-col gap-6 h-screen w-56 bg-charcoal " +
+  "bg-opacity-90 fixed top-0 text-white " +
+  "px-8 pb-8 pt-28 text-base z-20 transition-left ease-out duration-500 lg:hidden";
+
+const HeaderMainLinksContainer = tw.div`w-full bg-charcoal p-4`;

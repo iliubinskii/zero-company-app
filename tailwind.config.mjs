@@ -67,7 +67,8 @@ const config = {
         "1/3": "33.333333%"
       },
       transitionProperty: {
-        width: "width"
+        width: "width",
+        left: "left"
       },
       transitionTimingFunction: {
         'custom-bezier': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
