@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO Add proper JSDoc, use CoPilot
 /**
  *
  * @param handler is a function

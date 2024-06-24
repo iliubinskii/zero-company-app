@@ -16,9 +16,13 @@ const config = {
     "csstools/value-no-unknown-custom-properties": true,
     "plugin/no-unsupported-browser-features": [
       true,
-      { ignore: ["css-nesting", "css-appearance", "css-overflow"] },
+      {
+        ignore:
+          // @sorted
+          ["css-appearance", "css-nesting", "css-overflow"]
+      }
     ],
-    "property-no-vendor-prefix": null,
+    "property-no-vendor-prefix": null
   }
 };
 

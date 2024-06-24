@@ -67,11 +67,11 @@ const config = {
         "1/3": "33.333333%"
       },
       transitionProperty: {
-        width: "width",
-        left: "left"
+        left: "left",
+        width: "width"
       },
       transitionTimingFunction: {
-        'custom-bezier': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        "custom-bezier": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
       },
       width: {
         "aspect-ratio-16/9": `${0.01 * 1600}rem`

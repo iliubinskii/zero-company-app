@@ -21,6 +21,7 @@ const Header: FC<Props> = ({ categories }) => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
+
   const hamburgerRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = (): void => {
@@ -28,12 +29,16 @@ const Header: FC<Props> = ({ categories }) => {
   };
 
   useClickOutside([menuRef, hamburgerRef], closeMenu);
+
   useEscapePress(closeMenu);
 
   useEffect(() => {
     if (isMenuOpened) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
   }, [isMenuOpened]);
+
+  // eslint-disable-next-line no-warning-comments -- Assigned
+  // TODO: Use tw styled components
 
   return (
     <header>
@@ -73,6 +78,16 @@ const Header: FC<Props> = ({ categories }) => {
           </div>
         </div>
       </HeaderMainLinksContainer>
+      {/* Dark header END */}
+
+      {/* App drawer */}
+      {/* eslint-disable-next-line no-warning-comments -- Assigned */}
+      {/*
+        TODO:
+        Using fixed 600px value will cause delay before menu starts appearing
+        Maybe use same fixed size for drawer width and for left property
+        Or measure drawer width (in this case use `opacity-0 pointer-events-none` for hidden menu)
+      */}
       <ul
         className={`${smallMenu} ${isMenuOpened ? "left-0" : "-left-[600px]"}`}
         ref={menuRef}
@@ -88,10 +103,14 @@ const Header: FC<Props> = ({ categories }) => {
           </li>
         ))}
       </ul>
-      {/* Dark header END */}
+      {/* App drawer END */}
+
+      {/* Mobile site search */}
       <div className="px-4 pt-4 sm:hidden">
         <SiteSearch className="pl-2" themeColor="light" />
       </div>
+      {/* Mobile site search END */}
+
       {/* Text Carousel */}
       <div className="border-b-1.5 py-4 px-2">
         <TextCarousel>
@@ -123,6 +142,7 @@ const mainLinks: string[] = [
   lang.Internships,
   lang.CoFounders
 ];
+
 const smallMenu =
   "flex flex-col gap-6 h-screen w-56 bg-charcoal " +
   "bg-opacity-90 fixed top-0 text-white " +

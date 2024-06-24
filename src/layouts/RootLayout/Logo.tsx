@@ -6,6 +6,13 @@ import { images } from "../../images";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO:
+// Use tw styled component for img
+// Start sentence with a capital letter
+// Add space before *}
+// Remove redundant template literal {`${yanone.className} `}
+// alt="logo" - Move "logo" text to lang file, start with a capital letter
 const Logo: FC<
   Omit<ComponentProps<typeof AnimatedLink>, "className" | "href">
 > = props => (

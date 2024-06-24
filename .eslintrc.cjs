@@ -83,6 +83,7 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bezier",
             "bool",
             "borderless",
             "builtins",
