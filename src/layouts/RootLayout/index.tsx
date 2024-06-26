@@ -8,9 +8,9 @@ import { Logo } from "./Logo";
 import React from "react";
 import { lang } from "../../langs";
 
-export const RootLayout: FC<Props> = ({ categories, children }) => (
+export const RootLayout: FC<Props> = ({ children, pinnedCategories }) => (
   <div className="flex flex-col">
-    <Header categories={categories} />
+    <Header pinnedCategories={pinnedCategories} />
     <main>{children}</main>
     {/* Contents END */}
 
@@ -21,7 +21,7 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
           <h3 className="uppercase font-semibold mb-3 md:hidden">
             {lang.Explore}
           </h3>
-          {categories.map(category => (
+          {pinnedCategories.map(category => (
             <AnimatedLink
               className="inline-block whitespace-nowrap"
               href={`/categories/${category._id}`}
@@ -72,8 +72,8 @@ export const RootLayout: FC<Props> = ({ categories, children }) => (
 );
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
   readonly children: ReactNode;
+  readonly pinnedCategories: readonly ExistingCategory[];
 }
 
 const footerLinkGroups = [

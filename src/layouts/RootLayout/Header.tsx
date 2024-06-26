@@ -18,7 +18,7 @@ import { SiteSearchLightTheme } from "./SiteSearchLightTheme";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const Header: FC<Props> = ({ categories }) => {
+const Header: FC<Props> = ({ pinnedCategories }) => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -97,7 +97,7 @@ const Header: FC<Props> = ({ categories }) => {
       <TextCarouselContainer>
         <TextCarousel>
           <TextCarouselList>
-            {categories.map(category => (
+            {pinnedCategories.map(category => (
               <li key={category._id}>
                 <AnimatedLink href={`/categories/${category._id}`}>
                   {category.name}
@@ -115,7 +115,7 @@ const Header: FC<Props> = ({ categories }) => {
 export default Header;
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
+  readonly pinnedCategories: readonly ExistingCategory[];
 }
 
 const mainLinks: string[] = [
