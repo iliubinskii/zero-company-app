@@ -8,7 +8,6 @@
 .hamburger-bar.unclicked {
   @apply transform rotate-0 translate-x-0 translate-y-0 transition-all duration-500;
 
-  /* TODO: Use what is defined in transitionTimingFunction? */
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 

@@ -4,7 +4,7 @@ import type { FC, ReactNode } from "react";
 import { AnimatedLink } from "../../components";
 import type { ExistingCategory } from "../../schema";
 import Header from "./Header";
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 import React from "react";
 import { lang } from "../../langs";
 

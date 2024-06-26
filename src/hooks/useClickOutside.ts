@@ -3,16 +3,11 @@
 import type { RefObject } from "react";
 import { useEffect } from "react";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Add exclusion in .eslintrc.cjs instead
-/* eslint-disable spellcheck/spell-checker -- Ok */
-
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO Add proper JSDoc, use CoPilot, use hyphens on @param lines
 /**
- *
- * @param refs array of refs
- * @param handler function
+ * Custom hook that triggers a handler function when a click occurs outside
+ * any of the provided refs.
+ * @param refs - Array of refs to elements.
+ * @param handler - Function to be called when a click outside the refs is detected.
  */
 export function useClickOutside(
   refs: RefObject<HTMLElement>[],
@@ -20,15 +15,11 @@ export function useClickOutside(
 ): void {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
-      const isOutside = refs.every(ref => {
-        // eslint-disable-next-line no-warning-comments -- Assigned
-        // TODO: Use ternary operator
-        if (ref.current && event.target instanceof Node)
-          return !ref.current.contains(event.target);
-
-        return true;
-      });
-
+      const isOutside = refs.every(ref =>
+        ref.current && event.target instanceof Node
+          ? !ref.current.contains(event.target)
+          : true
+      );
       if (isOutside) handler();
     };
 

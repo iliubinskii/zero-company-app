@@ -2,11 +2,10 @@
 
 import { useEffect } from "react";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO Add proper JSDoc, use CoPilot
 /**
- *
- * @param handler is a function
+ * Custom hook that adds an event listener for the "Escape" key press.
+ * When the "Escape" key is pressed, the provided handler function is called.
+ * @param handler - A function to be called when the "Escape" key is pressed.
  */
 export function useEscapePress(handler: () => void): void {
   useEffect(() => {

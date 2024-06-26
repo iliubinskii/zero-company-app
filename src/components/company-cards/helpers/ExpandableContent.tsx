@@ -1,5 +1,5 @@
 import type { ExistingCategory, ExistingCompany } from "../../../schema";
-import { BadgeButton } from "../../buttons/BadgeButton";
+import { BadgeButton } from "../../buttons";
 import type { FC } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 import React from "react";

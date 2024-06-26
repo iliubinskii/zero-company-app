@@ -10,10 +10,11 @@ import { useClickOutside, useEscapePress } from "../../hooks";
 import CreateCompanyButton from "./CreateCompanyButton";
 import type { ExistingCategory } from "../../schema";
 import type { FC } from "react";
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 import ProfileButton from "./ProfileButton";
 import React, { useEffect, useRef, useState } from "react";
-import SiteSearch from "./SiteSearch";
+import { SiteSearchDarkTheme } from "./SiteSearchDarkTheme";
+import { SiteSearchLightTheme } from "./SiteSearchLightTheme";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
@@ -36,62 +37,45 @@ const Header: FC<Props> = ({ categories }) => {
     if (isMenuOpened) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
   }, [isMenuOpened]);
-
-  // eslint-disable-next-line no-warning-comments -- Assigned
-  // TODO: Use tw styled components
-
   return (
     <header>
       {/* Dark header */}
-      <HeaderMainLinksContainer>
-        <div
-          className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg gap-4 items-center relative z-30
-             lg:justify-between lg:grid-cols-header-grid-container"
-        >
-          <div className="flex gap-5 items-center">
+      <MainHeader>
+        <MainHeaderGridContainer>
+          <LinksContainer>
             <div
               onClick={() => {
                 setIsMenuOpened(!isMenuOpened);
               }}
               ref={hamburgerRef}
             >
-              <Hamburger isOpened={isMenuOpened} />
+              <Hamburger isOpened={isMenuOpened} onClick={setIsMenuOpened} />
             </div>
-            <ul className="gap-3 justify-start items-center hidden lg:flex">
+            <LinksList>
               {mainLinks.map((el, ind) => (
                 <li key={ind}>
                   <HeaderSimpleButton>{el}</HeaderSimpleButton>
                 </li>
               ))}
-            </ul>
-            <div className="text-white lg:hidden">
+            </LinksList>
+            <LogoContainerSmallScreen>
               <Logo />
-            </div>
-          </div>
-          <div className="text-white hidden lg:block">
+            </LogoContainerSmallScreen>
+          </LinksContainer>
+          <LogoContainerWideScreen>
             <Logo />
-          </div>
-          <div className="flex justify-end items-center gap-5 sm:gap-3 xl:gap-4">
-            <SiteSearch className="hidden sm:flex justify-end" />
+          </LogoContainerWideScreen>
+          <RightLinksContainer>
+            <SiteSearchDarkTheme />
             <CreateCompanyButton />
             <ProfileButton />
-          </div>
-        </div>
-      </HeaderMainLinksContainer>
+          </RightLinksContainer>
+        </MainHeaderGridContainer>
+      </MainHeader>
       {/* Dark header END */}
 
       {/* App drawer */}
-      {/* eslint-disable-next-line no-warning-comments -- Assigned */}
-      {/*
-        TODO:
-        Using fixed 600px value will cause delay before menu starts appearing
-        Maybe use same fixed size for drawer width and for left property
-        Or measure drawer width (in this case use `opacity-0 pointer-events-none` for hidden menu)
-      */}
-      <ul
-        className={`${smallMenu} ${isMenuOpened ? "left-0" : "-left-[600px]"}`}
-        ref={menuRef}
-      >
+      <AppDrawer className={isMenuOpened ? "left-0" : "-left-56"} ref={menuRef}>
         {mainLinks.map((el, ind) => (
           <li
             key={ind}
@@ -102,19 +86,19 @@ const Header: FC<Props> = ({ categories }) => {
             <HeaderSimpleButton>{el}</HeaderSimpleButton>
           </li>
         ))}
-      </ul>
+      </AppDrawer>
       {/* App drawer END */}
 
       {/* Mobile site search */}
-      <div className="px-4 pt-4 sm:hidden">
-        <SiteSearch className="pl-2" themeColor="light" />
+      <div className="px-4 pt-4 flex justify-center sm:hidden">
+        <SiteSearchLightTheme />
       </div>
       {/* Mobile site search END */}
 
       {/* Text Carousel */}
-      <div className="border-b-1.5 py-4 px-2">
+      <TextCarouselContainer>
         <TextCarousel>
-          <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
+          <TextCarouselList>
             {categories.map(category => (
               <li key={category._id}>
                 <AnimatedLink href={`/categories/${category._id}`}>
@@ -122,9 +106,9 @@ const Header: FC<Props> = ({ categories }) => {
                 </AnimatedLink>
               </li>
             ))}
-          </ul>
+          </TextCarouselList>
         </TextCarousel>
-      </div>
+      </TextCarouselContainer>
       {/* Text Carousel END */}
     </header>
   );
@@ -143,9 +127,31 @@ const mainLinks: string[] = [
   lang.CoFounders
 ];
 
-const smallMenu =
-  "flex flex-col gap-6 h-screen w-56 bg-charcoal " +
-  "bg-opacity-90 fixed top-0 text-white " +
-  "px-8 pb-8 pt-28 text-base z-20 transition-left ease-out duration-500 lg:hidden";
+const MainHeader = tw.div`w-full bg-charcoal p-4`;
 
-const HeaderMainLinksContainer = tw.div`w-full bg-charcoal p-4`;
+const MainHeaderGridContainer = tw.div`
+  mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg 
+  gap-4 items-center relative z-30
+  lg:justify-between 
+  lg:grid-cols-header-grid-container
+`;
+
+const LinksContainer = tw.div`flex gap-5 items-center`;
+
+const LinksList = tw.ul`gap-3 justify-start items-center hidden lg:flex`;
+
+const LogoContainerSmallScreen = tw.div`text-white lg:hidden`;
+
+const LogoContainerWideScreen = tw.div`text-white hidden lg:block`;
+
+const RightLinksContainer = tw.div`flex justify-end items-center gap-5 sm:gap-3 xl:gap-4`;
+
+const AppDrawer = tw.ul`
+  flex flex-col gap-6 h-screen w-56 bg-charcoal 
+  bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20 transition-all ease-out duration-300 
+  lg:hidden
+`;
+
+const TextCarouselContainer = tw.div`border-b-1.5 py-4 px-2`;
+
+const TextCarouselList = tw.ul`font-medium flex gap-4 whitespace-nowrap mx-auto`;
