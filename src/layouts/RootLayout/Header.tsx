@@ -43,12 +43,7 @@ const Header: FC<Props> = ({ categories }) => {
       <MainHeader>
         <MainHeaderGridContainer>
           <LinksContainer>
-            <div
-              onClick={() => {
-                setIsMenuOpened(!isMenuOpened);
-              }}
-              ref={hamburgerRef}
-            >
+            <div ref={hamburgerRef}>
               <Hamburger isOpened={isMenuOpened} onClick={setIsMenuOpened} />
             </div>
             <LinksList>
