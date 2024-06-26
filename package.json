@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Zero Company App",
-  "keywords": [
-    "crowdworking"
-  ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/iliubinskii/zero-company-app"
@@ -42,6 +40,7 @@
     "prepare": "husky",
     "start": "next start -p 3100",
     "test": "jest --coverage",
+    "test-e2e": "playwright test",
     "type-check": "tsc --incremental false --noEmit"
   },
   "lint-staged": {
@@ -87,11 +86,14 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@next/eslint-plugin-next": "^14.2.3",
+    "@playwright/test": "^1.44.1",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@types/eslint": "^8.56.10",
     "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.8",
     "@types/stylelint": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
@@ -99,6 +101,7 @@
     "cross-env": "^7.0.3",
     "daisyui": "^4.11.1",
     "dotenv": "^16.4.5",
+    "envalid": "^8.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
