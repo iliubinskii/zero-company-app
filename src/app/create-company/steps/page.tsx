@@ -1,12 +1,12 @@
 import { ClientPage } from "./ClientPage";
 import type { NextPage } from "next";
 import React from "react";
-import { getCategoriesSrv } from "../../../server-cache";
+import { api } from "../../../api";
 
 const Page: NextPage = async () => {
-  const categories = await getCategoriesSrv();
+  const categories = await api.getCategoriesSrv();
 
-  return <ClientPage categories={categories} />;
+  return <ClientPage categories={categories.docs} />;
 };
 
 export default Page;
