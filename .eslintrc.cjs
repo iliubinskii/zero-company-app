@@ -69,7 +69,7 @@ const config = {
       "warn",
       {
         additionalHooks:
-          "^(useAsyncCallback|useAuthGuardedLoader|useClickOutside)$"
+          "^(useAsyncCallback|useAuthGuardedLoader|useClickOutside|useEscapePress)$"
       }
     ],
     "spellcheck/spell-checker": [
