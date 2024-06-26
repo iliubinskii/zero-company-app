@@ -26,9 +26,8 @@ export async function generateStaticParams(): Promise<unknown[]> {
 const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
 
-  const categories = await getCategoriesSrv();
-
-  const [category, companies] = await Promise.all([
+  const [categories, category, companies] = await Promise.all([
+    getCategoriesSrv(),
     api.getCategory(id),
     api.getCompaniesByCategory(id, {
       limit: COMPANY_LIMIT,
