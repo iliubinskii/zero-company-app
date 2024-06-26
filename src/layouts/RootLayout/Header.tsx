@@ -29,23 +29,26 @@ const Header: FC<Props> = ({ categories }) => {
     setIsMenuOpened(false);
   };
 
-  useClickOutside([menuRef, hamburgerRef], closeMenu);
+  useClickOutside(closeMenu, [], [menuRef, hamburgerRef]);
 
-  useEscapePress(closeMenu);
+  useEscapePress(closeMenu, []);
 
   useEffect(() => {
     if (isMenuOpened) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
   }, [isMenuOpened]);
+
   return (
     <header>
       {/* Dark header */}
       <MainHeader>
         <MainHeaderGridContainer>
           <LinksContainer>
-            <div ref={hamburgerRef}>
-              <Hamburger isOpened={isMenuOpened} onClick={setIsMenuOpened} />
-            </div>
+            <Hamburger
+              isOpened={isMenuOpened}
+              onClick={setIsMenuOpened}
+              ref={hamburgerRef}
+            />
             <LinksList>
               {mainLinks.map((el, ind) => (
                 <li key={ind}>
@@ -85,9 +88,9 @@ const Header: FC<Props> = ({ categories }) => {
       {/* App drawer END */}
 
       {/* Mobile site search */}
-      <div className="px-4 pt-4 flex justify-center sm:hidden">
+      <MobileSiteSearchContainer>
         <SiteSearchLightTheme />
-      </div>
+      </MobileSiteSearchContainer>
       {/* Mobile site search END */}
 
       {/* Text Carousel */}
@@ -125,9 +128,9 @@ const mainLinks: string[] = [
 const MainHeader = tw.div`w-full bg-charcoal p-4`;
 
 const MainHeaderGridContainer = tw.div`
-  mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg 
+  mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg
   gap-4 items-center relative z-30
-  lg:justify-between 
+  lg:justify-between
   lg:grid-cols-header-grid-container
 `;
 
@@ -142,10 +145,12 @@ const LogoContainerWideScreen = tw.div`text-white hidden lg:block`;
 const RightLinksContainer = tw.div`flex justify-end items-center gap-5 sm:gap-3 xl:gap-4`;
 
 const AppDrawer = tw.ul`
-  flex flex-col gap-6 h-screen w-56 bg-charcoal 
-  bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20 transition-all ease-out duration-300 
+  flex flex-col gap-6 h-screen w-56 bg-charcoal
+  bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20 transition-all ease-out duration-300
   lg:hidden
 `;
+
+const MobileSiteSearchContainer = tw.div`px-4 pt-4 flex justify-center sm:hidden`;
 
 const TextCarouselContainer = tw.div`border-b-1.5 py-4 px-2`;
 

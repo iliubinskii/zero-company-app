@@ -8,7 +8,7 @@ export const SiteSearchDarkTheme: FC = () => {
   const [searchInput, setSearchInput] = useState("");
 
   return (
-    <SearchInputContainer>
+    <Container>
       <SearchIconContainer>
         <IoSearch className="w-6 h-6" />
       </SearchIconContainer>
@@ -29,11 +29,11 @@ export const SiteSearchDarkTheme: FC = () => {
           <IoClose className="w-6 h-6" />
         </CloseIconContainer>
       )}
-    </SearchInputContainer>
+    </Container>
   );
 };
 
-const SearchInputContainer = tw.div`relative w-full items-center hidden sm:flex justify-end`;
+const Container = tw.div`relative w-full items-center hidden sm:flex justify-end`;
 
 const SearchIconContainer = tw.div`text-white z-10 mt-[2px] -mr-9 xl:-mr-10 xl:mt-1`;
 

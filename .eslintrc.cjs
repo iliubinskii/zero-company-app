@@ -64,7 +64,10 @@ const config = {
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
-      { additionalHooks: "^(useAsyncCallback|useAuthGuardedLoader)$" }
+      {
+        additionalHooks:
+          "^(useAsyncCallback|useAuthGuardedLoader|useClickOutside)$"
+      }
     ],
     "spellcheck/spell-checker": [
       "warn",

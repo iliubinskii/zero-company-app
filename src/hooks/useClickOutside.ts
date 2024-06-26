@@ -1,26 +1,37 @@
 "use client";
 
-import type { RefObject } from "react";
-import { useEffect } from "react";
+import type { DependencyList, RefObject } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 /**
- * Custom hook that triggers a handler function when a click occurs outside
- * any of the provided refs.
- * @param refs - Array of refs to elements.
- * @param handler - Function to be called when a click outside the refs is detected.
+ * Custom hook that adds an event listener for clicks outside of the provided elements.
+ * @param handler - A function to be called when a click outside of the provided elements is detected.
+ * @param deps - Dependencies of the hook.
+ * @param elements - An array of React refs to the elements that should be ignored.
  */
 export function useClickOutside(
-  refs: RefObject<HTMLElement>[],
-  handler: () => void
+  handler: () => void,
+  deps: DependencyList,
+  elements: RefObject<HTMLElement>[]
 ): void {
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Ok
+  const memorizedElements = useMemo(() => elements, elements);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Ok
+  const memorizedHandler = useCallback(handler, deps);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
-      const isOutside = refs.every(ref =>
-        ref.current && event.target instanceof Node
-          ? !ref.current.contains(event.target)
-          : true
-      );
-      if (isOutside) handler();
+      const { target } = event;
+
+      const ignore =
+        target instanceof Node &&
+        memorizedElements.some(
+          ({ current: element }) =>
+            element && (target === element || element.contains(target))
+        );
+
+      if (!ignore) memorizedHandler();
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -28,5 +39,5 @@ export function useClickOutside(
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [refs, handler]);
+  }, [memorizedElements, memorizedHandler]);
 }
