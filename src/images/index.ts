@@ -45,6 +45,9 @@ export const images = {
   inOffice: {
     src: "/company-create-page-images/InOffice.webp"
   },
+  logoIcon: {
+    src: "/company-icon.png"
+  },
   noImage: {
     height: 900,
     src: "/no-image.webp",

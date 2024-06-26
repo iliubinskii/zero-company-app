@@ -57,6 +57,7 @@ const config = {
       },
       gridTemplateColumns: {
         "header-grid-container": "1fr auto 1fr",
+        "header-grid-container-lg": "auto 1fr",
         "main-grid-container": "1fr auto"
       },
       height: {
@@ -66,6 +67,7 @@ const config = {
         "1/3": "33.333333%"
       },
       transitionProperty: {
+        left: "left",
         width: "width"
       },
       width: {
