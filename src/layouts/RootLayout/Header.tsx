@@ -18,7 +18,7 @@ import { SiteSearchLightTheme } from "./SiteSearchLightTheme";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const Header: FC<Props> = ({ categories }) => {
+export const Header: FC<Props> = ({ categories }) => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -112,8 +112,6 @@ const Header: FC<Props> = ({ categories }) => {
   );
 };
 
-export default Header;
-
 export interface Props {
   readonly categories: readonly ExistingCategory[];
 }
@@ -125,7 +123,7 @@ const mainLinks: string[] = [
   lang.CoFounders
 ];
 
-const MainHeader = tw.div`w-full bg-charcoal p-4`;
+const MainHeader = tw.nav`w-full bg-charcoal p-4`;
 
 const MainHeaderGridContainer = tw.div`
   mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg
