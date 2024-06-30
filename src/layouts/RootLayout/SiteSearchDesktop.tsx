@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-export const SiteSearchLightTheme: FC = () => {
+export const SiteSearchDesktop: FC = () => {
   const [searchInput, setSearchInput] = useState("");
 
   return (
@@ -33,15 +33,16 @@ export const SiteSearchLightTheme: FC = () => {
   );
 };
 
-const Container = tw.div`relative w-full flex items-center `;
+const Container = tw.div`relative w-full items-center hidden sm:flex justify-end`;
 
-const SearchIconContainer = tw.div`absolute text-gray-700 z-10 mt-[2px] left-2.5`;
+const SearchIconContainer = tw.div`text-white z-10 mt-[2px] -mr-9 xl:-mr-10 xl:mt-1`;
 
-const CloseIconContainer = tw.div`absolute z-10 mt-[2px] right-2.5 cursor-pointer text-gray-700`;
+const CloseIconContainer = tw.div`absolute z-10 mt-[2px] right-2.5 cursor-pointer text-white hover:text-gray-300`;
 
 const SearchInput = tw.input`
   border rounded-lg pl-10 pr-3 py-3 text-base focus:outline-none
-  border-gray-400 w-full focus:border-gray-400
   focus:ring-2 focus:ring-transparent focus:w-full
+  border-white placeholder-white text-white bg-transparent
+  focus:border-white transition-all duration-300
   xl:pl-12 xl:py-3 sm:w-48 md:w-80 lg:w-48
 `;

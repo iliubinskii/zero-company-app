@@ -7,13 +7,20 @@ import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
 export const Footer: FC<Props> = ({ categories }) => (
-  <FooterContainer>
+  <footer className="bg-light-gray-cold w-full">
     <nav>
       {/* Footer categories */}
-      <FooterCategoriesWrapper>
-        <FooterCategoriesContainer>
-          <FooterCategoriesHeader>{lang.Explore}</FooterCategoriesHeader>
-          <ul>
+      <section className="border-t-1.5 border-gray-300">
+        <CategoriesContainer>
+          <h3 className="uppercase font-semibold pt-6 px-6 pb-2 md:hidden">
+            {lang.Explore}
+          </h3>
+          <ul
+            className="
+              px-6 md:px-12 py-6
+              flex flex-col md:flex-row flex-wrap gap-x-3 gap-y-2 text-sm
+            "
+          >
             {categories.map(category => (
               <li key={category._id}>
                 <AnimatedLink
@@ -25,46 +32,46 @@ export const Footer: FC<Props> = ({ categories }) => (
               </li>
             ))}
           </ul>
-        </FooterCategoriesContainer>
-      </FooterCategoriesWrapper>
+        </CategoriesContainer>
+      </section>
       {/* Footer categories END */}
 
       {/* Footer link groups */}
-      <FooterLinksWrapper>
-        <FooterLinksContainer>
+      <section className="border-t-1.5 p-6">
+        <LinksContainer>
           {footerLinkGroups.map(({ links, title }, key) => (
-            <FooterLinksColumn key={key}>
-              <FooterLinksHeader>{title}</FooterLinksHeader>
-              <FooterLinksList>
+            <LinksColumn key={key}>
+              <h3 className="uppercase font-bold">{title}</h3>
+              <ul className="flex flex-col gap-2 text-sm text-gray-700">
                 {links.map(({ href, text }) => (
                   <li key={href}>
                     <AnimatedLink
-                      className="hover:underline hover:text-green-primary underline-offset-2"
+                      className="leading-4 hover:underline hover:text-green-primary underline-offset-2"
                       href={href}
                     >
                       {text}
                     </AnimatedLink>
                   </li>
                 ))}
-              </FooterLinksList>
-            </FooterLinksColumn>
+              </ul>
+            </LinksColumn>
           ))}
-        </FooterLinksContainer>
-      </FooterLinksWrapper>
+        </LinksContainer>
+      </section>
       {/* Footer link groups END */}
       {/* Footer Logo */}
       <section>
         <AnimatedLink href="/">
-          <FooterLogoContainer>
-            <FooterLogoIcon alt={lang.Logo} src={images.logoIcon.src} />
-            <FooterLogoHeader>ZERO COMPANY &#169; 2024</FooterLogoHeader>
-          </FooterLogoContainer>
+          <LogoContainer>
+            <LogoIcon alt={lang.Logo} src={images.logoIcon.src} />
+            <LogoHeader>ZERO COMPANY &#169; 2024</LogoHeader>
+          </LogoContainer>
         </AnimatedLink>
       </section>
       {/* Footer Logo ends */}
-      {/* Footer links */}
-      <FooterPolicyLinksWrapper>
-        <FooterPolicyLinksList>
+      {/* Policies */}
+      <section className="border-t-1.5 px-4 py-7">
+        <ul className="mx-auto max-w-screen-2xl px-4 flex justify-center flex-wrap gap-4 md:gap-10 text-sm text-gray-700">
           {footerLinks.map(({ href, text }) => (
             <li key={href}>
               <AnimatedLink
@@ -75,45 +82,25 @@ export const Footer: FC<Props> = ({ categories }) => (
               </AnimatedLink>
             </li>
           ))}
-        </FooterPolicyLinksList>
-      </FooterPolicyLinksWrapper>
-      {/* Footer links END */}
+        </ul>
+      </section>
+      {/* Policies END */}
     </nav>
-  </FooterContainer>
+  </footer>
 );
 
-const FooterContainer = tw.footer`bg-light-gray-cold w-full`;
+const CategoriesContainer = tw.div`mx-auto max-w-screen-2xl`;
 
-const FooterCategoriesWrapper = tw.section`border-t-1.5 border-gray-300`;
+const LinksContainer = tw.div`
+  mx-auto max-w-screen-2xl grid grid-cols-3 gap-4 pt-2 md:px-8 lg:px-40`;
 
-const FooterCategoriesContainer = tw.div`
-  mx-auto max-w-screen-2xl px-6 md:px-12 py-5 flex 
-  flex-col md:flex-row flex-wrap gap-x-3 gap-y-1 text-sm
-`;
+const LinksColumn = tw.div`flex flex-col gap-6`;
 
-const FooterCategoriesHeader = tw.h3`uppercase font-semibold mb-3 md:hidden`;
+const LogoContainer = tw.div`mx-auto max-w-screen-2xl flex gap-2 items-center p-6`;
 
-const FooterLinksWrapper = tw.section`border-t-1.5 p-4`;
+const LogoIcon = tw.img`w-6 h-6 bg-white rounded-full`;
 
-const FooterLinksContainer = tw.div`
-  mx-auto max-w-screen-2xl flex justify-between gap-2 px-2 md:px-8 lg:px-40`;
-
-const FooterLinksColumn = tw.div`flex flex-col gap-4`;
-
-const FooterLinksHeader = tw.h3`uppercase font-bold`;
-
-const FooterLinksList = tw.ul`flex flex-col gap-1 text-sm text-gray-700`;
-
-const FooterLogoContainer = tw.div`mx-auto max-w-screen-2xl flex gap-2 items-center py-2 px-6`;
-
-const FooterLogoIcon = tw.img`w-6 h-6 bg-white rounded-full`;
-
-const FooterLogoHeader = tw.h3`text-sm text-charcoal tracking-tighter`;
-
-const FooterPolicyLinksWrapper = tw.section`border-t-1.5 px-4 py-7`;
-
-const FooterPolicyLinksList = tw.ul`
-  mx-auto max-w-screen-2xl px-4 flex justify-center flex-wrap gap-4 md:gap-10 text-sm text-gray-700`;
+const LogoHeader = tw.h3`text-sm text-charcoal tracking-tighter`;
 
 export interface Props {
   readonly categories: readonly ExistingCategory[];
