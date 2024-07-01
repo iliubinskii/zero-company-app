@@ -6,7 +6,7 @@ import type { ReactElement, ReactNode } from "react";
 import { ReduxPersistor, ReduxStoreProvider } from "../store";
 import React, { Suspense } from "react";
 import { RootLayout } from "../layouts";
-import { getCategoriesSrv } from "../server-cache";
+import { api } from "../api";
 import { lang } from "../langs";
 
 /**
@@ -16,7 +16,7 @@ import { lang } from "../langs";
  * @returns The root layout.
  */
 export default async function App({ children }: Props): Promise<ReactElement> {
-  const categories = await getCategoriesSrv();
+  const pinnedCategories = await api.getCategoriesSrv({ onlyPinned: true });
 
   return (
     <html lang="en">
@@ -35,7 +35,9 @@ export default async function App({ children }: Props): Promise<ReactElement> {
               <Suspense>
                 <ReduxPersistor />
               </Suspense>
-              <RootLayout categories={categories}>{children}</RootLayout>
+              <RootLayout pinnedCategories={pinnedCategories.docs}>
+                {children}
+              </RootLayout>
             </SnackbarProvider>
           </ReduxStoreProvider>
         </AppLoadingProvider>

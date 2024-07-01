@@ -10,7 +10,7 @@ export const ZeroCoin: FC<Props> = ({ amount, ...props }) => (
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 17.2 20.8"
     >
-      <g transform={"translate(-31,-30)"}>
+      <g transform="translate(-31,-30)">
         <path
           d="
             M41.04,31.07c-2.95,0-5.23,2.16-6.01,6.17h-2.98v1.74h2.75c-0.04,0.48-0.06,0.98-0.06,1.51c0.01,0.39,0.02,0.79,0.04,1.15

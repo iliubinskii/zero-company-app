@@ -26,7 +26,7 @@ export async function deleteReq<T extends SchemaItem = never>(
 > {
   const url = `${API_URL}${endpoint}`;
 
-  if (logQuery) logger.info(`GET: ${url}`);
+  if (logQuery) logger.info(`GET ${url}`);
 
   const response = await fetch(url, {
     credentials: "include",
@@ -58,7 +58,7 @@ export async function getReq<T extends SchemaItem = never>(
 
   const url = `${API_URL}${endpoint}${queryStr}`;
 
-  if (logQuery) logger.info(`GET: ${url}`);
+  if (logQuery) logger.info(`GET ${url}`);
 
   const response = await fetch(url, { credentials: "include" });
 
@@ -85,7 +85,7 @@ export async function postReq<T extends SchemaItem = never>(
 > {
   const url = `${API_URL}${endpoint}`;
 
-  if (logQuery) logger.info(`GET: ${url}`);
+  if (logQuery) logger.info(`GET ${url}`);
 
   const init: RequestInit =
     body instanceof FormData
@@ -122,7 +122,7 @@ export async function putReq<T extends SchemaItem = never>(
 ): Promise<SchemaResponse<T> | ErrorResponse<ErrorCode>> {
   const url = `${API_URL}${endpoint}`;
 
-  if (logQuery) logger.info(`GET: ${url}`);
+  if (logQuery) logger.info(`GET ${url}`);
 
   const init: RequestInit =
     body instanceof FormData
