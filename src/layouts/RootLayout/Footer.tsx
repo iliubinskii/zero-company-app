@@ -36,7 +36,7 @@ export const Footer: FC<Props> = ({ pinnedCategories: categories }) => (
       </section>
       {/* Categories END */}
 
-      {/* Link groups */}
+      {/* Links */}
       <section className="border-t-1.5 p-6">
         <LinksContainer>
           {footerLinkGroups.map(({ links, title }, key) => (
@@ -58,14 +58,20 @@ export const Footer: FC<Props> = ({ pinnedCategories: categories }) => (
           ))}
         </LinksContainer>
       </section>
-      {/* Link groups END */}
+      {/* Links END */}
 
       {/* Logo */}
       <section>
         <AnimatedLink href="/">
           <LogoContainer>
-            <LogoIcon alt={lang.Logo} src={images.logoIcon.src} />
-            <LogoHeader>ZERO COMPANY &#169; 2024</LogoHeader>
+            <img
+              alt={lang.Logo}
+              className="w-6 h-6 bg-white rounded-full"
+              src={images.logoIcon.src}
+            />
+            <h3 className="text-sm text-charcoal tracking-tighter">
+              ZERO COMPANY &#169; 2024
+            </h3>
           </LogoContainer>
         </AnimatedLink>
       </section>
@@ -102,10 +108,6 @@ const LinksContainer = tw.div`
 const LinksColumn = tw.div`flex flex-col gap-6`;
 
 const LogoContainer = tw.div`mx-auto max-w-screen-2xl flex gap-2 items-center p-6`;
-
-const LogoIcon = tw.img`w-6 h-6 bg-white rounded-full`;
-
-const LogoHeader = tw.h3`text-sm text-charcoal tracking-tighter`;
 
 export interface Props {
   readonly pinnedCategories: readonly ExistingCategory[];

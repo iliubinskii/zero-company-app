@@ -36,13 +36,17 @@ export const Header: FC<Props> = ({ pinnedCategories }) => {
   useEffect(() => {
     if (isMenuOpened) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
   }, [isMenuOpened]);
 
   return (
     <header>
-      {/* Dark header */}
       <nav>
-        <MainHeader>
+        {/* Main header */}
+        <section className="w-full bg-charcoal p-4">
           <GridContainer>
             <LinksContainer>
               <Hamburger
@@ -67,39 +71,42 @@ export const Header: FC<Props> = ({ pinnedCategories }) => {
               <ProfileButton />
             </ButtonsContainer>
           </GridContainer>
-        </MainHeader>
-        {/* Dark header END */}
+        </section>
+        {/* Main header END */}
 
         {/* App drawer */}
-        <ul
+        <aside
           className={`
-            flex flex-col gap-6 h-screen w-56 bg-charcoal
+            h-screen w-56 bg-charcoal
             bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20
             transition-all ease-out duration-300
-            lg:hidden ${isMenuOpened ? "left-0" : "-left-56"}
+            lg:hidden
+            ${isMenuOpened ? "left-0" : "-left-56"}
           `}
           ref={menuRef}
         >
-          {mainLinks.map((el, ind) => (
-            <li
-              key={ind}
-              onClick={() => {
-                setIsMenuOpened(!isMenuOpened);
-              }}
-            >
-              <HeaderSimpleButton>{el}</HeaderSimpleButton>
-            </li>
-          ))}
-        </ul>
+          <ul className="flex flex-col gap-6">
+            {mainLinks.map((el, ind) => (
+              <li
+                key={ind}
+                onClick={() => {
+                  setIsMenuOpened(!isMenuOpened);
+                }}
+              >
+                <HeaderSimpleButton>{el}</HeaderSimpleButton>
+              </li>
+            ))}
+          </ul>
+        </aside>
         {/* App drawer END */}
 
-        {/* Mobile site search */}
-        <MobileSearchContainer>
+        {/* Site search row for thin screens */}
+        <section className="px-4 pt-4 flex justify-center sm:hidden">
           <SiteSearchMobile />
-        </MobileSearchContainer>
-        {/* Mobile site search END */}
+        </section>
+        {/* Site search row for thin screens END */}
 
-        {/* Text Carousel */}
+        {/* Categories row */}
         <section className="border-b-1.5 py-4 px-2">
           <TextCarousel>
             <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
@@ -113,7 +120,7 @@ export const Header: FC<Props> = ({ pinnedCategories }) => {
             </ul>
           </TextCarousel>
         </section>
-        {/* Text Carousel END */}
+        {/* Categories row END */}
       </nav>
     </header>
   );
@@ -130,8 +137,6 @@ const mainLinks: string[] = [
   lang.CoFounders
 ];
 
-const MainHeader = tw.div`w-full bg-charcoal p-4`;
-
 const GridContainer = tw.div`
   mx-auto max-w-screen-2xl
   flex
@@ -140,10 +145,9 @@ const GridContainer = tw.div`
   lg:justify-between
   lg:grid-cols-header-grid-container
 `;
+
 const LinksContainer = tw.div`flex gap-5 items-center`;
 
 const LogoContainer = tw.div`text-white`;
 
 const ButtonsContainer = tw.div`flex justify-end items-center gap-5 sm:gap-3 xl:gap-4 flex-grow`;
-
-const MobileSearchContainer = tw.div`px-4 pt-4 flex justify-center sm:hidden`;
