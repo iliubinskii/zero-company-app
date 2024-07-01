@@ -13,12 +13,12 @@ import type { FC } from "react";
 import { Logo } from "./Logo";
 import ProfileButton from "./ProfileButton";
 import React, { useEffect, useRef, useState } from "react";
-import { SiteSearchDarkTheme } from "./SiteSearchDarkTheme";
-import { SiteSearchLightTheme } from "./SiteSearchLightTheme";
+import { SiteSearchDesktop } from "./SiteSearchDesktop";
+import { SiteSearchMobile } from "./SiteSearchMobile";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-const Header: FC<Props> = ({ pinnedCategories }) => {
+export const Header: FC<Props> = ({ pinnedCategories }) => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -36,83 +36,95 @@ const Header: FC<Props> = ({ pinnedCategories }) => {
   useEffect(() => {
     if (isMenuOpened) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
   }, [isMenuOpened]);
 
   return (
     <header>
-      {/* Dark header */}
-      <MainHeader>
-        <MainHeaderGridContainer>
-          <LinksContainer>
-            <Hamburger
-              isOpened={isMenuOpened}
-              onClick={setIsMenuOpened}
-              ref={hamburgerRef}
-            />
-            <LinksList>
-              {mainLinks.map((el, ind) => (
-                <li key={ind}>
-                  <HeaderSimpleButton>{el}</HeaderSimpleButton>
-                </li>
-              ))}
-            </LinksList>
-            <LogoContainerSmallScreen>
+      <nav>
+        {/* Main header */}
+        <section className="w-full bg-charcoal p-4">
+          <GridContainer>
+            <LinksContainer>
+              <Hamburger
+                isOpened={isMenuOpened}
+                onClick={setIsMenuOpened}
+                ref={hamburgerRef}
+              />
+              <ul className="gap-3 justify-start items-center hidden lg:flex">
+                {mainLinks.map((el, ind) => (
+                  <li key={ind}>
+                    <HeaderSimpleButton>{el}</HeaderSimpleButton>
+                  </li>
+                ))}
+              </ul>
+            </LinksContainer>
+            <LogoContainer>
               <Logo />
-            </LogoContainerSmallScreen>
-          </LinksContainer>
-          <LogoContainerWideScreen>
-            <Logo />
-          </LogoContainerWideScreen>
-          <RightLinksContainer>
-            <SiteSearchDarkTheme />
-            <CreateCompanyButton />
-            <ProfileButton />
-          </RightLinksContainer>
-        </MainHeaderGridContainer>
-      </MainHeader>
-      {/* Dark header END */}
+            </LogoContainer>
+            <ButtonsContainer>
+              <SiteSearchDesktop />
+              <CreateCompanyButton />
+              <ProfileButton />
+            </ButtonsContainer>
+          </GridContainer>
+        </section>
+        {/* Main header END */}
 
-      {/* App drawer */}
-      <AppDrawer className={isMenuOpened ? "left-0" : "-left-56"} ref={menuRef}>
-        {mainLinks.map((el, ind) => (
-          <li
-            key={ind}
-            onClick={() => {
-              setIsMenuOpened(!isMenuOpened);
-            }}
-          >
-            <HeaderSimpleButton>{el}</HeaderSimpleButton>
-          </li>
-        ))}
-      </AppDrawer>
-      {/* App drawer END */}
-
-      {/* Mobile site search */}
-      <MobileSiteSearchContainer>
-        <SiteSearchLightTheme />
-      </MobileSiteSearchContainer>
-      {/* Mobile site search END */}
-
-      {/* Text Carousel */}
-      <TextCarouselContainer>
-        <TextCarousel>
-          <TextCarouselList>
-            {pinnedCategories.map(category => (
-              <li key={category._id}>
-                <AnimatedLink href={`/categories/${category._id}`}>
-                  {category.name}
-                </AnimatedLink>
+        {/* App drawer */}
+        <aside
+          className={`
+            h-screen w-56 bg-charcoal
+            bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20
+            transition-all ease-out duration-300
+            lg:hidden
+            ${isMenuOpened ? "left-0" : "-left-56"}
+          `}
+          ref={menuRef}
+        >
+          <ul className="flex flex-col gap-6">
+            {mainLinks.map((el, ind) => (
+              <li
+                key={ind}
+                onClick={() => {
+                  setIsMenuOpened(!isMenuOpened);
+                }}
+              >
+                <HeaderSimpleButton>{el}</HeaderSimpleButton>
               </li>
             ))}
-          </TextCarouselList>
-        </TextCarousel>
-      </TextCarouselContainer>
-      {/* Text Carousel END */}
+          </ul>
+        </aside>
+        {/* App drawer END */}
+
+        {/* Site search row for thin screens */}
+        <section className="px-4 pt-4 flex justify-center sm:hidden">
+          <SiteSearchMobile />
+        </section>
+        {/* Site search row for thin screens END */}
+
+        {/* Categories row */}
+        <section className="border-b-1.5 py-4 px-2">
+          <TextCarousel>
+            <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
+              {pinnedCategories.map(category => (
+                <li key={category._id}>
+                  <AnimatedLink href={`/categories/${category._id}`}>
+                    {category.name}
+                  </AnimatedLink>
+                </li>
+              ))}
+            </ul>
+          </TextCarousel>
+        </section>
+        {/* Categories row END */}
+      </nav>
     </header>
   );
 };
-
-export default Header;
 
 export interface Props {
   readonly pinnedCategories: readonly ExistingCategory[];
@@ -125,10 +137,10 @@ const mainLinks: string[] = [
   lang.CoFounders
 ];
 
-const MainHeader = tw.div`w-full bg-charcoal p-4`;
-
-const MainHeaderGridContainer = tw.div`
-  mx-auto max-w-screen-2xl grid grid-cols-header-grid-container-lg
+const GridContainer = tw.div`
+  mx-auto max-w-screen-2xl
+  flex
+  lg:grid
   gap-4 items-center relative z-30
   lg:justify-between
   lg:grid-cols-header-grid-container
@@ -136,22 +148,6 @@ const MainHeaderGridContainer = tw.div`
 
 const LinksContainer = tw.div`flex gap-5 items-center`;
 
-const LinksList = tw.ul`gap-3 justify-start items-center hidden lg:flex`;
+const LogoContainer = tw.div`text-white`;
 
-const LogoContainerSmallScreen = tw.div`text-white lg:hidden`;
-
-const LogoContainerWideScreen = tw.div`text-white hidden lg:block`;
-
-const RightLinksContainer = tw.div`flex justify-end items-center gap-5 sm:gap-3 xl:gap-4`;
-
-const AppDrawer = tw.ul`
-  flex flex-col gap-6 h-screen w-56 bg-charcoal
-  bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20 transition-all ease-out duration-300
-  lg:hidden
-`;
-
-const MobileSiteSearchContainer = tw.div`px-4 pt-4 flex justify-center sm:hidden`;
-
-const TextCarouselContainer = tw.div`border-b-1.5 py-4 px-2`;
-
-const TextCarouselList = tw.ul`font-medium flex gap-4 whitespace-nowrap mx-auto`;
+const ButtonsContainer = tw.div`flex justify-end items-center gap-5 sm:gap-3 xl:gap-4 flex-grow`;
