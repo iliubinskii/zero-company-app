@@ -6,16 +6,15 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import React from "react";
 
-export const RootLayout: FC<Props> = ({ categories, children }) => (
+export const RootLayout: FC<Props> = ({ children, pinnedCategories }) => (
   <div className="flex flex-col">
-    <Header categories={categories} />
+    <Header pinnedCategories={pinnedCategories} />
     <main>{children}</main>
-    {/* Contents END */}
-    <Footer categories={categories} />
+    <Footer pinnedCategories={pinnedCategories} />
   </div>
 );
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
   readonly children: ReactNode;
+  readonly pinnedCategories: readonly ExistingCategory[];
 }

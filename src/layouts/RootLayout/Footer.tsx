@@ -6,10 +6,10 @@ import { images } from "../../images";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-export const Footer: FC<Props> = ({ categories }) => (
+export const Footer: FC<Props> = ({ pinnedCategories: categories }) => (
   <footer className="bg-light-gray-cold w-full">
     <nav>
-      {/* Footer categories */}
+      {/* Categories */}
       <section className="border-t-1.5 border-gray-300">
         <CategoriesContainer>
           <h3 className="uppercase font-semibold pt-6 px-6 pb-2 md:hidden">
@@ -34,9 +34,9 @@ export const Footer: FC<Props> = ({ categories }) => (
           </ul>
         </CategoriesContainer>
       </section>
-      {/* Footer categories END */}
+      {/* Categories END */}
 
-      {/* Footer link groups */}
+      {/* Link groups */}
       <section className="border-t-1.5 p-6">
         <LinksContainer>
           {footerLinkGroups.map(({ links, title }, key) => (
@@ -58,8 +58,9 @@ export const Footer: FC<Props> = ({ categories }) => (
           ))}
         </LinksContainer>
       </section>
-      {/* Footer link groups END */}
-      {/* Footer Logo */}
+      {/* Link groups END */}
+
+      {/* Logo */}
       <section>
         <AnimatedLink href="/">
           <LogoContainer>
@@ -68,7 +69,8 @@ export const Footer: FC<Props> = ({ categories }) => (
           </LogoContainer>
         </AnimatedLink>
       </section>
-      {/* Footer Logo ends */}
+      {/* Logo END */}
+
       {/* Policies */}
       <section className="border-t-1.5 px-4 py-7">
         <ul className="mx-auto max-w-screen-2xl px-4 flex justify-center flex-wrap gap-4 md:gap-10 text-sm text-gray-700">
@@ -92,7 +94,10 @@ export const Footer: FC<Props> = ({ categories }) => (
 const CategoriesContainer = tw.div`mx-auto max-w-screen-2xl`;
 
 const LinksContainer = tw.div`
-  mx-auto max-w-screen-2xl grid grid-cols-3 gap-4 pt-2 md:px-8 lg:px-40`;
+  mx-auto max-w-screen-2xl
+  grid grid-cols-3 gap-4 pt-2
+  md:px-8 lg:px-40
+`;
 
 const LinksColumn = tw.div`flex flex-col gap-6`;
 
@@ -103,7 +108,7 @@ const LogoIcon = tw.img`w-6 h-6 bg-white rounded-full`;
 const LogoHeader = tw.h3`text-sm text-charcoal tracking-tighter`;
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
+  readonly pinnedCategories: readonly ExistingCategory[];
 }
 
 const footerLinkGroups = [

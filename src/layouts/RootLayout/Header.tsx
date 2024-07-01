@@ -18,7 +18,7 @@ import { SiteSearchMobile } from "./SiteSearchMobile";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
-export const Header: FC<Props> = ({ categories }) => {
+export const Header: FC<Props> = ({ pinnedCategories }) => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -74,10 +74,10 @@ export const Header: FC<Props> = ({ categories }) => {
         <ul
           className={`
             flex flex-col gap-6 h-screen w-56 bg-charcoal
-            bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20 
+            bg-opacity-90 fixed top-0 text-white px-8 pb-8 pt-28 text-base z-20
             transition-all ease-out duration-300
             lg:hidden ${isMenuOpened ? "left-0" : "-left-56"}
-            `}
+          `}
           ref={menuRef}
         >
           {mainLinks.map((el, ind) => (
@@ -103,7 +103,7 @@ export const Header: FC<Props> = ({ categories }) => {
         <section className="border-b-1.5 py-4 px-2">
           <TextCarousel>
             <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
-              {categories.map(category => (
+              {pinnedCategories.map(category => (
                 <li key={category._id}>
                   <AnimatedLink href={`/categories/${category._id}`}>
                     {category.name}
@@ -120,7 +120,7 @@ export const Header: FC<Props> = ({ categories }) => {
 };
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
+  readonly pinnedCategories: readonly ExistingCategory[];
 }
 
 const mainLinks: string[] = [
@@ -133,9 +133,9 @@ const mainLinks: string[] = [
 const MainHeader = tw.div`w-full bg-charcoal p-4`;
 
 const GridContainer = tw.div`
-  mx-auto max-w-screen-2xl 
+  mx-auto max-w-screen-2xl
   flex
-  lg:grid 
+  lg:grid
   gap-4 items-center relative z-30
   lg:justify-between
   lg:grid-cols-header-grid-container
