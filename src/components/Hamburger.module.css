@@ -1,0 +1,30 @@
+@tailwind components;
+@tailwind utilities;
+
+.hamburger-bar {
+  @apply w-[1.8rem] h-[0.1rem] rounded-lg bg-white;
+}
+
+.hamburger-bar.unclicked {
+  @apply transform rotate-0 translate-x-0 translate-y-0 transition-all duration-500;
+
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hamburger-bar.clicked:nth-child(1) {
+  @apply transform transition ease-out duration-500;
+
+  transform: rotate(45deg) translate(0.3125rem, 0.4375rem);
+}
+
+.hamburger-bar.clicked:nth-child(2) {
+  @apply transform transition ease-out duration-500;
+
+  transform: scale(0.1);
+}
+
+.hamburger-bar.clicked:nth-child(3) {
+  @apply transform transition ease-out duration-500;
+
+  transform: rotate(135deg) translate(-0.3125rem, 0.4375rem);
+}

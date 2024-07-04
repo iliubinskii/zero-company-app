@@ -11,6 +11,7 @@ export { ExpandableCard } from "./ExpandableCard";
 export { FAQ } from "./FAQ";
 export { FoundedCompanyCard } from "./FoundedCompanyCard";
 export { FoundedCompanyCards } from "./FoundedCompanyCards";
+export { Hamburger } from "./Hamburger";
 export { HeaderSimpleButton } from "./HeaderSimpleButton";
 export { InfoBlock } from "./InfoBlock";
 export { InfoCard } from "./InfoCard";

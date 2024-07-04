@@ -67,7 +67,10 @@ const config = {
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
-      { additionalHooks: "^(useAsyncCallback|useAuthGuardedLoader)$" }
+      {
+        additionalHooks:
+          "^(useAsyncCallback|useAuthGuardedLoader|useClickOutside|useEscapePress)$"
+      }
     ],
     "spellcheck/spell-checker": [
       "warn",
@@ -86,6 +89,7 @@ const config = {
             "6xl",
             "autofix",
             "bebas",
+            "bezier",
             "bool",
             "borderless",
             "builtins",
@@ -134,6 +138,7 @@ const config = {
             "latin",
             "matchers",
             "mjs",
+            "mousedown",
             "nda",
             "neue",
             "nextjs",
@@ -176,6 +181,7 @@ const config = {
             "textarea",
             "tsconfig",
             "tsx",
+            "unclicked",
             "undef",
             "unobserve",
             "uri",

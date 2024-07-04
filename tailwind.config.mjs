@@ -56,8 +56,7 @@ const config = {
         teaser: "1.55rem"
       },
       gridTemplateColumns: {
-        "header-grid-container": "1fr auto 1fr",
-        "main-grid-container": "1fr auto"
+        "header-grid-container": "1fr auto 1fr"
       },
       height: {
         "aspect-ratio-16/9": `${0.01 * 900}rem`
@@ -66,6 +65,7 @@ const config = {
         "1/3": "33.333333%"
       },
       transitionProperty: {
+        left: "left",
         width: "width"
       },
       width: {
