@@ -99,6 +99,21 @@ export const api = {
   },
   /**
    * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompanies: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
+    const companies = await getReq<Routes["/companies"]["get"]>(
+      "companies",
+      options
+    );
+
+    return "error" in companies ? companies : restoreCompanies(companies);
+  },
+  /**
+   * Retrieves the companies from the API.
    * @param id - The category id.
    * @param options - Request options.
    * @returns The companies.
