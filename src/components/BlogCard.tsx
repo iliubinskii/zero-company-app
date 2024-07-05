@@ -9,7 +9,7 @@ export const BlogCard: FC<Props> = ({
   text
 }) => (
   <ArticleContainer>
-    <ImgContainer className="w-28 h-28 md:w-48 md:h-48 flex-shrink-0">
+    <ImgContainer>
       <img
         alt="random photo"
         className="w-full h-full object-cover"
