@@ -10,7 +10,7 @@ export const InternshipCard: FC<Props> = ({
   position,
   src
 }) => (
-  <div className="w-full flex flex-col p-4 gap-2 border-b hover:bg-light-gray-cold">
+  <div className="w-full flex flex-col py-4 lg:p-4 gap-2 border-b hover:bg-light-gray-cold">
     <div className="flex justify-between items-center">
       <div className="flex gap-2 items-center justify-start">
         <div className="w-6 h-6 overflow-hidden flex justify-center items-center rounded-full bg-white shadow">

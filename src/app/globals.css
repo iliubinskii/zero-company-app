@@ -30,6 +30,17 @@ input[type="search"]::-webkit-search-results-decoration {
   overflow: hidden;
 }
 
+/* Hide scroll-bar for WebKit-browsers */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scroll-bar for other browsers */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
 /* ----- Badge styles --------------- */
 
 .badge-outlined {
