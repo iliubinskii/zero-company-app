@@ -35,7 +35,7 @@ export const ClientPage: FC<Props> = ({ categories, companies }) => {
               <div className="flex pl-6 md:justify-center text-gray-500 text-sm uppercase">
                 {lang.WithZeroCompany}:
               </div>
-              <ul className="pl-6 md:pr-6 inline-flex items-center w-full overflow-x-auto scrollbar-hide">
+              <ul className="px-6 inline-flex items-center w-full overflow-x-auto scrollbar-hide">
                 {mockArrayForInfoCells.map((el, index) => (
                   <li
                     className="flex-1 flex flex-col py-4 px-6 border gap-2 justify-center items-center whitespace-nowrap bg-light-gray-warm/50 "
@@ -281,42 +281,46 @@ const competeBlock = {
 const mockArrayBlogBlock = [
   {
     button_text: "Read more",
-    header: "The Four Cringe-Worthy Mistakes Too Many Startups Make with Data",
     id: "1",
+    imageAltText: "lamp on the work-table",
     img_url: images.blog.photo1.src,
     link: "/",
     text:
       "I’ve talked to people at pre-launch startups with fewer than\n" +
-      "100 users who say..."
+      "100 users who say...",
+    title: "The Four Cringe-Worthy Mistakes Too Many Startups Make with Data"
   },
   {
     button_text: "Read more",
-    header: "How to Develop Content for Every Stage of the Customer Journey",
     id: "2",
+    imageAltText: "woman works on her laptop",
     img_url: images.blog.photo2.src,
     link: "/",
     text:
       "Everyone wants to succeed at content marketing, but where do you start? " +
-      "John Jantsch answers this question perfectly..."
+      "John Jantsch answers this question perfectly...",
+    title: "How to Develop Content for Every Stage of the Customer Journey"
   },
   {
     button_text: "Read more",
-    header: "How Shopify Increased Revenue 90% in 365 Days",
     id: "3",
+    imageAltText: "drone flies over the lake",
     img_url: images.blog.photo3.src,
     link: "/",
     text:
       "Initially, I was surprised to see that Shopify is trying to sell their paid plans in the " +
-      "very first onboarding email since they push..."
+      "very first onboarding email since they push...",
+    title: "How Shopify Increased Revenue 90% in 365 Days"
   },
   {
     button_text: "Read more",
-    header: "21 Customer Acquisition Strategies to Win New Customers",
     id: "4",
+    imageAltText: "large wooden support structure",
     img_url: images.blog.photo4.src,
     link: "/",
     text:
       "I’m going to give you a host of customer acquisition tactics, " +
-      "as well as a way to test them out, in order..."
+      "as well as a way to test them out, in order...",
+    title: "21 Customer Acquisition Strategies to Win New Customers"
   }
 ];
