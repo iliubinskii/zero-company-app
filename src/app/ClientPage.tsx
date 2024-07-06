@@ -170,8 +170,6 @@ const SectionContainerTop = tw.div`mx-auto w-full max-w-screen-xl pt-8 pb-10 md:
 
 const SectionContainer = tw.div`mx-auto w-full max-w-screen-xl pt-20 pb-24 px-6 md:px-10`;
 
-/* eslint-disable spellcheck/spell-checker -- Ok */
-
 const mockArrayForInfoCells = [
   {
     description: lang.teamsJoined,

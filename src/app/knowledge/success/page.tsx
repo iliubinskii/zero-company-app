@@ -1,3 +1,5 @@
+/* eslint-disable @cspell/spellchecker -- Ok */
+
 import { ArticleLayout } from "../../../layouts";
 import type { NextPage } from "next";
 import React from "react";
