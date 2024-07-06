@@ -32,7 +32,7 @@ export const IconAccordionItem: FC<Props> = ({
 export interface Props {
   readonly Icon: IconType;
   readonly alwaysOpen?: boolean | undefined;
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly description: string;
   readonly disabled?: boolean | undefined;
   readonly title: string;

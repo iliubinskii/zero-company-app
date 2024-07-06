@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions -- Ok */
-
 import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({ dir: "./src" });
@@ -10,12 +8,18 @@ const createJestConfig = nextJest({ dir: "./src" });
 const config = {
   clearMocks: true,
   collectCoverage: false,
-  collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!**/*.d.ts"],
+  collectCoverageFrom: ["src/**/*.{ts,tsx}", "!**/*.d.ts"],
   coverageDirectory: "coverage",
-  coverageProvider: "v8",
+  coverageProvider: "babel",
   coverageReporters: ["lcov"],
-  globalSetup: "./jest.global-setup.ts",
-  globalTeardown: "./jest.global-teardown.ts",
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    }
+  },
   preset: "ts-jest",
   setupFilesAfterEnv: ["jest-extended/all", "./jest.setup-after-env.ts"],
   testEnvironment: "jsdom",

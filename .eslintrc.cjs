@@ -2,30 +2,13 @@
  * @type {import("eslint").Linter.Config }
  */
 const config = {
+  ignorePatterns: ["!.*", "coverage/**", ".next/**", "node_modules/**"],
   env: { browser: true, es2020: true },
-  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
   globals: {},
-  ignorePatterns: ["!.*", ".next/**", "coverage/**", "node_modules/**"],
-  overrides: [
-    {
-      files: "./src/schema/**",
-      rules: {
-        "import/no-relative-parent-imports": "warn"
-      }
-    },
-    {
-      files: ["./src/schema/routes.ts"],
-      rules: {
-        "no-magic-numbers": "off",
-        "typescript-sort-keys/interface": "off"
-      }
-    },
-    {
-      files: ["./tests/**", "./utils/**"],
-      rules: {
-        "node/no-unpublished-import": "off"
-      }
-    }
+  extends: [
+    "./.eslintrc.base.cjs",
+    "./.eslintrc.next.cjs",
+    "./.eslintrc.spellcheck.cjs"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -39,7 +22,7 @@ const config = {
       "warn",
       {
         allow:
-          // @sort
+          // @sorted
           [
             "@testing-library/jest-dom/matchers",
             "flowbite/plugin",
@@ -50,20 +33,20 @@ const config = {
           ]
       }
     ],
+    "misc/consistent-optional-props": [
+      "warn",
+      { classes: "combined", interfaces: "combined" }
+    ],
+    "misc/typescript/no-complex-declarator-type": "off",
+    "misc/typescript/no-unsafe-object-assignment": "off",
     "n/no-unsupported-features/node-builtins": "off",
     "node/no-unsupported-features/es-builtins": [
       "warn",
-      {
-        ignores: [],
-        version: ">=20.0.0"
-      }
+      { ignores: [], version: ">=20.0.0" }
     ],
     "node/no-unsupported-features/node-builtins": [
       "warn",
-      {
-        ignores: [],
-        version: ">=20.0.0"
-      }
+      { ignores: [], version: ">=20.0.0" }
     ],
     "react-hooks/exhaustive-deps": [
       "warn",
@@ -72,136 +55,38 @@ const config = {
           "^(useAsyncCallback|useAuthGuardedLoader|useClickOutside|useEscapePress)$"
       }
     ],
-    "spellcheck/spell-checker": [
-      "warn",
-      {
-        comments: true,
-        identifiers: true,
-        lang: "en_US",
-        minLength: 3,
-        skipWords:
-          // @sort
-          [
-            "2xl",
-            "3xl",
-            "4xl",
-            "5xl",
-            "6xl",
-            "autofix",
-            "bebas",
-            "bezier",
-            "bool",
-            "borderless",
-            "builtins",
-            "camelcase",
-            "ccw",
-            "checkbox",
-            "cjs",
-            "commonjs",
-            "compat",
-            "consts",
-            "crowdworking",
-            "daisyui",
-            "defs",
-            "destructure",
-            "desynchronization",
-            "discoverable",
-            "docuseal",
-            "dom",
-            "droppable",
-            "dropzone",
-            "ecma",
-            "enum",
-            "escompat",
-            "eslintrc",
-            "faq",
-            "favicon",
-            "filenames",
-            "flowbite",
-            "foreach",
-            "globals",
-            "goto",
-            "gravatar",
-            "hoverable",
-            "href",
-            "ico",
-            "instanceof",
-            "jpg",
-            "jsdoc",
-            "jsdom",
-            "jsx",
-            "kaffeesatz",
-            "keydown",
-            "kickstarter",
-            "lang",
-            "langs",
-            "latin",
-            "matchers",
-            "mjs",
-            "mousedown",
-            "nda",
-            "neue",
-            "nextjs",
-            "nonnegative",
-            "noreferrer",
-            "nowrap",
-            "nullable",
-            "openapi",
-            "parens",
-            "pathname",
-            "persistor",
-            "picsum",
-            "postcss",
-            "readonly",
-            "redeclare",
-            "redux",
-            "req",
-            "resize",
-            "roboto",
-            "rofr",
-            "safelist",
-            "schemas",
-            "scrollable",
-            "scrollbar",
-            "semibold",
-            "serializable",
-            "smacss",
-            "snackbar",
-            "sonarjs",
-            "srv",
-            "str",
-            "stylelint",
-            "stylelintrc",
-            "subheader",
-            "subsets",
-            "svg",
-            "swr",
-            "tagline",
-            "tailwindcss",
-            "textarea",
-            "tsconfig",
-            "tsx",
-            "unclicked",
-            "undef",
-            "unobserve",
-            "uri",
-            "urls",
-            "ver",
-            "vscode",
-            "webhooks",
-            "webkit",
-            "webp",
-            "whitespace",
-            "yanone",
-            "zod"
-          ],
-        strings: true,
-        templates: true
-      }
-    ],
     "unicorn/no-null": "off"
-  }
+  },
+  overrides: [
+    {
+      files: "./next-env.d.ts",
+      rules: { "misc/sort-top-comments": "off" }
+    },
+    {
+      files: "./src/schema/**",
+      rules: { "import/no-relative-parent-imports": "warn" }
+    },
+    {
+      files: "./src/schema/routes.ts",
+      rules: {
+        "misc/comment-spacing": "off",
+        "misc/typescript/no-never": "off",
+        "misc/typescript/prefer-readonly-array": "off",
+        "misc/typescript/prefer-readonly-property": "off",
+        "no-magic-numbers": "off",
+        "typescript-sort-keys/interface": "off"
+      }
+    },
+    {
+      files: "./tests/**",
+      rules: {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "node/no-unpublished-import": "off"
+      }
+    },
+    { files: "./utils/**", rules: { "node/no-unpublished-import": "off" } }
+  ]
 };
 
-// eslint-disable-next-line import/no-commonjs -- Ok
 module.exports = config;

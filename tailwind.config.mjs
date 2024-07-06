@@ -1,5 +1,5 @@
-/* eslint-disable node/no-unpublished-import -- Ok */
 /* eslint-disable no-magic-numbers -- Ok */
+/* eslint-disable node/no-unpublished-import -- Ok */
 
 import daisyui from "daisyui";
 import flowbite from "flowbite/plugin";

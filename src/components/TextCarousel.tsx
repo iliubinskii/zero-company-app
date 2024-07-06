@@ -38,6 +38,7 @@ export const TextCarousel: FC<Props> = ({ children }) => {
       const { clientWidth, scrollLeft, scrollWidth } = container;
 
       const isOverflow = scrollWidth > clientWidth;
+
       setLeftButtonVisible(isOverflow && scrollLeft > 0);
       setRightButtonVisible(
         // Added an extra pixel because `scrollWidth` does not precisely reach `scrollWidth - clientWidth` in Chrome.
@@ -88,7 +89,7 @@ export const TextCarousel: FC<Props> = ({ children }) => {
 };
 
 export interface Props {
-  children?: ReactNode | undefined;
+  readonly children?: ReactNode;
 }
 
 const Container = tw.div`flex justify-center items-center`;

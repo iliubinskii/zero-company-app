@@ -1,8 +1,9 @@
 import type { Member } from "../members";
 import React from "react";
 
-export const MemberCard: React.FC<{ member: Member }> = ({ member }) => {
+export const MemberCard: React.FC<Props> = ({ member }) => {
   const defaultAvatar = "/members/member.webp";
+
   const avatarSrc = member.avatar ? member.avatar : defaultAvatar;
 
   return (
@@ -26,3 +27,7 @@ export const MemberCard: React.FC<{ member: Member }> = ({ member }) => {
     </div>
   );
 };
+
+export interface Props {
+  readonly member: Member;
+}

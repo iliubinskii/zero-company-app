@@ -250,6 +250,7 @@ const businessProcessBlock = {
   img_url: images.wide.businessProcess.src,
   link: "/"
 };
+
 const digitalDocumentBlock = {
   alt: "digital document signing",
   block_header: "Is a Digital Document Legally Binding",
@@ -278,6 +279,7 @@ const competeBlock = {
   link: "/",
   subheader: "Sponsored by "
 };
+
 const mockArrayBlogBlock = [
   {
     button_text: "Read more",
@@ -286,7 +288,7 @@ const mockArrayBlogBlock = [
     img_url: images.blog.photo1.src,
     link: "/",
     text:
-      "I’ve talked to people at pre-launch startups with fewer than\n" +
+      "I've talked to people at pre-launch startups with fewer than\n" +
       "100 users who say...",
     title: "The Four Cringe-Worthy Mistakes Too Many Startups Make with Data"
   },
@@ -319,7 +321,7 @@ const mockArrayBlogBlock = [
     img_url: images.blog.photo4.src,
     link: "/",
     text:
-      "I’m going to give you a host of customer acquisition tactics, " +
+      "I'm going to give you a host of customer acquisition tactics, " +
       "as well as a way to test them out, in order...",
     title: "21 Customer Acquisition Strategies to Win New Customers"
   }

@@ -23,6 +23,7 @@ export function useAsyncCallback<T extends readonly unknown[]>(
     (...args: T): void => {
       callAsync(async () => {
         setIsLoading(true);
+
         try {
           await memorizedCallback(...args);
         } finally {

@@ -21,11 +21,10 @@ export const FileInputElement: FC<Props> = ({
   ...props
 }) => {
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: readonly File[]) => {
       const filesWithPreviews = acceptedFiles.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
+        // eslint-disable-next-line misc/typescript/no-unsafe-object-assign -- Ok
+        Object.assign(file, { preview: URL.createObjectURL(file) })
       );
 
       onAddImages(filesWithPreviews);
@@ -86,7 +85,7 @@ export const FileInputElement: FC<Props> = ({
 export type CombinedFile = FileWithPreview | WebAccessibleImage;
 
 export interface FileWithPreview extends File {
-  preview: string;
+  readonly preview: string;
 }
 
 export interface Props {
@@ -96,9 +95,11 @@ export interface Props {
   readonly files: readonly CombinedFile[];
   readonly multiple?: boolean | undefined;
   readonly name?: string | undefined;
-  readonly onAddImages?: (images: readonly FileWithPreview[]) => void;
-  readonly onRemoveImage?: (image: CombinedFile) => void;
-  readonly onResetErrors?: (name?: string) => void;
+  readonly onAddImages?:
+    | ((images: readonly FileWithPreview[]) => void)
+    | undefined;
+  readonly onRemoveImage?: ((image: CombinedFile) => void) | undefined;
+  readonly onResetErrors?: ((name?: string) => void) | undefined;
 }
 
 const CloseIcon = tw(SlClose)`h-6 w-6 text-gray-500 cursor-pointer`;

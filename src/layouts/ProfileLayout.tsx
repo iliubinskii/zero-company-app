@@ -110,7 +110,7 @@ export const ProfileLayout: FC<Props> = ({
 };
 
 export interface Props {
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly loading?: boolean | undefined;
   readonly noInfo?: boolean | undefined;
 }

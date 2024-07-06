@@ -52,7 +52,7 @@ export const SelectCountry: FC = () => {
   );
 };
 
-const options: SelectOption[] = [
+const options: readonly SelectOption[] = [
   {
     label: lang.countries.us,
     value: "us"

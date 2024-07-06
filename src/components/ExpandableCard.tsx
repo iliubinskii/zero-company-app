@@ -42,7 +42,7 @@ export const ExpandableCard: FC<Props> = ({ children, expandable }) => {
 };
 
 export interface Props {
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly expandable?: ReactNode | undefined;
 }
 
