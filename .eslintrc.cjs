@@ -22,7 +22,7 @@ const config = {
       "warn",
       {
         allow:
-          // @sort
+          // @sorted
           [
             "@testing-library/jest-dom/matchers",
             "flowbite/plugin",

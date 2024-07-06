@@ -4,22 +4,16 @@
   "private": true,
   "description": "Zero Company App",
   "keywords": [],
+  "homepage": "https://github.com/iliubinskii/zero-company-app",
+  "bugs": {
+    "url": "https://github.com/iliubinskii/zero-company-app/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/iliubinskii/zero-company-app"
   },
   "license": "Proprietary",
-  "author": "Ilia Liubinskii <ilia.liubinskii@gmail.com>",
-  "contributors": [
-    {
-      "name": "David Liubinskii",
-      "email": "workdltest@gmail.com"
-    },
-    {
-      "name": "Ilia Liubinskii",
-      "email": "ilia.liubinskii@gmail.com"
-    }
-  ],
+  "author": "Ilia Liubinskii <ilia.liubinskii@gmail.com> (https://github.com/iliubinskii)",
   "type": "module",
   "scripts": {
     "build": "next build",
@@ -30,23 +24,31 @@
     "docker:build": "docker build -t zero-company-app .",
     "docker:start": "docker run --env-file .env -p 3100 zero-company-app",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
-    "install-deps": "npm install --save-prod --strict-peer-deps",
-    "install-dev-deps": "npm install --save-dev --strict-peer-deps",
+    "install-deps": "npm install --no-audit --save-prod --strict-peer-deps",
+    "install-deps-clean": "npm install-clean --no-audit --save-prod --strict-peer-deps",
+    "install-dev-deps": "npm install --no-audit --save-dev --strict-peer-deps",
+    "install-dev-deps-clean": "npm install-clean --no-audit --save-dev --strict-peer-deps",
     "lint": "eslint --fix --max-warnings=0 .",
+    "lint-commit-msg": "commitlint --edit",
+    "lint-markdown": "markdownlint *.md",
+    "lint-no-fix": "eslint --max-warnings=0 .",
     "lint-profile": "cross-env TIMING=1 eslint --max-warnings=0 .",
     "lint-style": "stylelint --fix --max-warnings=0 src/**/*.{css,less,postcss,scss}",
+    "lint-style-no-fix": "stylelint --max-warnings=0 src/**/*.{css,less,postcss,scss}",
     "ncu-check": "ncu --dep=dev,peer,prod",
     "ncu-upgrade": "ncu --dep=dev,peer,prod --upgrade && npm run install-deps",
     "prepare": "husky",
     "start": "next start -p 3100",
     "test": "jest --coverage",
     "test-e2e": "playwright test",
-    "type-check": "tsc --incremental false --noEmit"
+    "type-check": "tsc --incremental false --noEmit",
+    "update": "npm update --no-audit --strict-peer-deps"
   },
   "lint-staged": {
     "*.{css,html,json,less,postcss,scss}": "prettier --write",
     "*.{css,less,postcss,scss}": "stylelint --max-warnings=0",
-    "*.{js,jsx,ts,tsx}": "eslint --max-warnings=0"
+    "*.{js,jsx,ts,tsx},!dist/**,!es/**": "eslint --max-warnings=0",
+    "*.md": "markdownlint"
   },
   "dependencies": {
     "@docuseal/react": "^1.0.38",
@@ -86,6 +88,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@jest/globals": "^29.7.0",
     "@next/eslint-plugin-next": "^14.2.3",
     "@playwright/test": "^1.44.1",
@@ -143,7 +147,9 @@
     "jest-extended": "^4.0.2",
     "lint-staged": "^15.2.5",
     "local-ssl-proxy": "^2.0.5",
+    "markdownlint-cli": "^0.41.0",
     "npm-check-updates": "^16.14.20",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.38",
     "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",

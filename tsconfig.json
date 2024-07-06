@@ -49,8 +49,6 @@
     ".stylelintrc.base.mjs",
     ".stylelintrc.mjs",
     "**/*.cjs",
-    "**/*.js",
-    "**/*.jsx",
     "**/*.mjs",
     "**/*.ts",
     "**/*.tsx",
