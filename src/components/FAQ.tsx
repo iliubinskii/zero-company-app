@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { MdArticle } from "react-icons/md";
 import React, { useState } from "react";
+
 export const FAQ: FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 

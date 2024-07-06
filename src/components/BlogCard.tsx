@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import React from "react";
 import tw from "tailwind-styled-components";
+
 export const BlogCard: FC<Props> = ({
   button_text,
   imageAltText,
@@ -35,7 +36,7 @@ export const BlogCard: FC<Props> = ({
 );
 
 const ArticleContainer = tw.article`
-  flex pb-10 md:p-5 gap-5 justify-between border-b 
+  flex pb-10 md:p-5 gap-5 justify-between border-b
   border-gray-200 last:border-b-0 md:border md:last:border-b
 `;
 
@@ -46,7 +47,7 @@ const Content = tw.div`flex flex-col items-start justify-between lg:h-full`;
 export interface Props {
   readonly button_text: string;
   readonly id: string;
-  readonly imageAltText?: string;
+  readonly imageAltText?: string | undefined;
   readonly img_url: string;
   readonly link: string;
   readonly text: string;

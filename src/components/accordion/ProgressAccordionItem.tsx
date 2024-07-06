@@ -30,7 +30,7 @@ export const ProgressAccordionItem: FC<Props> = ({
 
 export interface Props {
   readonly alwaysOpen?: boolean | undefined;
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly description: string;
   readonly disabled?: boolean | undefined;
   readonly progress: number;

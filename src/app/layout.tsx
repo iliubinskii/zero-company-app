@@ -47,5 +47,5 @@ export default async function App({ children }: Props): Promise<ReactElement> {
 }
 
 export interface Props {
-  children?: ReactNode | undefined;
+  readonly children?: ReactNode;
 }

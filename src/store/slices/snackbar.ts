@@ -19,14 +19,14 @@ const snackbarSlice = createSlice({
       // Do not reset the message and variant to let snackbar fade out
       state.isOpen = false;
     },
-    logError(
+    logError: (
       state,
       action: PayloadAction<{
         readonly error: unknown;
         readonly message: string;
         readonly snackbar?: "always" | undefined;
       }>
-    ) {
+    ) => {
       const { error, message, snackbar } = action.payload;
 
       logger.error(error);

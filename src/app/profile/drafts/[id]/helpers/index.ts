@@ -9,12 +9,12 @@ import type { FormEventHandler } from "react";
 
 export interface CustomCompanyUpdate
   extends Omit<CompanyUpdate, "images" | "logo"> {
-  logo?: CombinedFile | null | undefined;
+  readonly logo?: CombinedFile | null | undefined;
 }
 
 export interface CustomExistingCompany
   extends Omit<ExistingCompany, "images" | "logo"> {
-  logo?: CombinedFile | null | undefined;
+  readonly logo?: CombinedFile | null | undefined;
 }
 
 export interface ModuleProps {

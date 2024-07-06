@@ -13,8 +13,11 @@ export function useRestoreFromLogout(): (state: AppState) => AppState {
     const action = params.get("action");
 
     if (action === "logout") {
-      state = { ...state, auth: { authUser: null } };
+      const updatedState = { ...state, auth: { authUser: null } };
+
       localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(state));
+
+      return updatedState;
     }
 
     return state;

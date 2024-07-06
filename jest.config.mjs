@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions -- Ok */
-
 import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({ dir: "./src" });

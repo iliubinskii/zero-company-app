@@ -20,16 +20,19 @@ const companyRegistrationSlice = createSlice({
 
         case CREATE_COMPANY_STEP.SELECT_COUNTRY: {
           state.step = CREATE_COMPANY_STEP.SELECT_CATEGORY;
+
           break;
         }
 
         case CREATE_COMPANY_STEP.REVIEW: {
           state.step = CREATE_COMPANY_STEP.SELECT_COUNTRY;
+
           break;
         }
 
         case CREATE_COMPANY_STEP.CREATE: {
           state.step = CREATE_COMPANY_STEP.REVIEW;
+
           break;
         }
       }

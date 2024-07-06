@@ -62,13 +62,13 @@ export const InfoBlock: FC<Props> = ({
 );
 
 export interface Props {
-  readonly additional_information?: string;
+  readonly additional_information?: string | undefined;
   readonly alt: string;
   readonly block_header: string;
   readonly block_text: string;
   readonly button_text: string;
-  readonly company_name?: string;
+  readonly company_name?: string | undefined;
   readonly img_url: string;
   readonly link: string;
-  readonly subheader?: string;
+  readonly subheader?: string | undefined;
 }

@@ -130,7 +130,7 @@ export interface Props {
   readonly pinnedCategories: readonly ExistingCategory[];
 }
 
-const mainLinks: string[] = [
+const mainLinks: readonly string[] = [
   lang.Teams,
   lang.Resources,
   lang.Internships,
