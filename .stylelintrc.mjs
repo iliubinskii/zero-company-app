@@ -19,7 +19,7 @@ const config = {
       {
         ignore:
           // @sorted
-          ["css-appearance", "css-nesting", "css-overflow"]
+          ["css-appearance", "css-nesting", "css-overflow", "css-scrollbar"]
       }
     ],
     "property-no-vendor-prefix": null

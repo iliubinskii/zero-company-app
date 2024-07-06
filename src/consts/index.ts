@@ -53,6 +53,10 @@ export const GRAVATAR_RATING = "pg";
 
 export const GRAVATAR_SIZE = "200";
 
+export const BREAKPOINT = {
+  md: 768
+};
+
 export const MOCK_STATS = {
   INTERNSHIP_POSITIONS: 6054,
   LOOKING_FOR_COFOUNDER: 4711,

@@ -12,24 +12,29 @@ export const InfoBlock: FC<Props> = ({
   link,
   subheader
 }) => (
-  <article className="flex gap-6 w-full mx-auto max-w-screen-2xl">
-    <div className="w-1/2">
-      <img alt={alt} className="w-full h-full object-cover" src={img_url} />
+  <article className="flex flex-col md:flex-row gap-6 w-full mx-auto max-w-screen-2xl">
+    <div className="w-full md:w-1/2">
+      <img
+        alt={alt}
+        className="min-h-44 md:w-full md:h-full object-cover"
+        src={img_url}
+      />
     </div>
-    <div className="w-1/2 flex flex-col gap-6 items-start">
+    <div className="w-full md:w-1/2 flex flex-col gap-6 items-start">
       <div className="flex flex-col gap-3 pl-5 border-l-[6px] border-green-primary/80">
         <a href={link}>
-          <h2 className="text-2xl hover:underline hover:text-green-primary underline-offset-4">
+          <h2 className="text-xl lg:text-2xl hover:underline hover:text-green-primary underline-offset-4">
             {block_header}
           </h2>
         </a>
         {subheader && (
           <p className="text-xl">
-            {subheader} <span className="text-2xl">{company_name}</span>
+            {subheader}{" "}
+            <span className="text-xl lg:text-2xl">{company_name}</span>
           </p>
         )}
         <a href="/">
-          <p className="text-lg">{block_text}</p>
+          <p className="text-base lg:text-lg">{block_text}</p>
         </a>
       </div>
       {additional_information ? (

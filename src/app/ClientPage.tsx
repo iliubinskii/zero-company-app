@@ -20,45 +20,45 @@ export const ClientPage: FC<Props> = ({ categories, companies }) => {
   const featuredCompany = companies[0];
 
   return (
-    <div className="w-full flex flex-col px-10 divide-y divide-gray-200">
+    <div className="w-full flex flex-col divide-y divide-gray-200">
       <section>
-        <SectionContainerTop className="flex flex-col gap-20">
+        <SectionContainerTop className="flex flex-col gap-12 md:gap-20">
           <div className="flex flex-col gap-8">
             {/* Slogan */}
-            <div className="text-teaser text-gray-700 text-center">
+            <div className="px-6 text-teaser text-gray-700 md:text-center">
               {lang.app.home.teaser}
             </div>
             {/* Slogan END */}
 
             {/* Stats */}
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-center text-gray-500 text-sm uppercase">
+            <div className="flex flex-col gap-6">
+              <div className="flex pl-6 md:justify-center text-gray-500 text-sm uppercase">
                 {lang.WithZeroCompany}:
               </div>
-              <div className="flex justify-center items-center w-full bg-light-gray-warm/50">
+              <ul className="px-6 inline-flex items-center w-full overflow-x-auto scrollbar-hide">
                 {mockArrayForInfoCells.map((el, index) => (
-                  <div
-                    className="w-full flex flex-col py-4 px-6 border gap-2 justify-center items-center"
+                  <li
+                    className="flex-1 flex flex-col py-4 px-6 border gap-2 justify-center items-center whitespace-nowrap bg-light-gray-warm/50 "
                     key={index}
                   >
-                    <p className="text-3xl text-green-secondary">
+                    <p className="text-2xl lg:text-3xl text-green-secondary">
                       {el.number.toLocaleString()}
                     </p>
-                    <p className="text-gray-500 tracking-wider">
+                    <p className="text-gray-500 text-base tracking-wider">
                       {el.description}
                     </p>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
             {/* Stats END */}
           </div>
 
           {/* Two cols */}
-          <div className="flex gap-10">
+          <div className="flex flex-col md:flex-row px-6 md:px-10 gap-10 mx-auto w-full max-w-screen-xl">
             {/* Featured companies */}
             {featuredCompany && (
-              <div className="w-3/5">
+              <div className="w-full md:w-3/5">
                 <BigCompanyCard
                   categories={categories}
                   company={featuredCompany}
@@ -68,7 +68,7 @@ export const ClientPage: FC<Props> = ({ categories, companies }) => {
             {/* Featured companies END */}
 
             {/* Internships */}
-            <div className="w-2/5 flex flex-col">
+            <div className="w-full md:w-2/5 flex flex-col">
               <h2 className="text-sm text-gray-500 font-bold">
                 Join as a co-worker
               </h2>
@@ -77,7 +77,7 @@ export const ClientPage: FC<Props> = ({ categories, companies }) => {
                 .map(el => (
                   <InternshipCard key={el._id} {...el} />
                 ))}
-              <div className="pt-4">
+              <div className="pt-10 md:pt-4">
                 <button
                   className="text-xl text-green-secondary hover:underline underline-offset-4"
                   type="button"
@@ -148,13 +148,11 @@ export const ClientPage: FC<Props> = ({ categories, companies }) => {
       {/* Creator's corner block */}
       <section>
         <SectionContainer>
-          <div className="mx-auto max-w-screen-2xl">
-            <h2 className="text-sm text-gray-500 font-bold mb-4">Our blog</h2>
-            <div className="grid grid-cols-2 gap-16">
-              {mockArrayBlogBlock.map(el => (
-                <BlogCard key={el.id} {...el} />
-              ))}
-            </div>
+          <h2 className="text-sm text-gray-500 font-bold mb-4">Our blog</h2>
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10">
+            {mockArrayBlogBlock.map(el => (
+              <BlogCard key={el.id} {...el} />
+            ))}
           </div>
         </SectionContainer>
       </section>
@@ -168,9 +166,9 @@ export interface Props {
   readonly companies: readonly ExistingCompany[];
 }
 
-const SectionContainerTop = tw.div`mx-auto w-full max-w-screen-xl pt-8 pb-20`;
+const SectionContainerTop = tw.div`mx-auto w-full max-w-screen-xl pt-8 pb-10 md:pb-20`;
 
-const SectionContainer = tw.div`mx-auto w-full max-w-screen-xl pt-20 pb-24`;
+const SectionContainer = tw.div`mx-auto w-full max-w-screen-xl pt-20 pb-24 px-6 md:px-10`;
 
 /* eslint-disable spellcheck/spell-checker -- Ok */
 
@@ -283,45 +281,46 @@ const competeBlock = {
 const mockArrayBlogBlock = [
   {
     button_text: "Read more",
-    header: "The Four Cringe-Worthy Mistakes Too Many Startups Make with Data",
     id: "1",
+    imageAltText: "lamp on the work-table",
     img_url: images.blog.photo1.src,
     link: "/",
     text:
       "I’ve talked to people at pre-launch startups with fewer than\n" +
-      "100 users who say, ‘We’re going to start on personalization, And I’m thinking, ‘What are you going to personalize?"
+      "100 users who say...",
+    title: "The Four Cringe-Worthy Mistakes Too Many Startups Make with Data"
   },
   {
     button_text: "Read more",
-    header: "How to Develop Content for Every Stage of the Customer Journey",
     id: "2",
+    imageAltText: "woman works on her laptop",
     img_url: images.blog.photo2.src,
     link: "/",
     text:
       "Everyone wants to succeed at content marketing, but where do you start? " +
-      "John Jantsch answers this question perfectly: with understanding your customer’s journey, " +
-      "and mapping your content plan to it."
+      "John Jantsch answers this question perfectly...",
+    title: "How to Develop Content for Every Stage of the Customer Journey"
   },
   {
     button_text: "Read more",
-    header: "How Shopify Increased Revenue 90% in 365 Days",
     id: "3",
+    imageAltText: "drone flies over the lake",
     img_url: images.blog.photo3.src,
     link: "/",
     text:
       "Initially, I was surprised to see that Shopify is trying to sell their paid plans in the " +
-      "very first onboarding email since they push their free trial all over their website. " +
-      "But after some analysis, it makes sense."
+      "very first onboarding email since they push...",
+    title: "How Shopify Increased Revenue 90% in 365 Days"
   },
   {
     button_text: "Read more",
-    header: "21 Customer Acquisition Strategies to Win New Customers",
     id: "4",
+    imageAltText: "large wooden support structure",
     img_url: images.blog.photo4.src,
     link: "/",
     text:
       "I’m going to give you a host of customer acquisition tactics, " +
-      "as well as a way to test them out, in order to enable you to get a feel for which " +
-      "channels have the potential to deliver the most value."
+      "as well as a way to test them out, in order...",
+    title: "21 Customer Acquisition Strategies to Win New Customers"
   }
 ];
