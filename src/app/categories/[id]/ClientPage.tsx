@@ -106,11 +106,9 @@ export const ClientPage: FC<Props> = ({
       </Head>
       <PageLayout size="xl">
         {/* Overview */}
-        <div className="overview">
-          <div className="header2">{category.name}</div>
-          <div className="paragraphs">
-            <p>{category.description}</p>
-          </div>
+        <div className="flex flex-col gap-4">
+          <h2 className="text-xl text-gray-500">{category.name}</h2>
+          <p>{category.description}</p>
         </div>
         {/* Overview END */}
 

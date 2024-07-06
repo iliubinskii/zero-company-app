@@ -7,6 +7,7 @@ export { DocumentCard } from "./DocumentCard";
 export { DocumentCards } from "./DocumentCards";
 export { DraftCard } from "./DraftCard";
 export { DraftCards } from "./DraftCards";
+export { DummyArticle } from "./DummyArticle";
 export { ExpandableCard } from "./ExpandableCard";
 export { FAQ } from "./FAQ";
 export { FoundedCompanyCard } from "./FoundedCompanyCard";

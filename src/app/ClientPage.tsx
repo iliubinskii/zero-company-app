@@ -298,7 +298,7 @@ const mockArrayBlogBlock = [
     link: "/",
     text:
       "Everyone wants to succeed at content marketing, but where do you start? " +
-      "John Jantsch answers this question perfectly...",
+      "John Smith answers this question perfectly...",
     title: "How to Develop Content for Every Stage of the Customer Journey"
   },
   {
