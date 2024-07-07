@@ -1,5 +1,3 @@
-/* eslint-disable spellcheck/spell-checker -- disabled spellcheck for member names */
-
 export const members: readonly Member[] = [
   {
     avatar: "/members/ilia.webp",

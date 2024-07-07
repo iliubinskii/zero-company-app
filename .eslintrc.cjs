@@ -5,11 +5,7 @@ const config = {
   ignorePatterns: ["!.*", "coverage/**", ".next/**", "node_modules/**"],
   env: { browser: true, es2020: true },
   globals: {},
-  extends: [
-    "./.eslintrc.base.cjs",
-    "./.eslintrc.next.cjs",
-    "./.eslintrc.spellcheck.cjs"
-  ],
+  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -18,6 +14,43 @@ const config = {
     sourceType: "module"
   },
   rules: {
+    "@cspell/spellchecker": [
+      "warn",
+      {
+        cspell: {
+          words:
+            // @sorted
+            [
+              "cofounder",
+              "csstools",
+              "daisyui",
+              "desynchronization",
+              "docuseal",
+              "ekaterina",
+              "escompat",
+              "esign",
+              "flowbite",
+              "hoverable",
+              "idas",
+              "katia",
+              "ksenia",
+              "liubinskii",
+              "netania",
+              "persistor",
+              "picsum",
+              "preprocesses",
+              "raanana",
+              "rofr",
+              "smacss",
+              "sonarjs",
+              "stylelintrc",
+              "ueta",
+              "unclicked",
+              "yanone"
+            ]
+        }
+      }
+    ],
     "import/no-internal-modules": [
       "warn",
       {

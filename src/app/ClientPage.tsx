@@ -170,8 +170,6 @@ const SectionContainerTop = tw.div`mx-auto w-full max-w-screen-xl pt-8 pb-10 md:
 
 const SectionContainer = tw.div`mx-auto w-full max-w-screen-xl pt-20 pb-24 px-6 md:px-10`;
 
-/* eslint-disable spellcheck/spell-checker -- Ok */
-
 const mockArrayForInfoCells = [
   {
     description: lang.teamsJoined,
@@ -300,7 +298,7 @@ const mockArrayBlogBlock = [
     link: "/",
     text:
       "Everyone wants to succeed at content marketing, but where do you start? " +
-      "John Jantsch answers this question perfectly...",
+      "John Smith answers this question perfectly...",
     title: "How to Develop Content for Every Stage of the Customer Journey"
   },
   {

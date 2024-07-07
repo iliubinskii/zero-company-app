@@ -86,17 +86,3 @@ input[type="search"]::-webkit-search-results-decoration {
 .form-field-container {
   @apply flex flex-col gap-1;
 }
-
-/* ----- Miscellaneous styles ------- */
-
-.header2 {
-  @apply text-xl text-gray-500;
-}
-
-.overview {
-  @apply flex flex-col gap-4;
-}
-
-.paragraphs {
-  @apply flex flex-col gap-3 text-justify;
-}

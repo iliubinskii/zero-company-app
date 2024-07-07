@@ -1,3 +1,5 @@
+/* eslint-disable @cspell/spellchecker -- Postponed */
+
 "use client";
 
 import { AnimatedLink, FAQ } from "../../components";
@@ -111,8 +113,8 @@ const Page: NextPage = () => {
                         xl:text-5xl"
           >
             On our platform, angel investors are actively looking for promising
-            projects. Dont miss your chance to secure funding and take your
-            venture to the next level. Register your company today and move
+            projects. Don&apos;t miss your chance to secure funding and take
+            your venture to the next level. Register your company today and move
             forward with confidence!
             <p className="text-blue-700">Learn more...</p>
           </div>
