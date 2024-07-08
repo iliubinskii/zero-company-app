@@ -39,10 +39,6 @@ export function useAsyncCallback<T extends readonly unknown[]>(
   }, [isLoading, sync]);
 }
 
-export interface Options {
-  readonly redirectOnNotFound?: string | undefined;
-}
-
 interface AsyncCallbackResult<T extends readonly unknown[]> {
   readonly callback: (...args: T) => void;
   readonly isLoading: boolean;
