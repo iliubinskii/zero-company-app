@@ -224,7 +224,9 @@ export const lang = {
   },
   done: "done",
   dragAndDropPrompt: "Drag & drop files here, or click to select files",
-  header: { searchPlaceholder: "Search..." },
+  header: {
+    searchPlaceholder: "Search..."
+  },
   internshipPositions: "internship positions",
   layouts: {
     RootLayout: {

@@ -1,7 +1,9 @@
 export { useAsyncCallback } from "./useAsyncCallback";
 export { useAuthGuardedLoader } from "./useAuthGuardedLoader";
+export { useClickOutside } from "./useClickOutside";
 export { useCompanyCategory } from "./useCompanyCategory";
 export { useCompanyName } from "./useCompanyName";
+export { useEscapePress } from "./useEscapePress";
 export { useSortedCompanies } from "./useSortedCompanies";
 export { useSortedDocuments } from "./useSortedDocuments";
 export { useSortedDrafts } from "./useSortedDrafts";

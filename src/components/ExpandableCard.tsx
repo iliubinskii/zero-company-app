@@ -1,6 +1,7 @@
 "use client";
 
 import type { FC, ReactNode } from "react";
+import { BREAKPOINT } from "../consts";
 import React, { useEffect, useRef, useState } from "react";
 import tw from "tailwind-styled-components";
 
@@ -20,10 +21,10 @@ export const ExpandableCard: FC<Props> = ({ children, expandable }) => {
     <div
       className="relative"
       onMouseEnter={() => {
-        setIsHovering(true);
+        if (window.innerWidth >= BREAKPOINT.md) setIsHovering(true);
       }}
       onMouseLeave={() => {
-        setIsHovering(false);
+        if (window.innerWidth >= BREAKPOINT.md) setIsHovering(false);
       }}
     >
       <div ref={contentsRef}>{children}</div>
@@ -41,7 +42,7 @@ export const ExpandableCard: FC<Props> = ({ children, expandable }) => {
 };
 
 export interface Props {
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly expandable?: ReactNode | undefined;
 }
 

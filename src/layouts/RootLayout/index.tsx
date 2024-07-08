@@ -1,182 +1,20 @@
 "use client";
 
-import {
-  AnimatedLink,
-  HeaderSimpleButton,
-  TextCarousel
-} from "../../components";
 import type { FC, ReactNode } from "react";
-import CreateCompanyButton from "./CreateCompanyButton";
 import type { ExistingCategory } from "../../schema";
-import Logo from "./Logo";
-import ProfileButton from "./ProfileButton";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
 import React from "react";
-import SiteSearch from "./SiteSearch";
-import { lang } from "../../langs";
 
-export const RootLayout: FC<Props> = ({ categories, children }) => (
+export const RootLayout: FC<Props> = ({ children, pinnedCategories }) => (
   <div className="flex flex-col">
-    {/* Header /*/}
-    <header>
-      {/* Dark header */}
-      <div className="w-full bg-charcoal p-5">
-        <div className="mx-auto max-w-screen-2xl grid grid-cols-header-grid-container gap-4 items-center">
-          <ul className="flex gap-3 justify-start">
-            <li>
-              <HeaderSimpleButton>{lang.Teams}</HeaderSimpleButton>
-            </li>
-            <li>
-              <HeaderSimpleButton>{lang.Resources}</HeaderSimpleButton>
-            </li>
-            <li>
-              <HeaderSimpleButton>{lang.Internships}</HeaderSimpleButton>
-            </li>
-            <li>
-              <HeaderSimpleButton>{lang.CoFounders}</HeaderSimpleButton>
-            </li>
-          </ul>
-          <div className="text-white">
-            <Logo />
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            <SiteSearch />
-            <CreateCompanyButton />
-            <ProfileButton />
-          </div>
-        </div>
-      </div>
-      {/* Dark header END */}
-
-      {/* Text Carousel */}
-      <div className="border-b-1.5 py-4">
-        <TextCarousel>
-          <ul className="font-medium flex gap-4 whitespace-nowrap mx-auto">
-            {categories.map(category => (
-              <li key={category._id}>
-                <AnimatedLink href={`/categories/${category._id}`}>
-                  {category.name}
-                </AnimatedLink>
-              </li>
-            ))}
-          </ul>
-        </TextCarousel>
-      </div>
-      {/* Text Carousel END */}
-    </header>
-    {/* Header END */}
-
-    {/* Contents */}
+    <Header pinnedCategories={pinnedCategories} />
     <main>{children}</main>
-    {/* Contents END */}
-
-    <footer className="bg-light-gray-cold">
-      {/* Footer categories */}
-      <div className="border-t-1.5 border-gray-300">
-        <div
-          className="
-            mx-auto max-w-screen-2xl px-20 py-5 flex flex-col
-            md:flex-row flex-wrap gap-x-5 gap-y-1 text-xs
-           "
-        >
-          <h3 className="uppercase font-semibold mb-3 md:hidden">
-            {lang.Explore}
-          </h3>
-          {categories.map(category => (
-            <AnimatedLink
-              className="inline-block whitespace-nowrap"
-              href={`/categories/${category._id}`}
-              key={category._id}
-            >
-              {category.name}
-            </AnimatedLink>
-          ))}
-        </div>
-      </div>
-      {/* Footer categories END */}
-
-      {/* Footer link groups */}
-      <div className="border-t-1.5 px-20 py-10">
-        <div className="mx-auto max-w-screen-2xl grid grid-cols-4 gap-10 items-start">
-          <div className="pt-5 text-charcoal scale-75 origin-top-left">
-            <Logo />
-          </div>
-          {footerLinkGroups.map(({ links, title }, key) => (
-            <div className="flex flex-col gap-4" key={key}>
-              <h3 className="uppercase text-xs font-semibold">{title}</h3>
-              <div className="flex flex-col gap-1 text-xs text-gray-700">
-                {links.map(({ href, text }) => (
-                  <AnimatedLink href={href} key={href}>
-                    {text}
-                  </AnimatedLink>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Footer link groups END */}
-
-      {/* Footer links */}
-      <div className="border-t-1.5">
-        <div className="mx-auto max-w-screen-2xl px-20 py-7 flex gap-10 text-sm text-gray-700">
-          {footerLinks.map(({ href, text }) => (
-            <AnimatedLink href={href} key={href}>
-              {text}
-            </AnimatedLink>
-          ))}
-        </div>
-      </div>
-      {/* Footer links END */}
-    </footer>
+    <Footer pinnedCategories={pinnedCategories} />
   </div>
 );
 
 export interface Props {
-  readonly categories: readonly ExistingCategory[];
-  readonly children: ReactNode;
+  readonly children?: ReactNode;
+  readonly pinnedCategories: readonly ExistingCategory[];
 }
-
-const footerLinkGroups = [
-  {
-    links: [
-      { href: "/knowledge/about", text: lang.AboutUs },
-      { href: "/knowledge/charter", text: lang.OurCharter },
-      { href: "/knowledge/team", text: lang.Team },
-      { href: "/knowledge/jobs", text: lang.Jobs }
-    ],
-    title: lang.About
-  },
-  {
-    links: [
-      { href: "/knowledge/how-it-works", text: lang.HowZeroCompanyWorks },
-      { href: "/knowledge/nda", text: lang.NDA },
-      { href: "/knowledge/ip", text: lang.IpAgreement },
-      { href: "/knowledge/shareholders", text: lang.FoundingAgreement },
-      { href: "/knowledge/buy-sell", text: lang.BuySellAgreement },
-      { href: "/knowledge/drag-along", text: lang.DragAlongRights },
-      { href: "/knowledge/tag-along", text: lang.TagAlongRights },
-      { href: "/knowledge/preemptive", text: lang.PreemptiveRights },
-      { href: "/knowledge/rofr", text: lang.ROFR }
-    ],
-    title: lang.Legal
-  },
-  {
-    links: [
-      { href: "/knowledge/questions", text: lang.CommonQuestions },
-      { href: "/knowledge/help", text: lang.HelpCenter },
-      { href: "/knowledge/blog", text: lang.Blog },
-      { href: "/knowledge/success", text: lang.SuccessStories }
-    ],
-    title: lang.Resources
-  }
-] as const;
-
-const footerLinks = [
-  { href: "/knowledge/terms", text: lang.TermsOfUse },
-  { href: "/knowledge/privacy", text: lang.PrivacyPolicy },
-  { href: "/knowledge/cookie-policy", text: lang.CookiePolicy },
-  {
-    href: "/knowledge/accessibility-statement",
-    text: lang.AccessibilityStatement
-  }
-] as const;

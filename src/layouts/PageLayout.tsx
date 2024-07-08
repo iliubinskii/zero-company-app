@@ -8,6 +8,6 @@ export const PageLayout: FC<Props> = ({ children, size = "md" }) => (
 );
 
 export interface Props {
-  children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly size?: "sm" | "lg" | "xl" | "2xl" | undefined;
 }

@@ -1,8 +1,4 @@
 import { COMPANY_LIMIT, ERROR } from "../../../consts";
-import {
-  getCategoriesSrv,
-  getPinnedCategoriesSrv
-} from "../../../server-cache";
 import { ClientPage } from "./ClientPage";
 import { CompanyStatus } from "../../../schema";
 import type { NextPage } from "next";
@@ -15,10 +11,10 @@ import { assertDefined } from "../../../utils";
  * Generates static parameters.
  * @returns Static parameters.
  */
-export async function generateStaticParams(): Promise<unknown[]> {
-  const categories = await getPinnedCategoriesSrv();
+export async function generateStaticParams(): Promise<readonly unknown[]> {
+  const categories = await api.getCategoriesSrv({ onlyPinned: true });
 
-  return categories.map(category => {
+  return categories.docs.map(category => {
     return { id: category._id };
   });
 }
@@ -26,11 +22,10 @@ export async function generateStaticParams(): Promise<unknown[]> {
 const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
   const id = assertDefined(params["id"], ERROR.EXPECTING_CATEGORY_ID_PARAM);
 
-  const categories = await getCategoriesSrv();
-
-  const [category, companies] = await Promise.all([
-    api.getCategory(id),
-    api.getCompaniesByCategory(id, {
+  const [categories, category, companies] = await Promise.all([
+    api.getCategoriesSrv(),
+    api.getCategorySrv(id),
+    api.getCompaniesByCategorySrv(id, {
       limit: COMPANY_LIMIT,
       sortBy: "foundedAt",
       sortOrder: "desc",
@@ -38,15 +33,9 @@ const Page: NextPage<NextPageProps> = async ({ params = {} }) => {
     })
   ]);
 
-  if ("error" in category)
-    throw new Error(`${category.error}: ${category.errorMessage}`);
-
-  if ("error" in companies)
-    throw new Error(`${companies.error}: ${companies.errorMessage}`);
-
   return (
     <ClientPage
-      categories={categories}
+      categories={categories.docs}
       category={category}
       companies={companies}
     />

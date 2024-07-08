@@ -66,27 +66,12 @@ export const api = {
    * @param options - Request options.
    * @returns The categories.
    */
-  getCategories: async (
-    options: GetCategoriesOptions = {}
-  ): Promise<ExistingCategories | ErrorResponse<ErrorCode>> => {
-    const categories = await getReq<Routes["/categories"]["get"]>(
-      "categories",
-      { ...options }
-    );
-
-    return "error" in categories ? categories : restoreCategories(categories);
-  },
-  /**
-   * Retrieves the categories from the API.
-   * @param options - Request options.
-   * @returns The categories.
-   */
   getCategoriesSrv: async (
     options: GetCategoriesOptions = {}
   ): Promise<ExistingCategories> => {
     const categories = await getReq<Routes["/categories"]["get"]>(
       "categories",
-      { ...options },
+      options,
       { logQuery: true }
     );
 
@@ -100,23 +85,17 @@ export const api = {
    * @param id - The category id.
    * @returns The category.
    */
-  getCategory: async (
-    id: string
-  ): Promise<ExistingCategory | ErrorResponse<ErrorCode>> =>
-    getReq<Routes["/categories/{id}"]["get"]>(`categories/${id}`),
-  /**
-   * Retrieves the companies from the API.
-   * @param options - Request options.
-   * @returns The companies.
-   */
-  getCompanies: async (
-    options: GetCompaniesOptions = {}
-  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
-    const companies = await getReq<Routes["/companies"]["get"]>("companies", {
-      ...options
-    });
+  getCategorySrv: async (id: string): Promise<ExistingCategory> => {
+    const category = await getReq<Routes["/categories/{id}"]["get"]>(
+      `categories/${id}`,
+      {},
+      { logQuery: true }
+    );
 
-    return "error" in companies ? companies : restoreCompanies(companies);
+    if ("error" in category)
+      throw new Error(`${category.error}: ${category.errorMessage}`);
+
+    return category;
   },
   /**
    * Retrieves the companies from the API.
@@ -130,10 +109,31 @@ export const api = {
   ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/categories/{id}/companies"]["get"]>(
       `categories/${id}/companies`,
-      { ...options }
+      options
     );
 
     return "error" in companies ? companies : restoreCompanies(companies);
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param id - The category id.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompaniesByCategorySrv: async (
+    id: string,
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies> => {
+    const companies = await getReq<Routes["/categories/{id}/companies"]["get"]>(
+      `categories/${id}/companies`,
+      options,
+      { logQuery: true }
+    );
+
+    if ("error" in companies)
+      throw new Error(`${companies.error}: ${companies.errorMessage}`);
+
+    return restoreCompanies(companies);
   },
   /**
    * Retrieves the companies from the API.
@@ -145,7 +145,7 @@ export const api = {
   ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/me/companies"]["get"]>(
       "me/companies",
-      { ...options }
+      options
     );
 
     return "error" in companies ? companies : restoreCompanies(companies);
@@ -160,7 +160,7 @@ export const api = {
   ): Promise<ExistingCompanies> => {
     const companies = await getReq<Routes["/companies"]["get"]>(
       "companies",
-      { ...options },
+      options,
       { logQuery: true }
     );
 
@@ -207,7 +207,7 @@ export const api = {
   ): Promise<PopulatedDocuments | ErrorResponse<ErrorCode>> => {
     const documents = await getReq<Routes["/me/documents"]["get"]>(
       "me/documents",
-      { ...options }
+      options
     );
 
     return "error" in documents
@@ -224,7 +224,7 @@ export const api = {
   ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
     const companies = await getReq<Routes["/me/favorite-companies"]["get"]>(
       "me/favorite-companies",
-      { ...options }
+      options
     );
 
     return "error" in companies ? companies : restoreCompanies(companies);
@@ -262,6 +262,7 @@ export const api = {
       `companies/${id}`,
       body
     );
+
     return "error" in company ? company : restoreCompany(company);
   },
   putDocument: async (

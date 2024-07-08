@@ -2,25 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ----- Global styles -------------- */
+
 body {
   @apply m-0 p-0 font-sans;
 }
 
-/* App */
-
+/* Applies app loading cursor */
 .app-loading,
 .app-loading * {
   cursor: wait !important;
 }
 
-/* Badge styles */
+/* Removes default x-icon from search fields */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+/* Disables scrolling */
+.no-scroll {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ----- Badge styles --------------- */
 
 .badge-outlined {
   @apply border border-gray-400 rounded
     px-4 py-2;
 }
 
-/* Button styles */
+/* ----- Button styles -------------- */
 
 .dark-button {
   @apply rounded
@@ -47,7 +64,7 @@ body {
     disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 
-/* Form field styles */
+/* ----- Form field styles ---------- */
 
 .checkbox-field {
   @apply h-5 w-5
@@ -68,18 +85,4 @@ body {
 
 .form-field-container {
   @apply flex flex-col gap-1;
-}
-
-/* Miscellaneous styles */
-
-.header2 {
-  @apply text-xl text-gray-500;
-}
-
-.overview {
-  @apply flex flex-col gap-4;
-}
-
-.paragraphs {
-  @apply flex flex-col gap-3 text-justify;
 }

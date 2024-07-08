@@ -15,14 +15,10 @@ export function useRestoreFromLocalStorage(): (state: AppState) => AppState {
 
       const storedState = AppStateValidationSchema.safeParse(json);
 
-      if (storedState.data) state = storedState.data;
-      else {
-        localStorage.removeItem(REDUX_PERSIST_KEY);
-        logger.error(
-          ERROR.FAILED_TO_RESTORE_APP_STATE,
-          storedState.error.errors
-        );
-      }
+      if (storedState.data) return storedState.data;
+
+      localStorage.removeItem(REDUX_PERSIST_KEY);
+      logger.error(ERROR.FAILED_TO_RESTORE_APP_STATE, storedState.error.errors);
     }
 
     return state;

@@ -50,11 +50,12 @@ export const AccordionItem: FC<Props> = ({
 
 export interface Props {
   readonly alwaysOpen?: boolean | undefined;
-  readonly children?: ReactNode | undefined;
+  readonly children?: ReactNode;
   readonly className?: string | undefined;
   readonly disabled?: boolean | undefined;
   readonly header?: ReactNode | undefined;
 }
+
 const Container = tw.div`p-5 flex flex-col`;
 
 const Header = tw.div`text-gray-700 select-none flex items-center gap-3`;
