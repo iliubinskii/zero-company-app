@@ -1,11 +1,22 @@
 /**
- * @type {import("eslint").Linter.Config }
+ * @type {import("eslint").Linter.Config}
  */
 const config = {
-  ignorePatterns: ["!.*", "coverage/**", ".next/**", "node_modules/**"],
+  ignorePatterns: [
+    "!.*",
+    ".next/**",
+    ".swc/**",
+    "coverage/**",
+    "node_modules/**",
+    "playwright-report/**",
+    "test-results/**"
+  ],
   env: { browser: true, es2020: true },
-  globals: {},
-  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
+  extends: [
+    "./.eslintrc.base.cjs",
+    "./.eslintrc.react.cjs",
+    "./.eslintrc.next.cjs"
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -117,8 +128,7 @@ const config = {
         "@typescript-eslint/no-unsafe-member-access": "off",
         "node/no-unpublished-import": "off"
       }
-    },
-    { files: "./utils/**", rules: { "node/no-unpublished-import": "off" } }
+    }
   ]
 };
 
