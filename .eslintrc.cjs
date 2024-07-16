@@ -103,10 +103,6 @@ const config = {
   },
   overrides: [
     {
-      files: "./next-env.d.ts",
-      rules: { "misc/sort-top-comments": "off" }
-    },
-    {
       files: "./src/schema/**",
       rules: { "import/no-relative-parent-imports": "warn" }
     },
@@ -125,8 +121,7 @@ const config = {
       files: "./tests/**",
       rules: {
         "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "node/no-unpublished-import": "off"
+        "@typescript-eslint/no-unsafe-member-access": "off"
       }
     }
   ]
