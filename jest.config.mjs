@@ -24,7 +24,7 @@ const config = {
   },
   preset: "ts-jest",
   setupFilesAfterEnv: ["jest-extended/all", "./jest.setup-after-env.ts"],
-  testEnvironment: "jsdom",
+  testEnvironment: "@happy-dom/jest-environment",
   testPathIgnorePatterns: ["/dist/", "/node_modules/", "/tests/"]
 };
 
