@@ -1,13 +1,15 @@
 "use client";
 
-import type { ExistingCompanies } from "../../schema";
+import { BigSpinner, CompanyCard, CompanyCards } from "../../components/";
+import type { ExistingCategory, ExistingCompanies } from "../../schema";
+import { logError, showSnackbar, useAppDispatch } from "../../store";
+import { COMPANY_LIMIT } from "../../consts";
 import type { NextPage } from "next";
-import React from "react";
+import { PageLayout } from "../../layouts/";
+import React, { useEffect, useState } from "react";
 import { api } from "../../api";
 import { useAsyncCallback } from "../../hooks";
-
-// Use `src\app\categories\[id]\ClientPage.tsx` as a reference
-// Do not work on infinite loading pagination
+import { useSearchParams } from "next/navigation";
 
 const Page: NextPage = () => {
   const [companies, setCompanies] = React.useState<ExistingCompanies>({
@@ -16,36 +18,69 @@ const Page: NextPage = () => {
     total: 0
   });
 
-  // eslint-disable-next-line no-unused-expressions -- Temp
-  companies;
-  // eslint-disable-next-line no-unused-expressions -- Temp
-  setCompanies;
+  const [loading, setLoading] = useState(true);
+
+  const [categories, setCategories] = useState<ExistingCategory[]>([]);
+
+  const dispatch = useAppDispatch();
+
+  const searchParams = useSearchParams();
+
+  const q = searchParams.get("q");
 
   const { callback: loadCompanies, isLoading } = useAsyncCallback(async () => {
-    // Use `q` parameter
-    const nextCompanies = await api.getCompanies();
+    const [nextCompanies, nextCategories] = await Promise.all([
+      api.getCompanies({
+        limit: COMPANY_LIMIT,
+        q,
+        sortBy: "foundedAt",
+        sortOrder: "asc"
+      }),
+      api.getCategories()
+    ]);
+    if ("error" in nextCompanies)
+      dispatch(
+        logError({ error: nextCompanies, message: nextCompanies.errorMessage })
+      );
+    else if ("error" in nextCategories)
+      dispatch(
+        showSnackbar({
+          message: nextCategories.errorMessage,
+          variant: "error"
+        })
+      );
+    else {
+      setCompanies(nextCompanies);
+      setLoading(isLoading);
+      setCategories([...nextCategories.docs]);
+    }
+  }, [dispatch, q]);
 
-    // 1. Check for errors
-    // 2. Update state
-    // eslint-disable-next-line no-unused-expressions -- Ok
-    nextCompanies;
-  }, []);
+  useEffect(() => {
+    loadCompanies();
+  }, [loadCompanies]);
 
-  // Show `BigSpinner` while loading
-  // eslint-disable-next-line no-unused-expressions -- Temp
-  isLoading;
-
-  // Call it in useEffect
-  // eslint-disable-next-line no-unused-expressions -- Temp
-  loadCompanies;
-
-  // eslint-disable-next-line no-warning-comments -- Ok
-  // TODO:
-  // - Get `q` from query string (on client side)
-  //   import { useSearchParams } from 'next/navigation';
-  // - Fetch companies with api.getCompanies
-
-  return <></>;
+  return (
+    <>
+      {loading ? (
+        <div className="py-24 flex justify-center items-center">
+          <BigSpinner />
+        </div>
+      ) : (
+        <PageLayout size="xl">
+          <CompanyCards>
+            {companies.docs.map(company => (
+              <CompanyCard
+                categories={categories}
+                company={company}
+                key={company._id}
+              />
+            ))}
+          </CompanyCards>
+        </PageLayout>
+      )}
+    </>
+  );
 };
 
 export default Page;

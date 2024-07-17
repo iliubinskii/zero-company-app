@@ -66,6 +66,21 @@ export const api = {
    * @param options - Request options.
    * @returns The categories.
    */
+  getCategories: async (
+    options: GetCategoriesOptions = {}
+  ): Promise<ExistingCategories | ErrorResponse<ErrorCode>> => {
+    const categories = await getReq<Routes["/categories"]["get"]>(
+      "categories",
+      options
+    );
+
+    return "error" in categories ? categories : restoreCategories(categories);
+  },
+  /**
+   * Retrieves the categories from the API.
+   * @param options - Request options.
+   * @returns The categories.
+   */
   getCategoriesSrv: async (
     options: GetCategoriesOptions = {}
   ): Promise<ExistingCategories> => {
