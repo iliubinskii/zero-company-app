@@ -1,18 +1,13 @@
+/* eslint import/no-extraneous-dependencies: ["warn", { "devDependencies": true }] -- Ok */
 /* eslint-disable no-magic-numbers -- Ok */
-/* eslint-disable node/no-unpublished-import -- Ok */
 
+import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
 import flowbite from "flowbite/plugin";
 import plugin from "tailwindcss/plugin";
 
-/**
- * @type {import("tailwindcss").Config}
- */
-const config = {
-  content: [
-    "./node_modules/flowbite-react/lib/**/*.js",
-    "./src/**/*.{js,jsx,ts,tsx}"
-  ],
+const config: Config = {
+  content: ["./node_modules/flowbite-react/lib/**/*.js", "./src/**/*.tsx"],
   plugins: [
     daisyui,
     flowbite,

@@ -1,4 +1,4 @@
-/* eslint-disable node/no-unpublished-import -- Ok */
+/* eslint import/no-extraneous-dependencies: ["warn", { "devDependencies": true }] -- Ok */
 
 // eslint-disable-next-line misc/comment-spacing -- Ok
 /// <reference types="jest-extended" />

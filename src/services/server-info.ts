@@ -4,7 +4,7 @@ import { logger } from "./logger";
 import { schema } from "../schema";
 
 /**
- * Log server info
+ * Log server info.
  */
 export function logServerInfo(): void {
   logger.info(`${lang.ZeroAppServer} ${schema.info.version}`);

@@ -45,8 +45,8 @@ export const AppLoadingProvider: FC<Props> = ({ children }) => {
 };
 
 /**
- * Get the current user from the JWT token
- * @returns The current user from the JWT token or undefined if the user is not logged in
+ * Get the current user from the JWT token.
+ * @returns The current user from the JWT token or undefined if the user is not logged in.
  */
 export function useAppLoading(): Context {
   return useContext(AppLoadingContext);

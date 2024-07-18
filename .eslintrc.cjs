@@ -1,11 +1,22 @@
 /**
- * @type {import("eslint").Linter.Config }
+ * @type {import("eslint").Linter.Config}
  */
 const config = {
-  ignorePatterns: ["!.*", "coverage/**", ".next/**", "node_modules/**"],
+  ignorePatterns: [
+    "!.*",
+    ".next/**",
+    ".swc/**",
+    "coverage/**",
+    "node_modules/**",
+    "playwright-report/**",
+    "test-results/**"
+  ],
   env: { browser: true, es2020: true },
-  globals: {},
-  extends: ["./.eslintrc.base.cjs", "./.eslintrc.next.cjs"],
+  extends: [
+    "./.eslintrc.base.cjs",
+    "./.eslintrc.react.cjs",
+    "./.eslintrc.next.cjs"
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -73,14 +84,6 @@ const config = {
     "misc/typescript/no-complex-declarator-type": "off",
     "misc/typescript/no-unsafe-object-assignment": "off",
     "n/no-unsupported-features/node-builtins": "off",
-    "node/no-unsupported-features/es-builtins": [
-      "warn",
-      { ignores: [], version: ">=20.0.0" }
-    ],
-    "node/no-unsupported-features/node-builtins": [
-      "warn",
-      { ignores: [], version: ">=20.0.0" }
-    ],
     "react-hooks/exhaustive-deps": [
       "warn",
       {
@@ -92,16 +95,13 @@ const config = {
   },
   overrides: [
     {
-      files: "./next-env.d.ts",
-      rules: { "misc/sort-top-comments": "off" }
-    },
-    {
       files: "./src/schema/**",
       rules: { "import/no-relative-parent-imports": "warn" }
     },
     {
       files: "./src/schema/routes.ts",
       rules: {
+        "jsdoc/require-description-complete-sentence": "off",
         "misc/comment-spacing": "off",
         "misc/typescript/no-never": "off",
         "misc/typescript/prefer-readonly-array": "off",
@@ -114,11 +114,9 @@ const config = {
       files: "./tests/**",
       rules: {
         "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "node/no-unpublished-import": "off"
+        "@typescript-eslint/no-unsafe-member-access": "off"
       }
-    },
-    { files: "./utils/**", rules: { "node/no-unpublished-import": "off" } }
+    }
   ]
 };
 

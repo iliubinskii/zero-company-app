@@ -1,23 +1,17 @@
 /**
- * @type {import("eslint").Linter.Config }
+ * @type {import("eslint").Linter.Config}
  */
 const config = {
-  extends: [
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended"
-  ],
+  extends: "plugin:@next/next/recommended",
   rules: {
-    "@next/next/no-img-element": "off",
-    "react/jsx-curly-brace-presence": [
-      "warn",
-      { children: "never", props: "never" }
-    ],
-    "react/jsx-sort-props": "warn",
-    "react/prop-types": "off",
-    "react/self-closing-comp": "warn"
+    "@next/next/no-img-element": "off"
   },
-  settings: { react: { version: "detect" } }
+  overrides: [
+    {
+      files: "./next-env.d.ts",
+      rules: { "misc/sort-top-comments": "off" }
+    }
+  ]
 };
 
 module.exports = config;

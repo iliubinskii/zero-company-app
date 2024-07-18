@@ -25,7 +25,6 @@ export const DocumentCard: FC<Props> = ({ authUser, categories, document }) => {
   const dispatch = useAppDispatch();
 
   const documentTitle = useMemo(() => {
-    // eslint-disable-next-line sonarjs/no-small-switch -- Ok
     switch (document.type) {
       case DocType.FoundingAgreement: {
         return lang.FoundingAgreement;
