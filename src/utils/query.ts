@@ -1,7 +1,7 @@
 import dot from "dot-object";
 
 /**
- * Build form data
+ * Build form data.
  * @param data - Form object.
  * @returns Form data.
  */
@@ -48,7 +48,7 @@ export function buildFormData(data: object): FormData {
 }
 
 /**
- * Build query string
+ * Build query string.
  * @param data - Query object.
  * @returns Query string.
  */

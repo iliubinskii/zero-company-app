@@ -84,14 +84,6 @@ const config = {
     "misc/typescript/no-complex-declarator-type": "off",
     "misc/typescript/no-unsafe-object-assignment": "off",
     "n/no-unsupported-features/node-builtins": "off",
-    "node/no-unsupported-features/es-builtins": [
-      "warn",
-      { ignores: [], version: ">=20.0.0" }
-    ],
-    "node/no-unsupported-features/node-builtins": [
-      "warn",
-      { ignores: [], version: ">=20.0.0" }
-    ],
     "react-hooks/exhaustive-deps": [
       "warn",
       {
@@ -109,6 +101,7 @@ const config = {
     {
       files: "./src/schema/routes.ts",
       rules: {
+        "jsdoc/require-description-complete-sentence": "off",
         "misc/comment-spacing": "off",
         "misc/typescript/no-never": "off",
         "misc/typescript/prefer-readonly-array": "off",
