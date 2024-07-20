@@ -51,6 +51,7 @@ const config = {
               "raanana",
               "rofr",
               "smacss",
+              "sonarjs",
               "stylelintrc",
               "ueta",
               "unclicked",
