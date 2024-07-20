@@ -12,11 +12,7 @@ const config = {
     "test-results/**"
   ],
   env: { browser: true, es2020: true },
-  extends: [
-    "./.eslintrc.base.cjs",
-    "./.eslintrc.react.cjs",
-    "./.eslintrc.next.cjs"
-  ],
+  extends: ["union", "union/react", "union/next"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -32,13 +28,13 @@ const config = {
           words:
             // @sorted
             [
+              "cjsx",
               "cofounder",
               "csstools",
               "daisyui",
               "desynchronization",
               "docuseal",
               "ekaterina",
-              "escompat",
               "esign",
               "flowbite",
               "hoverable",
@@ -46,7 +42,9 @@ const config = {
               "katia",
               "ksenia",
               "liubinskii",
+              "mjsx",
               "netania",
+              "packagejson",
               "persistor",
               "picsum",
               "preprocesses",
@@ -62,6 +60,7 @@ const config = {
         }
       }
     ],
+    "@next/next/no-img-element": "off",
     "import/no-internal-modules": [
       "warn",
       {
