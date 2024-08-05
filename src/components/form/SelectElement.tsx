@@ -42,7 +42,7 @@ export interface Props
   readonly errorMessages?: readonly FieldError[] | undefined;
   readonly onChange: (value: string) => void;
   readonly onResetErrors?: ((name?: string) => void) | undefined;
-  readonly options: SelectOption[];
+  readonly options: readonly SelectOption[];
   readonly placeholder?: string | undefined;
 }
 

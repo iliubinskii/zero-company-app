@@ -23,6 +23,7 @@ export function useAsyncCallback<T extends readonly unknown[]>(
     (...args: T): void => {
       callAsync(async () => {
         setIsLoading(true);
+
         try {
           await memorizedCallback(...args);
         } finally {
@@ -36,10 +37,6 @@ export function useAsyncCallback<T extends readonly unknown[]>(
   return useMemo(() => {
     return { callback: sync, isLoading };
   }, [isLoading, sync]);
-}
-
-export interface Options {
-  readonly redirectOnNotFound?: string | undefined;
 }
 
 interface AsyncCallbackResult<T extends readonly unknown[]> {

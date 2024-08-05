@@ -8,9 +8,7 @@ const loadedSlice = createSlice({
   initialState,
   name: "loaded",
   reducers: {
-    setLoaded(_state, action: PayloadAction<boolean>) {
-      return action.payload;
-    }
+    setLoaded: (_state, action: PayloadAction<boolean>) => action.payload
   }
 });
 

@@ -219,6 +219,7 @@ export interface Props {
  * @returns The prepared errors.
  */
 function prepareErrors(errors: readonly FieldError[]): readonly FieldError[] {
+  // eslint-disable-next-line misc/typescript/prefer-readonly-array -- Ok
   const result: FieldError[] = [];
 
   for (const error of errors)

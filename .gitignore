@@ -6,8 +6,8 @@
 blob-report
 certificates
 coverage
-docker
 dist
+docker
 node_modules
 playwright/.cache
 playwright-report

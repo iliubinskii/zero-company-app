@@ -292,6 +292,7 @@ export const api = {
       `companies/${id}`,
       body
     );
+
     return "error" in company ? company : restoreCompany(company);
   },
   putDocument: async (

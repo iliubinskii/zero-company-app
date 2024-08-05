@@ -169,7 +169,8 @@ const ButtonsCol = tw.div`
   opacity-0 pointer-events-none
   group-hover:opacity-100 group-hover:pointer-events-auto
   group-focus:opacity-100 group-focus:pointer-events-auto
-  group-focus-within:opacity-100 group-focus-within:pointer-events-auto`;
+  group-focus-within:opacity-100 group-focus-within:pointer-events-auto
+`;
 
 const DeleteButton = tw.button``;
 

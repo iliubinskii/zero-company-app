@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo } from "react";
 export function useClickOutside(
   handler: () => void,
   deps: DependencyList,
-  elements: RefObject<HTMLElement>[]
+  elements: readonly RefObject<HTMLElement>[]
 ): void {
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Ok
   const memorizedElements = useMemo(() => elements, elements);

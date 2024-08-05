@@ -15,6 +15,6 @@ export const RootLayout: FC<Props> = ({ children, pinnedCategories }) => (
 );
 
 export interface Props {
-  readonly children: ReactNode;
+  readonly children?: ReactNode;
   readonly pinnedCategories: readonly ExistingCategory[];
 }

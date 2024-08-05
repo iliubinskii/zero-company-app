@@ -21,6 +21,6 @@ export const setAppStateReducer: Reducer<AppState, SetStateAction> = (
 ): AppState => action.payload;
 
 export interface SetStateAction {
-  payload: AppState;
-  type: typeof SET_STATE;
+  readonly payload: AppState;
+  readonly type: typeof SET_STATE;
 }

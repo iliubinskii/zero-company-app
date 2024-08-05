@@ -39,10 +39,8 @@ export const ERROR = {
   EXPECTING_VALID_FOUNDERS_ARRAY_INDEX: "Expecting valid founders array index",
   EXPECTING_VALID_LOG_ERROR_SNACKBAR_ENV:
     "Expecting valid log error snackbar environment variable",
-  EXPECTINT_EVENT_TARGET_AS_HTML_FORM_ELEMENT:
-    "Expecting event target as HTMLFormElement",
   FAILED_TO_RESTORE_APP_STATE: "Failed to restore app state",
-  REDUX_STORE_DESYNCRONIZATION: "Redux store desynchronization"
+  REDUX_STORE_DESYNCHRONIZATION: "Redux store desynchronization"
 } as const;
 
 export const GRAVATAR_DEFAULT = "retro";
@@ -52,6 +50,10 @@ export const GRAVATAR_MP = "mp";
 export const GRAVATAR_RATING = "pg";
 
 export const GRAVATAR_SIZE = "200";
+
+export const BREAKPOINT = {
+  md: 768
+};
 
 export const MOCK_STATS = {
   INTERNSHIP_POSITIONS: 6054,

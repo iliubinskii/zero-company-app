@@ -1,6 +1,4 @@
-/* eslint-disable spellcheck/spell-checker -- disabled spellcheck for member names */
-
-export const members: Member[] = [
+export const members: readonly Member[] = [
   {
     avatar: "/members/ilia.webp",
     description:
@@ -40,5 +38,5 @@ export interface Member {
   readonly description: string;
   readonly id: string;
   readonly name: string;
-  readonly roles: string[];
+  readonly roles: readonly string[];
 }

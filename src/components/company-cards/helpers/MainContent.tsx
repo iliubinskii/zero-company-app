@@ -40,7 +40,7 @@ export const MainContent: FC<Props> = ({ company }) => {
     else if (authUser)
       dispatch(
         logError({
-          error: ERROR.REDUX_STORE_DESYNCRONIZATION,
+          error: ERROR.REDUX_STORE_DESYNCHRONIZATION,
           message: lang.ReduxStoreDesynchronization
         })
       );

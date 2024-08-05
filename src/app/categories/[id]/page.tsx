@@ -11,7 +11,7 @@ import { assertDefined } from "../../../utils";
  * Generates static parameters.
  * @returns Static parameters.
  */
-export async function generateStaticParams(): Promise<unknown[]> {
+export async function generateStaticParams(): Promise<readonly unknown[]> {
   const categories = await api.getCategoriesSrv({ onlyPinned: true });
 
   return categories.docs.map(category => {

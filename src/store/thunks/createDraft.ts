@@ -44,7 +44,7 @@ export function createDraft(push: (url: string) => void): AppThunk {
           push("/create-company");
           dispatch(
             logError({
-              error: ERROR.REDUX_STORE_DESYNCRONIZATION,
+              error: ERROR.REDUX_STORE_DESYNCHRONIZATION,
               message: lang.ReduxStoreDesynchronization
             })
           );

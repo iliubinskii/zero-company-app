@@ -65,5 +65,5 @@ export const ClientPage: FC<Props> = ({ categories }) => {
 };
 
 interface Props {
-  categories: readonly ExistingCategory[];
+  readonly categories: readonly ExistingCategory[];
 }

@@ -19,8 +19,11 @@ export function useRestoreFromLogin(): (state: AppState) => AppState {
       const authUser = AuthUserValidationSchema.safeParse(JSON.parse(user));
 
       if (authUser.success) {
-        state = { ...state, auth: { authUser: authUser.data } };
+        const updatedState = { ...state, auth: { authUser: authUser.data } };
+
         localStorage.setItem(REDUX_PERSIST_KEY, JSON.stringify(state));
+
+        return updatedState;
       }
     }
 
