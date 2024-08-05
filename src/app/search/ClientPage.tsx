@@ -18,7 +18,7 @@ export const ClientPage: FC<Props> = ({ categories }) => {
     total: 0
   });
 
-  const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -26,7 +26,7 @@ export const ClientPage: FC<Props> = ({ categories }) => {
 
   const q = searchParams.get("q");
 
-  const { callback: loadCompanies, isLoading } = useAsyncCallback(async () => {
+  const { callback: loadCompanies } = useAsyncCallback(async () => {
     const nextCompanies = await api.getCompanies({
       limit: COMPANY_LIMIT,
       q,
@@ -38,36 +38,29 @@ export const ClientPage: FC<Props> = ({ categories }) => {
       dispatch(
         logError({ error: nextCompanies, message: nextCompanies.errorMessage })
       );
-    else {
-      setCompanies(nextCompanies);
-      setLoading(isLoading);
-    }
+    else setCompanies(nextCompanies);
+
+    setInitialized(true);
   }, [dispatch, q]);
 
-  useEffect(() => {
-    loadCompanies();
-  }, [loadCompanies]);
+  useEffect(loadCompanies, [loadCompanies]);
 
-  return (
-    <>
-      {loading ? (
-        <div className="py-24 flex justify-center items-center">
-          <BigSpinner />
-        </div>
-      ) : (
-        <PageLayout size="xl">
-          <CompanyCards>
-            {companies.docs.map(company => (
-              <CompanyCard
-                categories={categories}
-                company={company}
-                key={company._id}
-              />
-            ))}
-          </CompanyCards>
-        </PageLayout>
-      )}
-    </>
+  return initialized ? (
+    <PageLayout size="xl">
+      <CompanyCards>
+        {companies.docs.map(company => (
+          <CompanyCard
+            categories={categories}
+            company={company}
+            key={company._id}
+          />
+        ))}
+      </CompanyCards>
+    </PageLayout>
+  ) : (
+    <div className="py-40 flex justify-center items-center">
+      <BigSpinner />
+    </div>
   );
 };
 
