@@ -66,6 +66,21 @@ export const api = {
    * @param options - Request options.
    * @returns The categories.
    */
+  getCategories: async (
+    options: GetCategoriesOptions = {}
+  ): Promise<ExistingCategories | ErrorResponse<ErrorCode>> => {
+    const categories = await getReq<Routes["/categories"]["get"]>(
+      "categories",
+      options
+    );
+
+    return "error" in categories ? categories : restoreCategories(categories);
+  },
+  /**
+   * Retrieves the categories from the API.
+   * @param options - Request options.
+   * @returns The categories.
+   */
   getCategoriesSrv: async (
     options: GetCategoriesOptions = {}
   ): Promise<ExistingCategories> => {
@@ -96,6 +111,21 @@ export const api = {
       throw new Error(`${category.error}: ${category.errorMessage}`);
 
     return category;
+  },
+  /**
+   * Retrieves the companies from the API.
+   * @param options - Request options.
+   * @returns The companies.
+   */
+  getCompanies: async (
+    options: GetCompaniesOptions = {}
+  ): Promise<ExistingCompanies | ErrorResponse<ErrorCode>> => {
+    const companies = await getReq<Routes["/companies"]["get"]>(
+      "companies",
+      options
+    );
+
+    return "error" in companies ? companies : restoreCompanies(companies);
   },
   /**
    * Retrieves the companies from the API.

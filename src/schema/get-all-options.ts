@@ -12,6 +12,8 @@ export interface GetCompaniesOptions {
   readonly limit?: number | undefined;
   readonly offset?: number | undefined;
   readonly onlyRecommended?: boolean | undefined;
+  // added `q` parameter
+  readonly q?: string | null | undefined;
   readonly sortBy?: "createdAt" | "foundedAt" | "name" | undefined;
   readonly sortOrder?: "asc" | "desc" | undefined;
   readonly status?: CompanyStatus | undefined;
