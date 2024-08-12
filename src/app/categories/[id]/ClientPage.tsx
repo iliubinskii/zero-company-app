@@ -18,6 +18,8 @@ import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
 import { logger } from "../../../services";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Move infinite loading to separate component
 export const ClientPage: FC<Props> = ({
   categories,
   category,

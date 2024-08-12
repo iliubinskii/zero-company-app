@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Redirect to search page
+// import { useRouter } from "next/navigation";
 export const SiteSearchDesktop: FC = () => {
   const [searchInput, setSearchInput] = useState("");
 

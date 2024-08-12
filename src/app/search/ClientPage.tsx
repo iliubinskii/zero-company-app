@@ -11,6 +11,8 @@ import { api } from "../../api";
 import { useAsyncCallback } from "../../hooks";
 import { useSearchParams } from "next/navigation";
 
+// eslint-disable-next-line no-warning-comments -- Assigned
+// TODO: Infinite loading pagination
 export const ClientPage: FC<Props> = ({ categories }) => {
   const [companies, setCompanies] = React.useState<ExistingCompanies>({
     count: 0,
