@@ -11,3 +11,9 @@ declare module "@jest/expect" {
     extends JestExtended,
       TestingLibraryMatchers<typeof expect.stringContaining, R> {}
 }
+
+declare module "next/jest.js" {
+  export default function nextJest(
+    options: unknown
+  ): (config: unknown) => unknown;
+}
