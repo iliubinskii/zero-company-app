@@ -96,7 +96,7 @@
     "daisyui": "^4",
     "dotenv": "^16",
     "envalid": "^8",
-    "eslint-config-union": "^1.1.0",
+    "eslint-config-union": "^1.2.0",
     "flowbite": "^2",
     "flowbite-react": "^0.10",
     "jest": "^29",
