@@ -3,12 +3,16 @@ import type { FC } from "react";
 import React, { useState } from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
+import { useRouter } from "next/navigation";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Redirect to search page
-// import { useRouter } from "next/navigation";
 export const SiteSearchDesktop: FC = () => {
   const [searchInput, setSearchInput] = useState("");
+
+  const router = useRouter();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter") router.push(`/search?q=${searchInput}`);
+  };
 
   return (
     <Container>
@@ -19,6 +23,7 @@ export const SiteSearchDesktop: FC = () => {
         onChange={e => {
           setSearchInput(e.target.value);
         }}
+        onKeyDown={handleKeyDown}
         placeholder={lang.layouts.RootLayout.SiteSearch.searchPlaceholder}
         type="search"
         value={searchInput}

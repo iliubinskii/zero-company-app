@@ -1,25 +1,22 @@
 "use client";
 
-import { CompanyCard, CompanyCards } from "../../../components";
+import { CompanyCard, CompanyCards, LoadMoreButton } from "../../../components";
 import type {
   ExistingCategory,
   ExistingCompany,
   MultipleDocsResponse
 } from "../../../schema";
 import { logError, useAppDispatch } from "../../../store";
-import { BeatLoader } from "react-spinners";
 import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
 import { PageLayout } from "../../../layouts";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { api } from "../../../api";
 import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
 import { logger } from "../../../services";
 
-// eslint-disable-next-line no-warning-comments -- Assigned
-// TODO: Move infinite loading to separate component
 export const ClientPage: FC<Props> = ({
   categories,
   category,
@@ -30,8 +27,6 @@ export const ClientPage: FC<Props> = ({
   const [companies, setCompanies] = useState(initialCompanies);
 
   const dispatch = useAppDispatch();
-
-  const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -75,31 +70,6 @@ export const ClientPage: FC<Props> = ({
     setNextCursor(initialNextCursor);
   }, [initialCompanies, initialNextCursor]);
 
-  useEffect(() => {
-    const target = loadMoreButtonRef.current;
-
-    if (autoMode && nextCursor && target && !loading) {
-      const observer = new IntersectionObserver(
-        entries => {
-          if (entries.some(entry => entry.isIntersecting)) fetchMoreData();
-        },
-        {
-          root: null,
-          rootMargin: "0px",
-          threshold: 1
-        }
-      );
-
-      observer.observe(target);
-
-      return () => {
-        observer.unobserve(target);
-      };
-    }
-
-    return undefined;
-  }, [autoMode, fetchMoreData, loading, nextCursor]);
-
   return (
     <>
       <Head>
@@ -128,25 +98,11 @@ export const ClientPage: FC<Props> = ({
 
         {/* More button or spinner */}
         {nextCursor && (
-          <div className="flex justify-center">
-            <button
-              className="dark-button relative"
-              disabled={loading}
-              onClick={fetchMoreData}
-              ref={loadMoreButtonRef}
-            >
-              {loading ? (
-                <>
-                  <div className="opacity-0">{lang.LoadMore}</div>
-                  <div className="absolute inset-0 flex justify-center items-center">
-                    <BeatLoader color="#ffffff" />
-                  </div>
-                </>
-              ) : (
-                <div>{lang.LoadMore}</div>
-              )}
-            </button>
-          </div>
+          <LoadMoreButton
+            autoMode={autoMode}
+            fetchMoreData={fetchMoreData}
+            loading={loading}
+          />
         )}
         {/* More button or spinner END */}
       </PageLayout>
