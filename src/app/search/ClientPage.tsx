@@ -26,10 +26,6 @@ export const ClientPage: FC<Props> = ({ categories }) => {
     total: 0
   });
 
-  const [autoMode, setAutoMode] = useState(false);
-
-  const [loading, setLoading] = useState(false);
-
   const [initialized, setInitialized] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -40,9 +36,6 @@ export const ClientPage: FC<Props> = ({ categories }) => {
 
   const fetchMoreData = useCallback(() => {
     callAsync(async () => {
-      setAutoMode(true);
-      setLoading(true);
-
       try {
         const response = await api.getCompanies({
           cursor: companies.nextCursor ?? undefined,
@@ -52,22 +45,18 @@ export const ClientPage: FC<Props> = ({ categories }) => {
           sortOrder: "desc"
         });
 
-        if ("error" in response) {
-          setAutoMode(false);
+        if ("error" in response)
           dispatch(
             logError({ error: response, message: response.errorMessage })
           );
-        } else
+        else
           setCompanies({
             ...companies,
             docs: [...companies.docs, ...response.docs],
             nextCursor: response.nextCursor
           });
       } catch (err) {
-        setAutoMode(false);
         logger.error(err);
-      } finally {
-        setLoading(false);
       }
     });
   }, [companies, dispatch, q]);
@@ -89,31 +78,29 @@ export const ClientPage: FC<Props> = ({ categories }) => {
     setInitialized(true);
   }, [dispatch, q]);
 
-  useEffect(() => {
-    loadCompanies();
-    setAutoMode(false);
-    setLoading(false);
-  }, [loadCompanies]);
+  useEffect(loadCompanies, [loadCompanies]);
 
   return initialized ? (
-    <PageLayout size="xl">
-      <CompanyCards>
-        {companies.docs.map(company => (
-          <CompanyCard
-            categories={categories}
-            company={company}
-            key={company._id}
-          />
-        ))}
-      </CompanyCards>
-      {companies.nextCursor && (
-        <LoadMoreButton
-          autoMode={autoMode}
-          fetchMoreData={fetchMoreData}
-          loading={loading}
-        />
-      )}
-    </PageLayout>
+    companies.count > 0 ? (
+      <PageLayout size="xl">
+        <CompanyCards>
+          {companies.docs.map(company => (
+            <CompanyCard
+              categories={categories}
+              company={company}
+              key={company._id}
+            />
+          ))}
+        </CompanyCards>
+        {companies.nextCursor && (
+          <LoadMoreButton fetchMoreData={fetchMoreData} />
+        )}
+      </PageLayout>
+    ) : (
+      <div className="py-40 flex justify-center items-center">
+        <h1>No companies found</h1>
+      </div>
+    )
   ) : (
     <div className="py-40 flex justify-center items-center">
       <BigSpinner />

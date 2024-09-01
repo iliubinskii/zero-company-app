@@ -22,21 +22,14 @@ export const ClientPage: FC<Props> = ({
   category,
   companies: { docs: initialCompanies, nextCursor: initialNextCursor }
 }) => {
-  const [autoMode, setAutoMode] = useState(false);
-
   const [companies, setCompanies] = useState(initialCompanies);
 
   const dispatch = useAppDispatch();
-
-  const [loading, setLoading] = useState(false);
 
   const [nextCursor, setNextCursor] = useState(initialNextCursor);
 
   const fetchMoreData = useCallback(() => {
     callAsync(async () => {
-      setAutoMode(true);
-      setLoading(true);
-
       try {
         const response = await api.getCompaniesByCategory(category._id, {
           cursor: nextCursor ?? undefined,
@@ -45,28 +38,22 @@ export const ClientPage: FC<Props> = ({
           sortOrder: "desc"
         });
 
-        if ("error" in response) {
-          setAutoMode(false);
+        if ("error" in response)
           dispatch(
             logError({ error: response, message: response.errorMessage })
           );
-        } else {
+        else {
           setCompanies([...companies, ...response.docs]);
           setNextCursor(response.nextCursor);
         }
       } catch (err) {
-        setAutoMode(false);
         logger.error(err);
-      } finally {
-        setLoading(false);
       }
     });
   }, [category, companies, dispatch, nextCursor]);
 
   useEffect(() => {
-    setAutoMode(false);
     setCompanies(initialCompanies);
-    setLoading(false);
     setNextCursor(initialNextCursor);
   }, [initialCompanies, initialNextCursor]);
 
@@ -97,13 +84,7 @@ export const ClientPage: FC<Props> = ({
         {/* Company cards END */}
 
         {/* More button or spinner */}
-        {nextCursor && (
-          <LoadMoreButton
-            autoMode={autoMode}
-            fetchMoreData={fetchMoreData}
-            loading={loading}
-          />
-        )}
+        {nextCursor && <LoadMoreButton fetchMoreData={fetchMoreData} />}
         {/* More button or spinner END */}
       </PageLayout>
     </>

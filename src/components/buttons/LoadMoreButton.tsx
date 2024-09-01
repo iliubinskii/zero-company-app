@@ -1,14 +1,32 @@
+"use client";
+
 import { BeatLoader } from "react-spinners";
 import type { FC } from "react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { lang } from "../../langs";
+import { logger } from "../../services";
+import { noop } from "lodash";
 
-export const LoadMoreButton: FC<Props> = ({
-  autoMode,
-  fetchMoreData,
-  loading
-}) => {
+export const LoadMoreButton: FC<Props> = ({ fetchMoreData = noop }) => {
+  const [loading, setLoading] = useState(false);
+
+  const [autoMode, setAutoMode] = useState(false);
+
   const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
+
+  const handleClick = (): void => {
+    setLoading(true);
+    setAutoMode(true);
+
+    try {
+      fetchMoreData();
+    } catch (err) {
+      setAutoMode(false);
+      logger.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const target = loadMoreButtonRef.current;
@@ -40,7 +58,7 @@ export const LoadMoreButton: FC<Props> = ({
       <button
         className="dark-button relative"
         disabled={loading}
-        onClick={fetchMoreData}
+        onClick={handleClick}
         ref={loadMoreButtonRef}
       >
         {loading ? (
@@ -59,7 +77,5 @@ export const LoadMoreButton: FC<Props> = ({
 };
 
 interface Props {
-  readonly autoMode: boolean;
-  readonly fetchMoreData: () => void;
-  readonly loading: boolean;
+  readonly fetchMoreData?: (() => void) | undefined;
 }
