@@ -1,35 +1,55 @@
 import { IoClose, IoSearch } from "react-icons/io5";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { FC } from "react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { lang } from "../../langs";
 import tw from "tailwind-styled-components";
 
 export const SiteSearchMobile: FC = () => {
   const [searchInput, setSearchInput] = useState("");
 
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const query = searchParams.get("q");
+
+    if (query) setSearchInput(query);
+  }, [searchParams]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    if (!searchInput) return;
+
+    e.preventDefault();
+    router.push(`/search?q=${searchInput}`);
+  };
+
   return (
-    <Container>
-      <SearchIconContainer>
-        <IoSearch className="w-6 h-6" />
-      </SearchIconContainer>
-      <SearchInput
-        onChange={e => {
-          setSearchInput(e.target.value);
-        }}
-        placeholder={lang.layouts.RootLayout.SiteSearch.searchPlaceholder}
-        type="search"
-        value={searchInput}
-      />
-      {searchInput && (
-        <CloseIconContainer
-          onClick={() => {
-            setSearchInput("");
+    <form onSubmit={handleSubmit}>
+      <Container>
+        <SearchIconContainer>
+          <IoSearch className="w-6 h-6" />
+        </SearchIconContainer>
+        <SearchInput
+          onChange={e => {
+            setSearchInput(e.target.value);
           }}
-        >
-          <IoClose className="w-6 h-6" />
-        </CloseIconContainer>
-      )}
-    </Container>
+          placeholder={lang.layouts.RootLayout.SiteSearch.searchPlaceholder}
+          type="search"
+          value={searchInput}
+        />
+        {searchInput && (
+          <CloseIconContainer
+            onClick={() => {
+              setSearchInput("");
+            }}
+          >
+            <IoClose className="w-6 h-6" />
+          </CloseIconContainer>
+        )}
+      </Container>
+    </form>
   );
 };
 

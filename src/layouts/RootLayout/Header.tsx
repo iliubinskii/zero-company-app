@@ -12,7 +12,7 @@ import type { ExistingCategory } from "../../schema";
 import type { FC } from "react";
 import { Logo } from "./Logo";
 import ProfileButton from "./ProfileButton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { SiteSearchDesktop } from "./SiteSearchDesktop";
 import { SiteSearchMobile } from "./SiteSearchMobile";
 import { lang } from "../../langs";
@@ -66,7 +66,9 @@ export const Header: FC<Props> = ({ pinnedCategories }) => {
               <Logo />
             </LogoContainer>
             <ButtonsContainer>
-              <SiteSearchDesktop />
+              <Suspense>
+                <SiteSearchDesktop />
+              </Suspense>
               <CreateCompanyButton />
               <ProfileButton />
             </ButtonsContainer>
@@ -102,7 +104,9 @@ export const Header: FC<Props> = ({ pinnedCategories }) => {
 
         {/* Site search row for thin screens */}
         <section className="px-4 pt-4 flex justify-center sm:hidden">
-          <SiteSearchMobile />
+          <Suspense>
+            <SiteSearchMobile />
+          </Suspense>
         </section>
         {/* Site search row for thin screens END */}
 
