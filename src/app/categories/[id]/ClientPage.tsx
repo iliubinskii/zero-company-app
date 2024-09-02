@@ -13,9 +13,7 @@ import Head from "next/head";
 import { PageLayout } from "../../../layouts";
 import React, { useCallback, useEffect, useState } from "react";
 import { api } from "../../../api";
-import { callAsync } from "../../../utils";
 import { lang } from "../../../langs";
-import { logger } from "../../../services";
 
 export const ClientPage: FC<Props> = ({
   categories,
@@ -28,28 +26,20 @@ export const ClientPage: FC<Props> = ({
 
   const [nextCursor, setNextCursor] = useState(initialNextCursor);
 
-  const fetchMoreData = useCallback(() => {
-    callAsync(async () => {
-      try {
-        const response = await api.getCompaniesByCategory(category._id, {
-          cursor: nextCursor ?? undefined,
-          limit: COMPANY_LIMIT,
-          sortBy: "foundedAt",
-          sortOrder: "desc"
-        });
-
-        if ("error" in response)
-          dispatch(
-            logError({ error: response, message: response.errorMessage })
-          );
-        else {
-          setCompanies([...companies, ...response.docs]);
-          setNextCursor(response.nextCursor);
-        }
-      } catch (err) {
-        logger.error(err);
-      }
+  const fetchMoreData = useCallback(async () => {
+    const response = await api.getCompaniesByCategory(category._id, {
+      cursor: nextCursor ?? undefined,
+      limit: COMPANY_LIMIT,
+      sortBy: "foundedAt",
+      sortOrder: "desc"
     });
+
+    if ("error" in response)
+      dispatch(logError({ error: response, message: response.errorMessage }));
+    else {
+      setCompanies([...companies, ...response.docs]);
+      setNextCursor(response.nextCursor);
+    }
   }, [category, companies, dispatch, nextCursor]);
 
   useEffect(() => {

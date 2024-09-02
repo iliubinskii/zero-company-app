@@ -13,8 +13,6 @@ import type { FC } from "react";
 import { PageLayout } from "../../layouts/";
 import React, { useCallback, useEffect, useState } from "react";
 import { api } from "../../api";
-import { callAsync } from "../../utils";
-import { logger } from "../../services";
 import { useAsyncCallback } from "../../hooks";
 import { useSearchParams } from "next/navigation";
 
@@ -34,31 +32,23 @@ export const ClientPage: FC<Props> = ({ categories }) => {
 
   const q = searchParams.get("q");
 
-  const fetchMoreData = useCallback(() => {
-    callAsync(async () => {
-      try {
-        const response = await api.getCompanies({
-          cursor: companies.nextCursor ?? undefined,
-          limit: COMPANY_LIMIT,
-          q,
-          sortBy: "foundedAt",
-          sortOrder: "desc"
-        });
-
-        if ("error" in response)
-          dispatch(
-            logError({ error: response, message: response.errorMessage })
-          );
-        else
-          setCompanies({
-            ...companies,
-            docs: [...companies.docs, ...response.docs],
-            nextCursor: response.nextCursor
-          });
-      } catch (err) {
-        logger.error(err);
-      }
+  const fetchMoreData = useCallback(async () => {
+    const response = await api.getCompanies({
+      cursor: companies.nextCursor ?? undefined,
+      limit: COMPANY_LIMIT,
+      q,
+      sortBy: "foundedAt",
+      sortOrder: "desc"
     });
+
+    if ("error" in response)
+      dispatch(logError({ error: response, message: response.errorMessage }));
+    else
+      setCompanies({
+        ...companies,
+        docs: [...companies.docs, ...response.docs],
+        nextCursor: response.nextCursor
+      });
   }, [companies, dispatch, q]);
 
   const { callback: loadCompanies } = useAsyncCallback(async () => {

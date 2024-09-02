@@ -2,31 +2,34 @@
 
 import { BeatLoader } from "react-spinners";
 import type { FC } from "react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { callAsync } from "../../utils";
 import { lang } from "../../langs";
 import { logger } from "../../services";
-import { noop } from "lodash";
 
-export const LoadMoreButton: FC<Props> = ({ fetchMoreData = noop }) => {
+export const LoadMoreButton: FC<Props> = ({
+  fetchMoreData: rawFetchMoreData = defaultFetchMoreData
+}) => {
   const [loading, setLoading] = useState(false);
 
   const [autoMode, setAutoMode] = useState(false);
 
   const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
-  const handleClick = (): void => {
-    setLoading(true);
-    setAutoMode(true);
+  const fetchMoreData = useCallback(() => {
+    callAsync(async () => {
+      setLoading(true);
+      setAutoMode(true);
 
-    try {
-      fetchMoreData();
-    } catch (err) {
-      setAutoMode(false);
-      logger.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        await rawFetchMoreData();
+      } catch (err) {
+        logger.error(err);
+      } finally {
+        setLoading(false);
+      }
+    });
+  }, [rawFetchMoreData]);
 
   useEffect(() => {
     const target = loadMoreButtonRef.current;
@@ -58,7 +61,7 @@ export const LoadMoreButton: FC<Props> = ({ fetchMoreData = noop }) => {
       <button
         className="dark-button relative"
         disabled={loading}
-        onClick={handleClick}
+        onClick={fetchMoreData}
         ref={loadMoreButtonRef}
       >
         {loading ? (
@@ -77,5 +80,11 @@ export const LoadMoreButton: FC<Props> = ({ fetchMoreData = noop }) => {
 };
 
 interface Props {
-  readonly fetchMoreData?: (() => void) | undefined;
+  readonly fetchMoreData?: (() => Promise<void>) | undefined;
 }
+
+/**
+ * Default fetch more data function.
+ */
+// eslint-disable-next-line no-empty-function -- Ok
+async function defaultFetchMoreData(): Promise<void> {}
