@@ -11,7 +11,7 @@ import { COMPANY_LIMIT } from "../../../consts";
 import type { FC } from "react";
 import Head from "next/head";
 import { PageLayout } from "../../../layouts";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { api } from "../../../api";
 import { lang } from "../../../langs";
 
@@ -41,11 +41,6 @@ export const ClientPage: FC<Props> = ({
       setNextCursor(response.nextCursor);
     }
   }, [category, companies, dispatch, nextCursor]);
-
-  useEffect(() => {
-    setCompanies(initialCompanies);
-    setNextCursor(initialNextCursor);
-  }, [initialCompanies, initialNextCursor]);
 
   return (
     <>
